@@ -1,5 +1,5 @@
 {
-  "name": "@acme/expo",
+  "name": "@microlearn/expo",
   "private": true,
   "main": "index.ts",
   "scripts": {
@@ -44,16 +44,16 @@
     "superjson": "2.2.3"
   },
   "devDependencies": {
-    "@acme/api": "workspace:*",
-    "@acme/eslint-config": "workspace:*",
-    "@acme/prettier-config": "workspace:*",
-    "@acme/tailwind-config": "workspace:*",
-    "@acme/tsconfig": "workspace:*",
+    "@microlearn/api": "workspace:*",
+    "@microlearn/eslint-config": "workspace:*",
+    "@microlearn/prettier-config": "workspace:*",
+    "@microlearn/tailwind-config": "workspace:*",
+    "@microlearn/tsconfig": "workspace:*",
     "@types/react": "catalog:react19",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "tailwindcss": "catalog:",
     "typescript": "catalog:"
   },
-  "prettier": "@acme/prettier-config"
+  "prettier": "@microlearn/prettier-config"
 }
