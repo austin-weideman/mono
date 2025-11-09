@@ -1,14 +1,15 @@
 import type { Config } from "drizzle-kit";
 
-if (!process.env.POSTGRES_URL) {
-  throw new Error("Missing POSTGRES_URL");
+// Use direct (non-pooled) connection for migrations
+if (!process.env.DATABASE_URL_UNPOOLED) {
+  throw new Error("DATABASE_URL_UNPOOLED environment variable required");
 }
 
-const nonPoolingUrl = process.env.POSTGRES_URL.replace(":6543", ":5432");
+const migrationUrl = process.env.DATABASE_URL_UNPOOLED;
 
 export default {
   schema: "./src/schema.ts",
   dialect: "postgresql",
-  dbCredentials: { url: nonPoolingUrl },
+  dbCredentials: { url: migrationUrl },
   casing: "snake_case",
 } satisfies Config;
