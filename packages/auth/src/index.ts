@@ -39,7 +39,7 @@ export function initAuth<
           },
         }),
     },
-    trustedOrigins: ["expo://"],
+    trustedOrigins: ["expo://", "exp://"],
     onAPIError: {
       onError(error, ctx) {
         console.error("BETTER AUTH API ERROR", error, ctx);
