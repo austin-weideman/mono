@@ -3,6 +3,7 @@
 @import "@microlearn/tailwind-config/theme";
 
 @source "../../../../packages/ui/src/*.{ts,tsx}";
+@source "../../node_modules/streamdown/dist/index.js";
 
 @custom-variant dark (&:where(.dark, .dark *));
 @custom-variant light (&:where(.light, .light *));

@@ -13,9 +13,14 @@
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
+    "@ai-sdk/anthropic": "^2.0.44",
+    "@ai-sdk/openai": "^2.0.65",
+    "@ai-sdk/react": "2.0.93",
     "@microlearn/api": "workspace:*",
     "@microlearn/auth": "workspace:*",
+    "@microlearn/conversation": "workspace:*",
     "@microlearn/db": "workspace:*",
+    "@microlearn/errors": "workspace:*",
     "@microlearn/ui": "workspace:*",
     "@microlearn/validators": "workspace:*",
     "@t3-oss/env-nextjs": "^0.13.8",
@@ -24,10 +29,12 @@
     "@trpc/client": "catalog:",
     "@trpc/server": "catalog:",
     "@trpc/tanstack-react-query": "catalog:",
+    "ai": "^5.0.93",
     "better-auth": "catalog:",
     "next": "^16.0.0",
     "react": "catalog:react19",
     "react-dom": "catalog:react19",
+    "streamdown": "^1.5.1",
     "superjson": "2.2.3",
     "zod": "catalog:"
   },

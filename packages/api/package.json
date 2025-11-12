@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@microlearn/auth": "workspace:*",
+    "@microlearn/conversation": "workspace:*",
     "@microlearn/db": "workspace:*",
     "@microlearn/validators": "workspace:*",
     "@trpc/server": "catalog:",
