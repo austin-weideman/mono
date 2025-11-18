@@ -36,9 +36,17 @@ function convertDbMessagesToUIMessages(messages: Message[]): UIMessage[] {
   }));
 }
 
+interface TextPart {
+  type: "text";
+  text: string;
+}
+
+function isTextPart(part: { type: string }): part is TextPart {
+  return part.type === "text";
+}
+
 function extractTextFromUIMessage(message: UIMessage): string {
-  const textParts = message.parts.filter((part) => part.type === "text");
-  return textParts.map((part) => part.text).join("");
+  return message.parts.filter(isTextPart).map((part) => part.text).join("");
 }
 
 function generateTitle(text: string): string {
@@ -117,10 +125,7 @@ export async function POST(req: Request): Promise<Response> {
       const lastMessage = updatedMessages[updatedMessages.length - 1];
 
       if (lastMessage?.role === "assistant") {
-        const textParts = lastMessage.parts.filter(
-          (part) => part.type === "text",
-        );
-        const content = textParts.map((part) => part.text).join("");
+        const content = extractTextFromUIMessage(lastMessage);
 
         await sendMessage(db, {
           conversationId,
