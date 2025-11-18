@@ -1,9 +1,9 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { useChat } from "@ai-sdk/react";
 import type { UIMessage } from "ai";
 import { DefaultChatTransport } from "ai";
-import { useRouter } from "next/navigation";
 
 import type { Message } from "@microlearn/conversation";
 
@@ -11,7 +11,7 @@ import { ChatInput } from "./chat-input";
 import { Messages } from "./messages";
 
 interface ChatProps {
-  conversationId: string | null;
+  conversationId: string;
   initialMessages: Message[];
 }
 
@@ -24,10 +24,10 @@ function convertDbMessagesToUIMessages(messages: Message[]): UIMessage[] {
 }
 
 export function Chat({ conversationId, initialMessages }: ChatProps) {
-  const router = useRouter();
+  const hasUpdatedUrl = useRef(false);
 
   const { messages, sendMessage, status } = useChat<UIMessage>({
-    id: conversationId ?? undefined,
+    id: conversationId,
     messages: convertDbMessagesToUIMessages(initialMessages),
     transport: new DefaultChatTransport({
       api: "/api/chat",
@@ -40,15 +40,19 @@ export function Chat({ conversationId, initialMessages }: ChatProps) {
         };
       },
     }),
-    onData: (dataPart) => {
-      if (dataPart.type === "data-conversation-id") {
-        const newConversationId = (
-          dataPart.data as { conversationId: string }
-        ).conversationId;
-        router.push(`/chat/${newConversationId}`);
-      }
-    },
   });
+
+  // Update URL when first message is sent (only on homepage)
+  useEffect(() => {
+    if (
+      !hasUpdatedUrl.current &&
+      messages.length > 0 &&
+      window.location.pathname === "/"
+    ) {
+      hasUpdatedUrl.current = true;
+      window.history.pushState({}, "", `/chat/${conversationId}`);
+    }
+  }, [messages.length, conversationId]);
 
   const handleSubmit = (text: string) => {
     void sendMessage({ text });

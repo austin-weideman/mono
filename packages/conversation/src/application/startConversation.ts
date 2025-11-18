@@ -6,6 +6,7 @@ import { insertConversation } from "../persistence/conversation.mutations";
 export interface StartConversationInput {
   userId: string;
   title?: string | null;
+  id?: string;
 }
 
 export async function startConversation(
@@ -13,6 +14,7 @@ export async function startConversation(
   input: StartConversationInput,
 ): Promise<Conversation> {
   return await insertConversation(db, {
+    id: input.id,
     userId: input.userId,
     title: input.title,
   });

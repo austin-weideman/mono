@@ -9,6 +9,7 @@ import type { Conversation } from "../domain/types";
 export interface InsertConversationInput {
   userId: string;
   title?: string | null;
+  id?: string;
 }
 
 export async function insertConversation(
@@ -17,7 +18,11 @@ export async function insertConversation(
 ): Promise<Conversation> {
   const [newConversation] = await db
     .insert(conversation)
-    .values(input)
+    .values({
+      id: input.id,
+      userId: input.userId,
+      title: input.title,
+    })
     .returning();
 
   if (!newConversation) {

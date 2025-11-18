@@ -16,6 +16,7 @@ import {
 } from "@microlearn/conversation";
 import type { Message } from "@microlearn/conversation";
 import { db } from "@microlearn/db/client";
+import { NotFoundError } from "@microlearn/errors";
 
 import { auth } from "~/auth/server";
 import { validateJson } from "~/lib/api-validation";
@@ -23,7 +24,7 @@ import { validateJson } from "~/lib/api-validation";
 export const maxDuration = 30;
 
 const chatRequestSchema = z.object({
-  conversationId: z.string().uuid().nullable(),
+  conversationId: z.string().uuid(),
   message: z.custom<UIMessage>(),
 });
 
@@ -67,25 +68,32 @@ export async function POST(req: Request): Promise<Response> {
   const { conversationId, message } = validation.data;
   const userId = session.user.id;
 
-  let actualConversationId: string;
   let dbMessages: Message[] = [];
 
-  if (!conversationId) {
-    const messageText = extractTextFromUIMessage(message);
-    const title = generateTitle(messageText);
-    const newConversation = await startConversation(db, { userId, title });
-    actualConversationId = newConversation.id;
-  } else {
-    const { conversation, messages } = await loadConversation(db, {
+  // Try to load existing conversation
+  try {
+    const { messages } = await loadConversation(db, {
       conversationId,
       userId,
     });
-    actualConversationId = conversation.id;
     dbMessages = messages;
+  } catch (error) {
+    // If conversation doesn't exist, create one
+    if (error instanceof NotFoundError) {
+      const messageText = extractTextFromUIMessage(message);
+      const title = generateTitle(messageText);
+      await startConversation(db, {
+        id: conversationId,
+        userId,
+        title,
+      });
+    } else {
+      throw error;
+    }
   }
 
   await sendMessage(db, {
-    conversationId: actualConversationId,
+    conversationId,
     userId,
     role: "user",
     content: extractTextFromUIMessage(message),
@@ -96,18 +104,11 @@ export async function POST(req: Request): Promise<Response> {
 
   const stream = createUIMessageStream({
     execute: ({ writer }) => {
-      if (!conversationId) {
-        writer.write({
-          type: "data-conversation-id",
-          data: { conversationId: actualConversationId },
-        });
-      }
-
-  const result = streamText({
-    model: openai("gpt-4o-mini"),
-    system: "You are a helpful AI tutor for microlearning.",
+      const result = streamText({
+        model: openai("gpt-4o-mini"),
+        system: "You are a helpful AI tutor for microlearning.",
         messages: convertToModelMessages(allMessages),
-  });
+      });
 
       void result.consumeStream();
       writer.merge(result.toUIMessageStream());
@@ -122,7 +123,7 @@ export async function POST(req: Request): Promise<Response> {
         const content = textParts.map((part) => part.text).join("");
 
         await sendMessage(db, {
-          conversationId: actualConversationId,
+          conversationId,
           userId,
           role: "assistant",
           content,
