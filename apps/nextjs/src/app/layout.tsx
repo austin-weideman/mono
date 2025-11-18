@@ -2,7 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
 import { cn } from "@microlearn/ui";
-import { ThemeProvider, ThemeToggle } from "@microlearn/ui/theme";
+import { ThemeProvider } from "@microlearn/ui/theme";
+import { ThemeToggle } from "@microlearn/ui/theme-toggle";
 import { Toaster } from "@microlearn/ui/toast";
 
 import { env } from "~/env";
@@ -57,12 +58,17 @@ export default function RootLayout(props: { children: React.ReactNode }) {
           geistMono.variable,
         )}
       >
-        <ThemeProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          disableTransitionOnChange
+          enableSystem
+        >
+          <Toaster position="top-center" />
           <TRPCReactProvider>{props.children}</TRPCReactProvider>
           <div className="absolute right-4 bottom-4">
             <ThemeToggle />
           </div>
-          <Toaster />
         </ThemeProvider>
       </body>
     </html>

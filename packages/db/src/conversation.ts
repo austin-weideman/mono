@@ -1,4 +1,6 @@
 import { index, pgEnum, pgTable } from "drizzle-orm/pg-core";
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
+import { z } from "zod";
 
 import { user } from "./auth-schema";
 
@@ -7,6 +9,9 @@ export const messageRoleEnum = pgEnum("message_role", [
   "assistant",
   "system",
 ]);
+
+export const messageRoleSchema = z.enum(messageRoleEnum.enumValues);
+export type MessageRole = z.infer<typeof messageRoleSchema>;
 
 export const conversation = pgTable(
   "conversation",
@@ -32,6 +37,11 @@ export const conversation = pgTable(
   ],
 );
 
+export const selectConversationSchema = createSelectSchema(conversation);
+export const insertConversationSchema = createInsertSchema(conversation);
+export type Conversation = typeof conversation.$inferSelect;
+export type NewConversation = typeof conversation.$inferInsert;
+
 export const message = pgTable(
   "message",
   (t) => ({
@@ -52,3 +62,8 @@ export const message = pgTable(
     index("idx_message_conversation").on(table.conversationId, table.createdAt),
   ],
 );
+
+export const selectMessageSchema = createSelectSchema(message);
+export const insertMessageSchema = createInsertSchema(message);
+export type Message = typeof message.$inferSelect;
+export type NewMessage = typeof message.$inferInsert;

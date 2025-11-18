@@ -56,3 +56,6 @@ dist/
 
 # local
 local/
+
+# example chatbot
+example-chatbot/

@@ -1,17 +1,13 @@
-import { HydrateClient } from "~/trpc/server";
+import { getSession } from "~/auth/server";
 import { AuthShowcase } from "./_components/auth-showcase";
+import { Chat } from "./_components/chat";
 
-export default function HomePage() {
-  return (
-    <HydrateClient>
-      <main className="container h-screen py-16">
-        <div className="flex flex-col items-center justify-center gap-4">
-          <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
-            Micro<span className="text-primary">Learn</span>
-          </h1>
-          <AuthShowcase />
-        </div>
-      </main>
-    </HydrateClient>
-  );
+export default async function HomePage() {
+  const session = await getSession();
+
+  if (!session) {
+    return <AuthShowcase />;
+  }
+
+  return <Chat conversationId={null} initialMessages={[]} />;
 }
