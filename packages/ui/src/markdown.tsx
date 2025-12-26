@@ -6,7 +6,7 @@ import { Streamdown } from "streamdown";
 
 import { cn } from "./index";
 
-type MarkdownProps = ComponentProps<typeof Streamdown>;
+type MarkdownProps = ComponentProps<typeof Streamdown>
 
 export const Markdown = memo(
   ({ className, ...props }: MarkdownProps) => (
@@ -22,5 +22,4 @@ export const Markdown = memo(
 );
 
 Markdown.displayName = "Markdown";
-
 
