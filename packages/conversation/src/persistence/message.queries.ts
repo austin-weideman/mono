@@ -1,12 +1,12 @@
 import { and, asc, eq, isNull } from "drizzle-orm";
 
-import type { Db } from "@microlearn/db/client";
+import type { DbOrTx } from "@microlearn/db/client";
 import { message } from "@microlearn/db";
 
 import type { Message } from "../domain/types";
 
 export async function listMessagesForConversation(
-  db: Db,
+  db: DbOrTx,
   conversationId: string,
 ): Promise<Message[]> {
   return await db

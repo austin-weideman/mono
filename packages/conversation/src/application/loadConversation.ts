@@ -1,4 +1,4 @@
-import type { Db } from "@microlearn/db/client";
+import type { DbOrTx } from "@microlearn/db/client";
 import { ForbiddenError, NotFoundError } from "@microlearn/errors";
 
 import type { ConversationWithMessages } from "../domain/types";
@@ -11,7 +11,7 @@ export interface LoadConversationInput {
 }
 
 export async function loadConversation(
-  db: Db,
+  db: DbOrTx,
   input: LoadConversationInput,
 ): Promise<ConversationWithMessages> {
   const conversation = await getConversationById(db, input.conversationId);

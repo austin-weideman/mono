@@ -1,6 +1,6 @@
 import { eq, sql } from "drizzle-orm";
 
-import type { Db } from "@microlearn/db/client";
+import type { DbOrTx } from "@microlearn/db/client";
 import { conversation } from "@microlearn/db";
 import { InternalServerError } from "@microlearn/errors";
 
@@ -13,7 +13,7 @@ export interface InsertConversationInput {
 }
 
 export async function insertConversation(
-  db: Db,
+  db: DbOrTx,
   input: InsertConversationInput,
 ): Promise<Conversation> {
   const [newConversation] = await db
@@ -33,7 +33,7 @@ export async function insertConversation(
 }
 
 export async function touchConversation(
-  db: Db,
+  db: DbOrTx,
   conversationId: string,
 ): Promise<void> {
   await db

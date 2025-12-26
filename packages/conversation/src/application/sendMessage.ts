@@ -1,4 +1,4 @@
-import type { Db } from "@microlearn/db/client";
+import type { DbOrTx } from "@microlearn/db/client";
 import { ForbiddenError, NotFoundError } from "@microlearn/errors";
 
 import type { Message, MessageRole } from "../domain/types";
@@ -14,7 +14,7 @@ export interface SendMessageInput {
 }
 
 export async function sendMessage(
-  db: Db,
+  db: DbOrTx,
   input: SendMessageInput,
 ): Promise<Message> {
   const conversation = await getConversationById(db, input.conversationId);

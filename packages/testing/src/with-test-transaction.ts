@@ -23,11 +23,13 @@ export async function withTestTransaction<T>(
       tx.rollback();
     });
   } catch (e) {
-    // Only swallow the rollback error
-    if (
-      !(e instanceof Error) ||
-      e.name !== "TransactionRollbackError"
-    ) {
+    // Only swallow the rollback error (Drizzle throws DrizzleError with message "Rollback")
+    const isRollbackError =
+      e instanceof Error &&
+      (e.name === "TransactionRollbackError" ||
+        (e.name === "DrizzleError" && e.message === "Rollback"));
+
+    if (!isRollbackError) {
       throw e;
     }
   }

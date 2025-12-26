@@ -21,3 +21,10 @@ export const db: Db = drizzle(pool, {
  */
 type TransactionFn = Parameters<typeof db.transaction>[0];
 export type Transaction = Parameters<TransactionFn>[0];
+
+/**
+ * Union type for functions that accept either the main db or a transaction.
+ * Use this as the parameter type for database operations that need to work
+ * in both standalone and transactional contexts.
+ */
+export type DbOrTx = Db | Transaction;

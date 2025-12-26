@@ -1,4 +1,4 @@
-import type { Db } from "@microlearn/db/client";
+import type { DbOrTx } from "@microlearn/db/client";
 import { message } from "@microlearn/db";
 import { InternalServerError } from "@microlearn/errors";
 
@@ -11,7 +11,7 @@ export interface InsertMessageInput {
 }
 
 export async function insertMessage(
-  db: Db,
+  db: DbOrTx,
   input: InsertMessageInput,
 ): Promise<Message> {
   const [newMessage] = await db.insert(message).values(input).returning();
