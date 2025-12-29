@@ -724,4 +724,5 @@ export {
   SidebarSeparator,
   SidebarTrigger,
   useSidebar,
+  SIDEBAR_COOKIE_NAME,
 }

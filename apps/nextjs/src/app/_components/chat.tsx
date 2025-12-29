@@ -6,6 +6,7 @@ import type { UIMessage } from "ai";
 import { DefaultChatTransport } from "ai";
 
 import type { Message } from "@microlearn/conversation";
+import { SidebarTrigger } from "@microlearn/ui";
 
 import { ChatInput } from "./chat-input";
 import { Messages } from "./messages";
@@ -42,12 +43,12 @@ export function Chat({ conversationId, initialMessages }: ChatProps) {
     }),
   });
 
-  // Update URL when first message is sent (only on homepage)
+  // Update URL when first message is sent (only on new chat page)
   useEffect(() => {
     if (
       !hasUpdatedUrl.current &&
       messages.length > 0 &&
-      window.location.pathname === "/"
+      window.location.pathname === "/chat"
     ) {
       hasUpdatedUrl.current = true;
       window.history.pushState({}, "", `/chat/${conversationId}`);
@@ -60,6 +61,9 @@ export function Chat({ conversationId, initialMessages }: ChatProps) {
 
   return (
     <div className="flex h-dvh min-w-0 flex-col bg-background">
+      <header className="sticky top-0 flex items-center gap-2 bg-background px-2 py-1.5">
+        <SidebarTrigger />
+      </header>
       <div className="flex-1 overflow-y-auto">
         <Messages messages={messages} status={status} />
       </div>
