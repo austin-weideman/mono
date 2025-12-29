@@ -17,6 +17,8 @@ import {
   useSidebar,
 } from "@microlearn/ui";
 
+import { SidebarHistory } from "./sidebar-history";
+
 interface User {
   id: string;
   name: string;
@@ -72,9 +74,7 @@ export function AppSidebar({ user }: AppSidebarProps) {
       </SidebarHeader>
 
       <SidebarContent>
-        <div className="text-muted-foreground p-4 text-sm">
-          Conversations will appear here
-        </div>
+        <SidebarHistory />
       </SidebarContent>
 
       <SidebarFooter>
