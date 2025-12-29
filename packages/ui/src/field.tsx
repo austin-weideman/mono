@@ -4,9 +4,9 @@ import type { VariantProps } from "class-variance-authority";
 import { useMemo } from "react";
 import { cva } from "class-variance-authority";
 
-import { cn } from "@microlearn/ui";
-import { Label } from "@microlearn/ui/label";
-import { Separator } from "@microlearn/ui/separator";
+import { cn } from "./utils";
+import { Label } from "./label";
+import { Separator } from "./separator";
 
 export function FieldSet({
   className,

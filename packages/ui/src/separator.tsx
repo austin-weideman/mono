@@ -2,7 +2,7 @@
 
 import { Separator as SeparatorPrimitive } from "radix-ui";
 
-import { cn } from "@microlearn/ui";
+import { cn } from "./utils";
 
 export function Separator({
   className,

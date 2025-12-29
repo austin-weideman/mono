@@ -1,8 +1,7 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
-import { Button } from "@microlearn/ui/button";
-import { SparklesIcon } from "@microlearn/ui";
+import { Button, SparklesIcon } from "@microlearn/ui";
 
 import { auth, getSession } from "~/auth/server";
 import { CenteredContainer } from "./centered-container";

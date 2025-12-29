@@ -7,7 +7,7 @@ import {
 } from "@radix-ui/react-icons";
 import { DropdownMenu as DropdownMenuPrimitive } from "radix-ui";
 
-import { cn } from "@microlearn/ui";
+import { cn } from "./utils";
 
 export function DropdownMenu({
   ...props

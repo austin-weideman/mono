@@ -1,4 +1,4 @@
-import { cn } from "@microlearn/ui";
+import { cn } from "./utils";
 
 export function Input({
   className,

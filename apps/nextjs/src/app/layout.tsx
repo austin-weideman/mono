@@ -1,10 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
-import { cn } from "@microlearn/ui";
-import { ThemeProvider } from "@microlearn/ui/theme";
-import { ThemeToggle } from "@microlearn/ui/theme-toggle";
-import { Toaster } from "@microlearn/ui/toast";
+import { cn, ThemeProvider, ThemeToggle, Toaster } from "@microlearn/ui";
 
 import { env } from "~/env";
 import { TRPCReactProvider } from "~/trpc/react";

@@ -30,6 +30,8 @@
     "@trpc/tanstack-react-query": "catalog:",
     "ai": "^5.0.93",
     "better-auth": "catalog:",
+    "date-fns": "^4.1.0",
+    "framer-motion": "^12.23.26",
     "next": "^16.0.0",
     "react": "catalog:react19",
     "react-dom": "catalog:react19",
