@@ -62,7 +62,7 @@ export function Chat({ conversationId, initialMessages }: ChatProps) {
   return (
     <div className="flex h-dvh min-w-0 flex-col bg-background">
       <header className="sticky top-0 flex items-center gap-2 bg-background px-2 py-1.5">
-        <SidebarTrigger />
+        <SidebarTrigger className="cursor-pointer" />
       </header>
       <div className="flex-1 overflow-y-auto">
         <Messages messages={messages} status={status} />

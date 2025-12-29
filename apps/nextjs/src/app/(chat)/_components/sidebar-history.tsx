@@ -139,7 +139,7 @@ function ConversationGroup({
           <DropdownMenu modal>
             <DropdownMenuTrigger asChild>
               <SidebarMenuAction
-                className="mr-0.5 data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+                className="mr-0.5 cursor-pointer data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                 showOnHover={conversation.id !== activeId}
               >
                 <MoreHorizontalIcon />

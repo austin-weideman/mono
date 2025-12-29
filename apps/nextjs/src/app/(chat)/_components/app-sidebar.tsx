@@ -53,7 +53,7 @@ export function AppSidebar({ user }: AppSidebarProps) {
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
-                  className="h-8 p-1 md:h-fit md:p-2"
+                  className="h-8 cursor-pointer p-1 md:h-fit md:p-2"
                   onClick={() => {
                     setOpenMobile(false);
                     router.push("/chat");
