@@ -42,3 +42,20 @@ export async function touchConversation(
     .where(eq(conversation.id, conversationId));
 }
 
+export async function archiveConversation(
+  db: DbOrTx,
+  conversationId: string,
+): Promise<void> {
+  const result = await db
+    .update(conversation)
+    .set({ archivedAt: sql`NOW()` })
+    .where(eq(conversation.id, conversationId))
+    .returning({ id: conversation.id });
+
+  if (result.length === 0) {
+    throw new InternalServerError(
+      `Failed to archive conversation: ${conversationId}`,
+    );
+  }
+}
+
