@@ -197,7 +197,7 @@ export function SidebarHistory() {
       onSuccess: () => {
         // Invalidate the conversation list to refetch
         void queryClient.invalidateQueries({
-          queryKey: trpc.conversation.list.queryKey(),
+          queryKey: trpc.conversation.list.pathKey(),
         });
 
         // If we deleted the active conversation, navigate away
