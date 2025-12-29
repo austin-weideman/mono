@@ -18,6 +18,7 @@ import {
 } from "@microlearn/ui";
 
 import { SidebarHistory } from "./sidebar-history";
+import { SidebarUserNav } from "./sidebar-user-nav";
 
 interface User {
   id: string;
@@ -78,9 +79,7 @@ export function AppSidebar({ user }: AppSidebarProps) {
       </SidebarContent>
 
       <SidebarFooter>
-        <div className="text-muted-foreground p-2 text-sm">
-          Signed in as {user.email}
-        </div>
+        <SidebarUserNav user={user} />
       </SidebarFooter>
     </Sidebar>
   );

@@ -1,8 +1,8 @@
-import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 import { Button, SparklesIcon } from "@microlearn/ui";
 
+import { signOutAction } from "~/auth/actions";
 import { auth, getSession } from "~/auth/server";
 import { CenteredContainer } from "./centered-container";
 import { FeatureCard } from "./feature-card";
@@ -77,17 +77,8 @@ export async function AuthShowcase() {
         <span>Logged in as {session.user.name}</span>
       </p>
 
-      <form>
-        <Button
-          size="lg"
-          formAction={async () => {
-            "use server";
-            await auth.api.signOut({
-              headers: await headers(),
-            });
-            redirect("/");
-          }}
-        >
+      <form action={signOutAction}>
+        <Button size="lg" type="submit">
           Sign out
         </Button>
       </form>
