@@ -1,5 +1,4 @@
 import { pgTable } from "drizzle-orm/pg-core";
-import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
 export const user = pgTable("user", (t) => ({
   id: t.text().primaryKey(),

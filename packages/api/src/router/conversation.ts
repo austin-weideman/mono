@@ -1,39 +1,51 @@
-import { z } from "zod";
-
 import { userActor } from "@microlearn/core-types";
 import {
+  deleteConversation,
+  deleteConversationInputSchema,
   listUserConversations,
+  listUserConversationsInputSchema,
   loadConversation,
+  loadConversationInputSchema,
   startConversation,
 } from "@microlearn/conversation";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const conversationRouter = createTRPCRouter({
-  list: protectedProcedure.query(async ({ ctx }) => {
-    return await listUserConversations(
-      ctx.db,
-      userActor(ctx.session.user.id),
-      { userId: ctx.session.user.id },
-    );
-  }),
-
-  load: protectedProcedure
-    .input(z.object({ conversationId: z.string() }))
+  list: protectedProcedure
+    .input(listUserConversationsInputSchema.omit({ userId: true }).optional())
     .query(async ({ ctx, input }) => {
-      return await loadConversation(
+      return await listUserConversations(
         ctx.db,
         userActor(ctx.session.user.id),
-        { conversationId: input.conversationId },
+        {
+          userId: ctx.session.user.id,
+          limit: input?.limit,
+          cursor: input?.cursor,
+        },
       );
     }),
 
-  start: protectedProcedure.mutation(async ({ ctx }) => {
-    return await startConversation(
-      ctx.db,
-      userActor(ctx.session.user.id),
-      { userId: ctx.session.user.id },
-    );
-  }),
-});
+  load: protectedProcedure
+    .input(loadConversationInputSchema)
+    .query(async ({ ctx, input }) => {
+      return await loadConversation(ctx.db, userActor(ctx.session.user.id), {
+        conversationId: input.conversationId,
+      });
+    }),
 
+  start: protectedProcedure.mutation(async ({ ctx }) => {
+    return await startConversation(ctx.db, userActor(ctx.session.user.id), {
+      userId: ctx.session.user.id,
+    });
+  }),
+
+  delete: protectedProcedure
+    .input(deleteConversationInputSchema)
+    .mutation(async ({ ctx, input }) => {
+      await deleteConversation(ctx.db, userActor(ctx.session.user.id), {
+        conversationId: input.conversationId,
+      });
+      return { success: true };
+    }),
+});

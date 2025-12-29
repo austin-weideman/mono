@@ -2,7 +2,8 @@ import type { DbOrTx } from "@microlearn/db/client";
 import { message } from "@microlearn/db";
 import { InternalServerError } from "@microlearn/errors";
 
-import type { Message, MessageRole } from "../domain/types";
+import type { Message } from "../types/Message";
+import type { MessageRole } from "../types/MessageRole";
 
 export interface InsertMessageInput {
   conversationId: string;

@@ -3,14 +3,9 @@ import { isUserActor } from "@microlearn/core-types";
 import type { DbOrTx } from "@microlearn/db/client";
 import { BadRequestError } from "@microlearn/errors";
 
-import type { Conversation } from "../domain/types";
+import type { Conversation } from "../types/Conversation";
+import type { StartConversationInput } from "../types/StartConversationInput";
 import { insertConversation } from "../persistence/conversation.mutations";
-
-export interface StartConversationInput {
-  userId: string;
-  title?: string | null;
-  id?: string;
-}
 
 export async function startConversation(
   db: DbOrTx,
@@ -27,4 +22,3 @@ export async function startConversation(
     title: input.title,
   });
 }
-

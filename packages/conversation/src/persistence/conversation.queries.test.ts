@@ -33,7 +33,7 @@ describe("conversation.queries", () => {
   describe("listConversationsForUser", () => {
     it("returns empty array when user has no conversations", async () => {
       await withTestTransaction(async (tx) => {
-        const result = await listConversationsForUser(tx, "non-existent-user");
+        const result = await listConversationsForUser(tx, "non-existent-user", { limit: 20 });
         expect(result).toEqual([]);
       });
     });
@@ -53,7 +53,7 @@ describe("conversation.queries", () => {
           title: "Other User Chat",
         });
 
-        const result = await listConversationsForUser(tx, userId);
+        const result = await listConversationsForUser(tx, userId, { limit: 20 });
 
         expect(result).toHaveLength(2);
         expect(result.map((c) => c.title)).toContain("First Chat");

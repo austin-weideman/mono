@@ -4,7 +4,7 @@ import type { DbOrTx } from "@microlearn/db/client";
 import { conversation } from "@microlearn/db";
 import { InternalServerError } from "@microlearn/errors";
 
-import type { Conversation } from "../domain/types";
+import type { Conversation } from "../types/Conversation";
 
 export interface InsertConversationInput {
   userId: string;

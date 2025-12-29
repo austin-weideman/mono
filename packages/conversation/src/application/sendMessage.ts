@@ -3,16 +3,11 @@ import { isUserActor } from "@microlearn/core-types";
 import type { DbOrTx } from "@microlearn/db/client";
 import { ForbiddenError, NotFoundError } from "@microlearn/errors";
 
-import type { Message, MessageRole } from "../domain/types";
+import type { Message } from "../types/Message";
+import type { SendMessageInput } from "../types/SendMessageInput";
 import { touchConversation } from "../persistence/conversation.mutations";
 import { getConversationById } from "../persistence/conversation.queries";
 import { insertMessage } from "../persistence/message.mutations";
-
-export interface SendMessageInput {
-  conversationId: string;
-  role: MessageRole;
-  content: string;
-}
 
 export async function sendMessage(
   db: DbOrTx,

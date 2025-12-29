@@ -3,13 +3,10 @@ import { isUserActor } from "@microlearn/core-types";
 import type { DbOrTx } from "@microlearn/db/client";
 import { ForbiddenError, NotFoundError } from "@microlearn/errors";
 
-import type { ConversationWithMessages } from "../domain/types";
+import type { ConversationWithMessages } from "../types/ConversationWithMessages";
+import type { LoadConversationInput } from "../types/LoadConversationInput";
 import { getConversationById } from "../persistence/conversation.queries";
 import { listMessagesForConversation } from "../persistence/message.queries";
-
-export interface LoadConversationInput {
-  conversationId: string;
-}
 
 export async function loadConversation(
   db: DbOrTx,
