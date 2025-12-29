@@ -18,6 +18,7 @@
     "@microlearn/api": "workspace:*",
     "@microlearn/auth": "workspace:*",
     "@microlearn/conversation": "workspace:*",
+    "@microlearn/core-types": "workspace:*",
     "@microlearn/db": "workspace:*",
     "@microlearn/errors": "workspace:*",
     "@microlearn/ui": "workspace:*",

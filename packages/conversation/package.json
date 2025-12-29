@@ -20,6 +20,7 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
+    "@microlearn/core-types": "workspace:*",
     "@microlearn/db": "workspace:*",
     "@microlearn/errors": "workspace:*",
     "@neondatabase/serverless": "^1.0.2",

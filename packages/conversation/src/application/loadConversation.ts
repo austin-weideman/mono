@@ -1,3 +1,5 @@
+import type { Actor } from "@microlearn/core-types";
+import { isUserActor } from "@microlearn/core-types";
 import type { DbOrTx } from "@microlearn/db/client";
 import { ForbiddenError, NotFoundError } from "@microlearn/errors";
 
@@ -7,11 +9,11 @@ import { listMessagesForConversation } from "../persistence/message.queries";
 
 export interface LoadConversationInput {
   conversationId: string;
-  userId: string;
 }
 
 export async function loadConversation(
   db: DbOrTx,
+  actor: Actor,
   input: LoadConversationInput,
 ): Promise<ConversationWithMessages> {
   const conversation = await getConversationById(db, input.conversationId);
@@ -20,7 +22,7 @@ export async function loadConversation(
     throw new NotFoundError(`Conversation not found: ${input.conversationId}`);
   }
 
-  if (conversation.userId !== input.userId) {
+  if (isUserActor(actor) && conversation.userId !== actor.userId) {
     throw new ForbiddenError("You do not have access to this conversation");
   }
 

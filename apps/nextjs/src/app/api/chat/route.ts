@@ -9,6 +9,7 @@ import type { UIMessage } from "ai";
 import { headers } from "next/headers";
 import { z } from "zod";
 
+import { userActor } from "@microlearn/core-types";
 import {
   loadConversation,
   sendMessage,
@@ -75,14 +76,14 @@ export async function POST(req: Request): Promise<Response> {
 
   const { conversationId, message } = validation.data;
   const userId = session.user.id;
+  const actor = userActor(userId);
 
   let dbMessages: Message[] = [];
 
   // Try to load existing conversation
   try {
-    const { messages } = await loadConversation(db, {
+    const { messages } = await loadConversation(db, actor, {
       conversationId,
-      userId,
     });
     dbMessages = messages;
   } catch (error) {
@@ -90,7 +91,7 @@ export async function POST(req: Request): Promise<Response> {
     if (error instanceof NotFoundError) {
       const messageText = extractTextFromUIMessage(message);
       const title = generateTitle(messageText);
-      await startConversation(db, {
+      await startConversation(db, actor, {
         id: conversationId,
         userId,
         title,
@@ -100,9 +101,8 @@ export async function POST(req: Request): Promise<Response> {
     }
   }
 
-  await sendMessage(db, {
+  await sendMessage(db, actor, {
     conversationId,
-    userId,
     role: "user",
     content: extractTextFromUIMessage(message),
   });
@@ -127,9 +127,8 @@ export async function POST(req: Request): Promise<Response> {
       if (lastMessage?.role === "assistant") {
         const content = extractTextFromUIMessage(lastMessage);
 
-        await sendMessage(db, {
+        await sendMessage(db, actor, {
           conversationId,
-          userId,
           role: "assistant",
           content,
         });

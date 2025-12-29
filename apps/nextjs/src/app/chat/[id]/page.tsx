@@ -1,5 +1,6 @@
 import { notFound, redirect } from "next/navigation";
 
+import { userActor } from "@microlearn/core-types";
 import { loadConversation } from "@microlearn/conversation";
 import { db } from "@microlearn/db/client";
 import { NotFoundError } from "@microlearn/errors";
@@ -24,9 +25,8 @@ export default async function ChatPage({ params }: ChatPageProps) {
   let messages;
 
   try {
-    const result = await loadConversation(db, {
+    const result = await loadConversation(db, userActor(session.user.id), {
       conversationId: id,
-      userId: session.user.id,
     });
     conversation = result.conversation;
     messages = result.messages;
