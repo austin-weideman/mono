@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 
 import { cn, ThemeProvider, ThemeToggle, Toaster } from "@microlearn/ui";
 
@@ -11,21 +10,16 @@ import "~/app/styles.css";
 export const metadata: Metadata = {
   metadataBase: new URL(
     env.VERCEL_ENV === "production"
-      ? "https://turbo.t3.gg"
+      ? "https://microlearn.app"
       : "http://localhost:3000",
   ),
-  title: "Create T3 Turbo",
-  description: "Simple monorepo with shared backend for web & mobile apps",
+  title: "MicroLearn",
+  description: "AI-powered microlearning. Learn anything, one conversation at a time.",
   openGraph: {
-    title: "Create T3 Turbo",
-    description: "Simple monorepo with shared backend for web & mobile apps",
-    url: "https://create-t3-turbo.vercel.app",
-    siteName: "Create T3 Turbo",
-  },
-  twitter: {
-    card: "summary_large_image",
-    site: "@jullerino",
-    creator: "@jullerino",
+    title: "MicroLearn",
+    description: "AI-powered microlearning. Learn anything, one conversation at a time.",
+    url: "https://microlearn.app",
+    siteName: "MicroLearn",
   },
 };
 
@@ -36,23 +30,12 @@ export const viewport: Viewport = {
   ],
 };
 
-const geistSans = Geist({
-  subsets: ["latin"],
-  variable: "--font-geist-sans",
-});
-const geistMono = Geist_Mono({
-  subsets: ["latin"],
-  variable: "--font-geist-mono",
-});
-
 export default function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
           "bg-background text-foreground min-h-screen font-sans antialiased",
-          geistSans.variable,
-          geistMono.variable,
         )}
       >
         <ThemeProvider

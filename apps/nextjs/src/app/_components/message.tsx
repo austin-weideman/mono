@@ -19,7 +19,7 @@ export function Message({ message }: MessageProps) {
         })}
       >
         {!isUser && (
-          <div className="-mt-1 flex size-8 shrink-0 items-center justify-center rounded-full bg-background ring-1 ring-border">
+          <div className="-mt-1 flex size-8 shrink-0 items-center justify-center rounded-full bg-muted">
             <SparklesIcon size={14} />
           </div>
         )}
@@ -36,11 +36,10 @@ export function Message({ message }: MessageProps) {
                 <div
                   key={idx}
                   className={cn({
-                    "w-fit wrap-break-word rounded-2xl px-3 py-2 text-right text-white":
+                    "w-fit wrap-break-word rounded-2xl bg-primary px-3 py-2 text-primary-foreground":
                       isUser,
                     "bg-transparent px-0 py-0 text-left": !isUser,
                   })}
-                  style={isUser ? { backgroundColor: "#006cff" } : undefined}
                 >
                   {isUser ? (
                     <div className="whitespace-pre-wrap">{part.text}</div>

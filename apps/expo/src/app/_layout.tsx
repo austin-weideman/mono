@@ -7,23 +7,31 @@ import { queryClient } from "~/utils/api";
 
 import "../styles.css";
 
-// This is the main layout of the app
-// It wraps your pages with the providers they need
+const COLORS = {
+  light: {
+    primary: "#007AFF",
+    background: "#FFFFFF",
+  },
+  dark: {
+    primary: "#0A84FF",
+    background: "#000000",
+  },
+} as const;
+
 export default function RootLayout() {
   const colorScheme = useColorScheme();
+  const colors = colorScheme === "dark" ? COLORS.dark : COLORS.light;
+
   return (
     <QueryClientProvider client={queryClient}>
-      {/*
-          The Stack component displays the current page.
-          It also allows you to configure your screens 
-        */}
       <Stack
         screenOptions={{
           headerStyle: {
-            backgroundColor: "#c03484",
+            backgroundColor: colors.primary,
           },
+          headerTintColor: "#FFFFFF",
           contentStyle: {
-            backgroundColor: colorScheme == "dark" ? "#09090B" : "#FFFFFF",
+            backgroundColor: colors.background,
           },
         }}
       />
