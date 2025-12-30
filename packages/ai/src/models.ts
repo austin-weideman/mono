@@ -14,15 +14,15 @@ export interface ModelConfig {
 }
 
 export const ModelId = {
-  CLAUDE_HAIKU_4_5: "claude-haiku-4.5",
   CLAUDE_SONNET_4_5: "claude-sonnet-4.5",
   CLAUDE_OPUS_4_5: "claude-opus-4.5",
   GEMINI_2_5_FLASH: "gemini-2.5-flash",
   GEMINI_2_5_PRO: "gemini-2.5-pro",
   GEMINI_3_FLASH: "gemini-3-flash",
   GEMINI_3_PRO_PREVIEW: "gemini-3-pro-preview",
-  GROK_4_FAST: "grok-4-fast",
-  GROK_4_1_FAST: "grok-4.1-fast",
+  GROK_4: "grok-4",
+  GROK_4_1_FAST_REASONING: "grok-4.1-fast-reasoning",
+  GROK_4_1_FAST_NON_REASONING: "grok-4.1-fast-non-reasoning",
   GPT_5_2: "gpt-5.2",
   GPT_5: "gpt-5",
   GPT_5_MINI: "gpt-5-mini",
@@ -31,11 +31,6 @@ export const ModelId = {
 export type ModelId = (typeof ModelId)[keyof typeof ModelId];
 
 export const MODEL_REGISTRY: Record<ModelId, ModelConfig> = {
-  [ModelId.CLAUDE_HAIKU_4_5]: {
-    gatewayId: "anthropic/claude-haiku-4.5",
-    provider: "anthropic",
-    displayName: "Claude Haiku 4.5",
-  },
   [ModelId.CLAUDE_SONNET_4_5]: {
     gatewayId: "anthropic/claude-sonnet-4.5",
     provider: "anthropic",
@@ -66,15 +61,20 @@ export const MODEL_REGISTRY: Record<ModelId, ModelConfig> = {
     provider: "google",
     displayName: "Gemini 3 Pro Preview",
   },
-  [ModelId.GROK_4_FAST]: {
-    gatewayId: "xai/grok-4-fast-non-reasoning",
+  [ModelId.GROK_4]: {
+    gatewayId: "xai/grok-4",
     provider: "xai",
-    displayName: "Grok 4 Fast Non-Reasoning",
+    displayName: "Grok 4",
   },
-  [ModelId.GROK_4_1_FAST]: {
+  [ModelId.GROK_4_1_FAST_REASONING]: {
     gatewayId: "xai/grok-4.1-fast-reasoning",
     provider: "xai",
     displayName: "Grok 4.1 Fast Reasoning",
+  },
+  [ModelId.GROK_4_1_FAST_NON_REASONING]: {
+    gatewayId: "xai/grok-4.1-fast-non-reasoning",
+    provider: "xai",
+    displayName: "Grok 4.1 Fast Non-Reasoning",
   },
   [ModelId.GPT_5_2]: {
     gatewayId: "openai/gpt-5.2",
