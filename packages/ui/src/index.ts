@@ -1,6 +1,7 @@
 export { cn } from "./utils";
 
 export * from "./alert-dialog";
+export * from "./auto-resize-textarea";
 export * from "./button";
 export * from "./dropdown-menu";
 export * from "./field";

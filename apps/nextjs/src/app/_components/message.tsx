@@ -2,32 +2,34 @@ import type { UIMessage } from "ai";
 
 import { cn, Markdown, SparklesIcon } from "@microlearn/ui";
 
+import { ThinkingIndicator } from "./thinking-indicator";
+
 interface MessageProps {
   message: UIMessage;
   isLoading?: boolean;
 }
 
-export function Message({ message }: MessageProps) {
+export function Message({ message, isLoading }: MessageProps) {
   const isUser = message.role === "user";
 
   return (
     <div className="group/message w-full" data-role={message.role}>
       <div
-        className={cn("flex w-full items-start gap-2 md:gap-3", {
+        className={cn("flex w-full items-start gap-2.5", {
           "justify-end": isUser,
           "justify-start": !isUser,
         })}
       >
         {!isUser && (
-          <div className="-mt-1 flex size-8 shrink-0 items-center justify-center rounded-full bg-muted">
+          <div className="flex size-7 shrink-0 items-center justify-center rounded-full bg-muted">
             <SparklesIcon size={14} />
           </div>
         )}
 
         <div
           className={cn("flex flex-col", {
-            "max-w-[calc(100%-2.5rem)] sm:max-w-[min(fit-content,80%)]": isUser,
-            "w-full": !isUser,
+            "max-w-[85%] sm:max-w-[75%]": isUser,
+            "w-full max-w-none": !isUser,
           })}
         >
           {message.parts.map((part, idx) => {
@@ -36,13 +38,13 @@ export function Message({ message }: MessageProps) {
                 <div
                   key={idx}
                   className={cn({
-                    "w-fit wrap-break-word rounded-2xl bg-primary px-3 py-2 text-primary-foreground":
+                    "w-fit wrap-break-word bg-primary px-3.5 py-2 text-primary-foreground rounded-[1.25rem] rounded-br-md":
                       isUser,
                     "bg-transparent px-0 py-0 text-left": !isUser,
                   })}
                 >
                   {isUser ? (
-                    <div className="whitespace-pre-wrap">{part.text}</div>
+                    <div className="whitespace-pre-wrap text-base leading-relaxed">{part.text}</div>
                   ) : (
                     <Markdown>{part.text}</Markdown>
                   )}
@@ -51,6 +53,8 @@ export function Message({ message }: MessageProps) {
             }
             return null;
           })}
+
+          {isLoading && !isUser && <ThinkingIndicator />}
         </div>
       </div>
     </div>

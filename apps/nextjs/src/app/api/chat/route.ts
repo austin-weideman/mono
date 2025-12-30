@@ -113,7 +113,7 @@ export async function POST(req: Request): Promise<Response> {
     execute: ({ writer }) => {
       const result = streamText({
         model: gateway(gatewayModelId),
-        system: "You are a helpful AI tutor for microlearning.",
+        system: "You are a helpful AI assistant.",
         messages: convertToModelMessages(allMessages),
       });
 

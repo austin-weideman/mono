@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { cn, SendIcon } from "@microlearn/ui";
+import { AutoResizeTextarea, cn, SendIcon } from "@microlearn/ui";
 
 interface ChatInputProps {
   onSubmit: (text: string) => void;
@@ -12,7 +12,7 @@ interface ChatInputProps {
 export function ChatInput({ onSubmit, disabled }: ChatInputProps) {
   const [input, setInput] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent | React.KeyboardEvent) => {
     e.preventDefault();
     if (input.trim() && !disabled) {
       onSubmit(input);
@@ -24,28 +24,30 @@ export function ChatInput({ onSubmit, disabled }: ChatInputProps) {
 
   return (
     <form onSubmit={handleSubmit} className="relative flex w-full items-end gap-2">
-      <textarea
+      <AutoResizeTextarea
         value={input}
-        onChange={(e) => setInput(e.target.value)}
-        onKeyDown={(e) => {
+        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setInput(e.target.value)}
+        onKeyDown={(e: React.KeyboardEvent<HTMLTextAreaElement>) => {
           if (e.key === "Enter" && !e.shiftKey) {
             e.preventDefault();
             handleSubmit(e);
           }
         }}
         disabled={disabled}
-        placeholder="Send a message..."
-        className="min-h-[44px] max-h-[200px] w-full resize-none rounded-2xl border border-border bg-muted px-4 py-2.5 pr-12 text-sm transition-colors placeholder:text-muted-foreground focus:border-primary focus:bg-background focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
-        rows={1}
+        placeholder="Message"
+        maxHeight={200}
+        wrapperClassName="rounded-[1.25rem] border border-border bg-background transition-colors focus-within:border-primary disabled:cursor-not-allowed disabled:opacity-50"
+        className="px-4 py-2.5 pr-12 text-base placeholder:text-muted-foreground"
       />
       <button
         type="submit"
         disabled={disabled || !hasContent}
+        aria-label="Send message"
         className={cn(
-          "absolute right-2 bottom-1.5 flex size-8 items-center justify-center rounded-full transition-all",
+          "absolute right-2 bottom-2 flex size-7 items-center justify-center rounded-full transition-all",
           hasContent
             ? "bg-primary text-primary-foreground hover:opacity-90"
-            : "bg-muted text-muted-foreground",
+            : "bg-transparent text-muted-foreground",
           "disabled:cursor-not-allowed disabled:opacity-50"
         )}
       >
