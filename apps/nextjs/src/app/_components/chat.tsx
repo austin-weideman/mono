@@ -60,7 +60,7 @@ export function Chat({
   };
 
   return (
-    <div className="flex h-dvh min-w-0 flex-col bg-background">
+    <div className="flex h-full min-w-0 flex-col bg-background">
       <header className="sticky top-0 flex items-center gap-2 bg-background px-2 py-1.5">
         <SidebarTrigger className="cursor-pointer" />
         <ModelSelector selectedModelId={selectedModelId} />
@@ -68,7 +68,7 @@ export function Chat({
       <div className="flex-1 overflow-y-auto">
         <Messages messages={messages} status={status} />
       </div>
-      <div className="sticky bottom-0 z-1 mx-auto flex w-full max-w-4xl gap-2 border-t-0 bg-background px-2 pb-3 md:px-4 md:pb-4">
+      <div className="mx-auto flex w-full max-w-4xl gap-2 bg-background px-2 pb-3 md:px-4 md:pb-4">
         <ChatInput onSubmit={handleSubmit} disabled={status !== "ready"} />
       </div>
     </div>

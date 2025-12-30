@@ -27,7 +27,7 @@ export default async function ChatLayout({
   return (
     <SidebarProvider defaultOpen={defaultOpen}>
       <AppSidebar user={session.user} />
-      <SidebarInset>{children}</SidebarInset>
+      <SidebarInset className="h-svh overflow-hidden">{children}</SidebarInset>
     </SidebarProvider>
   );
 }

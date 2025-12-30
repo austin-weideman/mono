@@ -44,7 +44,7 @@ export function MessageActions({ message, isLoading }: MessageActionsProps) {
           <Button
             variant="ghost"
             size="icon"
-            className="size-7 text-muted-foreground hover:text-foreground"
+            className="size-7 cursor-pointer text-muted-foreground hover:text-foreground"
             onClick={handleCopy}
             type="button"
           >
