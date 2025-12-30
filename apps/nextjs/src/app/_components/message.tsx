@@ -2,6 +2,7 @@ import type { UIMessage } from "ai";
 
 import { cn, Markdown, SparklesIcon } from "@microlearn/ui";
 
+import { MessageActions } from "./message-actions";
 import { ThinkingIndicator } from "./thinking-indicator";
 
 interface MessageProps {
@@ -27,7 +28,7 @@ export function Message({ message, isLoading }: MessageProps) {
         )}
 
         <div
-          className={cn("flex flex-col", {
+          className={cn("flex flex-col gap-2", {
             "max-w-[85%] sm:max-w-[75%]": isUser,
             "w-full max-w-none": !isUser,
           })}
@@ -55,6 +56,8 @@ export function Message({ message, isLoading }: MessageProps) {
           })}
 
           {isLoading && !isUser && <ThinkingIndicator />}
+
+          {!isUser && <MessageActions message={message} isLoading={isLoading} />}
         </div>
       </div>
     </div>
