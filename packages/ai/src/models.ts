@@ -1,5 +1,12 @@
 export type ModelProvider = "anthropic" | "google" | "xai" | "openai";
 
+export const PROVIDER_DISPLAY_NAMES: Record<ModelProvider, string> = {
+  anthropic: "Anthropic",
+  google: "Google",
+  xai: "xAI",
+  openai: "OpenAI",
+} as const;
+
 export interface ModelConfig {
   gatewayId: string;
   provider: ModelProvider;
@@ -102,6 +109,20 @@ export function getModelsByProvider(provider: ModelProvider): ModelId[] {
   return getAllModelIds().filter(
     (id) => MODEL_REGISTRY[id].provider === provider,
   );
+}
+
+export function getModelsGroupedByProvider(): {
+  anthropic: ModelId[];
+  google: ModelId[];
+  xai: ModelId[];
+  openai: ModelId[];
+} {
+  return {
+    anthropic: getModelsByProvider("anthropic"),
+    google: getModelsByProvider("google"),
+    xai: getModelsByProvider("xai"),
+    openai: getModelsByProvider("openai"),
+  };
 }
 
 export function isValidModelId(value: string): value is ModelId {

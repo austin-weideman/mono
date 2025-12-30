@@ -1,9 +1,14 @@
 "use client";
 
+import Image from "next/image";
 import { startTransition, useOptimistic, useState } from "react";
 
-import type { ModelId } from "@microlearn/ai";
-import { getAllModelIds, getModelConfig } from "@microlearn/ai";
+import type { ModelId, ModelProvider } from "@microlearn/ai";
+import {
+  getModelConfig,
+  getModelsGroupedByProvider,
+  PROVIDER_DISPLAY_NAMES,
+} from "@microlearn/ai";
 import {
   Button,
   CheckIcon,
@@ -11,11 +16,28 @@ import {
   cn,
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@microlearn/ui";
 
 import { saveModelPreference } from "../_actions/model";
+
+const PROVIDER_ORDER: ModelProvider[] = ["anthropic", "openai", "google", "xai"];
+
+function ProviderLogo({ provider }: { provider: ModelProvider }) {
+  return (
+    <Image
+      src={`https://models.dev/logos/${provider}.svg`}
+      alt={`${provider} logo`}
+      width={16}
+      height={16}
+      className="size-4 dark:invert"
+      unoptimized
+    />
+  );
+}
 
 interface ModelSelectorProps {
   selectedModelId: ModelId;
@@ -30,7 +52,7 @@ export function ModelSelector({
   const [optimisticModelId, setOptimisticModelId] =
     useOptimistic(selectedModelId);
 
-  const models = getAllModelIds();
+  const groupedModels = getModelsGroupedByProvider();
   const selectedModel = getModelConfig(optimisticModelId);
 
   return (
@@ -39,34 +61,48 @@ export function ModelSelector({
         <Button
           variant="outline"
           className={cn(
-            "cursor-pointer data-[state=open]:bg-accent data-[state=open]:text-accent-foreground",
+            "cursor-pointer gap-2 data-[state=open]:bg-accent data-[state=open]:text-accent-foreground",
             className,
           )}
         >
+          <ProviderLogo provider={selectedModel.provider} />
           {selectedModel.displayName}
           <ChevronDownIcon />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="start" className="min-w-[200px]">
-        {models.map((modelId) => {
-          const model = getModelConfig(modelId);
-          const isSelected = modelId === optimisticModelId;
+      <DropdownMenuContent align="start" className="min-w-[220px]">
+        {PROVIDER_ORDER.map((provider) => {
+          const models = groupedModels[provider];
+          if (models.length === 0) return null;
 
           return (
-            <DropdownMenuItem
-              key={modelId}
-              className="cursor-pointer justify-between"
-              onSelect={() => {
-                setOpen(false);
-                startTransition(() => {
-                  setOptimisticModelId(modelId);
-                  void saveModelPreference(modelId);
-                });
-              }}
-            >
-              {model.displayName}
-              {isSelected && <CheckIcon className="size-4" />}
-            </DropdownMenuItem>
+            <DropdownMenuGroup key={provider}>
+              <DropdownMenuLabel className="text-xs text-muted-foreground">
+                {PROVIDER_DISPLAY_NAMES[provider]}
+              </DropdownMenuLabel>
+              {models.map((modelId) => {
+                const model = getModelConfig(modelId);
+                const isSelected = modelId === optimisticModelId;
+
+                return (
+                  <DropdownMenuItem
+                    key={modelId}
+                    className="cursor-pointer gap-2.5"
+                    onSelect={() => {
+                      setOpen(false);
+                      startTransition(() => {
+                        setOptimisticModelId(modelId);
+                        void saveModelPreference(modelId);
+                      });
+                    }}
+                  >
+                    <ProviderLogo provider={provider} />
+                    <span className="flex-1">{model.displayName}</span>
+                    {isSelected && <CheckIcon className="size-4" />}
+                  </DropdownMenuItem>
+                );
+              })}
+            </DropdownMenuGroup>
           );
         })}
       </DropdownMenuContent>
