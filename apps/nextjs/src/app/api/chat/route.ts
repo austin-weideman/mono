@@ -1,4 +1,4 @@
-import { openai } from "@ai-sdk/openai";
+import { gateway } from "@ai-sdk/gateway";
 import {
   convertToModelMessages,
   createUIMessageStream,
@@ -6,19 +6,22 @@ import {
   streamText,
 } from "ai";
 import type { UIMessage } from "ai";
-import { headers } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { z } from "zod";
 
+import { getGatewayId } from "@microlearn/ai";
 import { userActor } from "@microlearn/core-types";
+import type { Message } from "@microlearn/conversation";
 import {
   loadConversation,
   sendMessage,
   startConversation,
 } from "@microlearn/conversation";
-import type { Message } from "@microlearn/conversation";
 import { db } from "@microlearn/db/client";
 import { NotFoundError } from "@microlearn/errors";
 
+import { convertDbMessagesToUIMessages } from "~/app/(chat)/_lib/messages";
+import { getSelectedModelId } from "~/app/(chat)/_lib/model";
 import { auth } from "~/auth/server";
 import { validateJson } from "~/lib/api-validation";
 
@@ -28,14 +31,6 @@ const chatRequestSchema = z.object({
   conversationId: z.string().uuid(),
   message: z.custom<UIMessage>(),
 });
-
-function convertDbMessagesToUIMessages(messages: Message[]): UIMessage[] {
-  return messages.map((msg) => ({
-    id: msg.id,
-    role: msg.role,
-    parts: [{ type: "text" as const, text: msg.content }],
-  }));
-}
 
 interface TextPart {
   type: "text";
@@ -57,9 +52,10 @@ function generateTitle(text: string): string {
 }
 
 export async function POST(req: Request): Promise<Response> {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+  const [session, cookieStore] = await Promise.all([
+    auth.api.getSession({ headers: await headers() }),
+    cookies(),
+  ]);
 
   if (!session?.user) {
     return Response.json(
@@ -77,6 +73,9 @@ export async function POST(req: Request): Promise<Response> {
   const { conversationId, message } = validation.data;
   const userId = session.user.id;
   const actor = userActor(userId);
+
+  const modelId = getSelectedModelId(cookieStore);
+  const gatewayModelId = getGatewayId(modelId);
 
   let dbMessages: Message[] = [];
 
@@ -113,7 +112,7 @@ export async function POST(req: Request): Promise<Response> {
   const stream = createUIMessageStream({
     execute: ({ writer }) => {
       const result = streamText({
-        model: openai("gpt-4o-mini"),
+        model: gateway(gatewayModelId),
         system: "You are a helpful AI tutor for microlearning.",
         messages: convertToModelMessages(allMessages),
       });

@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 
 import { userActor } from "@microlearn/core-types";
@@ -5,6 +6,7 @@ import { loadConversation } from "@microlearn/conversation";
 import { db } from "@microlearn/db/client";
 import { NotFoundError } from "@microlearn/errors";
 
+import { getSelectedModelId } from "../../_lib/model";
 import { getSession } from "~/auth/server";
 import { Chat } from "~/app/_components/chat";
 
@@ -13,13 +15,14 @@ interface ChatPageProps {
 }
 
 export default async function ChatPage({ params }: ChatPageProps) {
-  const session = await getSession();
+  const [session, cookieStore] = await Promise.all([getSession(), cookies()]);
 
   if (!session) {
     redirect("/");
   }
 
   const { id } = await params;
+  const selectedModelId = getSelectedModelId(cookieStore);
 
   let conversation;
   let messages;
@@ -37,6 +40,12 @@ export default async function ChatPage({ params }: ChatPageProps) {
     throw error;
   }
 
-  return <Chat conversationId={conversation.id} initialMessages={messages} />;
+  return (
+    <Chat
+      conversationId={conversation.id}
+      initialMessages={messages}
+      selectedModelId={selectedModelId}
+    />
+  );
 }
 

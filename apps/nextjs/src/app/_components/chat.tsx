@@ -5,26 +5,26 @@ import { useChat } from "@ai-sdk/react";
 import type { UIMessage } from "ai";
 import { DefaultChatTransport } from "ai";
 
+import type { ModelId } from "@microlearn/ai";
 import type { Message } from "@microlearn/conversation";
 import { SidebarTrigger } from "@microlearn/ui";
 
+import { convertDbMessagesToUIMessages } from "~/app/(chat)/_lib/messages";
+import { ModelSelector } from "~/app/(chat)/_components/model-selector";
 import { ChatInput } from "./chat-input";
 import { Messages } from "./messages";
 
 interface ChatProps {
   conversationId: string;
   initialMessages: Message[];
+  selectedModelId: ModelId;
 }
 
-function convertDbMessagesToUIMessages(messages: Message[]): UIMessage[] {
-  return messages.map((msg) => ({
-    id: msg.id,
-    role: msg.role,
-    parts: [{ type: "text" as const, text: msg.content }],
-  }));
-}
-
-export function Chat({ conversationId, initialMessages }: ChatProps) {
+export function Chat({
+  conversationId,
+  initialMessages,
+  selectedModelId,
+}: ChatProps) {
   const hasUpdatedUrl = useRef(false);
 
   const { messages, sendMessage, status } = useChat<UIMessage>({
@@ -63,6 +63,7 @@ export function Chat({ conversationId, initialMessages }: ChatProps) {
     <div className="flex h-dvh min-w-0 flex-col bg-background">
       <header className="sticky top-0 flex items-center gap-2 bg-background px-2 py-1.5">
         <SidebarTrigger className="cursor-pointer" />
+        <ModelSelector selectedModelId={selectedModelId} />
       </header>
       <div className="flex-1 overflow-y-auto">
         <Messages messages={messages} status={status} />

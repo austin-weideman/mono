@@ -22,8 +22,12 @@ export const env = createEnv({
     AUTH_GOOGLE_SECRET: z.string().min(1).optional(),
     AUTH_BASE_URL: z.url().optional(),
 
-    // AI
-    OPENAI_API_KEY: z.string().min(1),
+    // AI Gateway (primary - access all providers with one key)
+    AI_GATEWAY_API_KEY: z.string().min(1),
+
+    // Direct provider keys (optional - for fallback or specific use cases)
+    OPENAI_API_KEY: z.string().min(1).optional(),
+    ANTHROPIC_API_KEY: z.string().min(1).optional(),
 
     // Environment
     NODE_ENV: z
