@@ -10,6 +10,11 @@ import { cookies, headers } from "next/headers";
 import { z } from "zod";
 
 import { getGatewayId } from "@microlearn/ai";
+import {
+  convertDbMessagesToUIMessages,
+  extractTextFromUIMessage,
+  generateTitleFromText,
+} from "@microlearn/chat-utils";
 import { userActor } from "@microlearn/core-types";
 import type { Message } from "@microlearn/conversation";
 import {
@@ -20,7 +25,6 @@ import {
 import { db } from "@microlearn/db/client";
 import { NotFoundError } from "@microlearn/errors";
 
-import { convertDbMessagesToUIMessages } from "~/app/(chat)/_lib/messages";
 import { getSelectedModelId } from "~/app/(chat)/_lib/model";
 import { auth } from "~/auth/server";
 import { validateJson } from "~/lib/api-validation";
@@ -31,25 +35,6 @@ const chatRequestSchema = z.object({
   conversationId: z.string().uuid(),
   message: z.custom<UIMessage>(),
 });
-
-interface TextPart {
-  type: "text";
-  text: string;
-}
-
-function isTextPart(part: { type: string }): part is TextPart {
-  return part.type === "text";
-}
-
-function extractTextFromUIMessage(message: UIMessage): string {
-  return message.parts.filter(isTextPart).map((part) => part.text).join("");
-}
-
-function generateTitle(text: string): string {
-  const words = text.trim().split(/\s+/);
-  const firstTenWords = words.slice(0, 10).join(" ");
-  return firstTenWords || "New Conversation";
-}
 
 export async function POST(req: Request): Promise<Response> {
   const [session, cookieStore] = await Promise.all([
@@ -89,7 +74,7 @@ export async function POST(req: Request): Promise<Response> {
     // If conversation doesn't exist, create one
     if (error instanceof NotFoundError) {
       const messageText = extractTextFromUIMessage(message);
-      const title = generateTitle(messageText);
+      const title = generateTitleFromText(messageText);
       await startConversation(db, actor, {
         id: conversationId,
         userId,
@@ -110,11 +95,11 @@ export async function POST(req: Request): Promise<Response> {
   const allMessages = [...uiMessagesFromDb, message];
 
   const stream = createUIMessageStream({
-    execute: ({ writer }) => {
+    execute: async ({ writer }) => {
       const result = streamText({
         model: gateway(gatewayModelId),
         system: "You are a helpful AI assistant.",
-        messages: convertToModelMessages(allMessages),
+        messages: await convertToModelMessages(allMessages),
       });
 
       void result.consumeStream();

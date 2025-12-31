@@ -6,10 +6,9 @@ import type { UIMessage } from "ai";
 import { DefaultChatTransport } from "ai";
 
 import type { ModelId } from "@microlearn/ai";
+import { convertDbMessagesToUIMessages } from "@microlearn/chat-utils";
 import type { Message } from "@microlearn/conversation";
 import { SidebarTrigger } from "@microlearn/ui";
-
-import { convertDbMessagesToUIMessages } from "~/app/(chat)/_lib/messages";
 import { ModelSelector } from "~/app/(chat)/_components/model-selector";
 import { ChatInput } from "./chat-input";
 import { Messages } from "./messages";

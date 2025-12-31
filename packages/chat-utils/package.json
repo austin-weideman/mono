@@ -1,0 +1,38 @@
+{
+  "name": "@microlearn/chat-utils",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "dev": "tsc",
+    "format": "prettier --check . --ignore-path ../../.gitignore",
+    "lint": "eslint --flag unstable_native_nodejs_ts_config",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+  },
+  "dependencies": {
+    "@microlearn/conversation": "workspace:*"
+  },
+  "devDependencies": {
+    "@microlearn/eslint-config": "workspace:*",
+    "@microlearn/prettier-config": "workspace:*",
+    "@microlearn/tsconfig": "workspace:*",
+    "ai": "^6.0.5",
+    "eslint": "catalog:",
+    "prettier": "catalog:",
+    "typescript": "catalog:"
+  },
+  "peerDependencies": {
+    "ai": ">=6.0.0"
+  },
+  "prettier": "@microlearn/prettier-config"
+}
+
