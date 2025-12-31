@@ -120,6 +120,12 @@ export async function POST(req: Request): Promise<Response> {
     },
   });
 
-  return createUIMessageStreamResponse({ stream });
+  return createUIMessageStreamResponse({
+    stream,
+    headers: {
+      "Content-Type": "application/octet-stream",
+      "Content-Encoding": "none",
+    },
+  });
 }
 

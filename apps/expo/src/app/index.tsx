@@ -1,45 +1,25 @@
-import { Pressable, Text, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Stack } from "expo-router";
+import { useMemo } from "react";
+import { StyleSheet, View } from "react-native";
+import { v4 as uuidv4 } from "uuid";
 
-import { authClient } from "~/utils/auth";
+import { useTheme } from "~/lib";
+import { Chat } from "~/components/chat/Chat";
+import { ChatHeader } from "~/components/chat/ChatHeader";
 
-function MobileAuth() {
-  const { data: session } = authClient.useSession();
+export default function NewChatScreen() {
+  const { colors } = useTheme();
+  const conversationId = useMemo(() => uuidv4(), []);
 
   return (
-    <>
-      <Text className="text-foreground pb-2 text-center text-xl font-semibold">
-        {session?.user.name ? `Hello, ${session.user.name}` : "Not logged in"}
-      </Text>
-      <Pressable
-        onPress={() =>
-          session
-            ? authClient.signOut()
-            : authClient.signIn.social({
-                provider: "google",
-                callbackURL: "/",
-              })
-        }
-        className="bg-primary flex items-center rounded-sm p-2"
-      >
-        <Text>{session ? "Sign Out" : "Sign In With Google"}</Text>
-      </Pressable>
-    </>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
+      <Chat conversationId={conversationId} initialMessages={[]} />
+      <ChatHeader />
+    </View>
   );
 }
 
-export default function Index() {
-  return (
-    <SafeAreaView className="bg-background">
-      <Stack.Screen options={{ title: "MicroLearn" }} />
-      <View className="bg-background h-full w-full p-4">
-        <Text className="text-foreground pb-2 text-center text-5xl font-bold">
-          Micro<Text className="text-primary">Learn</Text>
-        </Text>
-
-        <MobileAuth />
-      </View>
-    </SafeAreaView>
-  );
-}
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
