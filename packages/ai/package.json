@@ -17,6 +17,12 @@
     "lint": "eslint --flag unstable_native_nodejs_ts_config",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
+  "dependencies": {
+    "@ai-sdk/gateway": "^3.0.4",
+    "@ai-sdk/mcp": "^1.0.5",
+    "ai": "^6.0.5",
+    "zod": "catalog:"
+  },
   "devDependencies": {
     "@microlearn/eslint-config": "workspace:*",
     "@microlearn/prettier-config": "workspace:*",

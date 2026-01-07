@@ -1,15 +1,9 @@
-import { gateway } from "@ai-sdk/gateway";
-import {
-  convertToModelMessages,
-  createUIMessageStream,
-  createUIMessageStreamResponse,
-  streamText,
-} from "ai";
+import { createAgentUIStreamResponse } from "ai";
 import type { UIMessage } from "ai";
 import { cookies, headers } from "next/headers";
 import { z } from "zod";
 
-import { getGatewayId } from "@microlearn/ai";
+import { createAssistantAgent, getGatewayId } from "@microlearn/ai";
 import {
   convertDbMessagesToUIMessages,
   extractTextFromUIMessage,
@@ -29,7 +23,7 @@ import { getSelectedModelId } from "~/app/(chat)/_lib/model";
 import { auth } from "~/auth/server";
 import { validateJson } from "~/lib/api-validation";
 
-export const maxDuration = 30;
+export const maxDuration = 300;
 
 const chatRequestSchema = z.object({
   conversationId: z.string().uuid(),
@@ -43,10 +37,7 @@ export async function POST(req: Request): Promise<Response> {
   ]);
 
   if (!session?.user) {
-    return Response.json(
-      { error: "Authentication required" },
-      { status: 401 },
-    );
+    return Response.json({ error: "Authentication required" }, { status: 401 });
   }
 
   const validation = await validateJson(req, chatRequestSchema);
@@ -64,22 +55,14 @@ export async function POST(req: Request): Promise<Response> {
 
   let dbMessages: Message[] = [];
 
-  // Try to load existing conversation
   try {
-    const { messages } = await loadConversation(db, actor, {
-      conversationId,
-    });
+    const { messages } = await loadConversation(db, actor, { conversationId });
     dbMessages = messages;
   } catch (error) {
-    // If conversation doesn't exist, create one
     if (error instanceof NotFoundError) {
       const messageText = extractTextFromUIMessage(message);
       const title = generateTitleFromText(messageText);
-      await startConversation(db, actor, {
-        id: conversationId,
-        userId,
-        title,
-      });
+      await startConversation(db, actor, { id: conversationId, userId, title });
     } else {
       throw error;
     }
@@ -94,17 +77,11 @@ export async function POST(req: Request): Promise<Response> {
   const uiMessagesFromDb = convertDbMessagesToUIMessages(dbMessages);
   const allMessages = [...uiMessagesFromDb, message];
 
-  const stream = createUIMessageStream({
-    execute: async ({ writer }) => {
-      const result = streamText({
-        model: gateway(gatewayModelId),
-        system: "You are a helpful AI assistant.",
-        messages: await convertToModelMessages(allMessages),
-      });
+  const { agent, close } = await createAssistantAgent({ gatewayModelId });
 
-      void result.consumeStream();
-      writer.merge(result.toUIMessageStream());
-    },
+  return createAgentUIStreamResponse({
+    agent,
+    uiMessages: allMessages,
     onFinish: async ({ messages: updatedMessages }) => {
       const lastMessage = updatedMessages[updatedMessages.length - 1];
 
@@ -117,14 +94,8 @@ export async function POST(req: Request): Promise<Response> {
           content,
         });
       }
-    },
-  });
 
-  return createUIMessageStreamResponse({
-    stream,
-    headers: {
-      "Content-Type": "application/octet-stream",
-      "Content-Encoding": "none",
+      await close();
     },
   });
 }
