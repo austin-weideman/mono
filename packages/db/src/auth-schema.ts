@@ -1,4 +1,5 @@
 import { pgTable } from "drizzle-orm/pg-core";
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
 export const user = pgTable("user", (t) => ({
   id: t.text().primaryKey(),
@@ -9,6 +10,11 @@ export const user = pgTable("user", (t) => ({
   createdAt: t.timestamp().notNull(),
   updatedAt: t.timestamp().notNull(),
 }));
+
+export const selectUserSchema = createSelectSchema(user);
+export const insertUserSchema = createInsertSchema(user);
+export type User = typeof user.$inferSelect;
+export type NewUser = typeof user.$inferInsert;
 
 export const session = pgTable("session", (t) => ({
   id: t.text().primaryKey(),

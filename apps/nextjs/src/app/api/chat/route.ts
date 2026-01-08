@@ -3,7 +3,8 @@ import type { UIMessage } from "ai";
 import { cookies, headers } from "next/headers";
 import { z } from "zod";
 
-import { createAssistantAgent, getGatewayId } from "@microlearn/ai";
+import { getGatewayId } from "@microlearn/ai";
+import { createAssistantAgent } from "@microlearn/agent";
 import {
   convertDbMessagesToUIMessages,
   extractTextFromUIMessage,
@@ -77,7 +78,10 @@ export async function POST(req: Request): Promise<Response> {
   const uiMessagesFromDb = convertDbMessagesToUIMessages(dbMessages);
   const allMessages = [...uiMessagesFromDb, message];
 
-  const { agent, close } = await createAssistantAgent({ gatewayModelId });
+  const { agent, close } = await createAssistantAgent({
+    gatewayModelId,
+    context: { db, actor },
+  });
 
   return createAgentUIStreamResponse({
     agent,
