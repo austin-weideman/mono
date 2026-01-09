@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useChat } from "@ai-sdk/react";
 import type { UIMessage } from "ai";
 import { DefaultChatTransport } from "ai";
@@ -25,6 +25,8 @@ export function Chat({
   selectedModelId,
 }: ChatProps) {
   const hasUpdatedUrl = useRef(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const prevMessageCount = useRef(0);
 
   const { messages, sendMessage, status } = useChat<UIMessage>({
     id: conversationId,
@@ -54,6 +56,21 @@ export function Chat({
     }
   }, [messages.length, conversationId]);
 
+  const scrollToBottom = useCallback(() => {
+    scrollContainerRef.current?.scrollTo({
+      top: scrollContainerRef.current.scrollHeight,
+      behavior: "smooth",
+    });
+  }, []);
+
+  useEffect(() => {
+    const lastMessage = messages[messages.length - 1];
+    if (messages.length > prevMessageCount.current && lastMessage?.role === "user") {
+      scrollToBottom();
+    }
+    prevMessageCount.current = messages.length;
+  }, [messages, scrollToBottom]);
+
   const handleSubmit = (text: string) => {
     void sendMessage({ text });
   };
@@ -64,7 +81,7 @@ export function Chat({
         <SidebarTrigger className="cursor-pointer" />
         <ModelSelector selectedModelId={selectedModelId} />
       </header>
-      <div className="flex-1 overflow-y-auto">
+      <div ref={scrollContainerRef} className="flex-1 overflow-y-auto">
         <Messages messages={messages} status={status} />
       </div>
       <div className="mx-auto flex w-full max-w-4xl gap-2 bg-background px-2 pb-3 md:px-4 md:pb-4">
