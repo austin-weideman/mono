@@ -1,5 +1,6 @@
 import { Alert, Pressable, StyleSheet, Text } from "react-native";
 import { router } from "expo-router";
+import * as Haptics from "expo-haptics";
 
 import type { Conversation } from "@microlearn/conversation";
 
@@ -29,6 +30,7 @@ export function ConversationItem({
   };
 
   const handleLongPress = () => {
+    void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     Alert.alert(
       "Delete Conversation",
       "Are you sure? This action cannot be undone.",

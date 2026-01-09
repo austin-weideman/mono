@@ -6,6 +6,7 @@ import type { UIMessage } from "ai";
 import { DefaultChatTransport } from "ai";
 import { fetch as expoFetch } from "expo/fetch";
 import { useQueryClient } from "@tanstack/react-query";
+import * as Haptics from "expo-haptics";
 
 import type { Message as DbMessage } from "@microlearn/conversation";
 import { convertDbMessagesToUIMessages } from "@microlearn/chat-utils";
@@ -68,6 +69,26 @@ export function Chat({ conversationId, initialMessages, isNew }: ChatProps) {
       });
     }
   }, [isNew, messages.length, queryClient]);
+
+  const prevStatus = useRef(status);
+  useEffect(() => {
+    if (prevStatus.current !== "streaming" && status === "streaming") {
+      const hapticCount = 15;
+      const interval = 60;
+      let count = 0;
+
+      const hapticInterval = setInterval(() => {
+        void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+        count++;
+        if (count >= hapticCount) {
+          clearInterval(hapticInterval);
+        }
+      }, interval);
+
+      return () => clearInterval(hapticInterval);
+    }
+    prevStatus.current = status;
+  }, [status]);
 
   const handleSubmit = (text: string) => {
     void sendMessage({ text });
