@@ -4,12 +4,15 @@ import { useCallback, useEffect, useRef } from "react";
 import { useChat } from "@ai-sdk/react";
 import type { UIMessage } from "ai";
 import { DefaultChatTransport } from "ai";
+import { useQueryClient } from "@tanstack/react-query";
 
 import type { ModelId } from "@microlearn/ai";
 import { convertDbMessagesToUIMessages } from "@microlearn/chat-utils";
 import type { Message } from "@microlearn/conversation";
 import { SidebarTrigger } from "@microlearn/ui";
+
 import { ModelSelector } from "~/app/(chat)/_components/model-selector";
+import { useTRPC } from "~/trpc/react";
 import { ChatInput } from "./chat-input";
 import { Messages } from "./messages";
 
@@ -17,14 +20,20 @@ interface ChatProps {
   conversationId: string;
   initialMessages: Message[];
   selectedModelId: ModelId;
+  isNew?: boolean;
 }
 
 export function Chat({
   conversationId,
   initialMessages,
   selectedModelId,
+  isNew,
 }: ChatProps) {
+  const trpc = useTRPC();
+  const queryClient = useQueryClient();
+
   const hasUpdatedUrl = useRef(false);
+  const hasInvalidated = useRef(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const prevMessageCount = useRef(0);
 
@@ -55,6 +64,16 @@ export function Chat({
       window.history.pushState({}, "", `/chat/${conversationId}`);
     }
   }, [messages.length, conversationId]);
+
+  // Invalidate sidebar conversation list when new conversation starts
+  useEffect(() => {
+    if (isNew && messages.length > 0 && !hasInvalidated.current) {
+      hasInvalidated.current = true;
+      void queryClient.invalidateQueries({
+        queryKey: trpc.conversation.list.pathKey(),
+      });
+    }
+  }, [isNew, messages.length, queryClient, trpc.conversation.list]);
 
   const scrollToBottom = useCallback(() => {
     scrollContainerRef.current?.scrollTo({

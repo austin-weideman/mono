@@ -14,6 +14,7 @@ export default async function NewChatPage() {
       conversationId={conversationId}
       initialMessages={[]}
       selectedModelId={selectedModelId}
+      isNew
     />
   );
 }
