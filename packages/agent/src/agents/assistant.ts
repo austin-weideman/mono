@@ -1,11 +1,10 @@
 import { gateway } from "@ai-sdk/gateway";
 import { ToolLoopAgent, stepCountIs } from "ai";
-import type { InferAgentUIMessage, ToolSet } from "ai";
+import type { InferAgentUIMessage } from "ai";
 
-import { createSingleMCPClient, mcpServers } from "@microlearn/ai";
-
-import type { ToolContext } from "../types";
-import { createInternalTools, generateToolInstructions } from "../tools";
+import type { AgentToolConfig, ToolContext, ToolMetadata } from "../types";
+import { ExternalToolSet, InternalTool } from "../types";
+import { createTools, generateToolInstructions } from "../tools";
 
 export interface CreateAssistantAgentOptions {
   gatewayModelId: string;
@@ -17,18 +16,21 @@ export interface AssistantAgentResult {
   close: () => Promise<void>;
 }
 
-function buildInstructions(): string {
-  const toolInstructions = generateToolInstructions();
+const ASSISTANT_TOOL_CONFIG: AgentToolConfig = {
+  internal: [InternalTool.GET_MY_USER_INFO],
+  external: [ExternalToolSet.EXA],
+};
 
-  const baseInstructions = `You are a helpful AI assistant.
+function buildInstructions(toolMetadata: ToolMetadata[]): string {
+  const toolInstructions = generateToolInstructions(toolMetadata);
+
+  return `You are a helpful AI assistant.
 
 ${toolInstructions}
 
 You also have access to web search capabilities for finding current information.
 
 Be concise and helpful. Cite sources when using search results.`;
-
-  return baseInstructions;
 }
 
 export async function createAssistantAgent(
@@ -36,28 +38,21 @@ export async function createAssistantAgent(
 ): Promise<AssistantAgentResult> {
   const { gatewayModelId, context } = options;
 
-  const internalTools = createInternalTools(context);
-
-  const exaClient = await createSingleMCPClient(mcpServers.exa);
-  const exaTools = (await exaClient.tools()) as ToolSet;
-
-  const allTools: ToolSet = {
-    ...internalTools,
-    ...exaTools,
-  };
+  const { tools, metadata, close } = await createTools(
+    context,
+    ASSISTANT_TOOL_CONFIG,
+  );
 
   const agent = new ToolLoopAgent({
     model: gateway(gatewayModelId),
-    instructions: buildInstructions(),
-    tools: allTools,
+    instructions: buildInstructions(metadata),
+    tools,
     stopWhen: stepCountIs(10),
   });
 
   return {
     agent,
-    close: async () => {
-      await exaClient.close();
-    },
+    close,
   };
 }
 

@@ -1,4 +1,4 @@
-import { createAgentUIStreamResponse } from "ai";
+import { consumeStream, createAgentUIStreamResponse } from "ai";
 import type { UIMessage } from "ai";
 import { cookies, headers } from "next/headers";
 import { z } from "zod";
@@ -86,17 +86,20 @@ export async function POST(req: Request): Promise<Response> {
   return createAgentUIStreamResponse({
     agent,
     uiMessages: allMessages,
-    onFinish: async ({ messages: updatedMessages }) => {
-      const lastMessage = updatedMessages[updatedMessages.length - 1];
+    consumeSseStream: consumeStream,
+    onFinish: async ({ messages: updatedMessages, isAborted }) => {
+      if (!isAborted) {
+        const lastMessage = updatedMessages[updatedMessages.length - 1];
 
-      if (lastMessage?.role === "assistant") {
-        const content = extractTextFromUIMessage(lastMessage);
+        if (lastMessage?.role === "assistant") {
+          const content = extractTextFromUIMessage(lastMessage);
 
-        await sendMessage(db, actor, {
-          conversationId,
-          role: "assistant",
-          content,
-        });
+          await sendMessage(db, actor, {
+            conversationId,
+            role: "assistant",
+            content,
+          });
+        }
       }
 
       await close();
