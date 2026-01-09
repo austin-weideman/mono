@@ -44,6 +44,8 @@ export const sizing = {
 export const layout = {
   /** Standard screen horizontal padding */
   screenPadding: spacing.lg,
+  /** Clearance below floating header button (touchTarget + padding) */
+  headerClearance: sizing.touchTarget + spacing.lg,
 } as const;
 
 export const fontSize = {

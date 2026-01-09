@@ -6,7 +6,7 @@ import type { UIMessage } from "ai";
 import type { UseChatHelpers } from "@ai-sdk/react";
 import { Sparkles } from "lucide-react-native";
 
-import { useTheme, spacing, sizing } from "~/lib";
+import { useTheme, spacing, sizing, layout } from "~/lib";
 import { Message } from "./Message";
 
 type ChatStatus = UseChatHelpers<UIMessage>["status"];
@@ -41,8 +41,6 @@ function EmptyState() {
   );
 }
 
-const HEADER_CLEARANCE = sizing.touchTarget + spacing.lg;
-
 export function Messages({ messages, status }: MessagesProps) {
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
@@ -67,12 +65,11 @@ export function Messages({ messages, status }: MessagesProps) {
 
   const keyExtractor = useCallback((item: UIMessage) => item.id, []);
 
-  // Header clearance only when messages exist; empty state centers naturally
   const topPadding = hasMessages
-    ? insets.top + HEADER_CLEARANCE
+    ? insets.top + layout.headerClearance
     : insets.top;
 
-  const fadeHeight = insets.top + HEADER_CLEARANCE;
+  const fadeHeight = insets.top + layout.headerClearance;
 
   return (
     <View style={styles.container}>

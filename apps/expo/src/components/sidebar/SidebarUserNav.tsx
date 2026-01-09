@@ -1,4 +1,5 @@
 import { Alert, Image, Pressable, StyleSheet, Text, View } from "react-native";
+import * as Haptics from "expo-haptics";
 
 import { getInitials } from "@microlearn/chat-utils";
 
@@ -16,8 +17,9 @@ export function SidebarUserNav() {
   const user = session.user;
   const initials = getInitials(user.name);
 
-  const handlePress = () => {
-    Alert.alert(user.name, undefined, [
+  const handleLongPress = () => {
+    void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    Alert.alert(user.email, undefined, [
       { text: "Cancel", style: "cancel" },
       {
         text: "Sign Out",
@@ -30,7 +32,7 @@ export function SidebarUserNav() {
   return (
     <View style={[styles.container, { borderTopColor: colors.border }]}>
       <Pressable
-        onPress={handlePress}
+        onLongPress={handleLongPress}
         style={({ pressed }) => [
           styles.userInfo,
           { opacity: pressed ? 0.7 : 1 },

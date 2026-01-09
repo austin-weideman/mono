@@ -1,4 +1,4 @@
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
 
@@ -6,6 +6,10 @@ import { useTheme } from "~/lib";
 import { trpc } from "~/utils/api";
 import { Chat } from "~/components/chat/Chat";
 import { ChatHeader } from "~/components/chat/ChatHeader";
+import { ChatInput } from "~/components/chat/ChatInput";
+import { ChatSkeleton } from "~/components/chat/ChatSkeleton";
+
+const noop = () => undefined;
 
 export default function ChatScreen() {
   const { colors } = useTheme();
@@ -27,15 +31,17 @@ export default function ChatScreen() {
 
   if (isLoading) {
     return (
-      <View style={[styles.centered, { backgroundColor: colors.background }]}>
-        <ActivityIndicator size="large" color={colors.primary} />
+      <View style={[styles.container, { backgroundColor: colors.background }]}>
+        <ChatSkeleton />
+        <ChatInput onSubmit={noop} disabled />
+        <ChatHeader />
       </View>
     );
   }
 
   if (error || !data) {
     return (
-      <View style={[styles.centered, { backgroundColor: colors.background }]}>
+      <View style={[styles.errorContainer, { backgroundColor: colors.background }]}>
         <Text style={[styles.errorText, { color: colors.textMuted }]}>
           Conversation not found
         </Text>
@@ -55,7 +61,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  centered: {
+  errorContainer: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
