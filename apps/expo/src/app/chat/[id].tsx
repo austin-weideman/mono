@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
 
-import { useTheme } from "~/lib";
+import { useTheme, fontSize } from "~/lib";
 import { trpc } from "~/utils/api";
 import { Chat } from "~/components/chat/Chat";
 import { ChatHeader } from "~/components/chat/ChatHeader";
@@ -67,6 +67,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   errorText: {
-    fontSize: 16,
+    fontSize: fontSize.md,
   },
 });

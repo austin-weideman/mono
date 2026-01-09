@@ -7,7 +7,7 @@ import type { UIMessage } from "ai";
 import type { UseChatHelpers } from "@ai-sdk/react";
 import { ArrowDown, Sparkles } from "lucide-react-native";
 
-import { useTheme, spacing, sizing, layout } from "~/lib";
+import { useTheme, spacing, sizing, layout, fontSize } from "~/lib";
 import { Message } from "./Message";
 
 type ChatStatus = UseChatHelpers<UIMessage>["status"];
@@ -193,11 +193,11 @@ const styles = StyleSheet.create({
     gap: spacing.xs,
   },
   emptyTitle: {
-    fontSize: 24,
+    fontSize: fontSize.xxl,
     fontWeight: "700",
   },
   emptySubtitle: {
-    fontSize: 16,
+    fontSize: fontSize.md,
     textAlign: "center",
   },
   list: {

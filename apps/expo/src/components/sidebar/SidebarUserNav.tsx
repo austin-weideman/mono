@@ -3,7 +3,7 @@ import * as Haptics from "expo-haptics";
 
 import { getInitials } from "@microlearn/chat-utils";
 
-import { useTheme, fontSize } from "~/lib";
+import { useTheme, fontSize, spacing, sizing } from "~/lib";
 import { authClient } from "~/utils/auth";
 
 export function SidebarUserNav() {
@@ -61,27 +61,27 @@ export function SidebarUserNav() {
 const styles = StyleSheet.create({
   container: {
     borderTopWidth: 1,
-    paddingTop: 16,
+    paddingTop: spacing.lg,
   },
   userInfo: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 12,
+    gap: spacing.md,
   },
   avatar: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    width: sizing.avatarSm + 4,
+    height: sizing.avatarSm + 4,
+    borderRadius: (sizing.avatarSm + 4) / 2,
   },
   avatarFallback: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    width: sizing.avatarSm + 4,
+    height: sizing.avatarSm + 4,
+    borderRadius: (sizing.avatarSm + 4) / 2,
     alignItems: "center",
     justifyContent: "center",
   },
   initials: {
-    fontSize: 12,
+    fontSize: fontSize.xs - 1,
     fontWeight: "600",
   },
   userName: {

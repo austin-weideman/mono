@@ -37,10 +37,7 @@ export function Chat({ conversationId, initialMessages, isNew }: ChatProps) {
       api: `${getBaseUrl()}/api/chat`,
       headers: (): Record<string, string> => {
         const cookies = authClient.getCookie();
-        if (cookies) {
-          return { Cookie: cookies };
-        }
-        return {};
+        return cookies ? { Cookie: cookies } : {};
       },
       prepareSendMessagesRequest: ({ messages: allMessages }) => ({
         body: {

@@ -2,7 +2,7 @@ import { useEffect, useMemo } from "react";
 import { Animated, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { useTheme, spacing, layout } from "~/lib";
+import { useTheme, spacing, sizing, layout } from "~/lib";
 
 function SkeletonBar({ width, delay }: { width: `${number}%`; delay: number }) {
   const { colors } = useTheme();
@@ -100,25 +100,25 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
   avatar: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    marginRight: 8,
+    width: sizing.avatarSm,
+    height: sizing.avatarSm,
+    borderRadius: sizing.avatarSm / 2,
+    marginRight: spacing.sm,
   },
   bubble: {
     maxWidth: "85%",
-    gap: 8,
+    gap: spacing.sm,
   },
   bubbleUser: {
     minWidth: 180,
-    borderRadius: 16,
-    borderBottomRightRadius: 4,
+    borderRadius: sizing.radiusLg,
+    borderBottomRightRadius: spacing.xs,
     paddingHorizontal: 14,
-    paddingVertical: 12,
+    paddingVertical: spacing.md,
   },
   bubbleAssistant: {
     flex: 1,
-    paddingVertical: 4,
+    paddingVertical: spacing.xs,
   },
   bar: {
     height: 14,
