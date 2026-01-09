@@ -1,10 +1,11 @@
-import { useCallback, useRef } from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { useCallback, useEffect, useRef, useState } from "react";
+import type { NativeScrollEvent, NativeSyntheticEvent } from "react-native";
+import { FlatList, Keyboard, Pressable, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 import type { UIMessage } from "ai";
 import type { UseChatHelpers } from "@ai-sdk/react";
-import { Sparkles } from "lucide-react-native";
+import { ArrowDown, Sparkles } from "lucide-react-native";
 
 import { useTheme, spacing, sizing, layout } from "~/lib";
 import { Message } from "./Message";
@@ -45,10 +46,40 @@ export function Messages({ messages, status }: MessagesProps) {
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   const flatListRef = useRef<FlatList<UIMessage>>(null);
+  const [isAtBottom, setIsAtBottom] = useState(true);
   const hasMessages = messages.length > 0;
 
   const scrollToEnd = useCallback(() => {
     flatListRef.current?.scrollToEnd({ animated: true });
+  }, []);
+
+  const prevMessageCount = useRef(messages.length);
+  useEffect(() => {
+    const lastMessage = messages[messages.length - 1];
+    if (messages.length > prevMessageCount.current && lastMessage?.role === "user") {
+      scrollToEnd();
+    }
+    prevMessageCount.current = messages.length;
+  }, [messages, scrollToEnd]);
+
+  const isAtBottomRef = useRef(isAtBottom);
+  useEffect(() => {
+    isAtBottomRef.current = isAtBottom;
+  }, [isAtBottom]);
+
+  useEffect(() => {
+    const subscription = Keyboard.addListener("keyboardDidShow", () => {
+      if (isAtBottomRef.current) {
+        scrollToEnd();
+      }
+    });
+    return () => subscription.remove();
+  }, [scrollToEnd]);
+
+  const handleScroll = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
+    const distanceFromBottom = contentSize.height - layoutMeasurement.height - contentOffset.y;
+    setIsAtBottom(distanceFromBottom < 50);
   }, []);
 
   const renderItem = useCallback(
@@ -87,8 +118,8 @@ export function Messages({ messages, status }: MessagesProps) {
         showsVerticalScrollIndicator={false}
         keyboardDismissMode="interactive"
         keyboardShouldPersistTaps="handled"
-        onContentSizeChange={scrollToEnd}
-        onLayout={scrollToEnd}
+        onScroll={handleScroll}
+        scrollEventThrottle={100}
       />
       {hasMessages && (
         <LinearGradient
@@ -96,6 +127,21 @@ export function Messages({ messages, status }: MessagesProps) {
           style={[styles.fadeGradient, { height: fadeHeight }]}
           pointerEvents="none"
         />
+      )}
+      {hasMessages && !isAtBottom && (
+        <Pressable
+          onPress={scrollToEnd}
+          style={({ pressed }) => [
+            styles.scrollButton,
+            {
+              backgroundColor: colors.surfaceSecondary,
+              borderColor: colors.border,
+              opacity: pressed ? 0.8 : 1,
+            },
+          ]}
+        >
+          <ArrowDown size={20} color={colors.textPrimary} />
+        </Pressable>
       )}
     </View>
   );
@@ -110,6 +156,22 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
+  },
+  scrollButton: {
+    position: "absolute",
+    bottom: spacing.md,
+    alignSelf: "center",
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    borderWidth: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   emptyContainer: {
     flex: 1,

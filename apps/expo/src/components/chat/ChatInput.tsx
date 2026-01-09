@@ -54,7 +54,6 @@ export function ChatInput({ onSubmit, disabled }: ChatInputProps) {
             placeholder="Message..."
             placeholderTextColor={colors.textMuted}
             multiline
-            editable={!disabled}
             onSubmitEditing={handleSubmit}
             blurOnSubmit={false}
             style={[styles.input, { color: colors.textPrimary }]}
