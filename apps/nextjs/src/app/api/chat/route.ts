@@ -27,7 +27,7 @@ import { validateJson } from "~/lib/api-validation";
 export const maxDuration = 300;
 
 const chatRequestSchema = z.object({
-  conversationId: z.string().uuid(),
+  conversationId: z.uuid(),
   message: z.custom<UIMessage>(),
 });
 
