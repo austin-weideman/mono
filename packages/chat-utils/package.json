@@ -19,7 +19,8 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "@microlearn/conversation": "workspace:*"
+    "@microlearn/conversation": "workspace:*",
+    "date-fns": "^4.1.0"
   },
   "devDependencies": {
     "@microlearn/eslint-config": "workspace:*",

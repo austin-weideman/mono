@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 
+import { getInitials } from "@microlearn/chat-utils";
 import {
   cn,
   DropdownMenu,
@@ -26,15 +27,7 @@ interface SidebarUserNavProps {
 }
 
 function UserAvatar({ user }: { user: User }) {
-  const initials =
-    user.name
-      .trim()
-      .split(/\s+/)
-      .filter(Boolean)
-      .map((n) => n[0])
-      .join("")
-      .slice(0, 2)
-      .toUpperCase() || "?";
+  const initials = getInitials(user.name);
 
   if (user.image) {
     return (
