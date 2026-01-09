@@ -4,7 +4,7 @@ import type { UIMessage } from "ai";
 import Markdown from "react-native-markdown-display";
 import { Sparkles } from "lucide-react-native";
 
-import { useTheme } from "~/lib";
+import { useTheme, fontSize } from "~/lib";
 
 interface MessageProps {
   message: UIMessage;
@@ -31,8 +31,8 @@ export const Message = React.memo<MessageProps>(({ message, isLoading }) => {
       StyleSheet.create({
         body: {
           color: colors.textPrimary,
-          fontSize: 16,
-          lineHeight: 24,
+          fontSize: fontSize.lg,
+          lineHeight: 26,
         },
         code_inline: {
           backgroundColor: colors.surfaceMuted,
@@ -149,10 +149,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   userText: {
-    fontSize: 16,
-    lineHeight: 24,
+    fontSize: fontSize.lg,
+    lineHeight: 26,
   },
   loadingText: {
-    fontSize: 16,
+    fontSize: fontSize.lg,
   },
 });

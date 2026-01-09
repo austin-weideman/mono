@@ -1,8 +1,8 @@
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Alert, Image, Pressable, StyleSheet, Text, View } from "react-native";
 
 import { getInitials } from "@microlearn/chat-utils";
 
-import { useTheme } from "~/lib";
+import { useTheme, fontSize } from "~/lib";
 import { authClient } from "~/utils/auth";
 
 export function SidebarUserNav() {
@@ -16,9 +16,26 @@ export function SidebarUserNav() {
   const user = session.user;
   const initials = getInitials(user.name);
 
+  const handlePress = () => {
+    Alert.alert(user.name, undefined, [
+      { text: "Cancel", style: "cancel" },
+      {
+        text: "Sign Out",
+        style: "destructive",
+        onPress: () => void authClient.signOut(),
+      },
+    ]);
+  };
+
   return (
     <View style={[styles.container, { borderTopColor: colors.border }]}>
-      <View style={styles.userInfo}>
+      <Pressable
+        onPress={handlePress}
+        style={({ pressed }) => [
+          styles.userInfo,
+          { opacity: pressed ? 0.7 : 1 },
+        ]}
+      >
         {user.image ? (
           <Image source={{ uri: user.image }} style={styles.avatar} />
         ) : (
@@ -28,30 +45,11 @@ export function SidebarUserNav() {
             </Text>
           </View>
         )}
-        <View style={styles.textContainer}>
-          <Text
-            style={[styles.userName, { color: colors.textPrimary }]}
-            numberOfLines={1}
-          >
-            {user.name}
-          </Text>
-          <Text
-            style={[styles.userEmail, { color: colors.textMuted }]}
-            numberOfLines={1}
-          >
-            {user.email}
-          </Text>
-        </View>
-      </View>
-      <Pressable
-        onPress={() => authClient.signOut()}
-        style={({ pressed }) => [
-          styles.signOutButton,
-          { opacity: pressed ? 0.7 : 1 },
-        ]}
-      >
-        <Text style={[styles.signOutText, { color: colors.textMuted }]}>
-          Sign Out
+        <Text
+          style={[styles.userName, { color: colors.textPrimary }]}
+          numberOfLines={1}
+        >
+          {user.name}
         </Text>
       </Pressable>
     </View>
@@ -62,7 +60,6 @@ const styles = StyleSheet.create({
   container: {
     borderTopWidth: 1,
     paddingTop: 16,
-    gap: 12,
   },
   userInfo: {
     flexDirection: "row",
@@ -85,21 +82,9 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: "600",
   },
-  textContainer: {
-    flex: 1,
-    minWidth: 0,
-  },
   userName: {
-    fontSize: 14,
+    flex: 1,
+    fontSize: fontSize.lg,
     fontWeight: "500",
-  },
-  userEmail: {
-    fontSize: 12,
-  },
-  signOutButton: {
-    alignSelf: "flex-start",
-  },
-  signOutText: {
-    fontSize: 14,
   },
 });

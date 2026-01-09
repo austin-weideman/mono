@@ -46,7 +46,23 @@ export const layout = {
   screenPadding: spacing.lg,
 } as const;
 
+export const fontSize = {
+  /** 13px - caption, footnotes */
+  xs: 13,
+  /** 14px - secondary text, labels */
+  sm: 14,
+  /** 16px - base body text */
+  md: 16,
+  /** 17px - primary body text, inputs (iOS standard) */
+  lg: 17,
+  /** 20px - subheadings */
+  xl: 20,
+  /** 24px - headings */
+  xxl: 24,
+} as const;
+
 export type TSpacing = typeof spacing;
 export type TSizing = typeof sizing;
 export type TLayout = typeof layout;
+export type TFontSize = typeof fontSize;
 

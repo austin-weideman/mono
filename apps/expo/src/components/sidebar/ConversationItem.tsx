@@ -3,7 +3,7 @@ import { router } from "expo-router";
 
 import type { Conversation } from "@microlearn/conversation";
 
-import { useTheme } from "~/lib";
+import { useTheme, fontSize, spacing } from "~/lib";
 
 interface ConversationItemProps {
   conversation: Conversation;
@@ -70,11 +70,11 @@ export function ConversationItem({
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderRadius: 8,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.md,
+    borderRadius: spacing.sm,
   },
   title: {
-    fontSize: 14,
+    fontSize: fontSize.lg,
   },
 });

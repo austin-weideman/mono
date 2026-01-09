@@ -5,7 +5,7 @@ import { KeyboardGestureArea } from "react-native-keyboard-controller";
 import { Send } from "lucide-react-native";
 import * as Haptics from "expo-haptics";
 
-import { useTheme, spacing, sizing } from "~/lib";
+import { useTheme, spacing, sizing, fontSize } from "~/lib";
 
 interface ChatInputProps {
   onSubmit: (text: string) => void;
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.md - 2,
   },
   input: {
-    fontSize: 16,
+    fontSize: fontSize.lg,
     maxHeight: 128,
     minHeight: spacing.xl,
   },
