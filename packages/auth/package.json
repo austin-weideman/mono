@@ -5,8 +5,7 @@
   "exports": {
     ".": "./src/index.ts",
     "./middleware": "./src/middleware.ts",
-    "./client": "./src/client.ts",
-    "./env": "./env.ts"
+    "./client": "./src/client.ts"
   },
   "license": "MIT",
   "scripts": {
@@ -19,7 +18,6 @@
   "dependencies": {
     "@better-auth/expo": "catalog:",
     "@microlearn/db": "workspace:*",
-    "@t3-oss/env-core": "^0.13.8",
     "better-auth": "catalog:",
     "zod": "catalog:"
   },

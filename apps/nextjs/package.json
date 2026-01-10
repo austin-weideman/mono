@@ -24,6 +24,7 @@
     "@microlearn/conversation": "workspace:*",
     "@microlearn/core-types": "workspace:*",
     "@microlearn/db": "workspace:*",
+    "@microlearn/env": "workspace:*",
     "@microlearn/errors": "workspace:*",
     "@microlearn/ui": "workspace:*",
     "@microlearn/validators": "workspace:*",
@@ -40,6 +41,7 @@
     "next": "^16.0.0",
     "react": "catalog:react19",
     "react-dom": "catalog:react19",
+    "shiki": "^3.21.0",
     "streamdown": "^1.5.1",
     "superjson": "2.2.3",
     "zod": "catalog:"
