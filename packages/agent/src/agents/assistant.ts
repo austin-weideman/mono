@@ -6,6 +6,21 @@ import type { AgentToolConfig, ToolContext, ToolMetadata } from "../types";
 import { ExternalToolSet, InternalTool } from "../types";
 import { createTools, generateToolInstructions } from "../tools";
 
+const REASONING_PROVIDER_OPTIONS = {
+  anthropic: {
+    thinking: { type: "enabled" as const, budgetTokens: 16384 },
+  },
+  google: {
+    thinkingConfig: { includeThoughts: true },
+  },
+  openai: {
+    reasoningEffort: "medium" as const,
+    reasoningSummary: "auto" as const,
+  },
+  // Note: xAI reasoningEffort requires the Responses API (xai.responses()),
+  // which isn't available through the AI Gateway's chat completions endpoint.
+};
+
 export interface CreateAssistantAgentOptions {
   gatewayModelId: string;
   context: ToolContext;
@@ -48,6 +63,7 @@ export async function createAssistantAgent(
     instructions: buildInstructions(metadata),
     tools,
     stopWhen: stepCountIs(10),
+    providerOptions: REASONING_PROVIDER_OPTIONS,
   });
 
   return {

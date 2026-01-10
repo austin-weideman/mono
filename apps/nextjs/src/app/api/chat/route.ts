@@ -87,6 +87,7 @@ export async function POST(req: Request): Promise<Response> {
     agent,
     uiMessages: allMessages,
     consumeSseStream: consumeStream,
+    sendReasoning: true,
     onFinish: async ({ messages: updatedMessages, isAborted }) => {
       if (!isAborted) {
         const lastMessage = updatedMessages[updatedMessages.length - 1];

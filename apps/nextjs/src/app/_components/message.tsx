@@ -3,6 +3,7 @@ import type { UIMessage } from "ai";
 import { cn, Markdown, SparklesIcon } from "@microlearn/ui";
 
 import { MessageActions } from "./message-actions";
+import { Reasoning } from "./reasoning";
 import { ThinkingIndicator } from "./thinking-indicator";
 
 interface MessageProps {
@@ -36,6 +37,15 @@ export function Message({ message, isLoading }: MessageProps) {
           })}
         >
           {message.parts.map((part, idx) => {
+            if (part.type === "reasoning") {
+              return (
+                <Reasoning
+                  key={idx}
+                  text={part.text}
+                  isStreaming={isLoading && idx === message.parts.length - 1}
+                />
+              );
+            }
             if (part.type === "text") {
               return (
                 <div

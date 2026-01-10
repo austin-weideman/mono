@@ -3,6 +3,7 @@ export { cn } from "./utils";
 export * from "./alert-dialog";
 export * from "./auto-resize-textarea";
 export * from "./button";
+export * from "./collapsible";
 export * from "./dropdown-menu";
 export * from "./field";
 export * from "./icons";

@@ -3,14 +3,21 @@ import * as Clipboard from "expo-clipboard";
 import * as Haptics from "expo-haptics";
 import { Copy } from "lucide-react-native";
 
-import { useTheme } from "~/lib";
+import { useTheme, spacing } from "~/lib";
+
+const ICON_SIZE = 16;
+const ACTION_BUTTON_PADDING = 6;
+const ACTION_BUTTON_RADIUS = 6;
 
 interface MessageActionsProps {
   textContent: string;
   isLoading?: boolean;
 }
 
-export function MessageActions({ textContent, isLoading }: MessageActionsProps) {
+export function MessageActions({
+  textContent,
+  isLoading,
+}: MessageActionsProps) {
   const { colors } = useTheme();
 
   if (isLoading || !textContent) {
@@ -30,9 +37,9 @@ export function MessageActions({ textContent, isLoading }: MessageActionsProps) 
           styles.actionButton,
           { backgroundColor: pressed ? colors.surfaceMuted : "transparent" },
         ]}
-        hitSlop={8}
+        hitSlop={spacing.sm}
       >
-        <Copy size={16} color={colors.textMuted} />
+        <Copy size={ICON_SIZE} color={colors.textMuted} />
       </Pressable>
     </View>
   );
@@ -42,11 +49,11 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 4,
-    marginTop: 8,
+    gap: spacing.xs,
+    marginTop: spacing.sm,
   },
   actionButton: {
-    padding: 6,
-    borderRadius: 6,
+    padding: ACTION_BUTTON_PADDING,
+    borderRadius: ACTION_BUTTON_RADIUS,
   },
 });

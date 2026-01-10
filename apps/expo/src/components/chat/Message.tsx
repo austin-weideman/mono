@@ -5,6 +5,7 @@ import Markdown from "react-native-markdown-display";
 
 import { useTheme, fontSize } from "~/lib";
 import { MessageActions } from "./MessageActions";
+import { Reasoning } from "./Reasoning";
 
 interface MessageProps {
   message: UIMessage;
@@ -95,7 +96,27 @@ export const Message = React.memo<MessageProps>(({ message, isLoading }) => {
             {textContent}
           </Text>
         ) : (
-          <Markdown style={markdownStyles}>{textContent}</Markdown>
+          <>
+            {message.parts.map((part, idx) => {
+              if (part.type === "reasoning") {
+                return (
+                  <Reasoning
+                    key={idx}
+                    text={part.text}
+                    isStreaming={isLoading && idx === message.parts.length - 1}
+                  />
+                );
+              }
+              if (part.type === "text") {
+                return (
+                  <Markdown key={idx} style={markdownStyles}>
+                    {part.text}
+                  </Markdown>
+                );
+              }
+              return null;
+            })}
+          </>
         )}
 
         {isLoading && !isUser && textContent.length === 0 && (
