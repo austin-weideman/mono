@@ -2,9 +2,9 @@ import React, { useMemo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import type { UIMessage } from "ai";
 import Markdown from "react-native-markdown-display";
-import { Sparkles } from "lucide-react-native";
 
 import { useTheme, fontSize } from "~/lib";
+import { MessageActions } from "./MessageActions";
 
 interface MessageProps {
   message: UIMessage;
@@ -82,14 +82,6 @@ export const Message = React.memo<MessageProps>(({ message, isLoading }) => {
 
   return (
     <View style={[styles.row, isUser ? styles.rowUser : styles.rowAssistant]}>
-      {!isUser && (
-        <View
-          style={[styles.avatar, { backgroundColor: colors.surfaceMuted }]}
-        >
-          <Sparkles size={14} color={colors.textPrimary} />
-        </View>
-      )}
-
       <View
         style={[
           styles.bubble,
@@ -111,6 +103,10 @@ export const Message = React.memo<MessageProps>(({ message, isLoading }) => {
             ...
           </Text>
         )}
+
+        {!isUser && (
+          <MessageActions textContent={textContent} isLoading={isLoading} />
+        )}
       </View>
     </View>
   );
@@ -128,18 +124,9 @@ const styles = StyleSheet.create({
   rowAssistant: {
     justifyContent: "flex-start",
   },
-  avatar: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    alignItems: "center",
-    justifyContent: "center",
-    marginRight: 8,
-  },
-  bubble: {
-    maxWidth: "85%",
-  },
+  bubble: {},
   bubbleUser: {
+    maxWidth: "85%",
     borderRadius: 16,
     borderBottomRightRadius: 4,
     paddingHorizontal: 14,
