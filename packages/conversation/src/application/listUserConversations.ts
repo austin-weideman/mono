@@ -8,7 +8,7 @@ import type { ListUserConversationsInput } from "../types/ListUserConversationsI
 import type { PaginatedConversations } from "../types/PaginatedConversations";
 import { listConversationsForUser } from "../persistence/conversation.queries";
 
-const DEFAULT_PAGE_SIZE = 20;
+const DEFAULT_PAGE_SIZE = 50;
 
 export async function listUserConversations(
   db: DbOrTx,

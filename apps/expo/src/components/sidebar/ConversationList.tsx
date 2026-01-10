@@ -10,6 +10,8 @@ import { ConversationGroup } from "./ConversationGroup";
 import { ConversationListEmpty } from "./ConversationListEmpty";
 import { ConversationListSkeleton } from "./ConversationListSkeleton";
 
+const PAGE_SIZE = 50;
+
 interface ConversationListProps {
   onNavigate: () => void;
 }
@@ -32,7 +34,7 @@ export function ConversationList({ onNavigate }: ConversationListProps) {
     isLoading,
   } = useInfiniteQuery(
     trpc.conversation.list.infiniteQueryOptions(
-      { limit: 20 },
+      { limit: PAGE_SIZE },
       {
         getNextPageParam: (lastPage) => lastPage.nextCursor,
       }
@@ -132,7 +134,7 @@ export function ConversationList({ onNavigate }: ConversationListProps) {
         </View>
       )}
 
-      {!hasNextPage && allConversations.length > 20 && (
+      {!hasNextPage && allConversations.length > PAGE_SIZE && (
         <Text style={[styles.endText, { color: colors.textMuted }]}>
           You've reached the end of your chat history.
         </Text>

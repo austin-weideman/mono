@@ -6,7 +6,6 @@ import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
-import type { GroupedConversations } from "@microlearn/chat-utils";
 import { groupConversationsByDate } from "@microlearn/chat-utils";
 import type { Conversation } from "@microlearn/conversation";
 import {
@@ -35,6 +34,8 @@ import {
 } from "@microlearn/ui";
 
 import { useTRPC } from "~/trpc/react";
+
+const PAGE_SIZE = 50;
 
 // Loading skeleton
 function SidebarHistorySkeleton() {
@@ -140,7 +141,7 @@ export function SidebarHistory() {
     isLoading,
   } = useInfiniteQuery(
     trpc.conversation.list.infiniteQueryOptions(
-      { limit: 20 },
+      { limit: PAGE_SIZE },
       {
         getNextPageParam: (lastPage) => lastPage.nextCursor,
       }
@@ -260,7 +261,7 @@ export function SidebarHistory() {
               </div>
               <div>Loading more...</div>
             </div>
-          ) : allConversations.length > 20 ? (
+          ) : allConversations.length > PAGE_SIZE ? (
             <div className="mt-8 flex w-full flex-row items-center justify-center gap-2 px-2 text-sm text-zinc-500">
               You&apos;ve reached the end of your chat history.
             </div>
