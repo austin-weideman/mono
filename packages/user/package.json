@@ -21,6 +21,7 @@
     "@microlearn/core-types": "workspace:*",
     "@microlearn/db": "workspace:*",
     "@microlearn/errors": "workspace:*",
+    "@microlearn/time": "workspace:*",
     "drizzle-orm": "^0.44.7",
     "zod": "catalog:"
   },

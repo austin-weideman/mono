@@ -24,5 +24,6 @@ export async function getMyUserInfo(
   return {
     name: user.name,
     email: user.email,
+    timezone: user.timezone,
   };
 }

@@ -3,3 +3,4 @@ export { alias } from "drizzle-orm/pg-core";
 
 export * from "./auth-schema";
 export * from "./conversation";
+export * from "./user-profile";

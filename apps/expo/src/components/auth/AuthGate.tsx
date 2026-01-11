@@ -11,6 +11,7 @@ import { Sparkles } from "lucide-react-native";
 
 import { useTheme } from "~/lib";
 import { authClient } from "~/utils/auth";
+import { TimezoneSync } from "./TimezoneSync";
 
 const FEATURES = [
   {
@@ -120,7 +121,12 @@ export function AuthGate({ children }: AuthGateProps) {
     );
   }
 
-  return <>{children}</>;
+  return (
+    <>
+      <TimezoneSync />
+      {children}
+    </>
+  );
 }
 
 const styles = StyleSheet.create({

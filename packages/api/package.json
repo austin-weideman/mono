@@ -22,6 +22,7 @@
     "@microlearn/conversation": "workspace:*",
     "@microlearn/core-types": "workspace:*",
     "@microlearn/db": "workspace:*",
+    "@microlearn/user": "workspace:*",
     "@microlearn/validators": "workspace:*",
     "@trpc/server": "catalog:",
     "superjson": "2.2.3",

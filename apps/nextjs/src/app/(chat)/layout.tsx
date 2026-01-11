@@ -9,6 +9,7 @@ import {
 
 import { getSession } from "~/auth/server";
 import { AppSidebar } from "./_components/app-sidebar";
+import { TimezoneSync } from "./_components/timezone-sync";
 
 export default async function ChatLayout({
   children,
@@ -26,6 +27,7 @@ export default async function ChatLayout({
 
   return (
     <SidebarProvider defaultOpen={defaultOpen}>
+      <TimezoneSync />
       <AppSidebar user={session.user} />
       <SidebarInset className="h-svh overflow-hidden">{children}</SidebarInset>
     </SidebarProvider>
