@@ -7,6 +7,18 @@ import {
   GET_MY_USER_INFO_METADATA,
 } from "./user";
 
+/**
+ * WARNING: Tool names are persisted in message history.
+ *
+ * When the AI uses a tool, the tool name is stored in the message parts
+ * (e.g., type: "tool-getMyUserInfo"). Renaming a tool will NOT update
+ * existing messages, which could break UI code that checks tool types.
+ *
+ * If you must rename a tool, also create a database migration:
+ * UPDATE message SET parts = REPLACE(parts::text, 'old-name', 'new-name')::jsonb
+ * WHERE parts::text LIKE '%old-name%';
+ */
+
 interface InternalToolDefinition {
   metadata: ToolMetadata;
   create: (context: ToolContext) => Tool;

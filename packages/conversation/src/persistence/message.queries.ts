@@ -9,7 +9,7 @@ export async function listMessagesForConversation(
   db: DbOrTx,
   conversationId: string,
 ): Promise<Message[]> {
-  return await db
+  const messages = await db
     .select()
     .from(message)
     .where(
@@ -19,5 +19,7 @@ export async function listMessagesForConversation(
       ),
     )
     .orderBy(asc(message.createdAt));
+
+  return messages as Message[];
 }
 

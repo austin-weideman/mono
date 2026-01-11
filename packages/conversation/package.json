@@ -32,10 +32,14 @@
     "@microlearn/prettier-config": "workspace:*",
     "@microlearn/testing": "workspace:*",
     "@microlearn/tsconfig": "workspace:*",
+    "ai": "^6.0.5",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:",
     "vitest": "^3.2.4"
+  },
+  "peerDependencies": {
+    "ai": ">=6.0.0"
   },
   "prettier": "@microlearn/prettier-config"
 }

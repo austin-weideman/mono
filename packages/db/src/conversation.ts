@@ -52,7 +52,7 @@ export const message = pgTable(
       .references(() => conversation.id, { onDelete: "cascade" }),
 
     role: messageRoleEnum().notNull(),
-    content: t.text().notNull(),
+    parts: t.jsonb().notNull(),
 
     createdAt: t.timestamp({ withTimezone: true }).notNull().defaultNow(),
 

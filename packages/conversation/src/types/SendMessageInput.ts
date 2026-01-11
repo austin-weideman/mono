@@ -1,10 +1,8 @@
-import { z } from "zod";
+import type { UIMessage } from "ai";
 
-export const sendMessageInputSchema = z.object({
-  conversationId: z.string(),
-  role: z.enum(["user", "assistant"]),
-  content: z.string(),
-});
-
-export type SendMessageInput = z.infer<typeof sendMessageInputSchema>;
+export interface SendMessageInput {
+  conversationId: string;
+  role: "user" | "assistant";
+  parts: UIMessage["parts"];
+}
 

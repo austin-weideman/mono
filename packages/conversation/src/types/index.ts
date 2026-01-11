@@ -17,7 +17,6 @@ export type { DeleteConversationInput } from "./DeleteConversationInput";
 export { loadConversationInputSchema } from "./LoadConversationInput";
 export type { LoadConversationInput } from "./LoadConversationInput";
 
-export { sendMessageInputSchema } from "./SendMessageInput";
 export type { SendMessageInput } from "./SendMessageInput";
 
 export { startConversationInputSchema } from "./StartConversationInput";

@@ -72,7 +72,7 @@ export async function POST(req: Request): Promise<Response> {
   await sendMessage(db, actor, {
     conversationId,
     role: "user",
-    content: extractTextFromUIMessage(message),
+    parts: message.parts,
   });
 
   const uiMessagesFromDb = convertDbMessagesToUIMessages(dbMessages);
@@ -93,12 +93,10 @@ export async function POST(req: Request): Promise<Response> {
         const lastMessage = updatedMessages[updatedMessages.length - 1];
 
         if (lastMessage?.role === "assistant") {
-          const content = extractTextFromUIMessage(lastMessage);
-
           await sendMessage(db, actor, {
             conversationId,
             role: "assistant",
-            content,
+            parts: lastMessage.parts,
           });
         }
       }

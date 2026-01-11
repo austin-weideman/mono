@@ -6,7 +6,7 @@ export function convertDbMessagesToUIMessages(messages: Message[]): UIMessage[] 
   return messages.map((msg) => ({
     id: msg.id,
     role: msg.role,
-    parts: [{ type: "text" as const, text: msg.content }],
+    parts: msg.parts,
   }));
 }
 

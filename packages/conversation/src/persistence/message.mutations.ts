@@ -8,7 +8,7 @@ import type { MessageRole } from "../types/MessageRole";
 export interface InsertMessageInput {
   conversationId: string;
   role: MessageRole;
-  content: string;
+  parts: unknown[];
 }
 
 export async function insertMessage(
@@ -21,6 +21,6 @@ export async function insertMessage(
     throw new InternalServerError("Failed to insert message");
   }
 
-  return newMessage;
+  return newMessage as Message;
 }
 

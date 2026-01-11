@@ -27,7 +27,7 @@ export async function sendMessage(
   const message = await insertMessage(db, {
     conversationId: input.conversationId,
     role: input.role,
-    content: input.content,
+    parts: input.parts,
   });
 
   await touchConversation(db, input.conversationId);
