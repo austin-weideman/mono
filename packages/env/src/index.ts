@@ -33,6 +33,9 @@ export const env = createEnv({
     NODE_ENV: z
       .enum(["development", "staging", "test", "production"])
       .default("development"),
+
+    // Timezone - Must be UTC for consistent timestamp handling with Better Auth
+    TZ: z.literal("UTC"),
   },
   runtimeEnv: process.env,
   skipValidation:
