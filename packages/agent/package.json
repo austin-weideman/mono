@@ -23,6 +23,7 @@
     "@microlearn/ai": "workspace:*",
     "@microlearn/core-types": "workspace:*",
     "@microlearn/db": "workspace:*",
+    "@microlearn/time": "workspace:*",
     "@microlearn/user": "workspace:*",
     "ai": "^6.0.5",
     "zod": "catalog:"

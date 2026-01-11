@@ -9,4 +9,5 @@ export {
   formatTime,
   formatDate,
   formatRelative,
+  formatFullDateTime,
 } from "./format";

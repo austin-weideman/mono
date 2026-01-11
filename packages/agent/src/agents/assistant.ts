@@ -32,7 +32,7 @@ export interface AssistantAgentResult {
 }
 
 const ASSISTANT_TOOL_CONFIG: AgentToolConfig = {
-  internal: [InternalTool.GET_MY_USER_INFO],
+  internal: [InternalTool.GET_MY_USER_INFO, InternalTool.GET_CURRENT_TIME],
   external: [ExternalToolSet.EXA],
 };
 
