@@ -14,3 +14,6 @@ export {
 // Theme
 export { ThemeProvider, useTheme, ThemeContext } from "./theme";
 
+// Markdown
+export { markdownParser, openLink } from "./markdown";
+

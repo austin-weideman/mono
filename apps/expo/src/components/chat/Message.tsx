@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import type { UIMessage } from "ai";
 import Markdown from "react-native-markdown-display";
 
-import { useTheme, fontSize } from "~/lib";
+import { useTheme, fontSize, markdownParser, openLink } from "~/lib";
 import { MessageActions } from "./MessageActions";
 import { Reasoning } from "./Reasoning";
 
@@ -52,6 +52,7 @@ export const Message = React.memo<MessageProps>(({ message, isLoading }) => {
         },
         link: {
           color: colors.primary,
+          textDecorationLine: "underline",
         },
         heading1: {
           color: colors.textPrimary,
@@ -109,7 +110,12 @@ export const Message = React.memo<MessageProps>(({ message, isLoading }) => {
               }
               if (part.type === "text") {
                 return (
-                  <Markdown key={idx} style={markdownStyles}>
+                  <Markdown
+                    key={idx}
+                    style={markdownStyles}
+                    markdownit={markdownParser}
+                    onLinkPress={openLink}
+                  >
                     {part.text}
                   </Markdown>
                 );
