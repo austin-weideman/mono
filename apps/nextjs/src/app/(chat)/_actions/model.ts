@@ -12,4 +12,3 @@ export async function saveModelPreference(modelId: string): Promise<void> {
     sameSite: "lax",
   });
 }
-

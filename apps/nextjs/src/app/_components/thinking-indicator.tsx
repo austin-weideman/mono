@@ -2,7 +2,7 @@ const THINKING_TEXT = "...";
 
 export function ThinkingIndicator() {
   return (
-    <p className="text-base text-muted-foreground">
+    <p className="text-muted-foreground text-base">
       {THINKING_TEXT.split("").map((char, i) => (
         <span
           key={i}
@@ -15,4 +15,3 @@ export function ThinkingIndicator() {
     </p>
   );
 }
-

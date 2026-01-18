@@ -1,9 +1,12 @@
+import type { MarkdownParser } from "react-native-markdown-display";
 import { Linking } from "react-native";
 import { MarkdownIt } from "react-native-markdown-display";
-import type { MarkdownParser } from "react-native-markdown-display";
 
 export const markdownParser = (
-  MarkdownIt as (options: { typographer: boolean; linkify: boolean }) => MarkdownParser
+  MarkdownIt as (options: {
+    typographer: boolean;
+    linkify: boolean;
+  }) => MarkdownParser
 )({
   typographer: true,
   linkify: true,

@@ -1,5 +1,5 @@
-import { userProfile } from "@microlearn/db";
 import type { DbOrTx } from "@microlearn/db/client";
+import { userProfile } from "@microlearn/db";
 import { InternalServerError } from "@microlearn/errors";
 
 export async function upsertUserProfile(

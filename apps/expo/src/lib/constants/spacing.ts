@@ -67,4 +67,3 @@ export type TSpacing = typeof spacing;
 export type TSizing = typeof sizing;
 export type TLayout = typeof layout;
 export type TFontSize = typeof fontSize;
-

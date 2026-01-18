@@ -7,4 +7,3 @@ export const deleteConversationInputSchema = z.object({
 export type DeleteConversationInput = z.infer<
   typeof deleteConversationInputSchema
 >;
-

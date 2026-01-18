@@ -23,4 +23,3 @@ export async function insertMessage(
 
   return newMessage as Message;
 }
-

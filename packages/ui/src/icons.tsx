@@ -222,4 +222,3 @@ export function CopyIcon({ size = 16, className }: IconProps) {
     </svg>
   );
 }
-

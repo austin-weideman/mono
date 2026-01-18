@@ -50,13 +50,9 @@ export async function getConversationById(
     .select()
     .from(conversation)
     .where(
-      and(
-        eq(conversation.id, conversationId),
-        isNull(conversation.archivedAt),
-      ),
+      and(eq(conversation.id, conversationId), isNull(conversation.archivedAt)),
     )
     .limit(1);
 
   return result ?? null;
 }
-

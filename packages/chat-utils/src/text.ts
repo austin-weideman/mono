@@ -10,6 +10,8 @@ function isTextPart(part: { type: string }): part is TextPart {
 }
 
 export function extractTextFromUIMessage(message: UIMessage): string {
-  return message.parts.filter(isTextPart).map((part) => part.text).join("");
+  return message.parts
+    .filter(isTextPart)
+    .map((part) => part.text)
+    .join("");
 }
-

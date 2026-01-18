@@ -9,7 +9,8 @@ export const GET_MY_USER_INFO_METADATA: ToolMetadata = {
   name: "getMyUserInfo",
   description:
     "Get the current user's basic information including their name and email address.",
-  usage: "Use when the user asks about their profile, name, identity, or email.",
+  usage:
+    "Use when the user asks about their profile, name, identity, or email.",
 };
 
 export function createGetMyUserInfoTool(context: ToolContext) {

@@ -6,4 +6,3 @@ export const conversationCursorSchema = z.object({
 });
 
 export type ConversationCursor = z.infer<typeof conversationCursorSchema>;
-

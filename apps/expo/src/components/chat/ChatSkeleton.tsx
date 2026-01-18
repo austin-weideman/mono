@@ -2,7 +2,7 @@ import { useEffect, useMemo } from "react";
 import { Animated, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { useTheme, spacing, sizing, layout } from "~/lib";
+import { layout, sizing, spacing, useTheme } from "~/lib";
 
 function SkeletonBar({ width, delay }: { width: `${number}%`; delay: number }) {
   const { colors } = useTheme();
@@ -22,7 +22,7 @@ function SkeletonBar({ width, delay }: { width: `${number}%`; delay: number }) {
           duration: 800,
           useNativeDriver: true,
         }),
-      ])
+      ]),
     );
     animation.start();
     return () => animation.stop();
@@ -42,13 +42,21 @@ function SkeletonBar({ width, delay }: { width: `${number}%`; delay: number }) {
   );
 }
 
-function SkeletonMessage({ isUser, lines }: { isUser: boolean; lines: number[] }) {
+function SkeletonMessage({
+  isUser,
+  lines,
+}: {
+  isUser: boolean;
+  lines: number[];
+}) {
   const { colors } = useTheme();
 
   return (
     <View style={[styles.row, isUser ? styles.rowUser : styles.rowAssistant]}>
       {!isUser && (
-        <View style={[styles.avatar, { backgroundColor: colors.surfaceMuted }]} />
+        <View
+          style={[styles.avatar, { backgroundColor: colors.surfaceMuted }]}
+        />
       )}
       <View
         style={[
@@ -71,7 +79,15 @@ export function ChatSkeleton() {
   const insets = useSafeAreaInsets();
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background, paddingTop: insets.top + layout.headerClearance }]}>
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor: colors.background,
+          paddingTop: insets.top + layout.headerClearance,
+        },
+      ]}
+    >
       <View style={styles.messages}>
         <SkeletonMessage isUser={true} lines={[80]} />
         <SkeletonMessage isUser={false} lines={[90, 75, 60]} />

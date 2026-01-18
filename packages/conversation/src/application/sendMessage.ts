@@ -1,6 +1,6 @@
 import type { Actor } from "@microlearn/core-types";
-import { isUserActor } from "@microlearn/core-types";
 import type { DbOrTx } from "@microlearn/db/client";
+import { isUserActor } from "@microlearn/core-types";
 import { ForbiddenError, NotFoundError } from "@microlearn/errors";
 
 import type { Message } from "../types/Message";

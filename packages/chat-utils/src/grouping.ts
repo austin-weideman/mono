@@ -11,7 +11,7 @@ export interface GroupedConversations {
 }
 
 export function groupConversationsByDate(
-  conversations: Conversation[]
+  conversations: Conversation[],
 ): GroupedConversations {
   const now = new Date();
   const oneWeekAgo = subWeeks(now, 1);
@@ -41,6 +41,6 @@ export function groupConversationsByDate(
       lastWeek: [],
       lastMonth: [],
       older: [],
-    } as GroupedConversations
+    } as GroupedConversations,
   );
 }

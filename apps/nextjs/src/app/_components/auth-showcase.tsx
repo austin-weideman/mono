@@ -34,7 +34,7 @@ export async function AuthShowcase() {
       <CenteredContainer>
         <div className="flex max-w-2xl flex-col items-center gap-8 text-center">
           <Hero
-            icon={<SparklesIcon className="size-8 text-primary" />}
+            icon={<SparklesIcon className="text-primary size-8" />}
             title="MicroLearn"
             description="Your personal AI tutor for microlearning. Learn anything, one conversation at a time."
           />

@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { startTransition, useOptimistic, useState } from "react";
+import Image from "next/image";
 
 import type { ModelId, ModelProvider } from "@microlearn/ai";
 import {
@@ -24,7 +24,12 @@ import {
 
 import { saveModelPreference } from "../_actions/model";
 
-const PROVIDER_ORDER: ModelProvider[] = ["anthropic", "openai", "google", "xai"];
+const PROVIDER_ORDER: ModelProvider[] = [
+  "anthropic",
+  "openai",
+  "google",
+  "xai",
+];
 
 function ProviderLogo({ provider }: { provider: ModelProvider }) {
   return (
@@ -61,7 +66,7 @@ export function ModelSelector({
         <Button
           variant="outline"
           className={cn(
-            "cursor-pointer gap-2 data-[state=open]:bg-accent data-[state=open]:text-accent-foreground",
+            "data-[state=open]:bg-accent data-[state=open]:text-accent-foreground cursor-pointer gap-2",
             className,
           )}
         >
@@ -77,7 +82,7 @@ export function ModelSelector({
 
           return (
             <DropdownMenuGroup key={provider}>
-              <DropdownMenuLabel className="text-xs text-muted-foreground">
+              <DropdownMenuLabel className="text-muted-foreground text-xs">
                 {PROVIDER_DISPLAY_NAMES[provider]}
               </DropdownMenuLabel>
               {models.map((modelId) => {
@@ -109,4 +114,3 @@ export function ModelSelector({
     </DropdownMenu>
   );
 }
-

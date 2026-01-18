@@ -5,4 +5,3 @@ export interface SendMessageInput {
   role: "user" | "assistant";
   parts: UIMessage["parts"];
 }
-

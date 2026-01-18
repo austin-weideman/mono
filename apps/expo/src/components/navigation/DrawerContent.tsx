@@ -1,13 +1,13 @@
+import type { DrawerContentComponentProps } from "@react-navigation/drawer";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import type { DrawerContentComponentProps } from "@react-navigation/drawer";
 import { router } from "expo-router";
-import { SquarePen, Sparkles } from "lucide-react-native";
+import { Sparkles, SquarePen } from "lucide-react-native";
 import { v4 as uuidv4 } from "uuid";
 
-import { useTheme } from "~/lib";
 import { ConversationList } from "~/components/sidebar/ConversationList";
 import { SidebarUserNav } from "~/components/sidebar/SidebarUserNav";
+import { useTheme } from "~/lib";
 
 export function DrawerContent({ navigation }: DrawerContentComponentProps) {
   const { colors } = useTheme();

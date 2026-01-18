@@ -1,6 +1,6 @@
 import type { Actor } from "@microlearn/core-types";
-import { isUserActor } from "@microlearn/core-types";
 import type { DbOrTx } from "@microlearn/db/client";
+import { isUserActor } from "@microlearn/core-types";
 import { BadRequestError, ForbiddenError } from "@microlearn/errors";
 import { isValidTimezone } from "@microlearn/time";
 

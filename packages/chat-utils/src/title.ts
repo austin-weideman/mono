@@ -6,4 +6,3 @@ export function generateTitleFromText(text: string): string {
   const firstWords = words.slice(0, MAX_WORDS).join(" ");
   return firstWords || DEFAULT_TITLE;
 }
-

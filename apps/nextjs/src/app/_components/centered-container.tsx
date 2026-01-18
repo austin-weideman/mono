@@ -22,4 +22,3 @@ export function CenteredContainer({
     </div>
   );
 }
-

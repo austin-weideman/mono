@@ -17,4 +17,3 @@ declare module "@stardazed/streams-text-encoding" {
     readonly ignoreBOM: boolean;
   }
 }
-

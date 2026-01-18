@@ -1,9 +1,9 @@
+import type { UIMessage } from "ai";
 import React, { useMemo } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import type { UIMessage } from "ai";
 import Markdown from "react-native-markdown-display";
 
-import { useTheme, fontSize, markdownParser, openLink } from "~/lib";
+import { fontSize, markdownParser, openLink, useTheme } from "~/lib";
 import { MessageActions } from "./MessageActions";
 import { Reasoning } from "./Reasoning";
 
@@ -20,11 +20,12 @@ export const Message = React.memo<MessageProps>(({ message, isLoading }) => {
     () =>
       message.parts
         .filter(
-          (part): part is { type: "text"; text: string } => part.type === "text"
+          (part): part is { type: "text"; text: string } =>
+            part.type === "text",
         )
         .map((part) => part.text)
         .join(""),
-    [message.parts]
+    [message.parts],
   );
 
   const markdownStyles = useMemo(
@@ -79,7 +80,7 @@ export const Message = React.memo<MessageProps>(({ message, isLoading }) => {
           color: colors.textPrimary,
         },
       }),
-    [colors]
+    [colors],
   );
 
   return (

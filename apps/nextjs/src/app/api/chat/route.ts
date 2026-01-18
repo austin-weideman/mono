@@ -1,22 +1,22 @@
-import { consumeStream, createAgentUIStreamResponse } from "ai";
 import type { UIMessage } from "ai";
 import { cookies, headers } from "next/headers";
+import { consumeStream, createAgentUIStreamResponse } from "ai";
 import { z } from "zod";
 
-import { getGatewayId } from "@microlearn/ai";
+import type { Message } from "@microlearn/conversation";
 import { createAssistantAgent } from "@microlearn/agent";
+import { getGatewayId } from "@microlearn/ai";
 import {
   convertDbMessagesToUIMessages,
   extractTextFromUIMessage,
   generateTitleFromText,
 } from "@microlearn/chat-utils";
-import { userActor } from "@microlearn/core-types";
-import type { Message } from "@microlearn/conversation";
 import {
   loadConversation,
   sendMessage,
   startConversation,
 } from "@microlearn/conversation";
+import { userActor } from "@microlearn/core-types";
 import { db } from "@microlearn/db/client";
 import { NotFoundError } from "@microlearn/errors";
 
@@ -105,4 +105,3 @@ export async function POST(req: Request): Promise<Response> {
     },
   });
 }
-

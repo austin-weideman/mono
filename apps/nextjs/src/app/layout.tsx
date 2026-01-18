@@ -14,10 +14,12 @@ export const metadata: Metadata = {
       : "http://localhost:3000",
   ),
   title: "MicroLearn",
-  description: "AI-powered microlearning. Learn anything, one conversation at a time.",
+  description:
+    "AI-powered microlearning. Learn anything, one conversation at a time.",
   openGraph: {
     title: "MicroLearn",
-    description: "AI-powered microlearning. Learn anything, one conversation at a time.",
+    description:
+      "AI-powered microlearning. Learn anything, one conversation at a time.",
     url: "https://microlearn.app",
     siteName: "MicroLearn",
   },

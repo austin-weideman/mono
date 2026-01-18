@@ -41,12 +41,16 @@ function FeatureCard({ icon, title, description }: FeatureCardProps) {
   const { colors } = useTheme();
 
   return (
-    <View style={[styles.featureCard, { backgroundColor: colors.cardBackground }]}>
+    <View
+      style={[styles.featureCard, { backgroundColor: colors.cardBackground }]}
+    >
       <Text style={styles.featureIcon}>{icon}</Text>
       <Text style={[styles.featureTitle, { color: colors.textPrimary }]}>
         {title}
       </Text>
-      <Text style={[styles.featureDescription, { color: colors.textSecondary }]}>
+      <Text
+        style={[styles.featureDescription, { color: colors.textSecondary }]}
+      >
         {description}
       </Text>
     </View>
@@ -63,7 +67,12 @@ export function AuthGate({ children }: AuthGateProps) {
 
   if (isPending) {
     return (
-      <View style={[styles.loadingContainer, { backgroundColor: colors.background }]}>
+      <View
+        style={[
+          styles.loadingContainer,
+          { backgroundColor: colors.background },
+        ]}
+      >
         <ActivityIndicator size="large" color={colors.primary} />
       </View>
     );
@@ -71,7 +80,9 @@ export function AuthGate({ children }: AuthGateProps) {
 
   if (!session?.user) {
     return (
-      <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+      <SafeAreaView
+        style={[styles.container, { backgroundColor: colors.background }]}
+      >
         <ScrollView
           contentContainerStyle={styles.scrollContent}
           style={styles.scrollView}
@@ -105,7 +116,12 @@ export function AuthGate({ children }: AuthGateProps) {
               }
               style={[styles.signInButton, { backgroundColor: colors.primary }]}
             >
-              <Text style={[styles.signInButtonText, { color: colors.textOnPrimary }]}>
+              <Text
+                style={[
+                  styles.signInButtonText,
+                  { color: colors.textOnPrimary },
+                ]}
+              >
                 Sign in with Google
               </Text>
             </Pressable>

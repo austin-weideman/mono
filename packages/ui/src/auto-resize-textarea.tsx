@@ -53,12 +53,11 @@ export function AutoResizeTextarea({
         className={cn(
           // field-sizing: content makes textarea size to content (Chrome 123+)
           // leading-snug gives predictable line-height for vertical centering
-          "size-full resize-none overflow-y-auto bg-transparent leading-snug transition-[height] duration-100 [field-sizing:content] focus:outline-none",
-          className
+          "[field-sizing:content] size-full resize-none overflow-y-auto bg-transparent leading-snug transition-[height] duration-100 focus:outline-none",
+          className,
         )}
         {...props}
       />
     </div>
   );
 }
-

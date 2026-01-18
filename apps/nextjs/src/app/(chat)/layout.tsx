@@ -23,7 +23,8 @@ export default async function ChatLayout({
   }
 
   const sidebarState = cookieStore.get(SIDEBAR_COOKIE_NAME)?.value;
-  const defaultOpen = sidebarState === undefined ? true : sidebarState === "true";
+  const defaultOpen =
+    sidebarState === undefined ? true : sidebarState === "true";
 
   return (
     <SidebarProvider defaultOpen={defaultOpen}>

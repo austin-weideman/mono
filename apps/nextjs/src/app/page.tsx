@@ -12,4 +12,3 @@ export default async function LandingPage() {
 
   return <AuthShowcase />;
 }
-

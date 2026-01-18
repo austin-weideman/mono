@@ -9,4 +9,3 @@ export {
   type TLayout,
   type TFontSize,
 } from "./spacing";
-

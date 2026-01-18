@@ -11,4 +11,3 @@ export async function signOutAction(): Promise<void> {
   });
   redirect("/");
 }
-

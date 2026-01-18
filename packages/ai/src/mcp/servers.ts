@@ -1,10 +1,10 @@
-export type MCPTransportType = "http" | "sse"
+export type MCPTransportType = "http" | "sse";
 
 export interface MCPServerConfig {
-  name: string
-  url: string
-  type: MCPTransportType
-  headers?: Record<string, string>
+  name: string;
+  url: string;
+  type: MCPTransportType;
+  headers?: Record<string, string>;
 }
 
 export const mcpServers = {
@@ -13,7 +13,6 @@ export const mcpServers = {
     url: "https://mcp.exa.ai/mcp",
     type: "http",
   },
-} as const satisfies Record<string, MCPServerConfig>
+} as const satisfies Record<string, MCPServerConfig>;
 
-export type MCPServerName = keyof typeof mcpServers
-
+export type MCPServerName = keyof typeof mcpServers;
