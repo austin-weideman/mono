@@ -35,7 +35,9 @@ export const env = createEnv({
       .default("development"),
 
     // Timezone - Must be UTC for consistent timestamp handling with Better Auth
-    TZ: z.literal("UTC"),
+    // Note: TZ is reserved in Vercel (serverless runs in UTC by default)
+    // For local dev, set TZ=UTC in Doppler dev config
+    TZ: z.literal("UTC").optional(),
   },
   runtimeEnv: process.env,
   skipValidation:

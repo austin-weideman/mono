@@ -1,0 +1,70 @@
+name: Production Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: production
+  cancel-in-progress: false
+
+env:
+  FORCE_COLOR: 3
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+
+jobs:
+  checks:
+    name: Checks
+    uses: ./.github/workflows/checks.yml
+    secrets:
+      DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN_PRODUCTION }}
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+
+  migrate:
+    name: Database Migration
+    needs: checks
+    uses: ./.github/workflows/deploy-db.yml
+    with:
+      environment: production
+    secrets:
+      DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN_PRODUCTION }}
+
+  deploy:
+    name: Deploy to Production
+    needs: migrate
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: ${{ steps.deploy.outputs.url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup
+        uses: ./tooling/github/setup
+
+      - name: Install Vercel CLI
+        run: pnpm add -g vercel
+
+      - name: Pull Vercel Environment
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      - name: Build
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      - name: Deploy to Production
+        id: deploy
+        run: |
+          url=$(vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }})
+          echo "url=$url" >> $GITHUB_OUTPUT
+          echo "Deployed to: $url"
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}

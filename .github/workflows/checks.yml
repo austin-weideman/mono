@@ -1,0 +1,96 @@
+name: Checks
+
+on:
+  workflow_call:
+    inputs:
+      skip-lint:
+        description: "Skip lint job (for dependabot PRs)"
+        type: boolean
+        default: false
+    secrets:
+      DOPPLER_TOKEN:
+        description: "Doppler token for database access in tests"
+        required: true
+      TURBO_TOKEN:
+        description: "Turbo remote cache token"
+        required: true
+
+env:
+  FORCE_COLOR: 3
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+
+jobs:
+  typecheck:
+    name: Typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup
+        uses: ./tooling/github/setup
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    if: ${{ !inputs.skip-lint }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup
+        uses: ./tooling/github/setup
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Lint Workspace
+        run: pnpm lint:ws
+
+      - name: Format
+        run: pnpm format
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup
+        uses: ./tooling/github/setup
+
+      - name: Install Doppler CLI
+        uses: dopplerhq/cli-action@v3
+
+      - name: Run tests
+        run: doppler run -- pnpm test
+        env:
+          DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
+
+  schema-drift:
+    name: Schema Drift Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup
+        uses: ./tooling/github/setup
+
+      - name: Install Doppler CLI
+        uses: dopplerhq/cli-action@v3
+
+      - name: Check for uncommitted migrations
+        working-directory: packages/db
+        run: |
+          doppler run -- pnpm generate
+          if [ -n "$(git status --porcelain migrations)" ]; then
+            echo "::error::Schema changes detected without committed migration!"
+            echo "Run 'd generate' locally and commit the migration file."
+            git status migrations
+            git diff migrations
+            exit 1
+          fi
+        env:
+          DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}

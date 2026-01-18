@@ -1,0 +1,33 @@
+name: Database Migration
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        description: "Target environment (staging or production)"
+        type: string
+        required: true
+    secrets:
+      DOPPLER_TOKEN:
+        description: "Doppler token for the target environment"
+        required: true
+
+jobs:
+  migrate:
+    name: Run Migrations
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup
+        uses: ./tooling/github/setup
+
+      - name: Install Doppler CLI
+        uses: dopplerhq/cli-action@v3
+
+      - name: Run database migrations
+        working-directory: packages/db
+        run: doppler run -- pnpm migrate
+        env:
+          DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
