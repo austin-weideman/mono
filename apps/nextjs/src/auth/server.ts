@@ -9,11 +9,12 @@ import { initAuth } from "@microlearn/auth";
 import { env } from "~/env";
 
 const baseUrl =
-  env.VERCEL_ENV === "production"
+  env.AUTH_BASE_URL ??
+  (env.VERCEL_ENV === "production"
     ? `https://${env.VERCEL_PROJECT_PRODUCTION_URL}`
     : env.VERCEL_ENV === "preview"
       ? `https://${env.VERCEL_URL}`
-      : (env.AUTH_BASE_URL ?? "http://localhost:3000");
+      : "http://localhost:3000");
 
 export const auth = initAuth({
   baseUrl,
