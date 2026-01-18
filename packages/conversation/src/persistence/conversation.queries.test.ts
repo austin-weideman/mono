@@ -13,7 +13,7 @@ import {
 
 /**
  * Creates a test user in the transaction.
- * Required because conversations have a foreign key to users.
+ * Required because conversations have a foreign key to users
  */
 async function createTestUser(
   tx: Transaction,
