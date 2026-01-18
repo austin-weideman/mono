@@ -70,7 +70,7 @@ jobs:
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
       - name: Alias to staging URL
-        run: vercel alias ${{ steps.deploy.outputs.url }} staging-microlearn.vercel.app --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel alias ${{ steps.deploy.outputs.url }} staging-microlearn-nextjs.vercel.app --token=${{ secrets.VERCEL_TOKEN }}
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
