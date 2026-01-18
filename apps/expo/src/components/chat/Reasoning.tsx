@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { ChevronDown, ChevronRight } from "lucide-react-native";
 
-import { useTheme, fontSize, spacing, sizing } from "~/lib";
+import { fontSize, sizing, spacing, useTheme } from "~/lib";
 
 const CHEVRON_SIZE = 14;
 const LINE_HEIGHT_SM = 20;

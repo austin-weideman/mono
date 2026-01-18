@@ -44,7 +44,7 @@ export function MessageActions({ message, isLoading }: MessageActionsProps) {
           <Button
             variant="ghost"
             size="icon"
-            className="size-7 cursor-pointer text-muted-foreground hover:text-foreground"
+            className="text-muted-foreground hover:text-foreground size-7 cursor-pointer"
             onClick={handleCopy}
             type="button"
           >
@@ -57,4 +57,3 @@ export function MessageActions({ message, isLoading }: MessageActionsProps) {
     </div>
   );
 }
-

@@ -1,18 +1,18 @@
-import { createMCPClient } from "@ai-sdk/mcp"
+import { createMCPClient } from "@ai-sdk/mcp";
 
-import type { MCPServerConfig } from "./servers"
+import type { MCPServerConfig } from "./servers";
 
-type MCPClient = Awaited<ReturnType<typeof createMCPClient>>
+type MCPClient = Awaited<ReturnType<typeof createMCPClient>>;
 
 export interface MCPToolProvider {
-  tools: Record<string, unknown>
-  close: () => Promise<void>
+  tools: Record<string, unknown>;
+  close: () => Promise<void>;
 }
 
 export async function createMCPToolProvider(
   servers: MCPServerConfig[],
 ): Promise<MCPToolProvider> {
-  const clients: MCPClient[] = []
+  const clients: MCPClient[] = [];
 
   for (const server of servers) {
     const client = await createMCPClient({
@@ -21,23 +21,23 @@ export async function createMCPToolProvider(
         url: server.url,
         headers: server.headers,
       },
-    })
-    clients.push(client)
+    });
+    clients.push(client);
   }
 
-  const allTools: Record<string, unknown> = {}
+  const allTools: Record<string, unknown> = {};
 
   for (const client of clients) {
-    const tools = await client.tools()
-    Object.assign(allTools, tools)
+    const tools = await client.tools();
+    Object.assign(allTools, tools);
   }
 
   return {
     tools: allTools,
     close: async () => {
-      await Promise.all(clients.map((c) => c.close()))
+      await Promise.all(clients.map((c) => c.close()));
     },
-  }
+  };
 }
 
 export async function createSingleMCPClient(
@@ -49,6 +49,5 @@ export async function createSingleMCPClient(
       url: config.url,
       headers: config.headers,
     },
-  })
+  });
 }
-

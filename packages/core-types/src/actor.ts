@@ -34,4 +34,3 @@ export function userActor(userId: string): UserActor {
 export function systemActor(service: string): SystemActor {
   return { type: ActorType.SYSTEM, service };
 }
-

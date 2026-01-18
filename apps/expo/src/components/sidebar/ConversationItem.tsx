@@ -1,10 +1,10 @@
 import { Alert, Pressable, StyleSheet, Text } from "react-native";
-import { router } from "expo-router";
 import * as Haptics from "expo-haptics";
+import { router } from "expo-router";
 
 import type { Conversation } from "@microlearn/conversation";
 
-import { useTheme, fontSize, spacing } from "~/lib";
+import { fontSize, spacing, useTheme } from "~/lib";
 
 interface ConversationItemProps {
   conversation: Conversation;
@@ -41,7 +41,7 @@ export function ConversationItem({
           style: "destructive",
           onPress: () => onDelete(conversation.id),
         },
-      ]
+      ],
     );
   };
 

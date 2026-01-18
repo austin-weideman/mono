@@ -2,18 +2,21 @@ import { StyleSheet, Text, View } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
 
-import { useTheme, fontSize } from "~/lib";
-import { trpc } from "~/utils/api";
 import { Chat } from "~/components/chat/Chat";
 import { ChatHeader } from "~/components/chat/ChatHeader";
 import { ChatInput } from "~/components/chat/ChatInput";
 import { ChatSkeleton } from "~/components/chat/ChatSkeleton";
+import { fontSize, useTheme } from "~/lib";
+import { trpc } from "~/utils/api";
 
 const noop = () => undefined;
 
 export default function ChatScreen() {
   const { colors } = useTheme();
-  const { id, new: isNew } = useLocalSearchParams<{ id: string; new?: string }>();
+  const { id, new: isNew } = useLocalSearchParams<{
+    id: string;
+    new?: string;
+  }>();
 
   const { data, isLoading, error } = useQuery({
     ...trpc.conversation.load.queryOptions({ conversationId: id }),
@@ -41,7 +44,9 @@ export default function ChatScreen() {
 
   if (error || !data) {
     return (
-      <View style={[styles.errorContainer, { backgroundColor: colors.background }]}>
+      <View
+        style={[styles.errorContainer, { backgroundColor: colors.background }]}
+      >
         <Text style={[styles.errorText, { color: colors.textMuted }]}>
           Conversation not found
         </Text>
@@ -51,7 +56,10 @@ export default function ChatScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <Chat conversationId={data.conversation.id} initialMessages={data.messages} />
+      <Chat
+        conversationId={data.conversation.id}
+        initialMessages={data.messages}
+      />
       <ChatHeader />
     </View>
   );

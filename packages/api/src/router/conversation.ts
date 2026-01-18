@@ -1,4 +1,3 @@
-import { userActor } from "@microlearn/core-types";
 import {
   deleteConversation,
   deleteConversationInputSchema,
@@ -8,6 +7,7 @@ import {
   loadConversationInputSchema,
   startConversation,
 } from "@microlearn/conversation";
+import { userActor } from "@microlearn/core-types";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 

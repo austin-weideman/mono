@@ -20,4 +20,3 @@ export async function validateJson<T>(
 
   return { success: true, data: parsed.data };
 }
-

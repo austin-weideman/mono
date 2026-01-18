@@ -26,7 +26,8 @@ export function ThemeProvider({ children, forcedTheme }: ThemeProviderProps) {
   const systemColorScheme = useColorScheme();
 
   const value = useMemo<ThemeContextValue>(() => {
-    const theme = forcedTheme ?? (systemColorScheme === "light" ? "light" : "dark");
+    const theme =
+      forcedTheme ?? (systemColorScheme === "light" ? "light" : "dark");
     return {
       theme,
       colors: colors[theme],
@@ -51,4 +52,3 @@ export function useTheme(): ThemeContextValue {
 }
 
 export { ThemeContext };
-

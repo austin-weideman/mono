@@ -5,4 +5,3 @@ export interface PaginatedConversations {
   conversations: Conversation[];
   nextCursor: ConversationCursor | null;
 }
-

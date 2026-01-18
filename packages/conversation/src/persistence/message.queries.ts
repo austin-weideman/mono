@@ -22,4 +22,3 @@ export async function listMessagesForConversation(
 
   return messages as Message[];
 }
-

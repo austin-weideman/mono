@@ -1,14 +1,14 @@
 import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 
-import { userActor } from "@microlearn/core-types";
 import { loadConversation } from "@microlearn/conversation";
+import { userActor } from "@microlearn/core-types";
 import { db } from "@microlearn/db/client";
 import { NotFoundError } from "@microlearn/errors";
 
-import { getSelectedModelId } from "../../_lib/model";
-import { getSession } from "~/auth/server";
 import { Chat } from "~/app/_components/chat";
+import { getSession } from "~/auth/server";
+import { getSelectedModelId } from "../../_lib/model";
 
 interface ChatPageProps {
   params: Promise<{ id: string }>;
@@ -48,4 +48,3 @@ export default async function ChatPage({ params }: ChatPageProps) {
     />
   );
 }
-

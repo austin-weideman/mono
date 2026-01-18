@@ -3,7 +3,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { DrawerActions, useNavigation } from "@react-navigation/native";
 import { Menu } from "lucide-react-native";
 
-import { useTheme, spacing, sizing, layout } from "~/lib";
+import { layout, sizing, spacing, useTheme } from "~/lib";
 
 export function ChatHeader() {
   const insets = useSafeAreaInsets();

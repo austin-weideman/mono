@@ -1,8 +1,8 @@
 import { eq } from "drizzle-orm";
 import { describe, expect, it } from "vitest";
 
-import { conversation, user } from "@microlearn/db";
 import type { Transaction } from "@microlearn/db/client";
+import { conversation, user } from "@microlearn/db";
 import { withTestTransaction } from "@microlearn/testing";
 
 import { insertConversation } from "./conversation.mutations";
@@ -15,10 +15,7 @@ import {
  * Creates a test user in the transaction.
  * Required because conversations have a foreign key to users
  */
-async function createTestUser(
-  tx: Transaction,
-  id: string,
-): Promise<string> {
+async function createTestUser(tx: Transaction, id: string): Promise<string> {
   await tx.insert(user).values({
     id,
     name: `Test User ${id}`,
@@ -34,7 +31,9 @@ describe("conversation.queries", () => {
   describe("listConversationsForUser", () => {
     it("returns empty array when user has no conversations", async () => {
       await withTestTransaction(async (tx) => {
-        const result = await listConversationsForUser(tx, "non-existent-user", { limit: 20 });
+        const result = await listConversationsForUser(tx, "non-existent-user", {
+          limit: 20,
+        });
         expect(result).toEqual([]);
       });
     });
@@ -52,7 +51,9 @@ describe("conversation.queries", () => {
           title: "Other User Chat",
         });
 
-        const result = await listConversationsForUser(tx, userId, { limit: 20 });
+        const result = await listConversationsForUser(tx, userId, {
+          limit: 20,
+        });
 
         expect(result).toHaveLength(2);
         expect(result.map((c) => c.title)).toContain("First Chat");
@@ -91,7 +92,9 @@ describe("conversation.queries", () => {
           .set({ updatedAt: new Date("2024-01-02T10:00:00Z") })
           .where(eq(conversation.id, newer.id));
 
-        const result = await listConversationsForUser(tx, userId, { limit: 10 });
+        const result = await listConversationsForUser(tx, userId, {
+          limit: 10,
+        });
 
         expect(result[0]?.id).toBe(newer.id);
         expect(result[1]?.id).toBe(older.id);
@@ -103,7 +106,10 @@ describe("conversation.queries", () => {
         const userId = await createTestUser(tx, "test-user-cursor");
 
         const first = await insertConversation(tx, { userId, title: "First" });
-        const second = await insertConversation(tx, { userId, title: "Second" });
+        const second = await insertConversation(tx, {
+          userId,
+          title: "Second",
+        });
         const third = await insertConversation(tx, { userId, title: "Third" });
 
         const firstTime = new Date("2024-01-01T10:00:00Z");
@@ -125,7 +131,9 @@ describe("conversation.queries", () => {
           .set({ updatedAt: thirdTime })
           .where(eq(conversation.id, third.id));
 
-        const firstPage = await listConversationsForUser(tx, userId, { limit: 1 });
+        const firstPage = await listConversationsForUser(tx, userId, {
+          limit: 1,
+        });
         expect(firstPage).toHaveLength(2);
         expect(firstPage[0]?.id).toBe(third.id);
 
@@ -150,14 +158,19 @@ describe("conversation.queries", () => {
         const userId = await createTestUser(tx, "test-user-archive");
 
         await insertConversation(tx, { userId, title: "Active" });
-        const archived = await insertConversation(tx, { userId, title: "Archived" });
+        const archived = await insertConversation(tx, {
+          userId,
+          title: "Archived",
+        });
 
         await tx
           .update(conversation)
           .set({ archivedAt: new Date() })
           .where(eq(conversation.id, archived.id));
 
-        const result = await listConversationsForUser(tx, userId, { limit: 10 });
+        const result = await listConversationsForUser(tx, userId, {
+          limit: 10,
+        });
 
         expect(result).toHaveLength(1);
         expect(result[0]?.title).toBe("Active");
@@ -178,14 +191,20 @@ describe("conversation.queries", () => {
         ];
 
         for (const id of ids) {
-          await insertConversation(tx, { id, userId, title: `Chat ${id.slice(0, 8)}` });
+          await insertConversation(tx, {
+            id,
+            userId,
+            title: `Chat ${id.slice(0, 8)}`,
+          });
           await tx
             .update(conversation)
             .set({ updatedAt: sameTime })
             .where(eq(conversation.id, id));
         }
 
-        const result = await listConversationsForUser(tx, userId, { limit: 10 });
+        const result = await listConversationsForUser(tx, userId, {
+          limit: 10,
+        });
 
         expect(result).toHaveLength(5);
         expect(result[0]?.id).toBe(ids[4]);
@@ -263,7 +282,9 @@ describe("conversation.queries", () => {
           if (!hasMore) break;
 
           const lastItem = items[items.length - 1];
-          cursor = lastItem ? { id: lastItem.id, updatedAt: lastItem.updatedAt } : undefined;
+          cursor = lastItem
+            ? { id: lastItem.id, updatedAt: lastItem.updatedAt }
+            : undefined;
           pageCount++;
         }
 
@@ -271,7 +292,6 @@ describe("conversation.queries", () => {
         expect(allFetched).toEqual(expectedOrder);
       });
     });
-
   });
 
   describe("getConversationById", () => {
@@ -303,4 +323,3 @@ describe("conversation.queries", () => {
     });
   });
 });
-

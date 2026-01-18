@@ -84,4 +84,3 @@ export function AppSidebar({ user }: AppSidebarProps) {
     </Sidebar>
   );
 }
-

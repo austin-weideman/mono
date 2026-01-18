@@ -23,10 +23,15 @@ export function ChatInput({ onSubmit, disabled }: ChatInputProps) {
   const hasContent = input.trim().length > 0;
 
   return (
-    <form onSubmit={handleSubmit} className="relative flex w-full items-end gap-2">
+    <form
+      onSubmit={handleSubmit}
+      className="relative flex w-full items-end gap-2"
+    >
       <AutoResizeTextarea
         value={input}
-        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setInput(e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+          setInput(e.target.value)
+        }
         onKeyDown={(e: React.KeyboardEvent<HTMLTextAreaElement>) => {
           if (e.key === "Enter" && !e.shiftKey) {
             e.preventDefault();
@@ -37,7 +42,7 @@ export function ChatInput({ onSubmit, disabled }: ChatInputProps) {
         placeholder="Message"
         maxHeight={200}
         wrapperClassName="rounded-[1.25rem] border border-border bg-background transition-colors focus-within:border-primary disabled:cursor-not-allowed disabled:opacity-50"
-        className="px-4 py-2.5 pr-12 text-base placeholder:text-muted-foreground"
+        className="placeholder:text-muted-foreground px-4 py-2.5 pr-12 text-base"
       />
       <button
         type="submit"
@@ -47,8 +52,8 @@ export function ChatInput({ onSubmit, disabled }: ChatInputProps) {
           "absolute right-2 bottom-2 flex size-7 items-center justify-center rounded-full transition-all",
           hasContent
             ? "bg-primary text-primary-foreground hover:opacity-90"
-            : "bg-transparent text-muted-foreground",
-          "disabled:cursor-not-allowed disabled:opacity-50"
+            : "text-muted-foreground bg-transparent",
+          "disabled:cursor-not-allowed disabled:opacity-50",
         )}
       >
         <SendIcon />
@@ -56,4 +61,3 @@ export function ChatInput({ onSubmit, disabled }: ChatInputProps) {
     </form>
   );
 }
-

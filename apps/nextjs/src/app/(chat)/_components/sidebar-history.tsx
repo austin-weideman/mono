@@ -1,13 +1,17 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import { useState } from "react";
-import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
+import { motion } from "framer-motion";
 
-import { groupConversationsByDate } from "@microlearn/chat-utils";
 import type { Conversation } from "@microlearn/conversation";
+import { groupConversationsByDate } from "@microlearn/chat-utils";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -96,7 +100,7 @@ function ConversationGroup({
           <DropdownMenu modal>
             <DropdownMenuTrigger asChild>
               <SidebarMenuAction
-                className="mr-0.5 cursor-pointer data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+                className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground mr-0.5 cursor-pointer"
                 showOnHover={conversation.id !== activeId}
               >
                 <MoreHorizontalIcon />
@@ -133,20 +137,15 @@ export function SidebarHistory() {
   const queryClient = useQueryClient();
 
   // Infinite query for conversations using new tRPC API
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-  } = useInfiniteQuery(
-    trpc.conversation.list.infiniteQueryOptions(
-      { limit: PAGE_SIZE },
-      {
-        getNextPageParam: (lastPage) => lastPage.nextCursor,
-      }
-    )
-  );
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    useInfiniteQuery(
+      trpc.conversation.list.infiniteQueryOptions(
+        { limit: PAGE_SIZE },
+        {
+          getNextPageParam: (lastPage) => lastPage.nextCursor,
+        },
+      ),
+    );
 
   // Delete mutation using new tRPC API
   const deleteMutation = useMutation(
@@ -162,7 +161,7 @@ export function SidebarHistory() {
           router.push("/chat");
         }
       },
-    })
+    }),
   );
 
   const handleDelete = () => {
@@ -182,7 +181,8 @@ export function SidebarHistory() {
   }
 
   // Flatten all pages into single array
-  const allConversations = data?.pages.flatMap((page) => page.conversations) ?? [];
+  const allConversations =
+    data?.pages.flatMap((page) => page.conversations) ?? [];
 
   // Empty state
   if (allConversations.length === 0) {
@@ -280,13 +280,10 @@ export function SidebarHistory() {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDelete}>
-              Delete
-            </AlertDialogAction>
+            <AlertDialogAction onClick={handleDelete}>Delete</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
     </>
   );
 }
-

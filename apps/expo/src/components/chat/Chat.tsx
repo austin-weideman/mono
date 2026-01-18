@@ -1,20 +1,20 @@
+import type { UIMessage } from "ai";
 import { useEffect, useRef } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import { KeyboardAvoidingView } from "react-native-keyboard-controller";
-import { useChat } from "@ai-sdk/react";
-import type { UIMessage } from "ai";
-import { DefaultChatTransport } from "ai";
-import { fetch as expoFetch } from "expo/fetch";
-import { useQueryClient } from "@tanstack/react-query";
 import * as Haptics from "expo-haptics";
+import { fetch as expoFetch } from "expo/fetch";
+import { useChat } from "@ai-sdk/react";
+import { useQueryClient } from "@tanstack/react-query";
+import { DefaultChatTransport } from "ai";
 
 import type { Message as DbMessage } from "@microlearn/conversation";
 import { convertDbMessagesToUIMessages } from "@microlearn/chat-utils";
 
 import { useTheme } from "~/lib";
 import { trpc } from "~/utils/api";
-import { getBaseUrl } from "~/utils/base-url";
 import { authClient } from "~/utils/auth";
+import { getBaseUrl } from "~/utils/base-url";
 import { ChatInput } from "./ChatInput";
 import { Messages } from "./Messages";
 
@@ -53,7 +53,7 @@ export function Chat({ conversationId, initialMessages, isNew }: ChatProps) {
       console.error("Chat error:", error);
       Alert.alert(
         "Error",
-        error.message || "Something went wrong. Please try again."
+        error.message || "Something went wrong. Please try again.",
       );
     }
   }, [error]);

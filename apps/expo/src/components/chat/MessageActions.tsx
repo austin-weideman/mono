@@ -3,7 +3,7 @@ import * as Clipboard from "expo-clipboard";
 import * as Haptics from "expo-haptics";
 import { Copy } from "lucide-react-native";
 
-import { useTheme, spacing } from "~/lib";
+import { spacing, useTheme } from "~/lib";
 
 const ICON_SIZE = 16;
 const ACTION_BUTTON_PADDING = 6;

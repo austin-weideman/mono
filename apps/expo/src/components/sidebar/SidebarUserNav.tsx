@@ -3,7 +3,7 @@ import * as Haptics from "expo-haptics";
 
 import { getInitials } from "@microlearn/chat-utils";
 
-import { useTheme, fontSize, spacing, sizing } from "~/lib";
+import { fontSize, sizing, spacing, useTheme } from "~/lib";
 import { authClient } from "~/utils/auth";
 
 export function SidebarUserNav() {
@@ -41,7 +41,9 @@ export function SidebarUserNav() {
         {user.image ? (
           <Image source={{ uri: user.image }} style={styles.avatar} />
         ) : (
-          <View style={[styles.avatarFallback, { backgroundColor: colors.primary }]}>
+          <View
+            style={[styles.avatarFallback, { backgroundColor: colors.primary }]}
+          >
             <Text style={[styles.initials, { color: colors.textOnPrimary }]}>
               {initials}
             </Text>

@@ -5,4 +5,3 @@ export interface ConversationWithMessages {
   conversation: Conversation;
   messages: Message[];
 }
-

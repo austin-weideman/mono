@@ -1,10 +1,10 @@
-import { gateway } from "@ai-sdk/gateway";
-import { ToolLoopAgent, stepCountIs } from "ai";
 import type { InferAgentUIMessage } from "ai";
+import { gateway } from "@ai-sdk/gateway";
+import { stepCountIs, ToolLoopAgent } from "ai";
 
 import type { AgentToolConfig, ToolContext, ToolMetadata } from "../types";
-import { ExternalToolSet, InternalTool } from "../types";
 import { createTools, generateToolInstructions } from "../tools";
+import { ExternalToolSet, InternalTool } from "../types";
 
 const REASONING_PROVIDER_OPTIONS = {
   anthropic: {

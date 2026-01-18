@@ -2,9 +2,9 @@ import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import { v4 as uuidv4 } from "uuid";
 
-import { useTheme } from "~/lib";
 import { Chat } from "~/components/chat/Chat";
 import { ChatHeader } from "~/components/chat/ChatHeader";
+import { useTheme } from "~/lib";
 
 export default function NewChatScreen() {
   const { colors } = useTheme();

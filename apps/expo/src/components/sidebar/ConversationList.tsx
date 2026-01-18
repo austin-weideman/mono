@@ -1,6 +1,16 @@
-import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { usePathname, useRouter } from "expo-router";
-import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
 
 import { groupConversationsByDate } from "@microlearn/chat-utils";
 
@@ -26,20 +36,15 @@ export function ConversationList({ onNavigate }: ConversationListProps) {
     ? pathname.replace("/chat/", "")
     : undefined;
 
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-  } = useInfiniteQuery(
-    trpc.conversation.list.infiniteQueryOptions(
-      { limit: PAGE_SIZE },
-      {
-        getNextPageParam: (lastPage) => lastPage.nextCursor,
-      }
-    )
-  );
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    useInfiniteQuery(
+      trpc.conversation.list.infiniteQueryOptions(
+        { limit: PAGE_SIZE },
+        {
+          getNextPageParam: (lastPage) => lastPage.nextCursor,
+        },
+      ),
+    );
 
   const deleteMutation = useMutation(
     trpc.conversation.delete.mutationOptions({
@@ -52,16 +57,23 @@ export function ConversationList({ onNavigate }: ConversationListProps) {
           router.replace("/");
         }
       },
-    })
+    }),
   );
 
   const handleDelete = (id: string) => {
     deleteMutation.mutate({ conversationId: id });
   };
 
-  const handleScroll = (event: { nativeEvent: { layoutMeasurement: { height: number }; contentOffset: { y: number }; contentSize: { height: number } } }) => {
+  const handleScroll = (event: {
+    nativeEvent: {
+      layoutMeasurement: { height: number };
+      contentOffset: { y: number };
+      contentSize: { height: number };
+    };
+  }) => {
     const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
-    const isNearBottom = layoutMeasurement.height + contentOffset.y >= contentSize.height - 100;
+    const isNearBottom =
+      layoutMeasurement.height + contentOffset.y >= contentSize.height - 100;
 
     if (isNearBottom && hasNextPage && !isFetchingNextPage) {
       void fetchNextPage();
@@ -72,7 +84,8 @@ export function ConversationList({ onNavigate }: ConversationListProps) {
     return <ConversationListSkeleton />;
   }
 
-  const allConversations = data?.pages.flatMap((page) => page.conversations) ?? [];
+  const allConversations =
+    data?.pages.flatMap((page) => page.conversations) ?? [];
 
   if (allConversations.length === 0) {
     return <ConversationListEmpty />;

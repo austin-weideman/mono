@@ -9,4 +9,3 @@ export const startConversationInputSchema = z.object({
 export type StartConversationInput = z.infer<
   typeof startConversationInputSchema
 >;
-

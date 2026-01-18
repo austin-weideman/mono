@@ -1,13 +1,20 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import type { UseChatHelpers } from "@ai-sdk/react";
+import type { UIMessage } from "ai";
 import type { NativeScrollEvent, NativeSyntheticEvent } from "react-native";
-import { FlatList, Keyboard, Pressable, StyleSheet, Text, View } from "react-native";
+import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  FlatList,
+  Keyboard,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
-import type { UIMessage } from "ai";
-import type { UseChatHelpers } from "@ai-sdk/react";
 import { ArrowDown, Sparkles } from "lucide-react-native";
 
-import { useTheme, spacing, sizing, layout, fontSize } from "~/lib";
+import { fontSize, layout, sizing, spacing, useTheme } from "~/lib";
 import { Message } from "./Message";
 
 type ChatStatus = UseChatHelpers<UIMessage>["status"];
@@ -56,7 +63,10 @@ export function Messages({ messages, status }: MessagesProps) {
   const prevMessageCount = useRef(messages.length);
   useEffect(() => {
     const lastMessage = messages[messages.length - 1];
-    if (messages.length > prevMessageCount.current && lastMessage?.role === "user") {
+    if (
+      messages.length > prevMessageCount.current &&
+      lastMessage?.role === "user"
+    ) {
       scrollToEnd();
     }
     prevMessageCount.current = messages.length;
@@ -76,11 +86,16 @@ export function Messages({ messages, status }: MessagesProps) {
     return () => subscription.remove();
   }, [scrollToEnd]);
 
-  const handleScroll = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
-    const distanceFromBottom = contentSize.height - layoutMeasurement.height - contentOffset.y;
-    setIsAtBottom(distanceFromBottom < 50);
-  }, []);
+  const handleScroll = useCallback(
+    (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+      const { layoutMeasurement, contentOffset, contentSize } =
+        event.nativeEvent;
+      const distanceFromBottom =
+        contentSize.height - layoutMeasurement.height - contentOffset.y;
+      setIsAtBottom(distanceFromBottom < 50);
+    },
+    [],
+  );
 
   const renderItem = useCallback(
     ({ item, index }: { item: UIMessage; index: number }) => (
@@ -91,7 +106,7 @@ export function Messages({ messages, status }: MessagesProps) {
         />
       </View>
     ),
-    [status, messages.length]
+    [status, messages.length],
   );
 
   const keyExtractor = useCallback((item: UIMessage) => item.id, []);

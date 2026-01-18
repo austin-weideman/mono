@@ -44,7 +44,7 @@ function UserAvatar({ user }: { user: User }) {
   }
 
   return (
-    <div className="flex size-8 items-center justify-center rounded-full bg-primary text-xs font-medium text-primary-foreground">
+    <div className="bg-primary text-primary-foreground flex size-8 items-center justify-center rounded-full text-xs font-medium">
       {initials}
     </div>
   );
@@ -60,13 +60,17 @@ export function SidebarUserNav({ user }: SidebarUserNavProps) {
               aria-label="User menu"
               className={cn(
                 "flex w-full cursor-pointer items-center gap-2.5 rounded-lg px-2 py-1.5 transition-colors",
-                "hover:bg-sidebar-accent data-[state=open]:bg-sidebar-accent"
+                "hover:bg-sidebar-accent data-[state=open]:bg-sidebar-accent",
               )}
             >
               <UserAvatar user={user} />
               <div className="flex min-w-0 flex-1 flex-col items-start">
-                <span className="truncate text-sm font-medium">{user.name}</span>
-                <span className="truncate text-xs text-muted-foreground">{user.email}</span>
+                <span className="truncate text-sm font-medium">
+                  {user.name}
+                </span>
+                <span className="text-muted-foreground truncate text-xs">
+                  {user.email}
+                </span>
               </div>
             </button>
           </DropdownMenuTrigger>
@@ -77,7 +81,10 @@ export function SidebarUserNav({ user }: SidebarUserNavProps) {
           >
             <form action={signOutAction}>
               <DropdownMenuItem asChild>
-                <button className="w-full cursor-pointer rounded-md" type="submit">
+                <button
+                  className="w-full cursor-pointer rounded-md"
+                  type="submit"
+                >
                   Sign out
                 </button>
               </DropdownMenuItem>

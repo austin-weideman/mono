@@ -1,5 +1,5 @@
-import { db } from "@microlearn/db/client";
 import type { Transaction } from "@microlearn/db/client";
+import { db } from "@microlearn/db/client";
 
 /**
  * Executes a test function within a database transaction that is always rolled back.
@@ -44,4 +44,3 @@ export async function withTestTransaction<T>(
 
   return result;
 }
-

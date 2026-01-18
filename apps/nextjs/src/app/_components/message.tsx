@@ -23,7 +23,7 @@ export function Message({ message, isLoading }: MessageProps) {
         })}
       >
         {!isUser && (
-          <div className="flex size-7 shrink-0 items-center justify-center rounded-full bg-muted">
+          <div className="bg-muted flex size-7 shrink-0 items-center justify-center rounded-full">
             <SparklesIcon size={14} />
           </div>
         )}
@@ -51,13 +51,15 @@ export function Message({ message, isLoading }: MessageProps) {
                 <div
                   key={idx}
                   className={cn({
-                    "max-w-full break-all bg-primary px-3.5 py-2 text-primary-foreground rounded-[1.25rem] rounded-br-md":
+                    "bg-primary text-primary-foreground max-w-full rounded-[1.25rem] rounded-br-md px-3.5 py-2 break-all":
                       isUser,
                     "bg-transparent px-0 py-0 text-left": !isUser,
                   })}
                 >
                   {isUser ? (
-                    <div className="whitespace-pre-wrap text-base leading-relaxed">{part.text}</div>
+                    <div className="text-base leading-relaxed whitespace-pre-wrap">
+                      {part.text}
+                    </div>
                   ) : (
                     <Markdown>{part.text}</Markdown>
                   )}
@@ -69,10 +71,11 @@ export function Message({ message, isLoading }: MessageProps) {
 
           {isLoading && !isUser && <ThinkingIndicator />}
 
-          {!isUser && <MessageActions message={message} isLoading={isLoading} />}
+          {!isUser && (
+            <MessageActions message={message} isLoading={isLoading} />
+          )}
         </div>
       </div>
     </div>
   );
 }
-

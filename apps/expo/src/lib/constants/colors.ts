@@ -109,4 +109,3 @@ export const colors = {
 
 export type TTheme = keyof typeof colors;
 export type TColors = (typeof colors)[TTheme];
-

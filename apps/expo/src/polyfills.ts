@@ -1,10 +1,10 @@
 import { Platform } from "react-native";
-import structuredClone from "@ungap/structured-clone";
 import { polyfillGlobal } from "react-native/Libraries/Utilities/PolyfillFunctions";
 import {
-  TextEncoderStream,
   TextDecoderStream,
+  TextEncoderStream,
 } from "@stardazed/streams-text-encoding";
+import structuredClone from "@ungap/structured-clone";
 
 if (Platform.OS !== "web") {
   if (!("structuredClone" in global)) {

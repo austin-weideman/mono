@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Pressable, StyleSheet, TextInput, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { KeyboardGestureArea } from "react-native-keyboard-controller";
-import { Send } from "lucide-react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as Haptics from "expo-haptics";
+import { Send } from "lucide-react-native";
 
-import { useTheme, spacing, sizing, fontSize } from "~/lib";
+import { fontSize, sizing, spacing, useTheme } from "~/lib";
 
 interface ChatInputProps {
   onSubmit: (text: string) => void;
