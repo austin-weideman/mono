@@ -6,6 +6,8 @@ import type { AgentToolConfig, ToolContext, ToolMetadata } from "../types";
 import { createTools, generateToolInstructions } from "../tools";
 import { ExternalToolSet, InternalTool } from "../types";
 
+const MAX_AGENT_STEPS = 50;
+
 const REASONING_PROVIDER_OPTIONS = {
   anthropic: {
     thinking: { type: "enabled" as const, budgetTokens: 16384 },
@@ -62,7 +64,7 @@ export async function createAssistantAgent(
     model: gateway(gatewayModelId),
     instructions: buildInstructions(metadata),
     tools,
-    stopWhen: stepCountIs(10),
+    stopWhen: stepCountIs(MAX_AGENT_STEPS),
     providerOptions: REASONING_PROVIDER_OPTIONS,
   });
 
