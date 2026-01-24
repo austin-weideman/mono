@@ -1,6 +1,8 @@
+import type { SectionListData } from "react-native";
+import { useCallback, useMemo } from "react";
 import {
   ActivityIndicator,
-  ScrollView,
+  SectionList,
   StyleSheet,
   Text,
   View,
@@ -12,15 +14,22 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 
+import type { Conversation } from "@microlearn/conversation";
 import { groupConversationsByDate } from "@microlearn/chat-utils";
 
 import { useTheme } from "~/lib";
 import { trpc } from "~/utils/api";
-import { ConversationGroup } from "./ConversationGroup";
+import { ConversationItem } from "./ConversationItem";
 import { ConversationListEmpty } from "./ConversationListEmpty";
 import { ConversationListSkeleton } from "./ConversationListSkeleton";
 
 const PAGE_SIZE = 50;
+const ON_END_REACHED_THRESHOLD = 0.5;
+
+interface ConversationSection {
+  title: string;
+  data: Conversation[];
+}
 
 interface ConversationListProps {
   onNavigate: () => void;
@@ -60,99 +69,120 @@ export function ConversationList({ onNavigate }: ConversationListProps) {
     }),
   );
 
-  const handleDelete = (id: string) => {
-    deleteMutation.mutate({ conversationId: id });
-  };
+  const handleDelete = useCallback(
+    (id: string) => {
+      deleteMutation.mutate({ conversationId: id });
+    },
+    [deleteMutation],
+  );
 
-  const handleScroll = (event: {
-    nativeEvent: {
-      layoutMeasurement: { height: number };
-      contentOffset: { y: number };
-      contentSize: { height: number };
-    };
-  }) => {
-    const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
-    const isNearBottom =
-      layoutMeasurement.height + contentOffset.y >= contentSize.height - 100;
-
-    if (isNearBottom && hasNextPage && !isFetchingNextPage) {
+  const handleEndReached = useCallback(() => {
+    if (hasNextPage && !isFetchingNextPage) {
       void fetchNextPage();
     }
-  };
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  if (isLoading) {
-    return <ConversationListSkeleton />;
-  }
+  const allConversations = useMemo(
+    () => data?.pages.flatMap((page) => page.conversations) ?? [],
+    [data?.pages],
+  );
 
-  const allConversations =
-    data?.pages.flatMap((page) => page.conversations) ?? [];
+  const sections = useMemo((): ConversationSection[] => {
+    if (allConversations.length === 0) return [];
 
-  if (allConversations.length === 0) {
-    return <ConversationListEmpty />;
-  }
+    const grouped = groupConversationsByDate(allConversations);
 
-  const grouped = groupConversationsByDate(allConversations);
+    const sectionDefinitions: { title: string; data: Conversation[] }[] = [
+      { title: "Today", data: grouped.today },
+      { title: "Yesterday", data: grouped.yesterday },
+      { title: "Last 7 days", data: grouped.lastWeek },
+      { title: "Last 30 days", data: grouped.lastMonth },
+      { title: "Older", data: grouped.older },
+    ];
 
-  return (
-    <ScrollView
-      style={styles.container}
-      contentContainerStyle={styles.content}
-      onScroll={handleScroll}
-      scrollEventThrottle={400}
-    >
-      <View style={styles.groups}>
-        <ConversationGroup
-          title="Today"
-          conversations={grouped.today}
-          activeId={activeId}
-          onDelete={handleDelete}
-          onNavigate={onNavigate}
-        />
-        <ConversationGroup
-          title="Yesterday"
-          conversations={grouped.yesterday}
-          activeId={activeId}
-          onDelete={handleDelete}
-          onNavigate={onNavigate}
-        />
-        <ConversationGroup
-          title="Last 7 days"
-          conversations={grouped.lastWeek}
-          activeId={activeId}
-          onDelete={handleDelete}
-          onNavigate={onNavigate}
-        />
-        <ConversationGroup
-          title="Last 30 days"
-          conversations={grouped.lastMonth}
-          activeId={activeId}
-          onDelete={handleDelete}
-          onNavigate={onNavigate}
-        />
-        <ConversationGroup
-          title="Older"
-          conversations={grouped.older}
-          activeId={activeId}
-          onDelete={handleDelete}
-          onNavigate={onNavigate}
-        />
-      </View>
+    return sectionDefinitions.filter((section) => section.data.length > 0);
+  }, [allConversations]);
 
-      {isFetchingNextPage && (
+  const renderItem = useCallback(
+    ({ item }: { item: Conversation }) => (
+      <ConversationItem
+        conversation={item}
+        isActive={item.id === activeId}
+        onDelete={handleDelete}
+        onNavigate={onNavigate}
+      />
+    ),
+    [activeId, handleDelete, onNavigate],
+  );
+
+  const renderSectionHeader = useCallback(
+    ({
+      section,
+    }: {
+      section: SectionListData<Conversation, ConversationSection>;
+    }) => (
+      <Text style={[styles.sectionHeader, { color: colors.textMuted }]}>
+        {section.title}
+      </Text>
+    ),
+    [colors.textMuted],
+  );
+
+  const renderFooter = useCallback(() => {
+    if (isFetchingNextPage) {
+      return (
         <View style={styles.loadingMore}>
           <ActivityIndicator size="small" color={colors.textMuted} />
           <Text style={[styles.loadingText, { color: colors.textMuted }]}>
             Loading more...
           </Text>
         </View>
-      )}
+      );
+    }
 
-      {!hasNextPage && allConversations.length > PAGE_SIZE && (
+    if (!hasNextPage && allConversations.length > PAGE_SIZE) {
+      return (
         <Text style={[styles.endText, { color: colors.textMuted }]}>
           You've reached the end of your chat history.
         </Text>
-      )}
-    </ScrollView>
+      );
+    }
+
+    return null;
+  }, [
+    isFetchingNextPage,
+    hasNextPage,
+    allConversations.length,
+    colors.textMuted,
+  ]);
+
+  const keyExtractor = useCallback((item: Conversation) => item.id, []);
+
+  if (isLoading) {
+    return <ConversationListSkeleton />;
+  }
+
+  if (allConversations.length === 0) {
+    return <ConversationListEmpty />;
+  }
+
+  return (
+    <SectionList
+      sections={sections}
+      keyExtractor={keyExtractor}
+      renderItem={renderItem}
+      renderSectionHeader={renderSectionHeader}
+      ListFooterComponent={renderFooter}
+      style={styles.container}
+      contentContainerStyle={styles.content}
+      stickySectionHeadersEnabled={false}
+      onEndReached={handleEndReached}
+      onEndReachedThreshold={ON_END_REACHED_THRESHOLD}
+      showsVerticalScrollIndicator={false}
+      initialNumToRender={15}
+      maxToRenderPerBatch={10}
+      windowSize={5}
+    />
   );
 }
 
@@ -163,8 +193,11 @@ const styles = StyleSheet.create({
   content: {
     paddingVertical: 8,
   },
-  groups: {
-    gap: 24,
+  sectionHeader: {
+    fontSize: 12,
+    paddingHorizontal: 12,
+    paddingTop: 16,
+    paddingBottom: 4,
   },
   loadingMore: {
     flexDirection: "row",
