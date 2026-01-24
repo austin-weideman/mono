@@ -1,42 +1,44 @@
-import { useEffect, useMemo } from "react";
-import { Animated, StyleSheet, View } from "react-native";
+import { useEffect } from "react";
+import { StyleSheet, View } from "react-native";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withDelay,
+  withRepeat,
+  withSequence,
+  withTiming,
+} from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { layout, sizing, spacing, useTheme } from "~/lib";
 
 function SkeletonBar({ width, delay }: { width: `${number}%`; delay: number }) {
   const { colors } = useTheme();
-  const opacity = useMemo(() => new Animated.Value(0.3), []);
+  const opacity = useSharedValue(0.3);
 
   useEffect(() => {
-    const animation = Animated.loop(
-      Animated.sequence([
-        Animated.timing(opacity, {
-          toValue: 0.7,
-          duration: 800,
-          delay,
-          useNativeDriver: true,
-        }),
-        Animated.timing(opacity, {
-          toValue: 0.3,
-          duration: 800,
-          useNativeDriver: true,
-        }),
-      ]),
+    opacity.value = withDelay(
+      delay,
+      withRepeat(
+        withSequence(
+          withTiming(0.7, { duration: 800 }),
+          withTiming(0.3, { duration: 800 }),
+        ),
+        -1,
+      ),
     );
-    animation.start();
-    return () => animation.stop();
-  }, [opacity, delay]);
+  }, [delay, opacity]);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    opacity: opacity.value,
+  }));
 
   return (
     <Animated.View
       style={[
         styles.bar,
-        {
-          width,
-          backgroundColor: colors.surfaceMuted,
-          opacity,
-        },
+        { width, backgroundColor: colors.surfaceMuted },
+        animatedStyle,
       ]}
     />
   );
