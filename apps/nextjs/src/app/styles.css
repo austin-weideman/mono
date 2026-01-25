@@ -20,18 +20,17 @@
     "SF Mono", ui-monospace, SFMono-Regular, "Roboto Mono", Menlo, Monaco,
     Consolas, "Liberation Mono", "Courier New", monospace;
 
-  --warm-cream: hsl(32 28% 96%);
-  --warm-cream-dark: hsl(332 22% 93%);
-  --warm-amber: hsl(336 38% 54%);
-  --warm-amber-light: hsl(338 46% 62%);
-  --warm-amber-dark: hsl(334 42% 44%);
-  --warm-gold: hsl(38 36% 88%);
-  --warm-gold-muted: hsl(332 18% 78%);
-  --warm-orange: hsl(320 44% 60%);
-  --warm-brown: hsl(332 24% 18%);
-  --warm-brown-light: hsl(332 18% 30%);
-  --warm-brown-muted: hsl(332 12% 45%);
-  --warm-tan: hsl(332 18% 88%);
+  --pearl: hsl(32 28% 96%);
+  --porcelain: hsl(332 22% 93%);
+  --mauve: hsl(336 38% 54%);
+  --mauve-light: hsl(338 46% 62%);
+  --mauve-dark: hsl(334 42% 44%);
+  --blush: hsl(332 30% 88%);
+  --rose: hsl(320 44% 60%);
+  --ink: hsl(332 24% 18%);
+  --ink-soft: hsl(332 18% 30%);
+  --ink-muted: hsl(332 12% 45%);
+  --shell: hsl(332 18% 88%);
 }
 
 @utility container {
@@ -49,18 +48,17 @@
   --font-display: var(--font-display), Georgia, "Times New Roman", serif;
   --font-body: var(--font-body), var(--font-system);
 
-  --color-warm-cream: var(--warm-cream);
-  --color-warm-cream-dark: var(--warm-cream-dark);
-  --color-warm-amber: var(--warm-amber);
-  --color-warm-amber-light: var(--warm-amber-light);
-  --color-warm-amber-dark: var(--warm-amber-dark);
-  --color-warm-gold: var(--warm-gold);
-  --color-warm-gold-muted: var(--warm-gold-muted);
-  --color-warm-orange: var(--warm-orange);
-  --color-warm-brown: var(--warm-brown);
-  --color-warm-brown-light: var(--warm-brown-light);
-  --color-warm-brown-muted: var(--warm-brown-muted);
-  --color-warm-tan: var(--warm-tan);
+  --color-pearl: var(--pearl);
+  --color-porcelain: var(--porcelain);
+  --color-mauve: var(--mauve);
+  --color-mauve-light: var(--mauve-light);
+  --color-mauve-dark: var(--mauve-dark);
+  --color-blush: var(--blush);
+  --color-rose: var(--rose);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-muted: var(--ink-muted);
+  --color-shell: var(--shell);
 }
 
 @layer base {

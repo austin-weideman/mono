@@ -38,9 +38,9 @@ export function GoogleSignInButton({
         className={cn(
           "inline-flex cursor-pointer items-center justify-center gap-2 rounded-full font-medium transition-all",
           variant === "primary" &&
-            "bg-warm-amber hover:bg-warm-amber-dark text-white shadow-[0_18px_40px_rgba(58,24,40,0.22)] hover:shadow-[0_22px_50px_rgba(58,24,40,0.28)]",
+            "bg-mauve hover:bg-mauve-dark text-white shadow-[0_18px_40px_rgba(58,24,40,0.22)] hover:shadow-[0_22px_50px_rgba(58,24,40,0.28)]",
           variant === "outline" &&
-            "border-warm-amber/50 text-warm-brown hover:bg-warm-amber/10 border-2",
+            "border-mauve/50 text-ink hover:bg-mauve/10 border-2",
           size === "default" && "px-5 py-2.5 text-sm",
           size === "large" && "px-8 py-4 text-base",
           className,
