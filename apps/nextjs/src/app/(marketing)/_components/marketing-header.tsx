@@ -18,7 +18,7 @@ export function MarketingHeader({ signInButton }: MarketingHeaderProps) {
 
   return (
     <header className="fixed top-0 right-0 left-0 z-50">
-      <div className="bg-warm-cream/80 border-warm-tan/50 mx-4 mt-4 rounded-2xl border backdrop-blur-md md:mx-8">
+      <div className="bg-warm-cream/75 border-warm-tan/60 mx-4 mt-4 rounded-2xl border shadow-[0_20px_60px_rgba(58,24,40,0.12)] backdrop-blur-md md:mx-8">
         <nav className="flex items-center justify-between px-6 py-4">
           <Link
             href="/"
@@ -61,7 +61,7 @@ export function MarketingHeader({ signInButton }: MarketingHeaderProps) {
             mobileMenuOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0",
           )}
         >
-          <div className="border-warm-tan/30 flex flex-col gap-4 border-t px-6 py-4">
+          <div className="border-warm-tan/40 flex flex-col gap-4 border-t px-6 py-4">
             {NAV_LINKS.map((link) => (
               <ScrollLink
                 key={link.label}

@@ -24,10 +24,10 @@ export function FeaturesSection() {
           return (
             <div
               key={feature.title}
-              className="group bg-warm-cream border-warm-tan/50 hover:border-warm-amber/30 relative overflow-hidden rounded-2xl border p-8 transition-all hover:shadow-lg"
+              className="group bg-warm-cream/90 border-warm-tan/60 hover:border-warm-amber/40 relative overflow-hidden rounded-3xl border p-8 transition-all hover:shadow-[0_24px_60px_rgba(58,24,40,0.12)]"
               style={{ animationDelay: `${index * 100}ms` }}
             >
-              <div className="bg-warm-amber/10 group-hover:bg-warm-amber/20 mb-6 inline-flex rounded-xl p-3 transition-colors">
+              <div className="bg-warm-amber/10 group-hover:bg-warm-amber/20 mb-6 inline-flex rounded-2xl p-3 transition-colors">
                 <Icon className="text-warm-amber size-6" />
               </div>
 

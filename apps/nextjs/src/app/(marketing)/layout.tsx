@@ -10,7 +10,10 @@ interface MarketingLayoutProps {
 
 export default function MarketingLayout({ children }: MarketingLayoutProps) {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div
+      className="bg-warm-cream text-warm-brown flex min-h-screen flex-col"
+      style={{ fontFamily: "var(--font-body)" }}
+    >
       <MarketingHeader
         signInButton={
           <GoogleSignInButton variant="outline">Sign In</GoogleSignInButton>

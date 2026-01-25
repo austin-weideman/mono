@@ -29,7 +29,8 @@ export default async function PricingPage() {
 function PricingHero() {
   return (
     <section className="bg-warm-cream relative overflow-hidden px-4 pt-32 pb-20 md:px-8 md:pt-40 md:pb-32">
-      <div className="from-warm-gold/20 via-warm-amber/10 absolute top-0 right-0 h-[600px] w-[600px] translate-x-1/3 -translate-y-1/3 rounded-full bg-linear-to-br to-transparent blur-3xl" />
+      <div className="from-warm-gold/30 via-warm-amber/20 absolute top-0 right-0 h-[600px] w-[600px] translate-x-1/3 -translate-y-1/3 rounded-full bg-linear-to-br to-transparent blur-3xl" />
+      <div className="from-warm-amber/20 absolute -bottom-32 left-0 h-[520px] w-[520px] -translate-x-1/3 rounded-full bg-linear-to-tr to-transparent blur-3xl" />
 
       <div className="relative mx-auto max-w-5xl">
         <div className="mb-16 text-center">
@@ -59,10 +60,10 @@ function PricingCard({ tier }: PricingCardProps) {
   return (
     <div
       className={cn(
-        "relative rounded-2xl border p-8 transition-all",
+        "relative rounded-3xl border p-8 transition-all",
         tier.highlighted
           ? "border-warm-amber bg-warm-cream z-10 scale-105 shadow-xl"
-          : "border-warm-tan/50 bg-warm-cream-dark hover:border-warm-amber/30 hover:shadow-lg",
+          : "border-warm-tan/60 bg-warm-cream-dark/70 hover:border-warm-amber/40 hover:shadow-[0_24px_60px_rgba(58,24,40,0.12)]",
       )}
     >
       {tier.highlighted && (
@@ -118,7 +119,7 @@ function PricingFaq() {
         {PRICING_FAQ.map((faq) => (
           <div
             key={faq.question}
-            className="bg-warm-cream border-warm-tan/50 rounded-2xl border p-6"
+            className="bg-warm-cream/90 border-warm-tan/60 rounded-3xl border p-6"
           >
             <h3 className="text-warm-brown mb-2 font-semibold">
               {faq.question}

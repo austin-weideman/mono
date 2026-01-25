@@ -36,11 +36,11 @@ export function GoogleSignInButton({
           redirect(res.url);
         }}
         className={cn(
-          "inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl font-medium transition-all",
+          "inline-flex cursor-pointer items-center justify-center gap-2 rounded-full font-medium transition-all",
           variant === "primary" &&
-            "bg-warm-amber hover:bg-warm-amber-dark text-white shadow-md hover:shadow-lg",
+            "bg-warm-amber hover:bg-warm-amber-dark text-white shadow-[0_18px_40px_rgba(58,24,40,0.22)] hover:shadow-[0_22px_50px_rgba(58,24,40,0.28)]",
           variant === "outline" &&
-            "border-warm-amber text-warm-amber hover:bg-warm-amber/10 border-2",
+            "border-warm-amber/50 text-warm-brown hover:bg-warm-amber/10 border-2",
           size === "default" && "px-5 py-2.5 text-sm",
           size === "large" && "px-8 py-4 text-base",
           className,

@@ -9,7 +9,7 @@ export function HowItWorksSection() {
       className="bg-warm-cream relative"
       maxWidth="5xl"
     >
-      <div className="from-warm-gold/10 absolute top-1/2 left-1/2 h-[800px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-linear-to-br to-transparent blur-3xl" />
+      <div className="from-warm-gold/30 absolute top-1/2 left-1/2 h-[860px] w-[860px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-linear-to-br to-transparent blur-3xl" />
 
       <div className="relative">
         <SectionHeader title={HOW_IT_WORKS.headline} />
@@ -32,7 +32,7 @@ export function HowItWorksSection() {
                 <div
                   className={`flex-1 ${index % 2 === 1 ? "md:text-right" : ""}`}
                 >
-                  <div className="bg-warm-cream-dark border-warm-tan/50 rounded-2xl border p-8 shadow-sm">
+                  <div className="bg-warm-cream/90 border-warm-tan/60 rounded-3xl border p-8 shadow-[0_16px_40px_rgba(58,24,40,0.08)]">
                     <div className="md:hidden">
                       <StepNumber number={step.number} size="small" />
                     </div>
@@ -64,7 +64,9 @@ interface StepNumberProps {
 
 function StepNumber({ number, size = "default" }: StepNumberProps) {
   const sizeClasses =
-    size === "default" ? "size-12 text-lg shadow-lg" : "size-10 text-sm mb-4";
+    size === "default"
+      ? "size-12 text-lg shadow-[0_12px_30px_rgba(58,24,40,0.2)]"
+      : "size-10 text-sm mb-4 shadow-[0_10px_24px_rgba(58,24,40,0.18)]";
 
   return (
     <div
