@@ -1,11 +1,24 @@
 import type { Metadata, Viewport } from "next";
+import { Fraunces, Nunito_Sans } from "next/font/google";
 
-import { cn, ThemeProvider, ThemeToggle, Toaster } from "@microlearn/ui";
+import { cn, ThemeProvider, Toaster } from "@microlearn/ui";
 
 import { env } from "~/env";
 import { TRPCReactProvider } from "~/trpc/react";
 
 import "~/app/styles.css";
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-display",
+});
+
+const nunitoSans = Nunito_Sans({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-body",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -34,23 +47,24 @@ export const viewport: Viewport = {
 
 export default function RootLayout(props: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={cn(fraunces.variable, nunitoSans.variable)}
+    >
       <body
         className={cn(
-          "bg-background text-foreground min-h-screen font-sans antialiased",
+          "bg-background text-foreground min-h-screen overflow-x-hidden font-sans antialiased",
         )}
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
+          defaultTheme="light"
           disableTransitionOnChange
           enableSystem
         >
           <Toaster position="top-center" />
           <TRPCReactProvider>{props.children}</TRPCReactProvider>
-          <div className="absolute right-4 bottom-4">
-            <ThemeToggle />
-          </div>
         </ThemeProvider>
       </body>
     </html>

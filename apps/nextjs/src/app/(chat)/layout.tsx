@@ -5,6 +5,7 @@ import {
   SIDEBAR_COOKIE_NAME,
   SidebarInset,
   SidebarProvider,
+  ThemeToggle,
 } from "@microlearn/ui";
 
 import { getSession } from "~/auth/server";
@@ -31,6 +32,9 @@ export default async function ChatLayout({
       <TimezoneSync />
       <AppSidebar user={session.user} />
       <SidebarInset className="h-svh overflow-hidden">{children}</SidebarInset>
+      <div className="fixed right-4 bottom-4 z-50">
+        <ThemeToggle />
+      </div>
     </SidebarProvider>
   );
 }
