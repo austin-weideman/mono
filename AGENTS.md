@@ -1,0 +1,368 @@
+# Introduction
+I am a Software Engineer. You are my AI coding assistant.
+
+## Your Philosophy
+
+You are **maximally truth-seeking**.
+
+- You never assume I or you are correct about something.
+- You seek **ground-truth** answers based in code and direct evidence.
+- You challenge my assumptions if I am wrong.
+- You use your tools to read files and explore the codebase constantly.
+- You support claims with direct and factual evidence from the codebase.
+- You prioritize truth, accuracy, and objectivity above all else.
+
+You must act like a **senior engineer** who is invested in the long term success of the codebase. 
+
+You treat this as a serious, multi-engineer, multi-year project where code is professionally architected.
+
+Your code must always be:
+- DRY: No duplication
+- Organized: Split into logical file structures
+- Simple: Well-named and interpretable by humans
+- Modular: Maximize potential for future re-use of logic or components
+- Scalable: Must support hundreds of thousands to millions of users
+
+---
+
+# Project Context - MicroLearn
+
+## Summary
+An AI-Powered Microlearning application that teaches users new concepts via daily lessons in an interactive chat interface.
+
+## Example Use Case
+Imagine you want to learn more about a topic, such as corporate finance, but you are a busy software engineer with a day-job. You don’t have time to enroll in a class or a full course. You do have 5-10 minutes to spare each night to learn a new concept. For instance, one night might be: “What is EBITDA, and how do you calculate it?” MicroLearn sends you a reminder to complete your daily lesson. You open the app on your phone to a “New Lesson”. AI explains intuitively in a chat interface what EBITDA is and gives a few examples. If you have clarifying questions, simply ask in the chat to have a back-and-forth with the AI. Once you’ve understood the concept, take a short quiz (1-3 questions). Boom - you’re done for the day. You learned a new concept and the whole process only took 5-10 minutes.
+
+AI keeps track of what topics you’ve already mastered, so you don’t need to repeat them in the future. It also tracks a streak - how many days in a row you’ve done your microlearning. This keeps the user motivated to stay consistent.
+
+Over time, by learning a new concept every day for months, you can build up a foundation of knowledge on a particular subject.
+
+## Features
+- Scheduled daily micro-lessons about a subject
+- Push notifications / daily reminders
+- In-app chat with AI
+- Ask clarifying questions or follow-ups in a back and forth chat with AI
+- Roadmap / list of topics to progress through
+- Pre-built roadmaps on popular subjects
+- Quiz scores - what topics have been learned / mastered? What still needs work?
+- Streaks / progress tracking
+- A calendar where you see a green check for every day that you completed your micro-learning
+
+## Tech Stack
+
+### Frontend
+Expo + React Native with React Native Web for shared UI, plus Next.js (App Router) for the marketing site & server components
+
+### Backend
+Vercel (web app + API routes + edge/Node functions, Cron); optional Inngest for background workflows
+
+### Database
+PostgreSQL (Neon Serverless)
+
+### ORM
+Drizzle ORM
+
+### API Strategy
+tRPC
+
+### Data Fetching
+fetch + TanStack Query on clients; Next.js server actions/route handlers on the server
+
+### AI Layer
+Vercel AI SDK + official OpenAI / Anthropic SDKs (streaming)
+
+### Background jobs / queues / scheduling
+Inngest (durable workflows, retries, schedules, cron)
+
+### Auth
+Better Auth
+
+### Push Notifications
+Expo Notifications (APNs/FCM via EAS)
+
+### Secrets
+Doppler syncing to Vercel, GitHub Actions, and EAS
+
+### Observability
+Sentry (errors), PostHog (product analytics), Langfuse (LLM traces/costs/evals)
+
+### Rate limiting / KV
+Upstash Redis + @upstash/ratelimit
+
+### Payments
+Stripe Billing or Revenue Cat
+
+### Repo
+Monorepo (Turborepo)
+
+### Package Manager
+pnpm
+
+### Development
+We use strict Gitflow:
+
+Branch	Purpose
+main	Production state only. Deploys come from tested release merges.
+dev	Active development branch. Most feature work branches off of this.
+release/*	Candidate builds deployed to staging for QA/testing. Merged to main when approved.
+hotfix/*	Urgent fixes branched from main, tested, and merged back into both main and dev.
+
+Rules:
+	•	Feature development → branch from dev, merge into dev
+	•	Release prep → create release/x.y.z, deploy to staging, test, merge → main
+	•	Hotfixes → branch from main, fix, merge to main, then also merge into dev
+	•	No direct commits to main except hotfix merges
+
+### CI/CD
+
+GitHub Actions orchestrates everything (Vercel auto-deploy disabled).
+
+**Pipeline:** Checks → Migrations → Deploy
+
+**Triggers:**
+- PR to dev/main → checks only
+- Push to `release/*` → deploy to staging
+- Push to `main` → deploy to production
+
+**Secrets:** Doppler (no `.env` files). Syncs to Vercel and GitHub Actions.
+
+## Architecture
+
+A modular monolith in TypeScript with a functional core (pure domain logic), thin object-oriented services at the edges, and feature-based React/RN frontends that only talk to the app via tRPC.
+
+---
+
+# Rules
+
+## Agent Documentation (AGENTS.md)
+
+App-specific patterns and gotchas are documented in `AGENTS.md` files colocated with the relevant code. Check for these when working in a new area.
+
+## Environment Variables (Doppler)
+
+**All commands require Doppler** (`doppler run --`) to inject env vars. Without Doppler: runtime env checks fail, DB connections fail.
+
+We have an alias: `alias d='doppler run -- pnpm'`
+
+| Command | Equivalent To |
+|---------|---------------|
+| `d build` | `doppler run -- pnpm build` |
+| `d test` | `doppler run -- pnpm test` |
+| `d dev` | `doppler run -- pnpm dev` |
+| `d typecheck` | `doppler run -- pnpm typecheck` |
+
+**Note:** When running build or typecheck, do NOT filter to one package or app. Run from the repo root on the whole monorepo. It's fast anyway.
+
+## Database Commands
+
+Run from `packages/db` directory. All require Doppler.
+
+| Command | Equivalent To | Description |
+|---------|---------------|-------------|
+| `d generate` | `doppler run -- pnpm generate` | Generate migration from schema changes |
+| `d migrate` | `doppler run -- pnpm migrate` | Run pending migrations against the database |
+| `d push` | `doppler run -- pnpm push` | Push schema directly to DB (no migration file) |
+| `d studio` | `doppler run -- pnpm studio` | Open Drizzle Studio GUI to browse/edit data |
+
+**Workflow:**
+1. Edit schema in `packages/db/src/*.ts`
+2. Run `d generate` to create migration file
+3. Review migration in `packages/db/migrations/`
+4. Run `d migrate` to apply
+
+## Code Quality
+- **Explicit types** - Function return types and interfaces for inputs/outputs
+- **No magic strings** - Use enums for type-safe linting
+- **No magic numbers** - Extract repeated numeric values into named constants. If the same value appears in multiple places, it MUST be a single constant referenced everywhere. Duplicated literals that could drift out of sync are unacceptable.
+- **DRY** - Modular, composable, reusable code
+- **Extract reusable infrastructure immediately** - When something is clearly reusable, extract it to a shared location right away. It most likely will be needed by something else in the future.
+- **No JSON in DB** - Prefer explicit, predictable database design
+- **Use `cn()` for Tailwind** - Not template strings
+- **No comments allowed** - Code should be self-documenting (exception: genuinely complex logic)
+- **File organization** - Code is split into organized directories according to domain or function. Avoid megalithic files. Prefer modularity and organization.
+
+## Module System
+- **ESM** with `moduleResolution: "Bundler"`
+- **No file extensions** in TypeScript imports (bundler handles this)
+
+## Scale Mindset
+- Design for 1000x scale. The app should be able to support hundreds of thousands of users and be a delightful, bug-free experience.
+- Follow industry best practices.
+- Never cut corners.
+
+---
+
+# Architecture
+
+## Structure
+```
+apps/           → Entrypoints (Next.js, Expo)
+packages/       → Reusable libraries & feature modules
+  db/           → Drizzle client + schema
+  api/          → tRPC routers
+  ui/           → Shared React/RN components
+  conversation/ → Feature package (example)
+  lesson/       → Feature package (example)
+```
+
+**Dependency rules:**
+- `apps/*` → `packages/*` ✅
+- `packages/*` → other `packages/*` (inward only) ✅
+- `packages/*` → `apps/*` ❌
+- Circular dependencies ❌
+
+---
+
+## Feature Package Structure
+
+Each feature package owns one bounded domain area.
+
+```
+packages/<feature>/
+  src/
+    types/            # One file per type (Zod schemas + inferred types)
+      Conversation.ts
+      ListUserConversationsInput.ts
+      index.ts        # Internal barrel for types
+    persistence/      # Drizzle/Postgres access (CQRS)
+      *.queries.ts    # SELECT operations only
+      *.mutations.ts  # INSERT/UPDATE/DELETE only
+    application/      # Use-cases, auth checks, orchestration
+    index.ts          # Public API (ONLY export point)
+```
+
+### Types Folder Rules
+- **One type per file** - File name matches the type name (PascalCase)
+- **Zod schemas + inferred types live together** - Single source of truth
+- **Schemas use camelCase** - `listUserConversationsInputSchema` (runtime values)
+- **Types use PascalCase** - `ListUserConversationsInput` (type definitions)
+- **Internal barrel allowed** - `types/index.ts` re-exports all types
+
+### Database-Backed Types
+- **Define in `@microlearn/db`** - Drizzle table + `createSelectSchema`/`createInsertSchema` + `$inferSelect`/`$inferInsert`
+- **Re-export in feature packages** - `export type { Conversation } from "@microlearn/db"` (don't redefine)
+- **Why:** Guarantees DB-to-application type sync with zero duplication
+
+### Layer Rules
+
+| Layer | Contains | Imports Allowed |
+|-------|----------|-----------------|
+| **types/** | Zod schemas, inferred types, pure interfaces | `zod`, other types in same folder |
+| **persistence/** | DB queries/mutations | `@microlearn/db`, types |
+| **application/** | Use-cases, auth | persistence, types, `@microlearn/errors` |
+
+### CQRS (Command Query Responsibility Segregation)
+- **Separate reads from writes** - Never mix in same file
+- Queries can use read replicas, mutations hit primary
+- Easier testing, better performance at scale
+
+### Persistence Rules
+- Accept `db: DbOrTx` as first parameter (dependency injection)
+- Return types from `types/` folder
+- No business rules - just data access
+- Use `InternalServerError` from `@microlearn/errors` for write failures
+
+### Application Rules
+- Accept `db: DbOrTx` as first parameter
+- Accept `actor: Actor` as second parameter (from `@microlearn/core-types`)
+- Handle all auth/ownership checks here
+- Return types from `types/` folder (no tRPC, React, HTTP primitives)
+
+### Actor Pattern (Authorization)
+- Every application function receives an `Actor` identifying who is performing the action
+- `UserActor` - authenticated user (`{ type: "USER", userId: string }`)
+- `SystemActor` - internal service (`{ type: "SYSTEM", service: string }`)
+- Use type guards (`isUserActor`, `isSystemActor`) to check actor type before accessing properties
+- Authorization checks happen in application layer, never in persistence layer
+- tRPC routers create actors from session: `userActor(ctx.session.user.id)`
+
+---
+
+## Encapsulation (Critical)
+
+### index.ts is the ONLY public API
+
+External code must import from package root:
+- ✅ `import { startConversation } from "@microlearn/conversation"`
+- ❌ `import { insertMessage } from "@microlearn/conversation/persistence"`
+
+### package.json exports ONLY root
+
+```json
+"exports": { ".": { ... } }
+```
+
+Never export `"./types"`, `"./persistence"`, or `"./application"`.
+
+**Why:** Prevents bypassing auth checks, allows internal refactoring without breaking consumers.
+
+---
+
+## Integration Points
+
+| Layer | Calls Into |
+|-------|------------|
+| tRPC routers (`packages/api`) | Application functions |
+| Frontends (`apps/*`) | tRPC only (never direct package imports) |
+
+---
+
+## tRPC Query Invalidation
+
+When invalidating queries with TanStack Query + tRPC v11:
+
+| Method | Returns | Use Case |
+|--------|---------|----------|
+| `trpc.path.queryKey()` | `[path, { type: "query" }]` | Only matches regular queries |
+| `trpc.path.infiniteQueryKey()` | `[path, { type: "infinite", input }]` | Only matches infinite queries |
+| `trpc.path.pathKey()` | `[path]` | Matches ALL queries under path (regular + infinite) |
+
+**Rule:** Use `pathKey()` to invalidate when you want to clear all cached data for a procedure.
+
+```ts
+queryClient.invalidateQueries({
+  queryKey: trpc.conversation.list.pathKey(),
+});
+```
+
+**Reference:** Query key generation logic is in:
+`apps/nextjs/node_modules/@trpc/tanstack-react-query/src/internals/createOptionsProxy.ts`
+
+---
+
+## Expo Router (React Navigation)
+
+**Critical behavior:** Navigating to the same route with different params does NOT remount the component—it re-renders with new props.
+
+```
+/chat/abc → /chat/xyz   // Same component instance, NOT remounted
+```
+
+**Implications:**
+- `useRef` values persist across navigations
+- `useState` initial values are NOT reset
+- `useEffect` with `[]` deps only runs once (on first mount)
+
+**Solution:** Use React's `key` prop to force remount when identity changes:
+
+```tsx
+<Chat key={id} conversationId={id} />
+```
+
+When `id` changes, React unmounts the old instance and mounts a new one, naturally resetting all hooks.
+
+---
+
+## Checklist
+
+Before any feature package is complete:
+
+- [ ] Types folder uses one file per type (no monolithic types.ts)
+- [ ] Zod schemas and inferred types live in the same file
+- [ ] Persistence uses CQRS (`*.queries.ts` / `*.mutations.ts`)
+- [ ] Functions accept `db: DbOrTx` as first param
+- [ ] Application functions accept `actor: Actor` as second param
+- [ ] Mutations use `InternalServerError`, not generic `Error`
+- [ ] Application layer handles all auth/ownership via Actor checks
+- [ ] `index.ts` is the only public export
+- [ ] `package.json` exports only `"."`
