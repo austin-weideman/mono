@@ -20,7 +20,7 @@ export function SectionHeader({
       <h2
         className={cn(
           "font-display mb-4 text-3xl font-semibold tracking-tight md:text-5xl",
-          dark ? "text-warm-cream" : "text-warm-brown",
+          dark ? "text-pearl" : "text-ink",
         )}
       >
         {title}
@@ -29,7 +29,7 @@ export function SectionHeader({
         <p
           className={cn(
             "mx-auto max-w-2xl text-lg",
-            dark ? "text-warm-gold-muted" : "text-warm-brown-muted",
+            dark ? "text-shell" : "text-ink-muted",
           )}
         >
           {subtitle}

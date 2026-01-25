@@ -1,8 +1,8 @@
 export const SITE = {
-  name: "MicroLearn",
-  tagline: "Learn anything, 5 minutes at a time",
+  name: "Sojourn",
+  tagline: "A private space to understand yourself",
   description:
-    "Your personal AI tutor that adapts to how you learn. Build lasting knowledge through daily micro-lessons.",
+    "An AI-guided journal that learns how you think. Build a daily habit that helps you feel clearer, calmer, and more in control.",
 } as const;
 
 export const NAV_LINKS = [
@@ -12,59 +12,59 @@ export const NAV_LINKS = [
 ] as const;
 
 export const HERO = {
-  headline: "Build knowledge that lasts",
+  headline: "A journal that listens and remembers",
   subheadline:
-    "MicroLearn is your personal AI tutor that remembers how you learn. Spend just 5 minutes a day mastering new concepts—no cramming, no forgetting.",
-  cta: "Start Learning Free",
+    "A private, AI-guided space for daily reflection. CBT-informed prompts and long-term memory help you understand your emotions and patterns, one gentle entry at a time.",
+  cta: "Start Journaling Free",
 } as const;
 
 export const FEATURES = [
   {
-    title: "Daily Micro-Lessons",
+    title: "Daily Guided Prompts",
     description:
-      "Bite-sized lessons designed for busy schedules. Learn something new in the time it takes to drink your morning coffee.",
+      "A gentle prompt arrives each day to help you unpack feelings and build a consistent journaling habit.",
     icon: "calendar",
   },
   {
-    title: "Adaptive AI Memory",
+    title: "Memory That Knows You",
     description:
-      "Our AI remembers your learning style, pace, and progress. Every lesson is personalized to how you learn best.",
+      "The AI learns how you think over time, so your journal evolves with you and stays deeply personal.",
     icon: "brain",
   },
   {
-    title: "Spaced Repetition",
+    title: "CBT-Informed Reflection",
     description:
-      "Scientifically-proven techniques ensure concepts move from short-term to long-term memory. Learn once, remember forever.",
+      "Evidence-based techniques help you reframe thoughts and build healthier patterns without feeling clinical.",
     icon: "refresh",
   },
   {
-    title: "Progress Tracking",
+    title: "Private Insights",
     description:
-      "Watch your knowledge grow with streaks, milestones, and visual progress maps. Stay motivated with daily achievements.",
+      "Track emotional trends, milestones, and gentle progress—always under your control and on your terms.",
     icon: "chart",
   },
 ] as const;
 
 export const HOW_IT_WORKS = {
-  headline: "Learning made effortless",
+  headline: "Journaling made effortless",
   steps: [
     {
       number: 1,
-      title: "Choose Your Subject",
+      title: "Create Your Space",
       description:
-        "Pick from pre-built roadmaps on topics like finance, history, science, or create your own custom learning path.",
+        "Start with a simple intention. Your journal stays private and adapts to your voice.",
     },
     {
       number: 2,
-      title: "Learn Daily",
+      title: "Reflect Daily",
       description:
-        "Receive a personalized micro-lesson each day. Chat with AI to explore concepts deeper, ask questions, and solidify understanding.",
+        "Get a thoughtful prompt each day. Speak or type freely while the AI helps you go deeper.",
     },
     {
       number: 3,
-      title: "Track Progress",
+      title: "See Yourself Clearly",
       description:
-        "Complete short quizzes, maintain your streak, and watch your mastery grow. The AI adjusts difficulty based on your performance.",
+        "Monthly insights and a year-end emotional recap help you notice patterns and celebrate growth.",
     },
   ],
 } as const;
@@ -72,45 +72,45 @@ export const HOW_IT_WORKS = {
 export const TESTIMONIALS = [
   {
     quote:
-      "I've tried so many learning apps, but MicroLearn is the first one that actually stuck. The AI feels like a real tutor who knows exactly what I need.",
-    author: "Sarah Chen",
-    role: "Product Manager",
+      "It feels like a private conversation with someone who really gets me. The prompts are gentle but powerful.",
+    author: "Maya K.",
+    role: "Founder",
   },
   {
     quote:
-      "As a busy parent, I never thought I'd have time to learn new things. Now I look forward to my 5-minute lessons every morning.",
-    author: "Marcus Johnson",
-    role: "Software Engineer",
+      "I finally built a journaling habit. The daily check-in is simple, and the reflection feels surprisingly deep.",
+    author: "Jasmine R.",
+    role: "Designer",
   },
   {
     quote:
-      "The adaptive memory is incredible. It somehow knows when I'm about to forget something and brings it back at the perfect time.",
-    author: "Elena Rodriguez",
-    role: "Medical Student",
+      "The year-end recap made me emotional in the best way. It helped me see how far I've come.",
+    author: "Ari L.",
+    role: "Product Lead",
   },
 ] as const;
 
 export const CTA = {
-  headline: "Start your learning journey today",
+  headline: "Start your journaling journey today",
   subheadline:
-    "Join thousands of learners building lasting knowledge, one micro-lesson at a time.",
-  button: "Get Started Free",
+    "Build a daily habit that helps you feel clearer, calmer, and more grounded.",
+  button: "Begin for Free",
 } as const;
 
 export const PRICING = {
   headline: "Simple, transparent pricing",
-  subheadline: "Start free, upgrade when you're ready for more.",
+  subheadline: "Start free, upgrade when you're ready for deeper insight.",
   tiers: [
     {
       name: "Free",
       price: "$0",
       period: "forever",
-      description: "Perfect for trying out MicroLearn",
+      description: "Perfect for getting started",
       features: [
-        "1 active learning path",
-        "Daily micro-lessons",
-        "Basic AI chat",
-        "Progress tracking",
+        "Daily guided prompts",
+        "Basic AI reflection",
+        "Weekly mood check-ins",
+        "Private, secure journaling",
       ],
       cta: "Start Free",
       highlighted: false,
@@ -119,31 +119,18 @@ export const PRICING = {
       name: "Pro",
       price: "$9",
       period: "per month",
-      description: "For dedicated learners",
+      description: "For deeper self-understanding",
       features: [
-        "Unlimited learning paths",
-        "Advanced AI memory",
-        "Custom roadmaps",
-        "Detailed analytics",
+        "Advanced memory system",
+        "CBT-informed guidance",
+        "Voice journaling",
+        "Deep emotional insights",
+        "Monthly insight summaries",
+        "Year-end emotional recap",
         "Priority support",
       ],
       cta: "Start Pro Trial",
       highlighted: true,
-    },
-    {
-      name: "Team",
-      price: "$29",
-      period: "per month",
-      description: "For teams and organizations",
-      features: [
-        "Everything in Pro",
-        "Team dashboards",
-        "Shared learning paths",
-        "Admin controls",
-        "SSO integration",
-      ],
-      cta: "Contact Sales",
-      highlighted: false,
     },
   ],
 } as const;
@@ -152,27 +139,27 @@ export const PRICING_FAQ = [
   {
     question: "Can I change plans later?",
     answer:
-      "Yes! You can upgrade, downgrade, or cancel your plan at any time. Changes take effect at the start of your next billing cycle.",
+      "Yes. You can upgrade, downgrade, or cancel at any time. Changes take effect at the start of your next billing cycle.",
   },
   {
     question: "What payment methods do you accept?",
     answer:
-      "We accept all major credit cards, PayPal, and Apple Pay. All payments are processed securely through Stripe.",
+      "We accept all major credit cards. Payments are processed securely through Stripe.",
   },
   {
     question: "Is there a free trial for Pro?",
     answer:
-      "Yes! Pro comes with a 14-day free trial. No credit card required to start. You'll only be charged if you decide to continue after the trial.",
+      "Yes. Pro includes a 14-day free trial. You'll only be charged if you decide to continue after the trial.",
   },
   {
     question: "What happens to my data if I cancel?",
     answer:
-      "Your learning progress and data are always yours. If you cancel, you'll retain read-only access to your history. You can export your data at any time.",
+      "Your journal is yours. If you cancel, you'll keep read-only access to your history. You can export or delete your data at any time.",
   },
 ] as const;
 
 export const FOOTER = {
-  tagline: "Build knowledge that lasts.",
+  tagline: "Build a habit of self-understanding.",
   sections: [
     {
       title: "Product",

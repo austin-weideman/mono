@@ -4,18 +4,14 @@ import { SectionHeader } from "./section-header";
 
 export function HowItWorksSection() {
   return (
-    <Section
-      id="how-it-works"
-      className="bg-warm-cream relative"
-      maxWidth="5xl"
-    >
-      <div className="from-warm-gold/30 absolute top-1/2 left-1/2 h-[860px] w-[860px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-linear-to-br to-transparent blur-3xl" />
+    <Section id="how-it-works" className="bg-pearl relative" maxWidth="5xl">
+      <div className="from-blush/30 absolute top-1/2 left-1/2 h-[860px] w-[860px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-linear-to-br to-transparent blur-3xl" />
 
       <div className="relative">
         <SectionHeader title={HOW_IT_WORKS.headline} />
 
         <div className="relative">
-          <div className="bg-warm-amber/20 absolute top-0 bottom-0 left-8 hidden w-0.5 md:left-1/2 md:block md:-translate-x-1/2" />
+          <div className="bg-mauve/20 absolute top-0 bottom-0 left-8 hidden w-0.5 md:left-1/2 md:block md:-translate-x-1/2" />
 
           <div className="space-y-12 md:space-y-24">
             {HOW_IT_WORKS.steps.map((step, index) => (
@@ -32,16 +28,16 @@ export function HowItWorksSection() {
                 <div
                   className={`flex-1 ${index % 2 === 1 ? "md:text-right" : ""}`}
                 >
-                  <div className="bg-warm-cream/90 border-warm-tan/60 rounded-3xl border p-8 shadow-[0_16px_40px_rgba(58,24,40,0.08)]">
+                  <div className="bg-pearl/90 border-shell/60 rounded-3xl border p-8 shadow-[0_16px_40px_rgba(58,24,40,0.08)]">
                     <div className="md:hidden">
                       <StepNumber number={step.number} size="small" />
                     </div>
 
-                    <h3 className="font-display text-warm-brown mb-3 text-xl font-semibold">
+                    <h3 className="font-display text-ink mb-3 text-xl font-semibold">
                       {step.title}
                     </h3>
 
-                    <p className="text-warm-brown-muted leading-relaxed">
+                    <p className="text-ink-muted leading-relaxed">
                       {step.description}
                     </p>
                   </div>
@@ -70,7 +66,7 @@ function StepNumber({ number, size = "default" }: StepNumberProps) {
 
   return (
     <div
-      className={`bg-warm-amber text-warm-cream flex items-center justify-center rounded-full font-bold ${sizeClasses}`}
+      className={`bg-mauve text-pearl flex items-center justify-center rounded-full font-bold ${sizeClasses}`}
     >
       {number}
     </div>

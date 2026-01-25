@@ -11,7 +11,7 @@ interface MarketingLayoutProps {
 export default function MarketingLayout({ children }: MarketingLayoutProps) {
   return (
     <div
-      className="bg-warm-cream text-warm-brown flex min-h-screen flex-col"
+      className="bg-pearl text-ink flex min-h-screen flex-col"
       style={{ fontFamily: "var(--font-body)" }}
     >
       <MarketingHeader
