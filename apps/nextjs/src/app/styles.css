@@ -16,6 +16,19 @@
   --font-mono-system:
     "SF Mono", ui-monospace, SFMono-Regular, "Roboto Mono", Menlo, Monaco,
     Consolas, "Liberation Mono", "Courier New", monospace;
+
+  --warm-cream: hsl(40 33% 97%);
+  --warm-cream-dark: hsl(40 20% 94%);
+  --warm-amber: hsl(32 95% 44%);
+  --warm-amber-light: hsl(36 100% 50%);
+  --warm-amber-dark: hsl(28 90% 38%);
+  --warm-gold: hsl(45 93% 58%);
+  --warm-gold-muted: hsl(45 40% 70%);
+  --warm-orange: hsl(24 95% 53%);
+  --warm-brown: hsl(25 30% 22%);
+  --warm-brown-light: hsl(25 20% 35%);
+  --warm-brown-muted: hsl(25 15% 50%);
+  --warm-tan: hsl(35 30% 85%);
 }
 
 @utility container {
@@ -29,6 +42,24 @@
   }
 }
 
+@theme inline {
+  --font-display: var(--font-display), Georgia, "Times New Roman", serif;
+  --font-body: var(--font-body), var(--font-system);
+
+  --color-warm-cream: var(--warm-cream);
+  --color-warm-cream-dark: var(--warm-cream-dark);
+  --color-warm-amber: var(--warm-amber);
+  --color-warm-amber-light: var(--warm-amber-light);
+  --color-warm-amber-dark: var(--warm-amber-dark);
+  --color-warm-gold: var(--warm-gold);
+  --color-warm-gold-muted: var(--warm-gold-muted);
+  --color-warm-orange: var(--warm-orange);
+  --color-warm-brown: var(--warm-brown);
+  --color-warm-brown-light: var(--warm-brown-light);
+  --color-warm-brown-muted: var(--warm-brown-muted);
+  --color-warm-tan: var(--warm-tan);
+}
+
 @layer base {
   * {
     @apply border-border;
@@ -38,4 +69,8 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+}
+
+@utility noise-texture {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
