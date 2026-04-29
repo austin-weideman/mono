@@ -29,6 +29,14 @@ export const env = createEnv({
     OPENAI_API_KEY: z.string().min(1).optional(),
     ANTHROPIC_API_KEY: z.string().min(1).optional(),
 
+    // Inngest (durable execution / background jobs)
+    // Required in production / non-dev environments.
+    // The Inngest SDK reads these directly from process.env at runtime;
+    // declaring them here gives us validation + a single source of truth.
+    // isDev is derived from NODE_ENV in the Inngest client, not a separate env var.
+    INNGEST_EVENT_KEY: z.string().min(1).optional(),
+    INNGEST_SIGNING_KEY: z.string().min(1).optional(),
+
     // Environment
     NODE_ENV: z
       .enum(["development", "staging", "test", "production"])

@@ -170,6 +170,37 @@ Run from `packages/db` directory. All require Doppler.
 3. Review migration in `packages/db/migrations/`
 4. Run `d migrate` to apply
 
+## Background Jobs (Inngest)
+
+All async / background work runs on Inngest. Architecture: one shared client + registry in `packages/jobs`, feature packages own their own functions under `src/jobs/`.
+
+**Local development** requires the Inngest dev server alongside the Next.js dev server:
+
+```bash
+# Terminal 1: app
+d dev
+
+# Terminal 2: Inngest dev server (auto-discovers /api/inngest)
+pnpm inngest:dev
+```
+
+The dev server lives at `http://localhost:8288`. No event/signing keys are needed locally — the Inngest client derives `isDev` from `NODE_ENV` (set to `development` automatically by `next dev`), which skips signature verification and points at the local dev server.
+
+**Adding a new background job:**
+
+1. Define the event in `packages/<feature>/src/jobs/events.ts` using `eventType()` + a Zod schema.
+2. Create `packages/<feature>/src/jobs/<verb>.ts` that calls `inngest.createFunction(...)`. One function per file. Each meaningful unit of work goes in its own `step.run("name", ...)` so retries resume from the last successful step.
+3. Export the function from `packages/<feature>/src/jobs/index.ts`. Add a `./jobs` subpath to the package's `exports` field.
+4. Add the function to `packages/jobs/src/registry.ts`.
+5. Send the event from any server-side code with `inngest.send(...)`.
+
+**Conventions:**
+- Function `id` is `"<domain>-<verb>"`, kebab-case. Stable forever — changing it breaks in-flight runs.
+- Inngest-triggered work uses `systemActor("<domain>")`, not a user actor.
+- Default `retries: 3`. Default `concurrency: { key: "event.data.userId", limit: 1 }` for user-triggered jobs.
+- Pass an idempotency `id` on `inngest.send()` whenever a natural dedupe key exists (job row id, etc.) — Inngest dedupes within 24h.
+- Handlers contain orchestration only; domain logic lives in the feature's `application/` layer.
+
 ## Code Quality
 - **Explicit types** - Function return types and interfaces for inputs/outputs
 - **No magic strings** - Use enums for type-safe linting
