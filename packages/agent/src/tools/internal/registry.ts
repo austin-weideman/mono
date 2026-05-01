@@ -4,6 +4,12 @@ import type { InternalTool, ToolContext, ToolMetadata } from "../../types";
 import { InternalTool as InternalToolEnum } from "../../types";
 import { createGetCurrentTimeTool, GET_CURRENT_TIME_METADATA } from "./time";
 import { createGetMyUserInfoTool, GET_MY_USER_INFO_METADATA } from "./user";
+import {
+  createFetchWebPagesTool,
+  createWebSearchTool,
+  FETCH_WEB_PAGES_METADATA,
+  WEB_SEARCH_METADATA,
+} from "./web";
 
 /**
  * WARNING: Tool names are persisted in message history.
@@ -33,5 +39,13 @@ export const INTERNAL_TOOL_REGISTRY: Record<
   [InternalToolEnum.GET_CURRENT_TIME]: {
     metadata: GET_CURRENT_TIME_METADATA,
     create: createGetCurrentTimeTool,
+  },
+  [InternalToolEnum.WEB_SEARCH]: {
+    metadata: WEB_SEARCH_METADATA,
+    create: createWebSearchTool,
+  },
+  [InternalToolEnum.FETCH_WEB_PAGES]: {
+    metadata: FETCH_WEB_PAGES_METADATA,
+    create: createFetchWebPagesTool,
   },
 };

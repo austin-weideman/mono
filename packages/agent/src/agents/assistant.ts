@@ -4,7 +4,7 @@ import { stepCountIs, ToolLoopAgent } from "ai";
 
 import type { AgentToolConfig, ToolContext, ToolMetadata } from "../types";
 import { createTools, generateToolInstructions } from "../tools";
-import { ExternalToolSet, InternalTool } from "../types";
+import { InternalTool } from "../types";
 
 const MAX_AGENT_STEPS = 50;
 
@@ -34,8 +34,12 @@ export interface AssistantAgentResult {
 }
 
 const ASSISTANT_TOOL_CONFIG: AgentToolConfig = {
-  internal: [InternalTool.GET_MY_USER_INFO, InternalTool.GET_CURRENT_TIME],
-  external: [ExternalToolSet.EXA],
+  internal: [
+    InternalTool.GET_MY_USER_INFO,
+    InternalTool.GET_CURRENT_TIME,
+    InternalTool.WEB_SEARCH,
+    InternalTool.FETCH_WEB_PAGES,
+  ],
 };
 
 function buildInstructions(toolMetadata: ToolMetadata[]): string {

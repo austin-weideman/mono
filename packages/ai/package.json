@@ -18,9 +18,9 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "@ai-sdk/gateway": "^3.0.4",
+    "@ai-sdk/gateway": "^3.0.107",
     "@ai-sdk/mcp": "^1.0.5",
-    "ai": "^6.0.5",
+    "ai": "^6.0.172",
     "zod": "catalog:"
   },
   "devDependencies": {

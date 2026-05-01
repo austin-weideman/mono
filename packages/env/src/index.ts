@@ -29,6 +29,9 @@ export const env = createEnv({
     OPENAI_API_KEY: z.string().min(1).optional(),
     ANTHROPIC_API_KEY: z.string().min(1).optional(),
 
+    // Web search (Exa)
+    EXA_API_KEY: z.string().min(1),
+
     // Inngest (durable execution / background jobs)
     // Required in production / non-dev environments.
     // The Inngest SDK reads these directly from process.env at runtime;

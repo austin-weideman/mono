@@ -1,7 +1,6 @@
 import type { ToolSet } from "ai";
 
 import type { AgentToolConfig, ToolContext, ToolMetadata } from "../types";
-import { EXTERNAL_TOOL_SET_REGISTRY } from "./external";
 import { INTERNAL_TOOL_REGISTRY } from "./internal";
 
 export interface CreateToolsResult {
@@ -16,7 +15,6 @@ export async function createTools(
 ): Promise<CreateToolsResult> {
   const tools: ToolSet = {};
   const metadata: ToolMetadata[] = [];
-  const closeFns: (() => Promise<void>)[] = [];
 
   for (const toolName of config.internal) {
     const definition = INTERNAL_TOOL_REGISTRY[toolName];
@@ -24,18 +22,11 @@ export async function createTools(
     metadata.push(definition.metadata);
   }
 
-  for (const toolSetName of config.external) {
-    const factory = EXTERNAL_TOOL_SET_REGISTRY[toolSetName];
-    const result = await factory();
-    Object.assign(tools, result.tools);
-    closeFns.push(result.close);
-  }
-
   return {
     tools,
     metadata,
     close: async () => {
-      await Promise.all(closeFns.map((fn) => fn()));
+      // No external resources to release.
     },
   };
 }

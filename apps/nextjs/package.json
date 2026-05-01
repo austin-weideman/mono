@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^3.0.9",
-    "@ai-sdk/gateway": "^3.0.4",
+    "@ai-sdk/gateway": "^3.0.107",
     "@ai-sdk/openai": "^3.0.2",
     "@ai-sdk/react": "^3.0.5",
     "@microlearn/agent": "workspace:*",
@@ -35,7 +35,7 @@
     "@trpc/client": "catalog:",
     "@trpc/server": "catalog:",
     "@trpc/tanstack-react-query": "catalog:",
-    "ai": "^6.0.5",
+    "ai": "^6.0.172",
     "better-auth": "catalog:",
     "date-fns": "^4.1.0",
     "framer-motion": "^12.23.26",
