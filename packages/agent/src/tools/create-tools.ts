@@ -9,10 +9,10 @@ export interface CreateToolsResult {
   close: () => Promise<void>;
 }
 
-export async function createTools(
+export function createTools(
   context: ToolContext,
   config: AgentToolConfig,
-): Promise<CreateToolsResult> {
+): CreateToolsResult {
   const tools: ToolSet = {};
   const metadata: ToolMetadata[] = [];
 

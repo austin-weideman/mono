@@ -78,7 +78,7 @@ export async function POST(req: Request): Promise<Response> {
   const uiMessagesFromDb = convertDbMessagesToUIMessages(dbMessages);
   const allMessages = [...uiMessagesFromDb, message];
 
-  const { agent, close } = await createAssistantAgent({
+  const { agent, close } = createAssistantAgent({
     gatewayModelId,
     context: { db, actor },
   });

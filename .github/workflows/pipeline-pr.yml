@@ -14,8 +14,6 @@ jobs:
   checks:
     name: Checks
     uses: ./.github/workflows/checks.yml
-    with:
-      skip-lint: ${{ github.actor == 'dependabot[bot]' }}
     secrets:
       DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN_DEV }}
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}

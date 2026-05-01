@@ -2,11 +2,6 @@ name: Checks
 
 on:
   workflow_call:
-    inputs:
-      skip-lint:
-        description: "Skip lint job (for dependabot PRs)"
-        type: boolean
-        default: false
     secrets:
       DOPPLER_TOKEN:
         description: "Doppler token for database access in tests"
@@ -36,7 +31,6 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
-    if: ${{ !inputs.skip-lint }}
     steps:
       - uses: actions/checkout@v4
 

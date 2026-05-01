@@ -54,12 +54,12 @@ You also have access to web search capabilities for finding current information.
 Be concise and helpful. Cite sources when using search results.`;
 }
 
-export async function createAssistantAgent(
+export function createAssistantAgent(
   options: CreateAssistantAgentOptions,
-): Promise<AssistantAgentResult> {
+): AssistantAgentResult {
   const { gatewayModelId, context } = options;
 
-  const { tools, metadata, close } = await createTools(
+  const { tools, metadata, close } = createTools(
     context,
     ASSISTANT_TOOL_CONFIG,
   );
@@ -79,5 +79,5 @@ export async function createAssistantAgent(
 }
 
 export type AssistantMessage = InferAgentUIMessage<
-  Awaited<ReturnType<typeof createAssistantAgent>>["agent"]
+  ReturnType<typeof createAssistantAgent>["agent"]
 >;
