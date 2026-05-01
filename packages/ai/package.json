@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@ai-sdk/gateway": "^3.0.107",
-    "@ai-sdk/mcp": "^1.0.5",
+    "@ai-sdk/mcp": "^1.0.38",
     "ai": "^6.0.172",
     "zod": "catalog:"
   },
