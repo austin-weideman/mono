@@ -5,6 +5,7 @@
   "timezone": "America/Los_Angeles",
   "schedule": ["before 6am on Monday"],
   "minimumReleaseAge": "7 days",
+  "internalChecksFilter": "strict",
   "rangeStrategy": "bump",
   "separateMinorPatch": true,
   "prConcurrentLimit": 10,
