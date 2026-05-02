@@ -21,7 +21,7 @@ catalog:
   "@trpc/server": ^11.7.0
   "@trpc/tanstack-react-query": ^11.7.0
   "@types/node": 22.19.17
-  "@vitejs/plugin-react": 5.1.0
+  "@vitejs/plugin-react": 5.2.0
   ai: ^6.0.172
   better-auth: 1.4.0-beta.9
   drizzle-orm: ^0.44.7
