@@ -1,6 +1,6 @@
 # Introduction
 
-I am a Software Engineer. You are my AI coding assistant.
+You are an AI coding agent.
 
 ## Your Philosophy
 
