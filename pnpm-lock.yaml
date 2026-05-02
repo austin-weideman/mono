@@ -82,8 +82,8 @@ catalogs:
       specifier: ^5.9.3
       version: 5.9.3
     zod:
-      specifier: ^4.1.12
-      version: 4.1.12
+      specifier: ^4.3.6
+      version: 4.4.2
   react19:
     '@types/react':
       specifier: ^19.1.12
@@ -136,7 +136,7 @@ importers:
     dependencies:
       '@ai-sdk/react':
         specifier: 'catalog:'
-        version: 3.0.5(react@19.1.1)(zod@4.1.12)
+        version: 3.0.5(react@19.1.1)(zod@4.4.2)
       '@better-auth/expo':
         specifier: 'catalog:'
         version: 1.4.0-beta.9(better-auth@1.4.0-beta.9(better-sqlite3@12.2.0)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(expo-constants@18.0.10)(expo-crypto@15.0.7(expo@54.0.20))(expo-linking@8.0.8)(expo-secure-store@15.0.7(expo@54.0.20))(expo-web-browser@15.0.8(expo@54.0.20)(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.12)(bufferutil@4.0.8)(react@19.1.1)))
@@ -178,7 +178,7 @@ importers:
         version: 1.3.0
       ai:
         specifier: 'catalog:'
-        version: 6.0.172(zod@4.1.12)
+        version: 6.0.172(zod@4.4.2)
       better-auth:
         specifier: 'catalog:'
         version: 1.4.0-beta.9(better-sqlite3@12.2.0)(next@16.1.3(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
@@ -314,16 +314,16 @@ importers:
     dependencies:
       '@ai-sdk/anthropic':
         specifier: 'catalog:'
-        version: 3.0.9(zod@4.1.12)
+        version: 3.0.9(zod@4.4.2)
       '@ai-sdk/gateway':
         specifier: 'catalog:'
-        version: 3.0.107(zod@4.1.12)
+        version: 3.0.107(zod@4.4.2)
       '@ai-sdk/openai':
         specifier: 'catalog:'
-        version: 3.0.2(zod@4.1.12)
+        version: 3.0.2(zod@4.4.2)
       '@ai-sdk/react':
         specifier: 'catalog:'
-        version: 3.0.5(react@19.1.1)(zod@4.1.12)
+        version: 3.0.5(react@19.1.1)(zod@4.4.2)
       '@microlearn/agent':
         specifier: workspace:*
         version: link:../../packages/agent
@@ -365,7 +365,7 @@ importers:
         version: link:../../packages/validators
       '@t3-oss/env-nextjs':
         specifier: ^0.13.8
-        version: 0.13.8(arktype@2.1.20)(typescript@5.9.3)(valibot@1.0.0-beta.15(typescript@5.9.3))(zod@4.1.12)
+        version: 0.13.8(arktype@2.1.20)(typescript@5.9.3)(valibot@1.0.0-beta.15(typescript@5.9.3))(zod@4.4.2)
       '@tanstack/react-form':
         specifier: 'catalog:'
         version: 1.23.8(@tanstack/react-start@1.133.29(crossws@0.4.1(srvx@0.9.1))(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(vite@7.1.12(@types/node@22.19.17)(jiti@2.6.1)(lightningcss@1.30.1)(terser@5.46.2)(tsx@4.21.0)(yaml@2.8.3)))(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
@@ -383,7 +383,7 @@ importers:
         version: 11.7.0(@tanstack/react-query@5.90.5(react@19.1.1))(@trpc/client@11.7.0(@trpc/server@11.7.0(typescript@5.9.3))(typescript@5.9.3))(@trpc/server@11.7.0(typescript@5.9.3))(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(typescript@5.9.3)
       ai:
         specifier: 'catalog:'
-        version: 6.0.172(zod@4.1.12)
+        version: 6.0.172(zod@4.4.2)
       better-auth:
         specifier: 'catalog:'
         version: 1.4.0-beta.9(better-sqlite3@12.2.0)(next@16.1.3(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
@@ -395,7 +395,7 @@ importers:
         version: 12.23.26(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       inngest:
         specifier: 'catalog:'
-        version: 4.2.5(@opentelemetry/core@2.7.0(@opentelemetry/api@1.9.0))(next@16.1.3(@opentelemetry/api@1.9.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1)(typescript@5.9.3)(zod@4.1.12)
+        version: 4.2.5(@opentelemetry/core@2.7.0(@opentelemetry/api@1.9.0))(next@16.1.3(@opentelemetry/api@1.9.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1)(typescript@5.9.3)(zod@4.4.2)
       next:
         specifier: ^16.1.3
         version: 16.1.3(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
@@ -416,7 +416,7 @@ importers:
         version: 2.2.3
       zod:
         specifier: 'catalog:'
-        version: 4.1.12
+        version: 4.4.2
     devDependencies:
       '@microlearn/eslint-config':
         specifier: workspace:*
@@ -462,7 +462,7 @@ importers:
     dependencies:
       '@ai-sdk/gateway':
         specifier: 'catalog:'
-        version: 3.0.107(zod@4.1.12)
+        version: 3.0.107(zod@4.4.2)
       '@microlearn/core-types':
         specifier: workspace:*
         version: link:../core-types
@@ -483,10 +483,10 @@ importers:
         version: link:../user
       ai:
         specifier: 'catalog:'
-        version: 6.0.172(zod@4.1.12)
+        version: 6.0.172(zod@4.4.2)
       zod:
         specifier: 'catalog:'
-        version: 4.1.12
+        version: 4.4.2
     devDependencies:
       '@microlearn/eslint-config':
         specifier: workspace:*
@@ -511,16 +511,16 @@ importers:
     dependencies:
       '@ai-sdk/gateway':
         specifier: 'catalog:'
-        version: 3.0.107(zod@4.1.12)
+        version: 3.0.107(zod@4.4.2)
       '@ai-sdk/mcp':
         specifier: 'catalog:'
-        version: 1.0.5(zod@4.1.12)
+        version: 1.0.5(zod@4.4.2)
       ai:
         specifier: 'catalog:'
-        version: 6.0.172(zod@4.1.12)
+        version: 6.0.172(zod@4.4.2)
       zod:
         specifier: 'catalog:'
-        version: 4.1.12
+        version: 4.4.2
     devDependencies:
       '@microlearn/eslint-config':
         specifier: workspace:*
@@ -569,7 +569,7 @@ importers:
         version: 2.2.3
       zod:
         specifier: 'catalog:'
-        version: 4.1.12
+        version: 4.4.2
     devDependencies:
       '@microlearn/eslint-config':
         specifier: workspace:*
@@ -603,7 +603,7 @@ importers:
         version: 1.4.0-beta.9(better-sqlite3@12.2.0)(next@16.1.3(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       zod:
         specifier: 'catalog:'
-        version: 4.1.12
+        version: 4.4.2
     devDependencies:
       '@better-auth/cli':
         specifier: 'catalog:'
@@ -647,7 +647,7 @@ importers:
         version: link:../../tooling/typescript
       ai:
         specifier: 'catalog:'
-        version: 6.0.172(zod@4.1.12)
+        version: 6.0.172(zod@4.4.2)
       eslint:
         specifier: 'catalog:'
         version: 9.38.0(jiti@2.6.1)
@@ -677,7 +677,7 @@ importers:
         version: 0.44.7(@neondatabase/serverless@1.0.2)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@prisma/client@5.22.0(prisma@5.22.0))(@types/better-sqlite3@7.6.13)(@types/pg@8.15.6)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(better-sqlite3@12.2.0)(gel@2.0.0)(kysely@0.28.5)(mysql2@3.11.3)(postgres@3.4.4)(prisma@5.22.0)
       zod:
         specifier: 'catalog:'
-        version: 4.1.12
+        version: 4.4.2
     devDependencies:
       '@microlearn/eslint-config':
         specifier: workspace:*
@@ -693,7 +693,7 @@ importers:
         version: link:../../tooling/typescript
       ai:
         specifier: 'catalog:'
-        version: 6.0.172(zod@4.1.12)
+        version: 6.0.172(zod@4.4.2)
       eslint:
         specifier: 'catalog:'
         version: 9.38.0(jiti@2.6.1)
@@ -744,10 +744,10 @@ importers:
         version: 0.44.7(@neondatabase/serverless@1.0.2)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@prisma/client@5.22.0(prisma@5.22.0))(@types/better-sqlite3@7.6.13)(@types/pg@8.15.6)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(better-sqlite3@12.2.0)(gel@2.0.0)(kysely@0.28.5)(mysql2@3.11.3)(postgres@3.4.4)(prisma@5.22.0)
       drizzle-zod:
         specifier: ^0.8.3
-        version: 0.8.3(drizzle-orm@0.44.7(@neondatabase/serverless@1.0.2)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@prisma/client@5.22.0(prisma@5.22.0))(@types/better-sqlite3@7.6.13)(@types/pg@8.15.6)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(better-sqlite3@12.2.0)(gel@2.0.0)(kysely@0.28.5)(mysql2@3.11.3)(postgres@3.4.4)(prisma@5.22.0))(zod@4.1.12)
+        version: 0.8.3(drizzle-orm@0.44.7(@neondatabase/serverless@1.0.2)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@prisma/client@5.22.0(prisma@5.22.0))(@types/better-sqlite3@7.6.13)(@types/pg@8.15.6)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(better-sqlite3@12.2.0)(gel@2.0.0)(kysely@0.28.5)(mysql2@3.11.3)(postgres@3.4.4)(prisma@5.22.0))(zod@4.4.2)
       zod:
         specifier: 'catalog:'
-        version: 4.1.12
+        version: 4.4.2
     devDependencies:
       '@microlearn/eslint-config':
         specifier: workspace:*
@@ -778,10 +778,10 @@ importers:
     dependencies:
       '@t3-oss/env-core':
         specifier: ^0.13.8
-        version: 0.13.8(arktype@2.1.20)(typescript@5.9.3)(valibot@1.0.0-beta.15(typescript@5.9.3))(zod@4.1.12)
+        version: 0.13.8(arktype@2.1.20)(typescript@5.9.3)(valibot@1.0.0-beta.15(typescript@5.9.3))(zod@4.4.2)
       zod:
         specifier: 'catalog:'
-        version: 4.1.12
+        version: 4.4.2
     devDependencies:
       '@microlearn/eslint-config':
         specifier: workspace:*
@@ -836,7 +836,7 @@ importers:
         version: link:../env
       inngest:
         specifier: 'catalog:'
-        version: 4.2.5(@opentelemetry/core@2.7.0(@opentelemetry/api@1.9.0))(next@16.1.3(@opentelemetry/api@1.9.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1)(typescript@5.9.3)(zod@4.1.12)
+        version: 4.2.5(@opentelemetry/core@2.7.0(@opentelemetry/api@1.9.0))(next@16.1.3(@opentelemetry/api@1.9.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1)(typescript@5.9.3)(zod@4.4.2)
     devDependencies:
       '@microlearn/eslint-config':
         specifier: workspace:*
@@ -984,7 +984,7 @@ importers:
         version: 5.9.3
       zod:
         specifier: 'catalog:'
-        version: 4.1.12
+        version: 4.4.2
 
   packages/user:
     dependencies:
@@ -1005,7 +1005,7 @@ importers:
         version: 0.44.7(@neondatabase/serverless@1.0.2)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@prisma/client@5.22.0(prisma@5.22.0))(@types/better-sqlite3@7.6.13)(@types/pg@8.15.6)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(better-sqlite3@12.2.0)(gel@2.0.0)(kysely@0.28.5)(mysql2@3.11.3)(postgres@3.4.4)(prisma@5.22.0)
       zod:
         specifier: 'catalog:'
-        version: 4.1.12
+        version: 4.4.2
     devDependencies:
       '@microlearn/eslint-config':
         specifier: workspace:*
@@ -1030,7 +1030,7 @@ importers:
     dependencies:
       zod:
         specifier: 'catalog:'
-        version: 4.1.12
+        version: 4.4.2
     devDependencies:
       '@microlearn/eslint-config':
         specifier: workspace:*
@@ -11393,6 +11393,9 @@ packages:
   zod@4.1.12:
     resolution: {integrity: sha512-JInaHOamG8pt5+Ey8kGmdcAcg3OL9reK8ltczgHTAwNhMys/6ThXHityHxVV2p3fkw/c+MAvBHFVYHFZDmjMCQ==}
 
+  zod@4.4.2:
+    resolution: {integrity: sha512-IynmDyxsEsb9RKzO3J9+4SxXnl2FTFSzNBaKKaMV6tsSk0rw9gYw9gs+JFCq/qk2LCZ78KDwyj+Z289TijSkUw==}
+
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
 
@@ -11402,59 +11405,59 @@ snapshots:
     optionalDependencies:
       graphql: 15.8.0
 
-  '@ai-sdk/anthropic@3.0.9(zod@4.1.12)':
+  '@ai-sdk/anthropic@3.0.9(zod@4.4.2)':
     dependencies:
       '@ai-sdk/provider': 3.0.2
-      '@ai-sdk/provider-utils': 4.0.4(zod@4.1.12)
-      zod: 4.1.12
+      '@ai-sdk/provider-utils': 4.0.4(zod@4.4.2)
+      zod: 4.4.2
 
-  '@ai-sdk/gateway@3.0.107(zod@4.1.12)':
+  '@ai-sdk/gateway@3.0.107(zod@4.4.2)':
     dependencies:
       '@ai-sdk/provider': 3.0.10
-      '@ai-sdk/provider-utils': 4.0.25(zod@4.1.12)
+      '@ai-sdk/provider-utils': 4.0.25(zod@4.4.2)
       '@vercel/oidc': 3.2.0
-      zod: 4.1.12
+      zod: 4.4.2
 
-  '@ai-sdk/gateway@3.0.4(zod@4.1.12)':
+  '@ai-sdk/gateway@3.0.4(zod@4.4.2)':
     dependencies:
       '@ai-sdk/provider': 3.0.1
-      '@ai-sdk/provider-utils': 4.0.2(zod@4.1.12)
+      '@ai-sdk/provider-utils': 4.0.2(zod@4.4.2)
       '@vercel/oidc': 3.0.5
-      zod: 4.1.12
+      zod: 4.4.2
 
-  '@ai-sdk/mcp@1.0.5(zod@4.1.12)':
+  '@ai-sdk/mcp@1.0.5(zod@4.4.2)':
     dependencies:
       '@ai-sdk/provider': 3.0.2
-      '@ai-sdk/provider-utils': 4.0.4(zod@4.1.12)
+      '@ai-sdk/provider-utils': 4.0.4(zod@4.4.2)
       pkce-challenge: 5.0.1
-      zod: 4.1.12
+      zod: 4.4.2
 
-  '@ai-sdk/openai@3.0.2(zod@4.1.12)':
+  '@ai-sdk/openai@3.0.2(zod@4.4.2)':
     dependencies:
       '@ai-sdk/provider': 3.0.1
-      '@ai-sdk/provider-utils': 4.0.2(zod@4.1.12)
-      zod: 4.1.12
+      '@ai-sdk/provider-utils': 4.0.2(zod@4.4.2)
+      zod: 4.4.2
 
-  '@ai-sdk/provider-utils@4.0.2(zod@4.1.12)':
+  '@ai-sdk/provider-utils@4.0.2(zod@4.4.2)':
     dependencies:
       '@ai-sdk/provider': 3.0.1
       '@standard-schema/spec': 1.1.0
       eventsource-parser: 3.0.8
-      zod: 4.1.12
+      zod: 4.4.2
 
-  '@ai-sdk/provider-utils@4.0.25(zod@4.1.12)':
+  '@ai-sdk/provider-utils@4.0.25(zod@4.4.2)':
     dependencies:
       '@ai-sdk/provider': 3.0.10
       '@standard-schema/spec': 1.1.0
       eventsource-parser: 3.0.8
-      zod: 4.1.12
+      zod: 4.4.2
 
-  '@ai-sdk/provider-utils@4.0.4(zod@4.1.12)':
+  '@ai-sdk/provider-utils@4.0.4(zod@4.4.2)':
     dependencies:
       '@ai-sdk/provider': 3.0.2
       '@standard-schema/spec': 1.1.0
       eventsource-parser: 3.0.8
-      zod: 4.1.12
+      zod: 4.4.2
 
   '@ai-sdk/provider@3.0.1':
     dependencies:
@@ -11468,10 +11471,10 @@ snapshots:
     dependencies:
       json-schema: 0.4.0
 
-  '@ai-sdk/react@3.0.5(react@19.1.1)(zod@4.1.12)':
+  '@ai-sdk/react@3.0.5(react@19.1.1)(zod@4.4.2)':
     dependencies:
-      '@ai-sdk/provider-utils': 4.0.2(zod@4.1.12)
-      ai: 6.0.5(zod@4.1.12)
+      '@ai-sdk/provider-utils': 4.0.2(zod@4.4.2)
+      ai: 6.0.5(zod@4.4.2)
       react: 19.1.1
       swr: 2.3.6(react@19.1.1)
       throttleit: 2.1.0
@@ -12882,7 +12885,7 @@ snapshots:
       semver: 7.7.3
       tinyexec: 0.3.2
       yocto-spinner: 0.2.3
-      zod: 4.1.12
+      zod: 4.4.2
     transitivePeerDependencies:
       - '@aws-sdk/client-rds-data'
       - '@cloudflare/workers-types'
@@ -16356,21 +16359,21 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@t3-oss/env-core@0.13.8(arktype@2.1.20)(typescript@5.9.3)(valibot@1.0.0-beta.15(typescript@5.9.3))(zod@4.1.12)':
+  '@t3-oss/env-core@0.13.8(arktype@2.1.20)(typescript@5.9.3)(valibot@1.0.0-beta.15(typescript@5.9.3))(zod@4.4.2)':
     optionalDependencies:
       arktype: 2.1.20
       typescript: 5.9.3
       valibot: 1.0.0-beta.15(typescript@5.9.3)
-      zod: 4.1.12
+      zod: 4.4.2
 
-  '@t3-oss/env-nextjs@0.13.8(arktype@2.1.20)(typescript@5.9.3)(valibot@1.0.0-beta.15(typescript@5.9.3))(zod@4.1.12)':
+  '@t3-oss/env-nextjs@0.13.8(arktype@2.1.20)(typescript@5.9.3)(valibot@1.0.0-beta.15(typescript@5.9.3))(zod@4.4.2)':
     dependencies:
-      '@t3-oss/env-core': 0.13.8(arktype@2.1.20)(typescript@5.9.3)(valibot@1.0.0-beta.15(typescript@5.9.3))(zod@4.1.12)
+      '@t3-oss/env-core': 0.13.8(arktype@2.1.20)(typescript@5.9.3)(valibot@1.0.0-beta.15(typescript@5.9.3))(zod@4.4.2)
     optionalDependencies:
       arktype: 2.1.20
       typescript: 5.9.3
       valibot: 1.0.0-beta.15(typescript@5.9.3)
-      zod: 4.1.12
+      zod: 4.4.2
 
   '@tailwindcss/node@4.2.4':
     dependencies:
@@ -17334,21 +17337,21 @@ snapshots:
       clean-stack: 2.2.0
       indent-string: 4.0.0
 
-  ai@6.0.172(zod@4.1.12):
+  ai@6.0.172(zod@4.4.2):
     dependencies:
-      '@ai-sdk/gateway': 3.0.107(zod@4.1.12)
+      '@ai-sdk/gateway': 3.0.107(zod@4.4.2)
       '@ai-sdk/provider': 3.0.10
-      '@ai-sdk/provider-utils': 4.0.25(zod@4.1.12)
+      '@ai-sdk/provider-utils': 4.0.25(zod@4.4.2)
       '@opentelemetry/api': 1.9.0
-      zod: 4.1.12
+      zod: 4.4.2
 
-  ai@6.0.5(zod@4.1.12):
+  ai@6.0.5(zod@4.4.2):
     dependencies:
-      '@ai-sdk/gateway': 3.0.4(zod@4.1.12)
+      '@ai-sdk/gateway': 3.0.4(zod@4.4.2)
       '@ai-sdk/provider': 3.0.1
-      '@ai-sdk/provider-utils': 4.0.2(zod@4.1.12)
+      '@ai-sdk/provider-utils': 4.0.2(zod@4.4.2)
       '@opentelemetry/api': 1.9.0
-      zod: 4.1.12
+      zod: 4.4.2
 
   ajv@6.12.6:
     dependencies:
@@ -18734,10 +18737,10 @@ snapshots:
       postgres: 3.4.4
       prisma: 5.22.0
 
-  drizzle-zod@0.8.3(drizzle-orm@0.44.7(@neondatabase/serverless@1.0.2)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@prisma/client@5.22.0(prisma@5.22.0))(@types/better-sqlite3@7.6.13)(@types/pg@8.15.6)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(better-sqlite3@12.2.0)(gel@2.0.0)(kysely@0.28.5)(mysql2@3.11.3)(postgres@3.4.4)(prisma@5.22.0))(zod@4.1.12):
+  drizzle-zod@0.8.3(drizzle-orm@0.44.7(@neondatabase/serverless@1.0.2)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@prisma/client@5.22.0(prisma@5.22.0))(@types/better-sqlite3@7.6.13)(@types/pg@8.15.6)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(better-sqlite3@12.2.0)(gel@2.0.0)(kysely@0.28.5)(mysql2@3.11.3)(postgres@3.4.4)(prisma@5.22.0))(zod@4.4.2):
     dependencies:
       drizzle-orm: 0.44.7(@neondatabase/serverless@1.0.2)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@prisma/client@5.22.0(prisma@5.22.0))(@types/better-sqlite3@7.6.13)(@types/pg@8.15.6)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(better-sqlite3@12.2.0)(gel@2.0.0)(kysely@0.28.5)(mysql2@3.11.3)(postgres@3.4.4)(prisma@5.22.0)
-      zod: 4.1.12
+      zod: 4.4.2
 
   dunder-proto@1.0.1:
     dependencies:
@@ -20237,7 +20240,7 @@ snapshots:
 
   inline-style-parser@0.2.7: {}
 
-  inngest@4.2.5(@opentelemetry/core@2.7.0(@opentelemetry/api@1.9.0))(next@16.1.3(@opentelemetry/api@1.9.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1)(typescript@5.9.3)(zod@4.1.12):
+  inngest@4.2.5(@opentelemetry/core@2.7.0(@opentelemetry/api@1.9.0))(next@16.1.3(@opentelemetry/api@1.9.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1)(typescript@5.9.3)(zod@4.4.2):
     dependencies:
       '@bufbuild/protobuf': 2.12.0
       '@inngest/ai': 0.1.7
@@ -20262,7 +20265,7 @@ snapshots:
       serialize-error-cjs: 0.1.4
       temporal-polyfill: 0.2.5
       ulid: 2.4.0
-      zod: 4.1.12
+      zod: 4.4.2
     optionalDependencies:
       next: 16.1.3(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       react: 19.1.1
@@ -24873,5 +24876,7 @@ snapshots:
   zod@3.25.76: {}
 
   zod@4.1.12: {}
+
+  zod@4.4.2: {}
 
   zwitch@2.0.4: {}
