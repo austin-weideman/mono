@@ -44,7 +44,7 @@
     "react": "catalog:react19",
     "react-dom": "catalog:react19",
     "shiki": "^4.0.2",
-    "streamdown": "^1.5.1",
+    "streamdown": "^2.5.0",
     "superjson": "catalog:",
     "zod": "catalog:"
   },
