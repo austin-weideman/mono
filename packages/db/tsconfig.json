@@ -1,5 +1,5 @@
 {
   "extends": "@microlearn/tsconfig/compiled-package.json",
-  "include": ["src", "drizzle.config.ts"],
+  "include": ["src"],
   "exclude": ["node_modules"]
 }
