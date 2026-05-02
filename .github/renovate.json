@@ -1,13 +1,15 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:best-practices"],
+  "baseBranchPatterns": ["dev"],
   "timezone": "America/Los_Angeles",
   "schedule": ["before 6am on Monday"],
   "minimumReleaseAge": "7 days",
+  "internalChecksFilter": "strict",
   "rangeStrategy": "bump",
   "separateMinorPatch": true,
-  "prConcurrentLimit": 10,
-  "prHourlyLimit": 2,
+  "prConcurrentLimit": 0,
+  "prHourlyLimit": 0,
   "labels": ["dependencies"],
   "lockFileMaintenance": {
     "enabled": true,
@@ -28,16 +30,9 @@
       "groupName": "all patch updates"
     },
     {
-      "description": "devDependency minor updates → one PR",
-      "matchDepTypes": ["devDependencies"],
+      "description": "All minor updates → one PR",
       "matchUpdateTypes": ["minor"],
-      "groupName": "devDependency minor updates"
-    },
-    {
-      "description": "Production minor updates → one PR",
-      "matchDepTypes": ["dependencies"],
-      "matchUpdateTypes": ["minor"],
-      "groupName": "production minor updates"
+      "groupName": "all minor updates"
     },
     {
       "description": "Major updates: individual PRs",
