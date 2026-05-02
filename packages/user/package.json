@@ -22,7 +22,7 @@
     "@microlearn/db": "workspace:*",
     "@microlearn/errors": "workspace:*",
     "@microlearn/time": "workspace:*",
-    "drizzle-orm": "^0.44.7",
+    "drizzle-orm": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {

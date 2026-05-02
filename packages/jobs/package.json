@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@microlearn/env": "workspace:*",
-    "inngest": "4.2.5"
+    "inngest": "catalog:"
   },
   "devDependencies": {
     "@microlearn/eslint-config": "workspace:*",

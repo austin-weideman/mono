@@ -14,7 +14,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@ai-sdk/react": "^3.0.5",
+    "@ai-sdk/react": "catalog:",
     "@better-auth/expo": "catalog:",
     "@expo/vector-icons": "^15.0.3",
     "@legendapp/list": "^2.0.14",
@@ -59,7 +59,7 @@
     "react-native-screens": "~4.16.0",
     "react-native-svg": "15.12.1",
     "react-native-worklets": "~0.5.1",
-    "superjson": "2.2.3",
+    "superjson": "catalog:",
     "uuid": "^13.0.0"
   },
   "devDependencies": {

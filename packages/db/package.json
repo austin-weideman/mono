@@ -31,8 +31,8 @@
   },
   "dependencies": {
     "@microlearn/env": "workspace:*",
-    "@neondatabase/serverless": "^1.0.2",
-    "drizzle-orm": "^0.44.7",
+    "@neondatabase/serverless": "catalog:",
+    "drizzle-orm": "catalog:",
     "drizzle-zod": "^0.8.3",
     "zod": "catalog:"
   },

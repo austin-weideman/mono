@@ -18,7 +18,7 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "@ai-sdk/gateway": "^3.0.107",
+    "@ai-sdk/gateway": "catalog:",
     "@microlearn/core-types": "workspace:*",
     "@microlearn/db": "workspace:*",
     "@microlearn/env": "workspace:*",

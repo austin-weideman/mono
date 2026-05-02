@@ -23,8 +23,8 @@
     "@microlearn/core-types": "workspace:*",
     "@microlearn/db": "workspace:*",
     "@microlearn/errors": "workspace:*",
-    "@neondatabase/serverless": "^1.0.2",
-    "drizzle-orm": "^0.44.7",
+    "@neondatabase/serverless": "catalog:",
+    "drizzle-orm": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {

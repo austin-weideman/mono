@@ -12,10 +12,10 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@ai-sdk/anthropic": "^3.0.9",
-    "@ai-sdk/gateway": "^3.0.107",
-    "@ai-sdk/openai": "^3.0.2",
-    "@ai-sdk/react": "^3.0.5",
+    "@ai-sdk/anthropic": "catalog:",
+    "@ai-sdk/gateway": "catalog:",
+    "@ai-sdk/openai": "catalog:",
+    "@ai-sdk/react": "catalog:",
     "@microlearn/agent": "workspace:*",
     "@microlearn/ai": "workspace:*",
     "@microlearn/api": "workspace:*",
@@ -39,13 +39,13 @@
     "better-auth": "catalog:",
     "date-fns": "^4.1.0",
     "framer-motion": "^12.23.26",
-    "inngest": "4.2.5",
+    "inngest": "catalog:",
     "next": "^16.1.3",
     "react": "catalog:react19",
     "react-dom": "catalog:react19",
     "shiki": "^3.21.0",
     "streamdown": "^1.5.1",
-    "superjson": "2.2.3",
+    "superjson": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {

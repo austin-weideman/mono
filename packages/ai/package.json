@@ -18,8 +18,8 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "@ai-sdk/gateway": "^3.0.107",
-    "@ai-sdk/mcp": "^1.0.5",
+    "@ai-sdk/gateway": "catalog:",
+    "@ai-sdk/mcp": "catalog:",
     "ai": "catalog:",
     "zod": "catalog:"
   },
