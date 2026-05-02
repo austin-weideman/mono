@@ -17,9 +17,9 @@ catalog:
   "@tailwindcss/vite": ^4.2.4
   "@tanstack/react-form": ^1.23.8
   "@tanstack/react-query": ^5.100.6
-  "@trpc/client": ^11.7.0
-  "@trpc/server": ^11.7.0
-  "@trpc/tanstack-react-query": ^11.7.0
+  "@trpc/client": ^11.17.0
+  "@trpc/server": ^11.17.0
+  "@trpc/tanstack-react-query": ^11.17.0
   "@types/node": 22.19.17
   "@vitejs/plugin-react": 5.1.0
   ai: ^6.0.172
