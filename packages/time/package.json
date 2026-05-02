@@ -25,7 +25,7 @@
     "@microlearn/eslint-config": "workspace:*",
     "@microlearn/prettier-config": "workspace:*",
     "@microlearn/tsconfig": "workspace:*",
-    "@types/luxon": "^3.7.1",
+    "@types/luxon": "3.7.1",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:"
