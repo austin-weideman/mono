@@ -32,7 +32,7 @@
     "typescript": "catalog:"
   },
   "peerDependencies": {
-    "ai": ">=6.0.0"
+    "ai": ">=6.0.170"
   },
   "prettier": "@microlearn/prettier-config"
 }
