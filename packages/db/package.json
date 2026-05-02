@@ -41,7 +41,7 @@
     "@microlearn/prettier-config": "workspace:*",
     "@microlearn/tsconfig": "workspace:*",
     "@types/node": "catalog:",
-    "drizzle-kit": "^0.31.5",
+    "drizzle-kit": "0.31.5",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:"
