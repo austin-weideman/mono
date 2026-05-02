@@ -56,7 +56,7 @@ jobs:
         uses: ./tooling/github/setup
 
       - name: Install Doppler CLI
-        uses: dopplerhq/cli-action@014df23b1329b615816a38eb5f473bb9000700b1 # v3
+        uses: dopplerhq/cli-action@4819d808ab99e5cde19a0637a16536a4038fad73 # v4
 
       - name: Run tests
         run: doppler run -- pnpm test
@@ -73,7 +73,7 @@ jobs:
         uses: ./tooling/github/setup
 
       - name: Install Doppler CLI
-        uses: dopplerhq/cli-action@014df23b1329b615816a38eb5f473bb9000700b1 # v3
+        uses: dopplerhq/cli-action@4819d808ab99e5cde19a0637a16536a4038fad73 # v4
 
       - name: Check for uncommitted migrations
         working-directory: packages/db
