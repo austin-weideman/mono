@@ -26,7 +26,7 @@
     "@microlearn/eslint-config": "workspace:*",
     "@microlearn/prettier-config": "workspace:*",
     "@microlearn/tsconfig": "workspace:*",
-    "ai": "^6.0.172",
+    "ai": "catalog:",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:"
