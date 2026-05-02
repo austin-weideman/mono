@@ -23,7 +23,7 @@ catalog:
   "@types/node": 22.19.17
   "@vitejs/plugin-react": 5.2.0
   ai: ^6.0.172
-  better-auth: 1.4.0-beta.9
+  better-auth: 1.6.9
   drizzle-orm: ^0.44.7
   eslint: ^9.38.0
   inngest: 4.2.5
