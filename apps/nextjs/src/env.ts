@@ -15,7 +15,11 @@ const vercelEnv = skipValidation
   ? (process.env as unknown as z.infer<typeof vercelSchema>)
   : vercelSchema.parse(process.env);
 
-if (vercelEnv.VERCEL_ENV && !vercelEnv.VERCEL_PROJECT_PRODUCTION_URL) {
+if (
+  !skipValidation &&
+  vercelEnv.VERCEL_ENV &&
+  !vercelEnv.VERCEL_PROJECT_PRODUCTION_URL
+) {
   throw new Error(
     "VERCEL_PROJECT_PRODUCTION_URL must be set when running on Vercel",
   );
