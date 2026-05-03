@@ -36,7 +36,7 @@ export function initAuth<
         : []),
       expo(),
       ...(options.extraPlugins ?? []),
-    ],
+    ] as BetterAuthPlugin[],
     socialProviders: {
       ...(options.googleClientId &&
         options.googleClientSecret && {
