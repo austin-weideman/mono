@@ -84,6 +84,9 @@ For more information about the Better Auth CLI, see the [official documentation]
 # Web app + API
 d dev
 
+# Ngrok server
+ngrok http 3000
+
 # In a second terminal: Inngest dev server (auto-discovers /api/inngest)
 pnpm inngest:dev
 ```

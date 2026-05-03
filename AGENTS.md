@@ -193,6 +193,9 @@ d dev
 
 # Terminal 2: Inngest dev server (auto-discovers /api/inngest)
 pnpm inngest:dev
+
+# Terminal 3: Ngrok server
+ngrok http 3000
 ```
 
 The dev server lives at `http://localhost:8288`. No event/signing keys are needed locally — the Inngest client derives `isDev` from `NODE_ENV` (set to `development` automatically by `next dev`), which skips signature verification and points at the local dev server.
