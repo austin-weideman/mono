@@ -16,9 +16,6 @@ const envSchema = z.object({
 
   AI_GATEWAY_API_KEY: z.string().min(1),
 
-  OPENAI_API_KEY: z.string().min(1).optional(),
-  ANTHROPIC_API_KEY: z.string().min(1).optional(),
-
   EXA_API_KEY: z.string().min(1),
 
   INNGEST_EVENT_KEY: z.string().min(1).optional(),

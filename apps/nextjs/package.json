@@ -27,6 +27,7 @@
     "@microlearn/env": "workspace:*",
     "@microlearn/errors": "workspace:*",
     "@microlearn/jobs": "workspace:*",
+    "@microlearn/realtime": "workspace:*",
     "@microlearn/ui": "workspace:*",
     "@microlearn/validators": "workspace:*",
     "@tanstack/react-form": "catalog:",

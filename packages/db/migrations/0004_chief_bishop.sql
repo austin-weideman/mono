@@ -1,0 +1,1 @@
+ALTER TABLE "conversation" ADD COLUMN "active_stream_id" uuid;

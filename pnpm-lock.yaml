@@ -359,6 +359,9 @@ importers:
       '@microlearn/jobs':
         specifier: workspace:*
         version: link:../../packages/jobs
+      '@microlearn/realtime':
+        specifier: workspace:*
+        version: link:../../packages/realtime
       '@microlearn/ui':
         specifier: workspace:*
         version: link:../../packages/ui
@@ -659,6 +662,9 @@ importers:
 
   packages/conversation:
     dependencies:
+      '@microlearn/agent':
+        specifier: workspace:*
+        version: link:../agent
       '@microlearn/core-types':
         specifier: workspace:*
         version: link:../core-types
@@ -668,12 +674,21 @@ importers:
       '@microlearn/errors':
         specifier: workspace:*
         version: link:../errors
+      '@microlearn/jobs':
+        specifier: workspace:*
+        version: link:../jobs
+      '@microlearn/realtime':
+        specifier: workspace:*
+        version: link:../realtime
       '@neondatabase/serverless':
         specifier: 'catalog:'
         version: 1.0.2
       drizzle-orm:
         specifier: 'catalog:'
-        version: 0.44.7(@neondatabase/serverless@1.0.2)(@opentelemetry/api@1.9.0)(@prisma/client@5.22.0)(@types/pg@8.15.6)(better-sqlite3@12.2.0)(kysely@0.28.17)(pg@8.20.0)
+        version: 0.44.7(@neondatabase/serverless@1.0.2)(@opentelemetry/api@1.9.0)(@prisma/client@5.22.0)(@types/pg@8.15.6)(@upstash/redis@1.37.0)(better-sqlite3@12.2.0)(kysely@0.28.17)(pg@8.20.0)
+      inngest:
+        specifier: 'catalog:'
+        version: 4.2.6(@opentelemetry/core@2.7.0(@opentelemetry/api@1.9.0))(next@16.2.4(@opentelemetry/api@1.9.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.1.6(react@19.1.6))(react@19.1.6))(react@19.1.6)(typescript@6.0.3)(zod@4.4.2)
       zod:
         specifier: 'catalog:'
         version: 4.4.2
@@ -740,10 +755,10 @@ importers:
         version: 1.0.2
       drizzle-orm:
         specifier: 'catalog:'
-        version: 0.44.7(@neondatabase/serverless@1.0.2)(@opentelemetry/api@1.9.0)(@prisma/client@5.22.0)(@types/pg@8.15.6)(better-sqlite3@12.2.0)(kysely@0.28.17)(pg@8.20.0)
+        version: 0.44.7(@neondatabase/serverless@1.0.2)(@opentelemetry/api@1.9.0)(@prisma/client@5.22.0)(@types/pg@8.15.6)(@upstash/redis@1.37.0)(better-sqlite3@12.2.0)(kysely@0.28.17)(pg@8.20.0)
       drizzle-zod:
         specifier: ^0.8.3
-        version: 0.8.3(drizzle-orm@0.44.7(@neondatabase/serverless@1.0.2)(@opentelemetry/api@1.9.0)(@prisma/client@5.22.0)(@types/pg@8.15.6)(better-sqlite3@12.2.0)(kysely@0.28.17)(pg@8.20.0))(zod@4.4.2)
+        version: 0.8.3(drizzle-orm@0.44.7(@neondatabase/serverless@1.0.2)(@opentelemetry/api@1.9.0)(@prisma/client@5.22.0)(@types/pg@8.15.6)(@upstash/redis@1.37.0)(better-sqlite3@12.2.0)(kysely@0.28.17)(pg@8.20.0))(zod@4.4.2)
       zod:
         specifier: 'catalog:'
         version: 4.4.2
@@ -833,6 +848,46 @@ importers:
       inngest:
         specifier: 'catalog:'
         version: 4.2.6(@opentelemetry/core@2.7.0(@opentelemetry/api@1.9.0))(next@16.2.4(@opentelemetry/api@1.9.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.1.6(react@19.1.6))(react@19.1.6))(react@19.1.6)(typescript@6.0.3)(zod@4.4.2)
+    devDependencies:
+      '@microlearn/eslint-config':
+        specifier: workspace:*
+        version: link:../../tooling/eslint
+      '@microlearn/prettier-config':
+        specifier: workspace:*
+        version: link:../../tooling/prettier
+      '@microlearn/tsconfig':
+        specifier: workspace:*
+        version: link:../../tooling/typescript
+      '@types/node':
+        specifier: 24.12.2
+        version: 24.12.2
+      eslint:
+        specifier: 'catalog:'
+        version: 9.38.0(jiti@2.6.1)
+      prettier:
+        specifier: 'catalog:'
+        version: 3.6.2
+      typescript:
+        specifier: 'catalog:'
+        version: 6.0.3
+
+  packages/realtime:
+    dependencies:
+      '@microlearn/env':
+        specifier: workspace:*
+        version: link:../env
+      '@upstash/realtime':
+        specifier: ^1.0.3
+        version: 1.0.3(@upstash/redis@1.37.0)(react-dom@19.1.6(react@19.1.6))(react@19.1.6)(zod@4.4.2)
+      '@upstash/redis':
+        specifier: ^1.37.0
+        version: 1.37.0
+      ai:
+        specifier: 'catalog:'
+        version: 6.0.172(zod@4.4.2)
+      zod:
+        specifier: 'catalog:'
+        version: 4.4.2
     devDependencies:
       '@microlearn/eslint-config':
         specifier: workspace:*
@@ -998,7 +1053,7 @@ importers:
         version: link:../time
       drizzle-orm:
         specifier: 'catalog:'
-        version: 0.44.7(@neondatabase/serverless@1.0.2)(@opentelemetry/api@1.9.0)(@prisma/client@5.22.0)(@types/pg@8.15.6)(better-sqlite3@12.2.0)(kysely@0.28.17)(pg@8.20.0)
+        version: 0.44.7(@neondatabase/serverless@1.0.2)(@opentelemetry/api@1.9.0)(@prisma/client@5.22.0)(@types/pg@8.15.6)(@upstash/redis@1.37.0)(better-sqlite3@12.2.0)(kysely@0.28.17)(pg@8.20.0)
       zod:
         specifier: 'catalog:'
         version: 4.4.2
@@ -5130,6 +5185,22 @@ packages:
 
   '@upsetjs/venn.js@2.0.0':
     resolution: {integrity: sha512-WbBhLrooyePuQ1VZxrJjtLvTc4NVfpOyKx0sKqioq9bX1C1m7Jgykkn8gLrtwumBioXIqam8DLxp88Adbue6Hw==}
+
+  '@upstash/realtime@1.0.3':
+    resolution: {integrity: sha512-cF5O0GqTW+yfb1PUzAQTvC0LZccLg8kgFHMc4MxTpQxSV5SKSHr3jl5xogLd772CCO0of9awZdWnbtyH2FHhQg==}
+    peerDependencies:
+      '@upstash/redis': '>=1.35.4'
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+      zod: ^3.25.0 || ^4.0.0
+    peerDependenciesMeta:
+      react:
+        optional: true
+      react-dom:
+        optional: true
+
+  '@upstash/redis@1.37.0':
+    resolution: {integrity: sha512-LqOJ3+XWPLSZ2rGSed5DYG3ixybxb8EhZu3yQqF7MdZX1wLBG/FRcI6xcUZXHy/SS7mmXWyadrud0HJHkOc+uw==}
 
   '@urql/core@5.2.0':
     resolution: {integrity: sha512-/n0ieD0mvvDnVAXEQgX/7qJiVcvYvNkOHeBvkwtylfjydar123caCXcl58PXFY11oU1oquJocVXHxLAbtv4x1A==}
@@ -9726,6 +9797,9 @@ packages:
     resolution: {integrity: sha512-nWJ91DjeOkej/TA8pXQ3myruKpKEYgqvpw9lz4OPHj/NWFNluYrjbz9j01CJ8yKQd2g4jFoOkINCTW2I5LEEyw==}
     engines: {node: '>= 0.4'}
 
+  uncrypto@0.1.3:
+    resolution: {integrity: sha512-Ql87qFHB3s/De2ClA9e0gsnS6zXG27SkTiSJwjCc9MebbfapQfuPzumMIUMi38ezPZVNFcHI9sUIepeQfw8J8Q==}
+
   undici-types@7.16.0:
     resolution: {integrity: sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw==}
 
@@ -10154,9 +10228,6 @@ packages:
     engines: {node: '>=18.0.0'}
     peerDependencies:
       zod: ^3.25.0 || ^4.0.0
-
-  zod@4.1.12:
-    resolution: {integrity: sha512-JInaHOamG8pt5+Ey8kGmdcAcg3OL9reK8ltczgHTAwNhMys/6ThXHityHxVV2p3fkw/c+MAvBHFVYHFZDmjMCQ==}
 
   zod@4.4.2:
     resolution: {integrity: sha512-IynmDyxsEsb9RKzO3J9+4SxXnl2FTFSzNBaKKaMV6tsSk0rw9gYw9gs+JFCq/qk2LCZ78KDwyj+Z289TijSkUw==}
@@ -14611,6 +14682,18 @@ snapshots:
       d3-selection: 3.0.0
       d3-transition: 3.0.1(d3-selection@3.0.0)
 
+  '@upstash/realtime@1.0.3(@upstash/redis@1.37.0)(react-dom@19.1.6(react@19.1.6))(react@19.1.6)(zod@4.4.2)':
+    dependencies:
+      '@upstash/redis': 1.37.0
+      zod: 4.4.2
+    optionalDependencies:
+      react: 19.1.6
+      react-dom: 19.1.6(react@19.1.6)
+
+  '@upstash/redis@1.37.0':
+    dependencies:
+      uncrypto: 0.1.3
+
   '@urql/core@5.2.0':
     dependencies:
       '@0no-co/graphql.web': 1.2.0
@@ -15817,19 +15900,20 @@ snapshots:
       kysely: 0.28.17
       pg: 8.20.0
 
-  drizzle-orm@0.44.7(@neondatabase/serverless@1.0.2)(@opentelemetry/api@1.9.0)(@prisma/client@5.22.0)(@types/pg@8.15.6)(better-sqlite3@12.2.0)(kysely@0.28.17)(pg@8.20.0):
+  drizzle-orm@0.44.7(@neondatabase/serverless@1.0.2)(@opentelemetry/api@1.9.0)(@prisma/client@5.22.0)(@types/pg@8.15.6)(@upstash/redis@1.37.0)(better-sqlite3@12.2.0)(kysely@0.28.17)(pg@8.20.0):
     optionalDependencies:
       '@neondatabase/serverless': 1.0.2
       '@opentelemetry/api': 1.9.0
       '@prisma/client': 5.22.0
       '@types/pg': 8.15.6
+      '@upstash/redis': 1.37.0
       better-sqlite3: 12.2.0
       kysely: 0.28.17
       pg: 8.20.0
 
-  drizzle-zod@0.8.3(drizzle-orm@0.44.7(@neondatabase/serverless@1.0.2)(@opentelemetry/api@1.9.0)(@prisma/client@5.22.0)(@types/pg@8.15.6)(better-sqlite3@12.2.0)(kysely@0.28.17)(pg@8.20.0))(zod@4.4.2):
+  drizzle-zod@0.8.3(drizzle-orm@0.44.7(@neondatabase/serverless@1.0.2)(@opentelemetry/api@1.9.0)(@prisma/client@5.22.0)(@types/pg@8.15.6)(@upstash/redis@1.37.0)(better-sqlite3@12.2.0)(kysely@0.28.17)(pg@8.20.0))(zod@4.4.2):
     dependencies:
-      drizzle-orm: 0.44.7(@neondatabase/serverless@1.0.2)(@opentelemetry/api@1.9.0)(@prisma/client@5.22.0)(@types/pg@8.15.6)(better-sqlite3@12.2.0)(kysely@0.28.17)(pg@8.20.0)
+      drizzle-orm: 0.44.7(@neondatabase/serverless@1.0.2)(@opentelemetry/api@1.9.0)(@prisma/client@5.22.0)(@types/pg@8.15.6)(@upstash/redis@1.37.0)(better-sqlite3@12.2.0)(kysely@0.28.17)(pg@8.20.0)
       zod: 4.4.2
 
   dunder-proto@1.0.1:
@@ -16144,8 +16228,8 @@ snapshots:
       '@babel/parser': 7.28.5
       eslint: 9.38.0(jiti@2.6.1)
       hermes-parser: 0.25.1
-      zod: 4.1.12
-      zod-validation-error: 4.0.2(zod@4.1.12)
+      zod: 4.4.2
+      zod-validation-error: 4.0.2(zod@4.4.2)
     transitivePeerDependencies:
       - supports-color
 
@@ -20003,6 +20087,8 @@ snapshots:
       has-symbols: 1.1.0
       which-boxed-primitive: 1.1.1
 
+  uncrypto@0.1.3: {}
+
   undici-types@7.16.0: {}
 
   undici@6.22.0: {}
@@ -20372,11 +20458,9 @@ snapshots:
 
   yoctocolors@2.1.2: {}
 
-  zod-validation-error@4.0.2(zod@4.1.12):
+  zod-validation-error@4.0.2(zod@4.4.2):
     dependencies:
-      zod: 4.1.12
-
-  zod@4.1.12: {}
+      zod: 4.4.2
 
   zod@4.4.2: {}
 
