@@ -1,49 +1,53 @@
-import { FEATURES } from "../_lib/content";
-import { BrainIcon, CalendarIcon, ChartIcon, RefreshIcon } from "./icons";
+import { FEATURES_SECTION } from "../_lib/content";
 import { Section } from "./section";
 import { SectionHeader } from "./section-header";
 
-const ICON_MAP = {
-  calendar: CalendarIcon,
-  brain: BrainIcon,
-  refresh: RefreshIcon,
-  chart: ChartIcon,
-} as const;
-
 export function FeaturesSection() {
   return (
-    <Section id="features" className="bg-porcelain">
+    <Section id="features">
       <SectionHeader
-        title="Everything you need to journal deeply"
-        subtitle="Guided by memory-aware AI that learns how you think"
+        eyebrow={FEATURES_SECTION.eyebrow}
+        title={FEATURES_SECTION.headline}
+        size="lg"
       />
 
-      <div className="grid gap-6 md:grid-cols-2">
-        {FEATURES.map((feature, index) => {
-          const Icon = ICON_MAP[feature.icon];
-          return (
-            <div
-              key={feature.title}
-              className="group bg-pearl/90 border-shell/60 hover:border-mauve/40 relative overflow-hidden rounded-3xl border p-8 transition-all hover:shadow-[0_24px_60px_rgba(58,24,40,0.12)]"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              <div className="bg-mauve/10 group-hover:bg-mauve/20 mb-6 inline-flex rounded-2xl p-3 transition-colors">
-                <Icon className="text-mauve size-6" />
-              </div>
-
-              <h3 className="font-display text-ink mb-3 text-xl font-semibold">
-                {feature.title}
-              </h3>
-
-              <p className="text-ink-muted leading-relaxed">
-                {feature.description}
-              </p>
-
-              <div className="from-mauve/5 absolute -right-8 -bottom-8 size-32 rounded-full bg-linear-to-br to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-            </div>
-          );
-        })}
+      <div className="border-chalk grid border-t md:grid-cols-2">
+        {FEATURES_SECTION.features.map((feature, index) => (
+          <FeatureBlock key={feature.title} feature={feature} index={index} />
+        ))}
       </div>
     </Section>
+  );
+}
+
+interface FeatureBlockProps {
+  feature: (typeof FEATURES_SECTION.features)[number];
+  index: number;
+}
+
+function FeatureBlock({ feature, index }: FeatureBlockProps) {
+  // Borders draw a clean grid: every cell gets a bottom border, and the right
+  // column gets a left border on md+ so the divider is internal to the grid.
+  const borderClasses = `border-chalk border-b ${
+    index % 2 === 1 ? "md:border-l" : ""
+  }`;
+
+  const dotClass = feature.accent === "signal" ? "bg-signal-blue" : "bg-ember";
+
+  return (
+    <div className={`${borderClasses} px-0 py-10 md:px-10`}>
+      <div className="flex items-center gap-2.5">
+        <span aria-hidden className={`size-2 rounded-full ${dotClass}`} />
+        <span className="text-obsidian text-[13px] font-medium tracking-[0.3px] uppercase">
+          {feature.label}
+        </span>
+      </div>
+      <h3 className="font-display text-obsidian mt-5 text-[24px] leading-[1.2] font-light tracking-[-0.4px] md:text-[28px] md:tracking-[-0.5px]">
+        {feature.title}
+      </h3>
+      <p className="text-gravel mt-3 max-w-[480px] text-[15px] leading-[1.55]">
+        {feature.description}
+      </p>
+    </div>
   );
 }

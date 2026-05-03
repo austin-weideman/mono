@@ -28,21 +28,17 @@ export default async function PricingPage() {
 
 function PricingHero() {
   return (
-    <section className="bg-pearl relative overflow-hidden px-4 pt-32 pb-20 md:px-8 md:pt-40 md:pb-32">
-      <div className="from-blush/30 via-mauve/20 absolute top-0 right-0 h-[600px] w-[600px] translate-x-1/3 -translate-y-1/3 rounded-full bg-linear-to-br to-transparent blur-3xl" />
-      <div className="from-mauve/20 absolute -bottom-32 left-0 h-[520px] w-[520px] -translate-x-1/3 rounded-full bg-linear-to-tr to-transparent blur-3xl" />
+    <section className="px-6 pt-16 pb-20 md:pt-24 md:pb-28">
+      <div className="mx-auto max-w-[1000px]">
+        <SectionHeader
+          eyebrow={PRICING.eyebrow}
+          title={PRICING.headline}
+          subtitle={PRICING.subheadline}
+          centered
+          size="lg"
+        />
 
-      <div className="relative mx-auto max-w-5xl">
-        <div className="mb-16 text-center">
-          <h1 className="font-display text-ink mb-4 text-4xl font-semibold tracking-tight md:text-6xl">
-            {PRICING.headline}
-          </h1>
-          <p className="text-ink-muted mx-auto max-w-xl text-lg">
-            {PRICING.subheadline}
-          </p>
-        </div>
-
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-5 md:grid-cols-2">
           {PRICING.tiers.map((tier) => (
             <PricingCard key={tier.name} tier={tier} />
           ))}
@@ -60,71 +56,79 @@ function PricingCard({ tier }: PricingCardProps) {
   return (
     <div
       className={cn(
-        "relative rounded-3xl border p-8 transition-all",
-        tier.highlighted
-          ? "border-mauve bg-pearl z-10 scale-105 shadow-xl"
-          : "border-shell/60 bg-porcelain/70 hover:border-mauve/40 hover:shadow-[0_24px_60px_rgba(58,24,40,0.12)]",
+        "relative flex flex-col rounded-[16px] p-8",
+        tier.highlighted ? "bg-white" : "bg-eggshell border-chalk border",
       )}
+      style={
+        tier.highlighted
+          ? {
+              boxShadow:
+                "rgba(0, 0, 0, 0.4) 0px 0px 1px 0px, rgba(0, 0, 0, 0.04) 0px 4px 12px 0px",
+            }
+          : undefined
+      }
     >
       {tier.highlighted && (
-        <div className="bg-mauve absolute -top-4 left-1/2 -translate-x-1/2 rounded-full px-4 py-1">
-          <span className="text-sm font-semibold text-white">Most Popular</span>
-        </div>
+        <span className="bg-obsidian text-eggshell absolute -top-3 left-8 inline-flex items-center rounded-full px-3 py-1 text-[11px] font-medium tracking-[0.3px] uppercase">
+          Most popular
+        </span>
       )}
 
-      <div className="mb-6">
-        <h3 className="font-display text-ink text-xl font-semibold">
+      <div>
+        <h3 className="font-display text-obsidian text-[24px] leading-[1.2] font-light tracking-[-0.4px]">
           {tier.name}
         </h3>
-        <p className="text-ink-muted mt-1 text-sm">{tier.description}</p>
+        <p className="text-gravel mt-1 text-[14px]">{tier.description}</p>
       </div>
 
-      <div className="mb-6">
-        <span className="font-display text-ink text-4xl font-bold">
+      <div className="mt-6 flex items-baseline gap-2">
+        <span className="font-display text-obsidian text-[44px] leading-none font-light tracking-[-1px]">
           {tier.price}
         </span>
-        <span className="text-ink-muted ml-2 text-sm">{tier.period}</span>
+        <span className="text-gravel text-[14px]">{tier.period}</span>
       </div>
 
-      <ul className="mb-8 space-y-3">
+      <ul className="mt-8 mb-10 space-y-3">
         {tier.features.map((feature) => (
           <li
             key={feature}
-            className="text-ink-soft flex items-start gap-3 text-sm"
+            className="text-obsidian flex items-start gap-3 text-[14px] leading-[1.5]"
           >
-            <CheckIcon className="text-mauve mt-0.5 size-4 shrink-0" />
+            <CheckIcon className="text-obsidian mt-[3px] size-3.5 shrink-0" />
             {feature}
           </li>
         ))}
       </ul>
 
-      <GoogleSignInButton
-        variant={tier.highlighted ? "primary" : "outline"}
-        className="w-full"
-      >
-        {tier.cta}
-      </GoogleSignInButton>
+      <div className="mt-auto">
+        <GoogleSignInButton
+          variant={tier.highlighted ? "primary" : "ghost"}
+          className="w-full"
+        >
+          {tier.cta}
+        </GoogleSignInButton>
+      </div>
     </div>
   );
 }
 
 function PricingFaq() {
   return (
-    <Section className="bg-porcelain" maxWidth="3xl">
-      <SectionHeader title="Frequently asked questions" />
-
-      <div className="space-y-6">
-        {PRICING_FAQ.map((faq) => (
-          <div
-            key={faq.question}
-            className="bg-pearl/90 border-shell/60 rounded-3xl border p-6"
-          >
-            <h3 className="text-ink mb-2 font-semibold">{faq.question}</h3>
-            <p className="text-ink-muted text-sm leading-relaxed">
-              {faq.answer}
-            </p>
-          </div>
-        ))}
+    <Section className="border-chalk border-t">
+      <div className="mx-auto max-w-[760px]">
+        <SectionHeader title="Frequently asked questions" centered />
+        <div className="border-chalk border-t">
+          {PRICING_FAQ.map((faq) => (
+            <div key={faq.question} className="border-chalk border-b py-6">
+              <h3 className="text-obsidian text-[16px] font-medium">
+                {faq.question}
+              </h3>
+              <p className="text-gravel mt-2 text-[14px] leading-[1.6]">
+                {faq.answer}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
     </Section>
   );

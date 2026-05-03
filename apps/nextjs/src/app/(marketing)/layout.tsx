@@ -11,15 +11,18 @@ interface MarketingLayoutProps {
 export default function MarketingLayout({ children }: MarketingLayoutProps) {
   return (
     <div
-      className="bg-pearl text-ink flex min-h-screen flex-col"
+      className="bg-eggshell text-obsidian flex min-h-screen flex-col"
       style={{ fontFamily: "var(--font-body)" }}
     >
       <MarketingHeader
         signInButton={
-          <GoogleSignInButton variant="outline">Sign In</GoogleSignInButton>
+          <GoogleSignInButton variant="ghost">Log in</GoogleSignInButton>
+        }
+        signUpButton={
+          <GoogleSignInButton variant="primary">Sign up</GoogleSignInButton>
         }
       />
-      <main className="flex-1">{children}</main>
+      <main className="flex-1 pt-14">{children}</main>
       <MarketingFooter />
     </div>
   );

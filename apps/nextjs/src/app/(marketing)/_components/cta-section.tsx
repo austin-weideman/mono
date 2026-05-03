@@ -3,24 +3,20 @@ import { GoogleSignInButton } from "./google-sign-in-button";
 
 export function CtaSection() {
   return (
-    <section className="bg-pearl relative overflow-hidden px-4 py-20 md:px-8 md:py-32">
-      <div className="from-mauve/25 via-blush/20 absolute -top-32 -right-32 h-[520px] w-[520px] rounded-full bg-linear-to-br to-transparent blur-3xl" />
-      <div className="from-rose/20 absolute -bottom-32 -left-32 h-[420px] w-[420px] rounded-full bg-linear-to-tr to-transparent blur-3xl" />
-
-      <div className="relative mx-auto max-w-3xl text-center">
-        <h2 className="font-display text-ink mb-6 text-3xl font-semibold tracking-tight md:text-5xl">
+    <section className="border-chalk border-t px-6 py-24 md:py-32">
+      <div className="mx-auto flex max-w-[760px] flex-col items-center text-center">
+        <h2 className="font-display text-obsidian text-[36px] leading-[1.1] font-light tracking-[-0.72px] md:text-[48px] md:leading-[1.08] md:tracking-[-0.96px]">
           {CTA.headline}
         </h2>
-
-        <p className="text-ink-muted mx-auto mb-10 max-w-xl text-lg leading-relaxed">
+        <p className="text-gravel mt-5 max-w-[520px] text-[16px] leading-[1.55]">
           {CTA.subheadline}
         </p>
-
-        <GoogleSignInButton size="large">{CTA.button}</GoogleSignInButton>
-
-        <p className="text-ink-muted mt-6 text-sm">
-          No credit card required. Start journaling in seconds.
-        </p>
+        <div className="mt-8">
+          <GoogleSignInButton variant="primary" size="large">
+            {CTA.button}
+          </GoogleSignInButton>
+        </div>
+        <p className="text-slate mt-5 text-[13px]">{CTA.fineprint}</p>
       </div>
     </section>
   );

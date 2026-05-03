@@ -1,135 +1,152 @@
 export const SITE = {
-  name: "Sojourn",
-  tagline: "A private space to understand yourself",
+  name: "MicroLearn",
+  tagline: "Learn anything, five minutes at a time",
   description:
-    "An AI-guided journal that learns how you think. Build a daily habit that helps you feel clearer, calmer, and more in control.",
+    "AI-powered microlearning. A new concept every day, taught in an interactive chat. Build a foundation in any subject — one tiny lesson at a time.",
 } as const;
 
 export const NAV_LINKS = [
   { label: "Features", href: "/#features" },
-  { label: "How It Works", href: "/#how-it-works" },
+  { label: "How it works", href: "/#how-it-works" },
   { label: "Pricing", href: "/pricing" },
 ] as const;
 
 export const HERO = {
-  headline: "A journal that listens and remembers",
+  eyebrow: "Daily microlearning",
+  headline: "A new concept, every day. In five minutes.",
   subheadline:
-    "A private, AI-guided space for daily reflection. CBT-informed prompts and long-term memory help you understand your emotions and patterns, one gentle entry at a time.",
-  cta: "Start Journaling Free",
+    "MicroLearn delivers a single, intuitive lesson each day in an interactive AI chat. Ask follow-ups, take a short quiz, build a streak — and master a subject one tiny lesson at a time.",
+  cta: "Start learning",
+  ctaSecondary: "How it works",
 } as const;
 
-export const FEATURES = [
-  {
-    title: "Daily Guided Prompts",
-    description:
-      "A gentle prompt arrives each day to help you unpack feelings and build a consistent journaling habit.",
-    icon: "calendar",
-  },
-  {
-    title: "Memory That Knows You",
-    description:
-      "The AI learns how you think over time, so your journal evolves with you and stays deeply personal.",
-    icon: "brain",
-  },
-  {
-    title: "CBT-Informed Reflection",
-    description:
-      "Evidence-based techniques help you reframe thoughts and build healthier patterns without feeling clinical.",
-    icon: "refresh",
-  },
-  {
-    title: "Private Insights",
-    description:
-      "Track emotional trends, milestones, and gentle progress—always under your control and on your terms.",
-    icon: "chart",
-  },
-] as const;
-
-export const HOW_IT_WORKS = {
-  headline: "Journaling made effortless",
-  steps: [
+export const FEATURES_SECTION = {
+  eyebrow: "What you get",
+  headline: "Every day, a small idea worth understanding.",
+  features: [
     {
-      number: 1,
-      title: "Create Your Space",
+      accent: "signal" as const,
+      label: "Daily lessons",
+      title: "A single concept, taught well.",
       description:
-        "Start with a simple intention. Your journal stays private and adapts to your voice.",
+        "Each day, a focused micro-lesson lands in your chat. No bloated curriculum, no twelve-week commitment — just one idea, taught in plain language.",
     },
     {
-      number: 2,
-      title: "Reflect Daily",
+      accent: "ember" as const,
+      label: "Interactive chat",
+      title: "Ask anything, anytime.",
       description:
-        "Get a thoughtful prompt each day. Speak or type freely while the AI helps you go deeper.",
+        "Don't follow it? Want a real-world example? Ask. Each lesson is an open conversation with an AI tutor that adapts to how you think.",
     },
     {
-      number: 3,
-      title: "See Yourself Clearly",
+      accent: "signal" as const,
+      label: "Quiz & mastery",
+      title: "Confirm you got it.",
       description:
-        "Monthly insights and a year-end emotional recap help you notice patterns and celebrate growth.",
+        "Finish each lesson with a short quiz — one to three questions. We track what you've mastered so you never relearn the same idea twice.",
+    },
+    {
+      accent: "ember" as const,
+      label: "Streaks & calendar",
+      title: "Five minutes, every day.",
+      description:
+        "A reminder when it's time to learn. A green check for every day you show up. Months of these add up to a real foundation in a subject.",
     },
   ],
 } as const;
 
-export const TESTIMONIALS = [
-  {
-    quote:
-      "It feels like a private conversation with someone who really gets me. The prompts are gentle but powerful.",
-    author: "Maya K.",
-    role: "Founder",
-  },
-  {
-    quote:
-      "I finally built a journaling habit. The daily check-in is simple, and the reflection feels surprisingly deep.",
-    author: "Jasmine R.",
-    role: "Designer",
-  },
-  {
-    quote:
-      "The year-end recap made me emotional in the best way. It helped me see how far I've come.",
-    author: "Ari L.",
-    role: "Product Lead",
-  },
-] as const;
+export const HOW_IT_WORKS = {
+  eyebrow: "How it works",
+  headline: "Pick a subject. Show up daily. Get smarter.",
+  steps: [
+    {
+      number: "01",
+      title: "Pick a roadmap",
+      description:
+        "Choose a pre-built track — corporate finance, machine learning, philosophy of mind — or describe a custom subject and we'll generate the curriculum for you.",
+    },
+    {
+      number: "02",
+      title: "Chat through today's lesson",
+      description:
+        "Open the app for five minutes. The AI explains today's concept with intuitive examples and answers your follow-up questions in a back-and-forth chat.",
+    },
+    {
+      number: "03",
+      title: "Quiz, master, repeat",
+      description:
+        "Take a one-minute quiz to lock the idea in. Watch your streak grow on the calendar. Tomorrow, a new concept — built on what you already know.",
+    },
+  ],
+} as const;
+
+export const TESTIMONIALS_SECTION = {
+  eyebrow: "Learners",
+  headline: "Five minutes a day, compounding.",
+  items: [
+    {
+      quote:
+        "I'd been wanting to understand corporate finance for years. Six weeks of MicroLearn and EBITDA, free cash flow, working capital — they actually click now.",
+      author: "Maya K.",
+      role: "Software Engineer",
+    },
+    {
+      quote:
+        "The chat format is the difference. Every time I get stuck I just ask, and it explains it a different way. It's the tutor I never had time to hire.",
+      author: "Jasmine R.",
+      role: "Designer",
+    },
+    {
+      quote:
+        "I have a 47-day streak on philosophy of mind. I would not have committed to a course. I will commit to five minutes before bed.",
+      author: "Ari L.",
+      role: "Product Lead",
+    },
+  ],
+} as const;
 
 export const CTA = {
-  headline: "Start your journaling journey today",
+  headline: "Start your daily five minutes.",
   subheadline:
-    "Build a daily habit that helps you feel clearer, calmer, and more grounded.",
-  button: "Begin for Free",
+    "One concept a day. A streak you'll actually keep. A subject you'll actually learn.",
+  button: "Start learning",
+  fineprint: "Free to start. No credit card required.",
 } as const;
 
 export const PRICING = {
-  headline: "Simple, transparent pricing",
-  subheadline: "Start free, upgrade when you're ready for deeper insight.",
+  eyebrow: "Pricing",
+  headline: "Simple, transparent pricing.",
+  subheadline: "Start free. Upgrade when you want more depth.",
   tiers: [
     {
       name: "Free",
       price: "$0",
       period: "forever",
-      description: "Perfect for getting started",
+      description: "Everything you need to build the habit.",
       features: [
-        "Daily guided prompts",
-        "Basic AI reflection",
-        "Weekly mood check-ins",
-        "Private, secure journaling",
+        "One daily micro-lesson",
+        "Interactive AI chat",
+        "Streak & calendar tracking",
+        "Pre-built roadmaps",
       ],
-      cta: "Start Free",
+      cta: "Start free",
       highlighted: false,
     },
     {
       name: "Pro",
       price: "$9",
       period: "per month",
-      description: "For deeper self-understanding",
+      description: "For learners who want to go deep.",
       features: [
-        "Advanced memory system",
-        "CBT-informed guidance",
-        "Voice journaling",
-        "Deep emotional insights",
-        "Monthly insight summaries",
-        "Year-end emotional recap",
+        "Everything in Free",
+        "Unlimited custom roadmaps",
+        "Advanced topic generation",
+        "Multi-lesson days",
+        "Mastery review summaries",
+        "Year-end learning recap",
         "Priority support",
       ],
-      cta: "Start Pro Trial",
+      cta: "Start Pro trial",
       highlighted: true,
     },
   ],
@@ -139,34 +156,34 @@ export const PRICING_FAQ = [
   {
     question: "Can I change plans later?",
     answer:
-      "Yes. You can upgrade, downgrade, or cancel at any time. Changes take effect at the start of your next billing cycle.",
+      "Yes. Upgrade, downgrade, or cancel any time. Changes take effect at the start of your next billing cycle.",
   },
   {
     question: "What payment methods do you accept?",
     answer:
-      "We accept all major credit cards. Payments are processed securely through Stripe.",
+      "All major credit and debit cards, processed securely through Stripe.",
   },
   {
     question: "Is there a free trial for Pro?",
     answer:
-      "Yes. Pro includes a 14-day free trial. You'll only be charged if you decide to continue after the trial.",
+      "Pro includes a 14-day free trial. You're only charged if you decide to continue afterward.",
   },
   {
-    question: "What happens to my data if I cancel?",
+    question: "What happens to my progress if I cancel?",
     answer:
-      "Your journal is yours. If you cancel, you'll keep read-only access to your history. You can export or delete your data at any time.",
+      "Your learning history is yours. After cancellation you keep read-only access to everything you've mastered, and you can export or delete your data at any time.",
   },
 ] as const;
 
 export const FOOTER = {
-  tagline: "Build a habit of self-understanding.",
+  tagline: "A new concept, every day.",
   sections: [
     {
       title: "Product",
       links: [
         { label: "Features", href: "/#features" },
+        { label: "How it works", href: "/#how-it-works" },
         { label: "Pricing", href: "/pricing" },
-        { label: "Roadmap", href: "#" },
       ],
     },
     {

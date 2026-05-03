@@ -24,6 +24,9 @@ const envSchema = z.object({
   INNGEST_EVENT_KEY: z.string().min(1).optional(),
   INNGEST_SIGNING_KEY: z.string().min(1).optional(),
 
+  UPSTASH_REDIS_REST_URL: z.url(),
+  UPSTASH_REDIS_REST_TOKEN: z.string().min(1),
+
   NODE_ENV: z
     .enum(["development", "staging", "test", "production"])
     .default("development"),

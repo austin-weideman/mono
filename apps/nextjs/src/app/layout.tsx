@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Nunito_Sans } from "next/font/google";
+import { Fraunces, Inter } from "next/font/google";
 
 import { cn, ThemeProvider, Toaster } from "@microlearn/ui";
 
@@ -12,12 +12,14 @@ const fraunces = Fraunces({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-display",
+  weight: ["300", "400", "500"],
 });
 
-const nunitoSans = Nunito_Sans({
+const inter = Inter({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-body",
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
@@ -50,7 +52,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
     <html
       lang="en"
       suppressHydrationWarning
-      className={cn(fraunces.variable, nunitoSans.variable)}
+      className={cn(fraunces.variable, inter.variable)}
     >
       <body
         className={cn(

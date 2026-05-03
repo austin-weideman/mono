@@ -3,10 +3,9 @@ import { redirect } from "next/navigation";
 import { cn } from "@microlearn/ui";
 
 import { auth } from "~/auth/server";
-import { GoogleIcon } from "./icons";
 
 interface GoogleSignInButtonProps {
-  variant?: "primary" | "outline";
+  variant?: "primary" | "ghost" | "outline";
   size?: "default" | "large";
   className?: string;
   children?: React.ReactNode;
@@ -36,17 +35,16 @@ export function GoogleSignInButton({
           redirect(res.url);
         }}
         className={cn(
-          "inline-flex cursor-pointer items-center justify-center gap-2 rounded-full font-medium transition-all",
+          "inline-flex cursor-pointer items-center justify-center rounded-full font-medium transition-colors",
           variant === "primary" &&
-            "bg-mauve hover:bg-mauve-dark text-white shadow-[0_18px_40px_rgba(58,24,40,0.22)] hover:shadow-[0_22px_50px_rgba(58,24,40,0.28)]",
-          variant === "outline" &&
-            "border-mauve/50 text-ink hover:bg-mauve/10 border-2",
-          size === "default" && "px-5 py-2.5 text-sm",
-          size === "large" && "px-8 py-4 text-base",
+            "bg-obsidian text-eggshell border-obsidian hover:bg-cinder border",
+          (variant === "ghost" || variant === "outline") &&
+            "bg-eggshell text-obsidian border-chalk hover:bg-powder border",
+          size === "default" && "h-9 px-4 text-[14px] leading-none",
+          size === "large" && "h-11 px-6 text-[14px] leading-none",
           className,
         )}
       >
-        <GoogleIcon className="size-5" />
         {children ?? "Sign in with Google"}
       </button>
     </form>
