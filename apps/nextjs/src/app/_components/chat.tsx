@@ -39,7 +39,7 @@ export function Chat({
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const prevMessageCount = useRef(0);
 
-  // Tracks the streamId currently associated with this conversation:
+  // Tracks the streamId that is currently associated with this conversation:
   // - Initialized from the server-rendered activeStreamId for resume on mount.
   // - Updated to a fresh UUID on each new send.
   // - Used by prepareReconnectToStreamRequest if useChat re-mounts mid-stream.
