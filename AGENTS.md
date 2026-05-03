@@ -183,7 +183,7 @@ Run from `packages/db` directory. All require Doppler.
 
 ## Background Jobs (Inngest)
 
-All async / background work runs on Inngest. Architecture: one shared client + registry in `packages/jobs`, feature packages own their own functions under `src/jobs/`.
+All async / background work runs on Inngest. Architecture: a leaf `@microlearn/jobs` package owns only the shared Inngest client. Feature packages own their own functions under `src/jobs/`. The Next.js inngest serve handler at `apps/nextjs/src/app/api/inngest/route.ts` is the single roof — it imports every feature's jobs and registers them with `serve({ client, functions: [...] })`.
 
 **Local development** requires the Inngest dev server alongside the Next.js dev server:
 
@@ -202,7 +202,7 @@ The dev server lives at `http://localhost:8288`. No event/signing keys are neede
 1. Define the event in `packages/<feature>/src/jobs/events.ts` using `eventType()` + a Zod schema.
 2. Create `packages/<feature>/src/jobs/<verb>.ts` that calls `inngest.createFunction(...)`. One function per file. Each meaningful unit of work goes in its own `step.run("name", ...)` so retries resume from the last successful step.
 3. Export the function from `packages/<feature>/src/jobs/index.ts`. Add a `./jobs` subpath to the package's `exports` field.
-4. Add the function to `packages/jobs/src/registry.ts`.
+4. Import the function in `apps/nextjs/src/app/api/inngest/route.ts` and add it to the `functions: [...]` array passed to `serve(...)`.
 5. Send the event from any server-side code with `inngest.send(...)`.
 
 **Conventions:**

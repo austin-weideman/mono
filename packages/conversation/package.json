@@ -6,6 +6,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./src/index.ts"
+    },
+    "./jobs": {
+      "types": "./dist/jobs/index.d.ts",
+      "default": "./src/jobs/index.ts"
     }
   },
   "scripts": {
@@ -19,11 +23,15 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
+    "@microlearn/agent": "workspace:*",
     "@microlearn/core-types": "workspace:*",
     "@microlearn/db": "workspace:*",
     "@microlearn/errors": "workspace:*",
+    "@microlearn/jobs": "workspace:*",
+    "@microlearn/realtime": "workspace:*",
     "@neondatabase/serverless": "catalog:",
     "drizzle-orm": "catalog:",
+    "inngest": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {

@@ -42,6 +42,24 @@ export async function touchConversation(
     .where(eq(conversation.id, conversationId));
 }
 
+export async function updateActiveStreamId(
+  db: DbOrTx,
+  conversationId: string,
+  streamId: string | null,
+): Promise<void> {
+  const result = await db
+    .update(conversation)
+    .set({ activeStreamId: streamId })
+    .where(eq(conversation.id, conversationId))
+    .returning({ id: conversation.id });
+
+  if (result.length === 0) {
+    throw new InternalServerError(
+      `Failed to update active stream id: ${conversationId}`,
+    );
+  }
+}
+
 export async function archiveConversation(
   db: DbOrTx,
   conversationId: string,

@@ -45,6 +45,7 @@ export default async function ChatPage({ params }: ChatPageProps) {
       conversationId={conversation.id}
       initialMessages={messages}
       selectedModelId={selectedModelId}
+      activeStreamId={conversation.activeStreamId}
     />
   );
 }

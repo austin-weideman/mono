@@ -1,33 +1,31 @@
 import type { UIMessage } from "ai";
 import { cookies, headers } from "next/headers";
-import { consumeStream, createAgentUIStreamResponse } from "ai";
 import { z } from "zod";
 
-import type { Message } from "@microlearn/conversation";
-import { createAssistantAgent } from "@microlearn/agent";
 import { getGatewayId } from "@microlearn/ai";
 import {
-  convertDbMessagesToUIMessages,
   extractTextFromUIMessage,
   generateTitleFromText,
 } from "@microlearn/chat-utils";
 import {
   loadConversation,
   sendMessage,
+  setActiveStream,
   startConversation,
 } from "@microlearn/conversation";
+import { conversationRunAssistantEvent } from "@microlearn/conversation/jobs";
 import { userActor } from "@microlearn/core-types";
 import { db } from "@microlearn/db/client";
 import { NotFoundError } from "@microlearn/errors";
+import { inngest } from "@microlearn/jobs";
 
 import { getSelectedModelId } from "~/app/(chat)/_lib/model";
 import { auth } from "~/auth/server";
 import { validateJson } from "~/lib/api-validation";
 
-export const maxDuration = 300;
-
 const chatRequestSchema = z.object({
   conversationId: z.uuid(),
+  streamId: z.uuid(),
   message: z.custom<UIMessage>(),
 });
 
@@ -42,23 +40,19 @@ export async function POST(req: Request): Promise<Response> {
   }
 
   const validation = await validateJson(req, chatRequestSchema);
-
   if (!validation.success) {
     return validation.error;
   }
 
-  const { conversationId, message } = validation.data;
+  const { conversationId, streamId, message } = validation.data;
   const userId = session.user.id;
   const actor = userActor(userId);
 
   const modelId = getSelectedModelId(cookieStore);
   const gatewayModelId = getGatewayId(modelId);
 
-  let dbMessages: Message[] = [];
-
   try {
-    const { messages } = await loadConversation(db, actor, { conversationId });
-    dbMessages = messages;
+    await loadConversation(db, actor, { conversationId });
   } catch (error) {
     if (error instanceof NotFoundError) {
       const messageText = extractTextFromUIMessage(message);
@@ -75,33 +69,14 @@ export async function POST(req: Request): Promise<Response> {
     parts: message.parts,
   });
 
-  const uiMessagesFromDb = convertDbMessagesToUIMessages(dbMessages);
-  const allMessages = [...uiMessagesFromDb, message];
+  await setActiveStream(db, actor, { conversationId, streamId });
 
-  const { agent, close } = createAssistantAgent({
-    gatewayModelId,
-    context: { db, actor },
-  });
+  await inngest.send(
+    conversationRunAssistantEvent.create(
+      { conversationId, userId, streamId, gatewayModelId },
+      { id: streamId },
+    ),
+  );
 
-  return createAgentUIStreamResponse({
-    agent,
-    uiMessages: allMessages,
-    consumeSseStream: consumeStream,
-    sendReasoning: true,
-    onFinish: async ({ messages: updatedMessages, isAborted }) => {
-      if (!isAborted) {
-        const lastMessage = updatedMessages[updatedMessages.length - 1];
-
-        if (lastMessage?.role === "assistant") {
-          await sendMessage(db, actor, {
-            conversationId,
-            role: "assistant",
-            parts: lastMessage.parts,
-          });
-        }
-      }
-
-      await close();
-    },
-  });
+  return Response.json({ streamId }, { status: 202 });
 }
