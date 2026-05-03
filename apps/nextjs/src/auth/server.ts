@@ -14,7 +14,7 @@ export const auth = initAuth({
     ? `https://${env.VERCEL_PROJECT_PRODUCTION_URL}`
     : undefined,
   secret: env.AUTH_SECRET,
-  useOauthProxy: !!env.VERCEL_ENV,
+  useOauthProxy: !!env.VERCEL_ENV && !!env.VERCEL_PROJECT_PRODUCTION_URL,
   googleClientId: env.AUTH_GOOGLE_ID,
   googleClientSecret: env.AUTH_GOOGLE_SECRET,
   extraPlugins: [nextCookies()],
