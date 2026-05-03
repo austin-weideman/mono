@@ -11,6 +11,7 @@
   "prConcurrentLimit": 0,
   "prHourlyLimit": 0,
   "labels": ["dependencies"],
+  "postUpdateOptions": ["pnpmDedupe"],
   "lockFileMaintenance": {
     "enabled": true,
     "schedule": ["before 6am on Monday"]
@@ -20,22 +21,43 @@
   },
   "packageRules": [
     {
-      "description": "Disable internal workspace packages (resolved via pnpm workspace:* protocol)",
+      "description": "Internal workspace packages — resolved via pnpm workspace:* protocol",
       "matchPackageNames": ["@microlearn/**"],
       "enabled": false
     },
     {
-      "description": "All patch updates → one PR",
-      "matchUpdateTypes": ["patch"],
-      "groupName": "all patch updates"
+      "description": "better-auth ecosystem — must move together (renovate's monorepo registry doesn't know about better-auth yet, and version skew between cli/core/expo broke us 2026-05)",
+      "matchPackageNames": [
+        "better-auth",
+        "@better-auth/**",
+        "better-call",
+        "@better-fetch/**"
+      ],
+      "groupName": "better-auth",
+      "minimumReleaseAge": "14 days"
     },
     {
-      "description": "All minor updates → one PR",
-      "matchUpdateTypes": ["minor"],
-      "groupName": "all minor updates"
+      "description": "Vercel AI SDK ecosystem — not in renovate's monorepo registry",
+      "matchPackageNames": ["ai", "@ai-sdk/**"],
+      "groupName": "ai-sdk"
     },
     {
-      "description": "Major updates: individual PRs",
+      "description": "Drizzle ecosystem — not in renovate's monorepo registry",
+      "matchPackageNames": ["drizzle-orm", "drizzle-kit", "drizzle-zod"],
+      "groupName": "drizzle"
+    },
+    {
+      "description": "Inngest ecosystem — not in renovate's monorepo registry",
+      "matchPackageNames": ["inngest", "@inngest/**"],
+      "groupName": "inngest"
+    },
+    {
+      "description": "Native-binding packages — extra-long release age (lightningcss 1.30.2 shipped a broken native binary that bricked Expo bundling 2026-05)",
+      "matchPackageNames": ["lightningcss", "lightningcss-*"],
+      "minimumReleaseAge": "30 days"
+    },
+    {
+      "description": "Major updates: individual PRs always",
       "matchUpdateTypes": ["major"],
       "labels": ["dependencies", "major"]
     }
