@@ -18,8 +18,11 @@ const baseUrl =
 
 export const auth = initAuth({
   baseUrl,
-  productionUrl: `https://${env.VERCEL_PROJECT_PRODUCTION_URL ?? "turbo.t3.gg"}`,
+  productionUrl: env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : undefined,
   secret: env.AUTH_SECRET,
+  useOauthProxy: !!env.VERCEL_ENV,
   googleClientId: env.AUTH_GOOGLE_ID,
   googleClientSecret: env.AUTH_GOOGLE_SECRET,
   extraPlugins: [nextCookies()],
