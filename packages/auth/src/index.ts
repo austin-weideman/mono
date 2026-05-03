@@ -10,13 +10,20 @@ export function initAuth<
   TExtraPlugins extends BetterAuthPlugin[] = [],
 >(options: {
   baseUrl: string;
-  productionUrl: string;
+  productionUrl: string | undefined;
   secret: string | undefined;
+  useOauthProxy: boolean;
 
   googleClientId?: string;
   googleClientSecret?: string;
   extraPlugins?: TExtraPlugins;
 }) {
+  if (options.useOauthProxy && !options.productionUrl) {
+    throw new Error(
+      "productionUrl must be set when useOauthProxy is true (set VERCEL_PROJECT_PRODUCTION_URL)",
+    );
+  }
+
   const config = {
     database: drizzleAdapter(db, {
       provider: "pg",
@@ -24,9 +31,9 @@ export function initAuth<
     baseURL: options.baseUrl,
     secret: options.secret,
     plugins: [
-      oAuthProxy({
-        productionURL: options.productionUrl,
-      }),
+      ...(options.useOauthProxy && options.productionUrl
+        ? [oAuthProxy({ productionURL: options.productionUrl })]
+        : []),
       expo(),
       ...(options.extraPlugins ?? []),
     ],

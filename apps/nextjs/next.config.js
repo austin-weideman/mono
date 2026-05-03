@@ -16,6 +16,9 @@ const config = {
     "@microlearn/validators",
   ],
 
+  /** Allow dev resources to be served to the ngrok tunnel used for local OAuth/Expo testing */
+  allowedDevOrigins: ["multifaced-dazedly-brain.ngrok-free.dev"],
+
   /** We already do linting and typechecking as separate tasks in CI */
   typescript: { ignoreBuildErrors: true },
 };
