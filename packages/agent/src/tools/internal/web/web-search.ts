@@ -26,12 +26,7 @@ const exaCategorySchema = z.enum([
 ]);
 
 const inputSchema = z.object({
-  query: z
-    .string()
-    .min(1)
-    .describe(
-      "Natural-language search query. Use plain semantic phrasing; do NOT repeat date constraints in the query text — pass them via startPublishedDate/endPublishedDate instead.",
-    ),
+  query: z.string().min(1).describe("Natural-language search query."),
   numResults: z
     .number()
     .int()
@@ -39,18 +34,6 @@ const inputSchema = z.object({
     .max(MAX_NUM_RESULTS)
     .default(DEFAULT_NUM_RESULTS)
     .describe(`Number of results to return (1-${MAX_NUM_RESULTS}).`),
-  startPublishedDate: z.iso
-    .datetime()
-    .optional()
-    .describe(
-      "OPTIONAL ISO 8601 timestamp. Only set this when the user explicitly asks for time-bounded results (e.g. 'news from this week', 'articles since March'). Omit otherwise — Exa already prioritizes recent content. Note: Exa's date filtering is best-effort, not strict.",
-    ),
-  endPublishedDate: z.iso
-    .datetime()
-    .optional()
-    .describe(
-      "OPTIONAL ISO 8601 timestamp. Only set this when the user explicitly asks for an upper time bound. Omit otherwise.",
-    ),
   category: exaCategorySchema
     .optional()
     .describe(
@@ -81,20 +64,14 @@ export const WEB_SEARCH_METADATA: ToolMetadata = {
   description:
     "Search the web. Returns each result with title, URL, published date, and short query-relevant highlight excerpts. Does NOT return full page text.",
   usage:
-    "Default to passing only `query` (and `category` when the query type is clear). Leave date filters unset unless the user explicitly asked for a time window — Exa already prioritizes recent content. Read the highlights to triage; if you need a page's full content, pass its URL to fetchWebPages.",
+    "Default to passing only `query` (and `category` when the query type is clear). Read the highlights to triage; if you need a page's full content, pass its URL to fetchWebPages.",
 };
 
 export function createWebSearchTool() {
   return tool({
     description: WEB_SEARCH_METADATA.description,
     inputSchema,
-    execute: async ({
-      query,
-      numResults,
-      startPublishedDate,
-      endPublishedDate,
-      category,
-    }) => {
+    execute: async ({ query, numResults, category }) => {
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
 
@@ -109,8 +86,6 @@ export function createWebSearchTool() {
             query,
             numResults,
             type: SEARCH_TYPE,
-            ...(startPublishedDate ? { startPublishedDate } : {}),
-            ...(endPublishedDate ? { endPublishedDate } : {}),
             ...(category ? { category } : {}),
             contents: {
               highlights: {
@@ -131,12 +106,6 @@ export function createWebSearchTool() {
 
         const json: unknown = await response.json();
         const parsed = exaSearchResponseSchema.parse(json);
-
-        if (parsed.costDollars?.total != null) {
-          console.log(
-            `[webSearch] cost=$${parsed.costDollars.total.toFixed(4)} results=${parsed.results.length} query=${JSON.stringify(query)}`,
-          );
-        }
 
         return {
           requestId: parsed.requestId,

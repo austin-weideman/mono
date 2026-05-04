@@ -29,6 +29,7 @@ const PROVIDER_ORDER: ModelProvider[] = [
   "openai",
   "google",
   "xai",
+  "deepseek",
 ];
 
 function ProviderLogo({ provider }: { provider: ModelProvider }) {

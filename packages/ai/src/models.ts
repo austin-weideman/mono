@@ -1,10 +1,16 @@
-export type ModelProvider = "anthropic" | "google" | "xai" | "openai";
+export type ModelProvider =
+  | "anthropic"
+  | "google"
+  | "xai"
+  | "openai"
+  | "deepseek";
 
 export const PROVIDER_DISPLAY_NAMES: Record<ModelProvider, string> = {
   anthropic: "Anthropic",
   google: "Google",
   xai: "xAI",
   openai: "OpenAI",
+  deepseek: "DeepSeek",
 } as const;
 
 export interface ModelConfig {
@@ -14,82 +20,40 @@ export interface ModelConfig {
 }
 
 export const ModelId = {
-  CLAUDE_SONNET_4_5: "claude-sonnet-4.5",
-  CLAUDE_OPUS_4_5: "claude-opus-4.5",
-  GEMINI_2_5_FLASH: "gemini-2.5-flash",
-  GEMINI_2_5_PRO: "gemini-2.5-pro",
+  CLAUDE_HAIKU_4_5: "claude-haiku-4.5",
   GEMINI_3_FLASH: "gemini-3-flash",
-  GEMINI_3_PRO_PREVIEW: "gemini-3-pro-preview",
-  GROK_4: "grok-4",
-  GROK_4_1_FAST_REASONING: "grok-4.1-fast-reasoning",
-  GROK_4_1_FAST_NON_REASONING: "grok-4.1-fast-non-reasoning",
-  GPT_5_2: "gpt-5.2",
-  GPT_5: "gpt-5",
-  GPT_5_MINI: "gpt-5-mini",
+  GPT_5_4_MINI: "gpt-5.4-mini",
+  GROK_4_3: "grok-4.3",
+  DEEPSEEK_V4_PRO: "deepseek-v4-pro",
 } as const;
 
 export type ModelId = (typeof ModelId)[keyof typeof ModelId];
 
 export const MODEL_REGISTRY: Record<ModelId, ModelConfig> = {
-  [ModelId.CLAUDE_SONNET_4_5]: {
-    gatewayId: "anthropic/claude-sonnet-4.5",
+  [ModelId.CLAUDE_HAIKU_4_5]: {
+    gatewayId: "anthropic/claude-haiku-4.5",
     provider: "anthropic",
-    displayName: "Claude Sonnet 4.5",
-  },
-  [ModelId.CLAUDE_OPUS_4_5]: {
-    gatewayId: "anthropic/claude-opus-4.5",
-    provider: "anthropic",
-    displayName: "Claude Opus 4.5",
-  },
-  [ModelId.GEMINI_2_5_FLASH]: {
-    gatewayId: "google/gemini-2.5-flash",
-    provider: "google",
-    displayName: "Gemini 2.5 Flash",
-  },
-  [ModelId.GEMINI_2_5_PRO]: {
-    gatewayId: "google/gemini-2.5-pro",
-    provider: "google",
-    displayName: "Gemini 2.5 Pro",
+    displayName: "Claude Haiku 4.5",
   },
   [ModelId.GEMINI_3_FLASH]: {
     gatewayId: "google/gemini-3-flash",
     provider: "google",
     displayName: "Gemini 3 Flash",
   },
-  [ModelId.GEMINI_3_PRO_PREVIEW]: {
-    gatewayId: "google/gemini-3-pro-preview",
-    provider: "google",
-    displayName: "Gemini 3 Pro Preview",
-  },
-  [ModelId.GROK_4]: {
-    gatewayId: "xai/grok-4",
-    provider: "xai",
-    displayName: "Grok 4",
-  },
-  [ModelId.GROK_4_1_FAST_REASONING]: {
-    gatewayId: "xai/grok-4.1-fast-reasoning",
-    provider: "xai",
-    displayName: "Grok 4.1 Fast Reasoning",
-  },
-  [ModelId.GROK_4_1_FAST_NON_REASONING]: {
-    gatewayId: "xai/grok-4.1-fast-non-reasoning",
-    provider: "xai",
-    displayName: "Grok 4.1 Fast Non-Reasoning",
-  },
-  [ModelId.GPT_5_2]: {
-    gatewayId: "openai/gpt-5.2",
+  [ModelId.GPT_5_4_MINI]: {
+    gatewayId: "openai/gpt-5.4-mini",
     provider: "openai",
-    displayName: "GPT-5.2",
+    displayName: "GPT 5.4 Mini",
   },
-  [ModelId.GPT_5]: {
-    gatewayId: "openai/gpt-5",
-    provider: "openai",
-    displayName: "GPT-5",
+  [ModelId.GROK_4_3]: {
+    gatewayId: "xai/grok-4.3",
+    provider: "xai",
+    displayName: "Grok 4.3",
   },
-  [ModelId.GPT_5_MINI]: {
-    gatewayId: "openai/gpt-5-mini",
-    provider: "openai",
-    displayName: "GPT-5 Mini",
+  [ModelId.DEEPSEEK_V4_PRO]: {
+    gatewayId: "deepseek/deepseek-v4-pro",
+    provider: "deepseek",
+    displayName: "DeepSeek V4 Pro",
   },
 } as const;
 
@@ -116,12 +80,14 @@ export function getModelsGroupedByProvider(): {
   google: ModelId[];
   xai: ModelId[];
   openai: ModelId[];
+  deepseek: ModelId[];
 } {
   return {
     anthropic: getModelsByProvider("anthropic"),
     google: getModelsByProvider("google"),
     xai: getModelsByProvider("xai"),
     openai: getModelsByProvider("openai"),
+    deepseek: getModelsByProvider("deepseek"),
   };
 }
 
