@@ -32,7 +32,7 @@ export default async function ChatLayout({
       <TimezoneSync />
       <AppSidebar user={session.user} />
       <SidebarInset className="h-svh overflow-hidden">{children}</SidebarInset>
-      <div className="fixed right-4 bottom-4 z-50">
+      <div className="fixed top-4 right-4 z-50">
         <ThemeToggle />
       </div>
     </SidebarProvider>
