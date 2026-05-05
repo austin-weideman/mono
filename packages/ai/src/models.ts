@@ -17,6 +17,7 @@ export interface ModelConfig {
   gatewayId: string;
   provider: ModelProvider;
   displayName: string;
+  contextWindowTokens: number;
 }
 
 export const ModelId = {
@@ -34,26 +35,31 @@ export const MODEL_REGISTRY: Record<ModelId, ModelConfig> = {
     gatewayId: "anthropic/claude-haiku-4.5",
     provider: "anthropic",
     displayName: "Claude Haiku 4.5",
+    contextWindowTokens: 200000,
   },
   [ModelId.GEMINI_3_FLASH]: {
     gatewayId: "google/gemini-3-flash",
     provider: "google",
     displayName: "Gemini 3 Flash",
+    contextWindowTokens: 1000000,
   },
   [ModelId.GPT_5_4_MINI]: {
     gatewayId: "openai/gpt-5.4-mini",
     provider: "openai",
     displayName: "GPT 5.4 Mini",
+    contextWindowTokens: 400000,
   },
   [ModelId.GROK_4_3]: {
     gatewayId: "xai/grok-4.3",
     provider: "xai",
     displayName: "Grok 4.3",
+    contextWindowTokens: 1000000,
   },
   [ModelId.DEEPSEEK_V4_PRO]: {
     gatewayId: "deepseek/deepseek-v4-pro",
     provider: "deepseek",
     displayName: "DeepSeek V4 Pro",
+    contextWindowTokens: 1000000,
   },
 } as const;
 
