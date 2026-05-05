@@ -11,8 +11,40 @@ interface MessageProps {
   isLoading?: boolean;
 }
 
+type RenderItem =
+  | { kind: "reasoning"; text: string; isStreaming: boolean }
+  | { kind: "text"; text: string };
+
+function buildRenderItems(
+  parts: UIMessage["parts"],
+  isLoading: boolean,
+): RenderItem[] {
+  const items: RenderItem[] = [];
+  parts.forEach((part, idx) => {
+    const isLastPart = idx === parts.length - 1;
+    if (part.type === "reasoning") {
+      const last = items[items.length - 1];
+      const streamingNow = isLoading && isLastPart;
+      if (last?.kind === "reasoning") {
+        last.text += "\n\n" + part.text;
+        last.isStreaming = last.isStreaming || streamingNow;
+      } else {
+        items.push({
+          kind: "reasoning",
+          text: part.text,
+          isStreaming: streamingNow,
+        });
+      }
+    } else if (part.type === "text") {
+      items.push({ kind: "text", text: part.text });
+    }
+  });
+  return items;
+}
+
 export function Message({ message, isLoading }: MessageProps) {
   const isUser = message.role === "user";
+  const items = buildRenderItems(message.parts, !!isLoading);
 
   return (
     <div className="group/message w-full" data-role={message.role}>
@@ -36,37 +68,34 @@ export function Message({ message, isLoading }: MessageProps) {
             "w-full max-w-none": !isUser,
           })}
         >
-          {message.parts.map((part, idx) => {
-            if (part.type === "reasoning") {
+          {items.map((item, idx) => {
+            if (item.kind === "reasoning") {
               return (
                 <Reasoning
                   key={idx}
-                  text={part.text}
-                  isStreaming={isLoading && idx === message.parts.length - 1}
+                  text={item.text}
+                  isStreaming={item.isStreaming}
                 />
               );
             }
-            if (part.type === "text") {
-              return (
-                <div
-                  key={idx}
-                  className={cn({
-                    "bg-primary text-primary-foreground max-w-full rounded-[1.25rem] rounded-br-md px-3.5 py-2 break-all":
-                      isUser,
-                    "bg-transparent px-0 py-0 text-left": !isUser,
-                  })}
-                >
-                  {isUser ? (
-                    <div className="text-base leading-relaxed whitespace-pre-wrap">
-                      {part.text}
-                    </div>
-                  ) : (
-                    <Markdown>{part.text}</Markdown>
-                  )}
-                </div>
-              );
-            }
-            return null;
+            return (
+              <div
+                key={idx}
+                className={cn({
+                  "bg-primary text-primary-foreground max-w-full rounded-[1.25rem] rounded-br-md px-3.5 py-2 break-all":
+                    isUser,
+                  "bg-transparent px-0 py-0 text-left": !isUser,
+                })}
+              >
+                {isUser ? (
+                  <div className="text-base leading-relaxed whitespace-pre-wrap">
+                    {item.text}
+                  </div>
+                ) : (
+                  <Markdown>{item.text}</Markdown>
+                )}
+              </div>
+            );
           })}
 
           {isLoading && !isUser && <ThinkingIndicator />}

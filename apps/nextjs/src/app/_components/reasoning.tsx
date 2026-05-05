@@ -2,6 +2,7 @@
 
 import {
   ChevronRightIcon,
+  cn,
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
@@ -18,22 +19,36 @@ export function Reasoning({ text, isStreaming }: ReasoningProps) {
   }
 
   return (
-    <Collapsible className="border-border/50 bg-muted/30 mb-2 rounded-lg border">
-      <CollapsibleTrigger className="group text-muted-foreground hover:text-foreground flex w-full cursor-pointer items-center gap-2 px-3 py-2 text-sm">
+    <Collapsible className="-my-1">
+      <CollapsibleTrigger
+        className={cn(
+          "group/reasoning inline-flex cursor-pointer items-center gap-1.5",
+          "text-muted-foreground hover:text-foreground",
+          "text-sm transition-colors duration-200",
+          "focus-visible:outline-none",
+        )}
+      >
         <ChevronRightIcon
-          size={14}
-          className="transition-transform group-data-[state=open]:rotate-90"
+          size={12}
+          className="transition-transform duration-200 ease-out group-data-[state=open]/reasoning:rotate-90"
         />
-        <span className="font-medium">
-          {isStreaming ? "Thinking..." : "Thought process"}
-        </span>
-        {isStreaming && (
-          <span className="bg-primary ml-1 inline-block size-2 animate-pulse rounded-full" />
+        {isStreaming ? (
+          <span
+            className={cn(
+              "animate-shimmer-text bg-clip-text text-transparent",
+              "bg-[length:200%_100%]",
+              "bg-[linear-gradient(110deg,var(--muted-foreground)_40%,var(--foreground)_50%,var(--muted-foreground)_60%)]",
+            )}
+          >
+            Thinking
+          </span>
+        ) : (
+          <span>Reasoning</span>
         )}
       </CollapsibleTrigger>
       <CollapsibleContent>
-        <div className="border-border/50 border-t px-3 py-2">
-          <p className="text-muted-foreground text-sm whitespace-pre-wrap">
+        <div className="border-border/70 mt-2 ml-[5px] border-l pl-3.5">
+          <p className="text-muted-foreground text-[13px] leading-relaxed whitespace-pre-wrap">
             {text}
           </p>
         </div>
