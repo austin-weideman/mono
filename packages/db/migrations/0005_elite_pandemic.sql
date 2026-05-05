@@ -1,0 +1,1 @@
+ALTER TABLE "conversation" ADD COLUMN "last_total_tokens" integer DEFAULT 0 NOT NULL;

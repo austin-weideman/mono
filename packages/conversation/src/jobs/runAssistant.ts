@@ -12,6 +12,7 @@ import type { Message } from "../types/Message";
 import { loadConversation } from "../application/loadConversation";
 import { sendMessage } from "../application/sendMessage";
 import { setActiveStream } from "../application/setActiveStream";
+import { updateConversationTokenUsage } from "../persistence/conversation.mutations";
 import { conversationRunAssistantEvent } from "./events";
 
 const SYSTEM_SERVICE = "conversation";
@@ -65,6 +66,12 @@ const runAssistantFn = inngest.createFunction(
                 conversationId,
                 role: "assistant",
                 parts: last.parts,
+              });
+
+              const usage = await result.usage;
+              await updateConversationTokenUsage(db, {
+                conversationId,
+                lastTotalTokens: usage.totalTokens ?? 0,
               });
             }
           },

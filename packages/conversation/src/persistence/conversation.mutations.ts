@@ -42,6 +42,24 @@ export async function touchConversation(
     .where(eq(conversation.id, conversationId));
 }
 
+export interface UpdateConversationTokenUsageInput {
+  conversationId: string;
+  lastTotalTokens: number;
+}
+
+export async function updateConversationTokenUsage(
+  db: DbOrTx,
+  input: UpdateConversationTokenUsageInput,
+): Promise<void> {
+  await db
+    .update(conversation)
+    .set({
+      lastTotalTokens: input.lastTotalTokens,
+      updatedAt: sql`NOW()`,
+    })
+    .where(eq(conversation.id, input.conversationId));
+}
+
 export async function updateActiveStreamId(
   db: DbOrTx,
   conversationId: string,

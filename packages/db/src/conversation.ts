@@ -26,6 +26,8 @@ export const conversation = pgTable(
 
     activeStreamId: t.uuid(),
 
+    lastTotalTokens: t.integer().notNull().default(0),
+
     createdAt: t.timestamp({ withTimezone: true }).notNull().defaultNow(),
     updatedAt: t.timestamp({ withTimezone: true }).notNull().defaultNow(),
 
