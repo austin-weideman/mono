@@ -19,7 +19,7 @@ import { db } from "@microlearn/db/client";
 import { NotFoundError } from "@microlearn/errors";
 import { inngest } from "@microlearn/jobs";
 
-import { getSelectedModelId } from "~/app/(chat)/_lib/model";
+import { getSelectedModelId } from "~/app/(app)/_lib/model";
 import { auth } from "~/auth/server";
 import { validateJson } from "~/lib/api-validation";
 

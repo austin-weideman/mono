@@ -11,7 +11,6 @@ import {
 import { motion } from "framer-motion";
 
 import type { Conversation } from "@microlearn/conversation";
-import { groupConversationsByDate } from "@microlearn/chat-utils";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -45,7 +44,9 @@ const PAGE_SIZE = 50;
 function SidebarHistorySkeleton() {
   return (
     <SidebarGroup>
-      <div className="text-sidebar-foreground/50 px-2 py-1 text-xs">Today</div>
+      <div className="text-sidebar-foreground/50 px-2 py-1 text-xs">
+        Recents
+      </div>
       <SidebarGroupContent>
         <div className="flex flex-col">
           {[44, 32, 28, 64, 52].map((width) => (
@@ -197,51 +198,18 @@ export function SidebarHistory() {
     );
   }
 
-  // Group by date
-  const grouped = groupConversationsByDate(allConversations);
-
   return (
     <>
       <SidebarGroup>
         <SidebarGroupContent>
           <SidebarMenu>
-            <div className="flex flex-col gap-6">
-              <ConversationGroup
-                title="Today"
-                conversations={grouped.today}
-                activeId={activeId}
-                onDelete={onDeleteClick}
-                setOpenMobile={setOpenMobile}
-              />
-              <ConversationGroup
-                title="Yesterday"
-                conversations={grouped.yesterday}
-                activeId={activeId}
-                onDelete={onDeleteClick}
-                setOpenMobile={setOpenMobile}
-              />
-              <ConversationGroup
-                title="Last 7 days"
-                conversations={grouped.lastWeek}
-                activeId={activeId}
-                onDelete={onDeleteClick}
-                setOpenMobile={setOpenMobile}
-              />
-              <ConversationGroup
-                title="Last 30 days"
-                conversations={grouped.lastMonth}
-                activeId={activeId}
-                onDelete={onDeleteClick}
-                setOpenMobile={setOpenMobile}
-              />
-              <ConversationGroup
-                title="Older"
-                conversations={grouped.older}
-                activeId={activeId}
-                onDelete={onDeleteClick}
-                setOpenMobile={setOpenMobile}
-              />
-            </div>
+            <ConversationGroup
+              title="Recents"
+              conversations={allConversations}
+              activeId={activeId}
+              onDelete={onDeleteClick}
+              setOpenMobile={setOpenMobile}
+            />
           </SidebarMenu>
 
           {/* Infinite scroll trigger */}

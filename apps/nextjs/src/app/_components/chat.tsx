@@ -11,7 +11,7 @@ import type { Message } from "@microlearn/conversation";
 import { convertDbMessagesToUIMessages } from "@microlearn/chat-utils";
 import { SidebarTrigger } from "@microlearn/ui";
 
-import { ModelSelector } from "~/app/(chat)/_components/model-selector";
+import { ModelSelector } from "~/app/(app)/_components/model-selector";
 import { useTRPC } from "~/trpc/react";
 import { ChatInput } from "./chat-input";
 import { Messages } from "./messages";
