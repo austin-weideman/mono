@@ -4,39 +4,6 @@ An AI-powered microlearning app that teaches new concepts through 5–10 minute 
 
 See [AGENTS.md](./AGENTS.md) for the full project overview, architectural rules, and conventions for AI agents working in this repo.
 
-## Repo Layout
-
-A [Turborepo](https://turborepo.com) monorepo:
-
-```text
-apps
-  ├─ expo                  # React Native (Expo SDK 54, RN 0.81, NativeWind)
-  └─ nextjs                # Next.js 16 (App Router) — marketing site + API
-packages
-  ├─ agent                 # Agent orchestration
-  ├─ ai                    # Vercel AI SDK wrappers
-  ├─ api                   # tRPC v11 routers
-  ├─ auth                  # Better Auth setup
-  ├─ chat-utils            # Shared chat helpers
-  ├─ conversation          # Conversation feature package
-  ├─ core-types            # Shared types (Actor, etc.)
-  ├─ db                    # Drizzle schema + Postgres client (Neon)
-  ├─ env                   # Type-safe env-var validation
-  ├─ errors                # Domain error types
-  ├─ jobs                  # Inngest client + job registry
-  ├─ testing               # Test helpers
-  ├─ time                  # Time utilities
-  ├─ ui                    # Shared React/RN components (shadcn-ui base)
-  ├─ user                  # User feature package
-  └─ validators            # Shared Zod schemas
-tooling
-  ├─ eslint                # Shared ESLint presets
-  ├─ github                # Shared GitHub Actions
-  ├─ prettier              # Shared Prettier config
-  ├─ tailwind              # Shared Tailwind theme
-  └─ typescript            # Shared tsconfig
-```
-
 ## Quick Start
 
 > All commands require Doppler. The repo uses an alias: `alias d='doppler run -- pnpm'`. See [AGENTS.md](./AGENTS.md#environment-variables-doppler) for details.
