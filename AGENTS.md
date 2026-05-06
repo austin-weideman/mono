@@ -181,9 +181,7 @@ Run from `packages/db` directory. All require Doppler.
 3. Review migration in `packages/db/migrations/`
 4. Run `d migrate` to apply
 
-## Background Jobs (Inngest)
-
-All async / background work runs on Inngest. Architecture: a leaf `@microlearn/jobs` package owns only the shared Inngest client. Feature packages own their own functions under `src/jobs/`. The Next.js inngest serve handler at `apps/nextjs/src/app/api/inngest/route.ts` is the single roof — it imports every feature's jobs and registers them with `serve({ client, functions: [...] })`.
+## Local Development Startup
 
 **Local development** requires the Inngest dev server alongside the Next.js dev server:
 
@@ -198,7 +196,13 @@ pnpm inngest:dev
 ngrok http 3000
 ```
 
-The dev server lives at `http://localhost:8288`. No event/signing keys are needed locally — the Inngest client derives `isDev` from `NODE_ENV` (set to `development` automatically by `next dev`), which skips signature verification and points at the local dev server.
+The local dev server lives at `https://multifaced-dazedly-brain.ngrok-free.dev/` or `http://localhost:3000/`
+
+The Inngest dev server lives at `http://localhost:8288`. No event/signing keys are needed locally — the Inngest client derives `isDev` from `NODE_ENV` (set to `development` automatically by `next dev`), which skips signature verification and points at the local dev server.
+
+## Background Jobs (Inngest)
+
+All async / background work runs on Inngest. Architecture: a leaf `@microlearn/jobs` package owns only the shared Inngest client. Feature packages own their own functions under `src/jobs/`. The Next.js inngest serve handler at `apps/nextjs/src/app/api/inngest/route.ts` is the single roof — it imports every feature's jobs and registers them with `serve({ client, functions: [...] })`.
 
 **Adding a new background job:**
 
