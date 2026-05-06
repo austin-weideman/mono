@@ -8,7 +8,7 @@ import type { ToolMetadata } from "../../../types";
 
 const EXA_CONTENTS_URL = "https://api.exa.ai/contents";
 const FETCH_TIMEOUT_MS = 30_000;
-const TEXT_MAX_CHARACTERS = 8_000;
+const TEXT_MAX_CHARACTERS = 30_000;
 const MAX_URLS_PER_CALL = 10;
 
 const inputSchema = z.object({

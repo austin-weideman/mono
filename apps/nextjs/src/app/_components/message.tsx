@@ -60,8 +60,8 @@ export function Message({ message, isLoading }: MessageProps) {
           </div>
         )}
 
-        {/* min-w-0 + break-all: flex children don't shrink below content size by default.
-            Without these, long unbroken strings (URLs) overflow the container. */}
+        {/* min-w-0 lets the flex child shrink below its intrinsic content width;
+            wrap-break-word on the bubble breaks long URLs/tokens that would otherwise overflow. */}
         <div
           className={cn("flex min-w-0 flex-col gap-2", {
             "max-w-[85%] sm:max-w-[75%]": isUser,
@@ -82,7 +82,7 @@ export function Message({ message, isLoading }: MessageProps) {
               <div
                 key={idx}
                 className={cn({
-                  "bg-primary text-primary-foreground max-w-full rounded-[1.25rem] rounded-br-md px-3.5 py-2 break-all":
+                  "bg-primary text-primary-foreground max-w-full rounded-[1.25rem] rounded-br-md px-3.5 py-2 wrap-break-word":
                     isUser,
                   "bg-transparent px-0 py-0 text-left": !isUser,
                 })}
