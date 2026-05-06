@@ -2,7 +2,7 @@ import { randomUUID } from "crypto";
 import { cookies } from "next/headers";
 
 import { getSelectedModelId } from "../_lib/model";
-import { Chat } from "../../_components/chat";
+import { Chat } from "./_components/chat";
 
 export default async function NewChatPage() {
   const conversationId = randomUUID();

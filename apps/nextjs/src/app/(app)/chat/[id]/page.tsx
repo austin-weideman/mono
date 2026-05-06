@@ -6,8 +6,8 @@ import { userActor } from "@microlearn/core-types";
 import { db } from "@microlearn/db/client";
 import { NotFoundError } from "@microlearn/errors";
 
-import { Chat } from "~/app/_components/chat";
 import { getSession } from "~/auth/server";
+import { Chat } from "../_components/chat";
 import { getSelectedModelId } from "../../_lib/model";
 
 interface ChatPageProps {
