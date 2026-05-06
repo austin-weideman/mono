@@ -987,6 +987,9 @@ importers:
       '@radix-ui/react-tooltip':
         specifier: ^1.2.8
         version: 1.2.8(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.1.6(react@19.1.6))(react@19.1.6)
+      border-beam:
+        specifier: ^1.0.1
+        version: 1.0.1(react-dom@19.1.6(react@19.1.6))(react@19.1.6)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -5671,6 +5674,12 @@ packages:
 
   boolbase@1.0.0:
     resolution: {integrity: sha512-JZOSA7Mo9sNGB8+UjSgzdLtokWAky1zbztM3WRLCbZ70/3cTANmQmOdR7y2g+J0e2WXywy1yS468tY+IruqEww==}
+
+  border-beam@1.0.1:
+    resolution: {integrity: sha512-kswSYT8zRmt5en+wZMtJAbM8RjJglqSKwyRuQZWXnMHQsBwJisaznTfhD8SWvWJZKAtGbSkE2q/wY7seiNDmcw==}
+    peerDependencies:
+      react: '>=18.0.0'
+      react-dom: '>=18.0.0'
 
   bplist-creator@0.1.0:
     resolution: {integrity: sha512-sXaHZicyEEmY86WyueLTQesbeoH/mquvarJaQNbjuOQO+7gbFcDEWqKmcWA4cOTLzFlfgvkiVxolk1k5bBIpmg==}
@@ -15182,6 +15191,11 @@ snapshots:
       readable-stream: 3.6.2
 
   boolbase@1.0.0: {}
+
+  border-beam@1.0.1(react-dom@19.1.6(react@19.1.6))(react@19.1.6):
+    dependencies:
+      react: 19.1.6
+      react-dom: 19.1.6(react@19.1.6)
 
   bplist-creator@0.1.0:
     dependencies:

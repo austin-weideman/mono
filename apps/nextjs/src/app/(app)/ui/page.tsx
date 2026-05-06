@@ -12,6 +12,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
+  BorderBeam,
   Button,
   Collapsible,
   CollapsibleContent,
@@ -249,6 +250,42 @@ export default function UiPlaygroundPage() {
                 Hidden content revealed.
               </CollapsibleContent>
             </Collapsible>
+          </Section>
+
+          <Section
+            title="Border beam"
+            description="Animated glow wrapper from border-beam."
+          >
+            <div className="flex flex-wrap gap-4">
+              <BorderBeam>
+                <div className="bg-card text-card-foreground rounded-2xl px-6 py-4 text-sm">
+                  Default (colorful, md)
+                </div>
+              </BorderBeam>
+              <BorderBeam colorVariant="ocean">
+                <div className="bg-card text-card-foreground rounded-2xl px-6 py-4 text-sm">
+                  Ocean
+                </div>
+              </BorderBeam>
+              <BorderBeam colorVariant="sunset">
+                <div className="bg-card text-card-foreground rounded-2xl px-6 py-4 text-sm">
+                  Sunset
+                </div>
+              </BorderBeam>
+              <BorderBeam colorVariant="mono">
+                <div className="bg-card text-card-foreground rounded-2xl px-6 py-4 text-sm">
+                  Mono
+                </div>
+              </BorderBeam>
+            </div>
+            <div className="flex flex-wrap items-center gap-4">
+              <BorderBeam size="sm">
+                <Button variant="outline">Small beam</Button>
+              </BorderBeam>
+              <BorderBeam size="line">
+                <Input placeholder="Line beam under input" className="w-64" />
+              </BorderBeam>
+            </div>
           </Section>
 
           <Section title="Skeleton">
