@@ -181,6 +181,24 @@ Run from `packages/db` directory. All require Doppler.
 3. Review migration in `packages/db/migrations/`
 4. Run `d migrate` to apply
 
+### Ad-hoc Queries (psql)
+
+Agents can query the dev database directly with `psql` against the Neon `POSTGRES_URL` Doppler injects. No local Postgres, dev server, or Drizzle Studio needs to be running — psql opens its own connection to Neon over the standard wire protocol.
+
+```bash
+doppler run -- sh -c 'psql "$POSTGRES_URL" -c "<SQL>"'
+```
+
+Quoting matters: wrap the `sh -c` argument in single quotes so the outer shell does not expand `$POSTGRES_URL` before Doppler injects it. Doppler populates `sh`'s env, then `sh` expands the variable for psql.
+
+Useful flags:
+
+- `-x` — expanded display, one column per line (good for wide rows like `message.parts`)
+- `-c "\dt"` — list tables; `-c "\d <table>"` — describe a table
+- `-f script.sql` — run a multi-statement file
+
+Treat this as read-only. Do not run `INSERT` / `UPDATE` / `DELETE` / DDL through psql against the dev DB without explicit user permission — schema changes go through `d generate` + `d migrate`.
+
 ## Local Development Startup
 
 **Local development** requires the Inngest dev server alongside the Next.js dev server:
