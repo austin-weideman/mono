@@ -36,7 +36,7 @@ export function Reasoning({ text, isStreaming }: ReasoningProps) {
           <span
             className={cn(
               "animate-shimmer-text bg-clip-text text-transparent",
-              "bg-[length:200%_100%]",
+              "bg-size-[200%_100%]",
               "bg-[linear-gradient(110deg,var(--muted-foreground)_40%,var(--foreground)_50%,var(--muted-foreground)_60%)]",
             )}
           >
