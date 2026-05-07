@@ -3,11 +3,9 @@ import { cookies, headers } from "next/headers";
 import { z } from "zod";
 
 import { getGatewayId } from "@microlearn/ai";
+import { extractTextFromUIMessage } from "@microlearn/chat-utils";
 import {
-  extractTextFromUIMessage,
   generateTitleFromText,
-} from "@microlearn/chat-utils";
-import {
   loadConversation,
   sendMessage,
   setActiveStream,

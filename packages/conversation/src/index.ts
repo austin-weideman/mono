@@ -3,6 +3,7 @@ export * from "./types";
 
 // Application layer
 export { deleteConversation } from "./application/deleteConversation";
+export { generateTitleFromText } from "./application/generateTitleFromText";
 export { getActiveStream } from "./application/getActiveStream";
 export { listUserConversations } from "./application/listUserConversations";
 export { loadConversation } from "./application/loadConversation";
