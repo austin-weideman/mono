@@ -220,15 +220,17 @@ The Inngest dev server lives at `http://localhost:8288`. No event/signing keys a
 
 ## Background Jobs (Inngest)
 
-All async / background work runs on Inngest. Architecture: a leaf `@microlearn/jobs` package owns only the shared Inngest client. Feature packages own their own functions under `src/jobs/`. The Next.js inngest serve handler at `apps/nextjs/src/app/api/inngest/route.ts` is the single roof — it imports every feature's jobs and registers them with `serve({ client, functions: [...] })`.
+All async / background work runs on Inngest. Architecture: a leaf `@microlearn/jobs` package owns the shared Inngest client **and the cross-package event contracts**. Feature packages own their own functions under `src/jobs/` (or `src/inngest/` for runtime infrastructure like the scheduler). The Next.js inngest serve handler at `apps/nextjs/src/app/api/inngest/route.ts` is the single roof — it imports every feature's jobs and registers them with `serve({ client, functions: [...] })`.
+
+**Why events live in `@microlearn/jobs`, not in the feature package:** events are a shared _contract_ between producer and consumer. Putting them in a leaf package lets any package emit any event by depending only on `@microlearn/jobs` — never on the consumer feature package. This is the load-bearing fix for the dependency-direction trap: a low-level package (e.g. `scheduler`) can fire an event consumed by a higher-level package (e.g. `conversation`) without forming a cycle. `eventType()` definitions are inert metadata — no `inngest.createFunction(...)` lives in the events folder, only the wire-format declarations — so importing an event never drags in a function-creation side effect.
 
 **Adding a new background job:**
 
-1. Define the event in `packages/<feature>/src/jobs/events.ts` using `eventType()` + a Zod schema.
+1. Define the event in `packages/jobs/src/events/<domain>/index.ts` using `eventType()` + a Zod schema. Add a `./events/<domain>` subpath to `packages/jobs/package.json` exports.
 2. Create `packages/<feature>/src/jobs/<verb>.ts` that calls `inngest.createFunction(...)`. One function per file. Each meaningful unit of work goes in its own `step.run("name", ...)` so retries resume from the last successful step.
 3. Export the function from `packages/<feature>/src/jobs/index.ts`. Add a `./jobs` subpath to the package's `exports` field.
 4. Import the function in `apps/nextjs/src/app/api/inngest/route.ts` and add it to the `functions: [...]` array passed to `serve(...)`.
-5. Send the event from any server-side code with `inngest.send(...)`.
+5. Send the event from any server-side code with `inngest.send(eventName.create(data, { id }))`.
 
 **Conventions:**
 
