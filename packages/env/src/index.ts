@@ -25,7 +25,7 @@ const envSchema = z.object({
   UPSTASH_REDIS_REST_TOKEN: z.string().min(1),
 
   NODE_ENV: z
-    .enum(["development", "staging", "test", "production"])
+    .enum(["development", "test", "production"])
     .default("development"),
 
   // Note: TZ is reserved by Vercel and cannot be validated. Vercel serverless runs in UTC by default

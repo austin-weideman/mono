@@ -25,6 +25,7 @@
   "dependencies": {
     "@microlearn/core-types": "workspace:*",
     "@microlearn/db": "workspace:*",
+    "@microlearn/env": "workspace:*",
     "@microlearn/errors": "workspace:*",
     "@microlearn/jobs": "workspace:*",
     "@microlearn/time": "workspace:*",
