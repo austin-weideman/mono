@@ -12,6 +12,7 @@ export interface ComputeNextRunInput {
   timezone: string;
   dtstart: Date;
   after: Date;
+  /** If `after` is itself an occurrence: `true` returns it, `false` (default) skips to the next. */
   inclusive?: boolean;
 }
 
