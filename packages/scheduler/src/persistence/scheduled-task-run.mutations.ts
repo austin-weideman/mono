@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 
 import type { DbOrTx } from "@microlearn/db/client";
 import { scheduledTaskRun } from "@microlearn/db";
@@ -28,6 +28,34 @@ export async function insertScheduledTaskRun(
 
   if (!row) {
     throw new InternalServerError("Failed to insert scheduled_task_run");
+  }
+  return row;
+}
+
+/**
+ * Insert a pending run row. If a row already exists for
+ * `(scheduledTaskId, scheduledFor)` (the unique constraint), no new row is
+ * created and the existing row is returned. The DO UPDATE is a no-op solely
+ * to make `RETURNING` populate the existing row in the conflict path.
+ */
+export async function upsertPendingScheduledTaskRun(
+  db: DbOrTx,
+  input: { scheduledTaskId: string; scheduledFor: Date },
+): Promise<ScheduledTaskRun> {
+  const [row] = await db
+    .insert(scheduledTaskRun)
+    .values({
+      scheduledTaskId: input.scheduledTaskId,
+      scheduledFor: input.scheduledFor,
+    })
+    .onConflictDoUpdate({
+      target: [scheduledTaskRun.scheduledTaskId, scheduledTaskRun.scheduledFor],
+      set: { scheduledFor: sql`excluded.scheduled_for` },
+    })
+    .returning();
+
+  if (!row) {
+    throw new InternalServerError("Failed to upsert scheduled_task_run");
   }
   return row;
 }

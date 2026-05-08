@@ -11,6 +11,10 @@
     "./events/conversation": {
       "types": "./dist/events/conversation/index.d.ts",
       "default": "./src/events/conversation/index.ts"
+    },
+    "./events/scheduler": {
+      "types": "./dist/events/scheduler/index.d.ts",
+      "default": "./src/events/scheduler/index.ts"
     }
   },
   "scripts": {

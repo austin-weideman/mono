@@ -6,6 +6,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./src/index.ts"
+    },
+    "./inngest": {
+      "types": "./dist/inngest/index.d.ts",
+      "default": "./src/inngest/index.ts"
     }
   },
   "scripts": {
@@ -25,6 +29,7 @@
     "@microlearn/jobs": "workspace:*",
     "@microlearn/time": "workspace:*",
     "drizzle-orm": "catalog:",
+    "inngest": "catalog:",
     "rrule": "^2.8.1",
     "zod": "catalog:"
   },

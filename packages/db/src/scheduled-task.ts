@@ -24,24 +24,39 @@ export const scheduledTaskRunStatusEnum = pgEnum("scheduled_task_run_status", [
   "failed",
 ]);
 
+export const ScheduledTaskActorType = {
+  USER: "USER",
+  SYSTEM: "SYSTEM",
+} as const;
+export type ScheduledTaskActorType =
+  (typeof ScheduledTaskActorType)[keyof typeof ScheduledTaskActorType];
 export const scheduledTaskActorTypeSchema = z.enum(
   scheduledTaskActorTypeEnum.enumValues,
 );
-export type ScheduledTaskActorType = z.infer<
-  typeof scheduledTaskActorTypeSchema
->;
 
+export const ScheduledTaskStatus = {
+  ACTIVE: "active",
+  PAUSED: "paused",
+  COMPLETED: "completed",
+  FAILED: "failed",
+} as const;
+export type ScheduledTaskStatus =
+  (typeof ScheduledTaskStatus)[keyof typeof ScheduledTaskStatus];
 export const scheduledTaskStatusSchema = z.enum(
   scheduledTaskStatusEnum.enumValues,
 );
-export type ScheduledTaskStatus = z.infer<typeof scheduledTaskStatusSchema>;
 
+export const ScheduledTaskRunStatus = {
+  PENDING: "pending",
+  RUNNING: "running",
+  SUCCEEDED: "succeeded",
+  FAILED: "failed",
+} as const;
+export type ScheduledTaskRunStatus =
+  (typeof ScheduledTaskRunStatus)[keyof typeof ScheduledTaskRunStatus];
 export const scheduledTaskRunStatusSchema = z.enum(
   scheduledTaskRunStatusEnum.enumValues,
 );
-export type ScheduledTaskRunStatus = z.infer<
-  typeof scheduledTaskRunStatusSchema
->;
 
 export const scheduledTask = pgTable(
   "scheduled_task",

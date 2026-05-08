@@ -1,4 +1,4 @@
 export {
+  ScheduledTaskActorType,
   scheduledTaskActorTypeSchema,
-  type ScheduledTaskActorType,
 } from "@microlearn/db";

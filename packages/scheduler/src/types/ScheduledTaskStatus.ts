@@ -1,4 +1,1 @@
-export {
-  scheduledTaskStatusSchema,
-  type ScheduledTaskStatus,
-} from "@microlearn/db";
+export { ScheduledTaskStatus, scheduledTaskStatusSchema } from "@microlearn/db";

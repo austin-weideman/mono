@@ -2,16 +2,16 @@ export type { ScheduledTask } from "./ScheduledTask";
 export type { ScheduledTaskRun } from "./ScheduledTaskRun";
 
 export {
+  ScheduledTaskStatus,
   scheduledTaskStatusSchema,
-  type ScheduledTaskStatus,
 } from "./ScheduledTaskStatus";
 export {
+  ScheduledTaskRunStatus,
   scheduledTaskRunStatusSchema,
-  type ScheduledTaskRunStatus,
 } from "./ScheduledTaskRunStatus";
 export {
+  ScheduledTaskActorType,
   scheduledTaskActorTypeSchema,
-  type ScheduledTaskActorType,
 } from "./ScheduledTaskActorType";
 
 export {

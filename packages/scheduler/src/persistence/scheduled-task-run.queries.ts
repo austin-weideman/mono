@@ -1,7 +1,7 @@
-import { and, desc, eq, lt, or } from "drizzle-orm";
+import { and, asc, desc, eq, isNull, lt, or } from "drizzle-orm";
 
 import type { DbOrTx } from "@microlearn/db/client";
-import { scheduledTaskRun } from "@microlearn/db";
+import { scheduledTaskRun, ScheduledTaskRunStatus } from "@microlearn/db";
 
 import type { ScheduledTaskRunCursor } from "../types/ListScheduledTaskRunsInput";
 import type { ScheduledTaskRun } from "../types/ScheduledTaskRun";
@@ -48,4 +48,29 @@ export async function listScheduledTaskRunsForTask(
     )
     .orderBy(desc(scheduledTaskRun.scheduledFor), desc(scheduledTaskRun.id))
     .limit(limit + 1);
+}
+
+const EMIT_BATCH_LIMIT = 1000;
+
+/**
+ * Selects scheduled_task_run rows that are still pending an Inngest emit
+ * (i.e. dispatch committed the row but the event has not yet been delivered),
+ * locking them for the duration of the emit transaction.
+ */
+export async function findPendingEmitRuns(
+  db: DbOrTx,
+  limit: number = EMIT_BATCH_LIMIT,
+): Promise<ScheduledTaskRun[]> {
+  return await db
+    .select()
+    .from(scheduledTaskRun)
+    .where(
+      and(
+        eq(scheduledTaskRun.status, ScheduledTaskRunStatus.PENDING),
+        isNull(scheduledTaskRun.inngestEventId),
+      ),
+    )
+    .orderBy(asc(scheduledTaskRun.scheduledFor))
+    .limit(limit)
+    .for("update", { skipLocked: true });
 }

@@ -1,4 +1,4 @@
 export {
+  ScheduledTaskRunStatus,
   scheduledTaskRunStatusSchema,
-  type ScheduledTaskRunStatus,
 } from "@microlearn/db";
