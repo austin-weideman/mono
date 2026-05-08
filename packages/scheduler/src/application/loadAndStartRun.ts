@@ -19,14 +19,6 @@ export interface LoadedRun {
   scheduledForIso: string;
 }
 
-/**
- * Executor `step.run('load')` body.
- *
- * Loads the run + parent schedule, builds the Actor (USER vs SYSTEM), and
- * transitions the run to `running`. Idempotent on retry: status is set
- * unconditionally; loading the same row twice is fine because the next
- * checkpointed step replays from cache once this step has succeeded once.
- */
 export async function loadAndStartRun(
   db: DbOrTx,
   runId: string,
@@ -38,24 +30,22 @@ export async function loadAndStartRun(
 
   const task = await getScheduledTaskById(db, run.scheduledTaskId);
   if (!task) {
-    // Schedule was archived/deleted after the run was created. The cascade
-    // delete on scheduled_task_run.scheduled_task_id should normally remove
-    // these, so this is genuinely unexpected.
     throw new NotFoundError(
       `Parent scheduled task not found: ${run.scheduledTaskId}`,
     );
   }
 
-  const actor: Actor =
-    task.actorType === ScheduledTaskActorType.USER
-      ? task.userId
-        ? userActor(task.userId)
-        : (() => {
-            throw new InternalServerError(
-              `USER scheduled task ${task.id} has no userId`,
-            );
-          })()
-      : systemActor(SCHEDULER_SERVICE);
+  let actor: Actor;
+  if (task.actorType === ScheduledTaskActorType.USER) {
+    if (!task.userId) {
+      throw new InternalServerError(
+        `USER scheduled task ${task.id} has no userId`,
+      );
+    }
+    actor = userActor(task.userId);
+  } else {
+    actor = systemActor(SCHEDULER_SERVICE);
+  }
 
   await updateScheduledTaskRunById(db, runId, {
     status: ScheduledTaskRunStatus.RUNNING,

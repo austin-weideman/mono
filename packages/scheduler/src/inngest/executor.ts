@@ -17,12 +17,9 @@ const executorFn = inngest.createFunction(
     retries: EXECUTOR_RETRIES,
     triggers: [{ event: scheduledTaskDueEvent }],
     onFailure: async ({ event, error }) => {
-      // event.data.event is the original `scheduled_task/due` payload. The
-      // SDK types `event` loosely on the failure handler, so narrow it.
       const original = event.data.event as { data: { runId: string } };
-      const runId = original.data.runId;
       await failRun(db, {
-        runId,
+        runId: original.data.runId,
         now: new Date(),
         error: { name: error.name, message: error.message },
       });
@@ -40,9 +37,6 @@ const executorFn = inngest.createFunction(
           `No handler registered for task type: ${loaded.taskType}`,
         );
       }
-      // Each handler defines its own payload schema; the registry stores
-      // them as TaskHandler<any>, so the parse result is `any`. Funnel
-      // through `unknown` and let the handler's signature re-narrow.
       const parsed: unknown = handler.payloadSchema.parse(loaded.payload);
       await handler.execute(
         {

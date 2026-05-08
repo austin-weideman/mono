@@ -32,12 +32,8 @@ export async function insertScheduledTaskRun(
   return row;
 }
 
-/**
- * Insert a pending run row. If a row already exists for
- * `(scheduledTaskId, scheduledFor)` (the unique constraint), no new row is
- * created and the existing row is returned. The DO UPDATE is a no-op solely
- * to make `RETURNING` populate the existing row in the conflict path.
- */
+// `onConflictDoUpdate` (no-op) instead of `onConflictDoNothing` so RETURNING
+// always yields a row, even on the unique-constraint conflict path.
 export async function upsertPendingScheduledTaskRun(
   db: DbOrTx,
   input: { scheduledTaskId: string; scheduledFor: Date },

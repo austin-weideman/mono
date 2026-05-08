@@ -133,8 +133,7 @@ describe("dispatchDue", () => {
       const dueAt = new Date("2026-05-08T09:00:00Z");
       const now = new Date("2026-05-08T09:00:30Z");
 
-      // COUNT=1 with dtstart at dueAt yields exactly one occurrence; once
-      // dispatched, the next computeNextRun(after = now) returns null.
+      // COUNT=1 → after dispatch, computeNextRun(after=now) returns null.
       const task = await insertScheduledTask(tx, {
         userId,
         actorType: ActorType.USER,
@@ -175,9 +174,8 @@ describe("dispatchDue", () => {
         nextRunAt: dueAt,
       });
 
-      // Bypass createScheduledTask validation by inserting a row with a bad
-      // rrule directly. Simulates a library upgrade where an old rule no
-      // longer parses.
+      // Bypass createScheduledTask validation to simulate an rrule that
+      // parsed at write time but now throws (e.g. library upgrade).
       const badTask = await insertScheduledTask(tx, {
         userId,
         actorType: ActorType.USER,
@@ -226,9 +224,7 @@ describe("dispatchDue", () => {
       });
 
       await dispatchDue(tx, now);
-      // Reset nextRunAt back to the original due time to simulate the
-      // unique-constraint conflict path that arises if the previous tick
-      // crashed mid-transaction.
+      // Replay the same scheduledFor to hit the unique-constraint path.
       await tx
         .update(scheduledTask)
         .set({ nextRunAt: dueAt, status: ScheduledTaskStatus.ACTIVE })

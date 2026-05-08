@@ -8,9 +8,6 @@ export interface CompleteRunInput {
   now: Date;
 }
 
-/**
- * Executor `step.run('complete')` body — marks the run as succeeded.
- */
 export async function completeRun(
   db: DbOrTx,
   input: CompleteRunInput,
@@ -28,10 +25,6 @@ export interface FailRunInput {
   error: { name: string; message: string };
 }
 
-/**
- * Marks the run as failed. Called by the executor's `onFailure` hook after
- * Inngest has exhausted the retry budget.
- */
 export async function failRun(db: DbOrTx, input: FailRunInput): Promise<void> {
   await updateScheduledTaskRunById(db, input.runId, {
     status: ScheduledTaskRunStatus.FAILED,

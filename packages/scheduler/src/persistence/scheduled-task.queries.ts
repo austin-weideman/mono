@@ -32,11 +32,6 @@ export async function loadScheduledTasksForUser(
 
 const DISPATCH_BATCH_LIMIT = 1000;
 
-/**
- * Selects active schedules whose nextRunAt has elapsed, locking them
- * for the duration of the dispatcher transaction so concurrent dispatchers
- * pick disjoint subsets.
- */
 export async function findDueScheduledTasks(
   db: DbOrTx,
   now: Date,

@@ -52,11 +52,6 @@ export async function listScheduledTaskRunsForTask(
 
 const EMIT_BATCH_LIMIT = 1000;
 
-/**
- * Selects scheduled_task_run rows that are still pending an Inngest emit
- * (i.e. dispatch committed the row but the event has not yet been delivered),
- * locking them for the duration of the emit transaction.
- */
 export async function findPendingEmitRuns(
   db: DbOrTx,
   limit: number = EMIT_BATCH_LIMIT,

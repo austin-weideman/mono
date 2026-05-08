@@ -7,32 +7,12 @@ import { findDueScheduledTasks } from "../persistence/scheduled-task.queries";
 import { computeNextRun } from "../utils/computeNextRun";
 
 export interface DispatchDueResult {
-  /** Number of due rows considered in this tick. */
   considered: number;
-  /** Number of pending run rows successfully prepared (upserted) for emit. */
   dispatched: number;
-  /** Number of schedules marked `completed` because the rrule is exhausted. */
   completed: number;
-  /** Number of schedules marked `failed` because computeNextRun threw. */
   failed: number;
 }
 
-/**
- * Dispatch step of the scheduler tick — runs in a single DB transaction.
- *
- * For each active schedule whose nextRunAt <= now, atomically:
- *   1. upsert a pending scheduled_task_run row at `scheduledFor = oldNextRunAt`
- *   2. advance scheduled_task.nextRunAt = computeNextRun(rrule, tz, now)
- *      (or mark completed if exhausted)
- *   3. record lastRunId pointing at the new run
- *
- * Per-row try/catch isolates a malformed rrule: that one schedule is marked
- * `failed` and the rest of the batch proceeds.
- *
- * Does NOT call inngest.send — emission lives in `emitPendingRuns`, which
- * runs after this transaction commits. This preserves the transactional
- * outbox pattern: the pending run row IS the outbox.
- */
 export async function dispatchDue(
   db: DbOrTx,
   now: Date,
@@ -72,11 +52,8 @@ export async function dispatchDue(
         result.dispatched += 1;
         if (!next) result.completed += 1;
       } catch {
-        // computeNextRun threw — deterministic failure, mark the schedule
-        // failed so it stops being picked up. The rest of the batch
-        // continues. The error is swallowed here because dispatcher tick
-        // observability is provided via Inngest function logs and metrics
-        // emitted at the call site, not via per-row exceptions.
+        // Per-row containment: a malformed rrule is deterministic, so we
+        // mark just this schedule failed and let the rest of the batch run.
         await updateScheduledTaskById(tx, row.id, {
           status: ScheduledTaskStatus.FAILED,
         });
