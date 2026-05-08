@@ -296,6 +296,8 @@ packages/<feature>/
       Conversation.ts
       ListUserConversationsInput.ts
       index.ts        # Internal barrel for types
+    utils/            # Pure functions: calculations, validation, business rules.
+                      # No I/O, no DB, no actor. Optional — only when present.
     persistence/      # Drizzle/Postgres access (CQRS)
       *.queries.ts    # SELECT operations only
       *.mutations.ts  # INSERT/UPDATE/DELETE only
@@ -319,11 +321,20 @@ packages/<feature>/
 
 ### Layer Rules
 
-| Layer            | Contains                                     | Imports Allowed                          |
-| ---------------- | -------------------------------------------- | ---------------------------------------- |
-| **types/**       | Zod schemas, inferred types, pure interfaces | `zod`, other types in same folder        |
-| **persistence/** | DB queries/mutations                         | `@microlearn/db`, types                  |
-| **application/** | Use-cases, auth                              | persistence, types, `@microlearn/errors` |
+| Layer            | Contains                                                                                                                     | Imports Allowed                                                     |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| **types/**       | Zod schemas, inferred types, pure interfaces                                                                                 | `zod`, other types in same folder                                   |
+| **utils/**       | Pure functions: calculations, validation, business rules. No I/O, no DB, no actor, no clock reads — `now: Date` is injected. | types, `@microlearn/errors`, `@microlearn/time`, other compute libs |
+| **persistence/** | DB queries/mutations                                                                                                         | `@microlearn/db`, types                                             |
+| **application/** | Use-cases, auth, orchestration                                                                                               | utils, persistence, types, `@microlearn/errors`                     |
+
+### Utils Rules
+
+- **Pure functions only** - No DB access, no actor, no `Date` reads, no environment access. Reach for this layer when logic is reusable across application functions or when calculation is non-trivial enough to test in isolation.
+- **Inject the clock** - functions that need "now" accept `now: Date` as a parameter so tests can advance time deterministically
+- **Return primitive types or `types/` types** - never tRPC/HTTP/React primitives
+- **Optional layer** - small features may not need a `utils/` folder. Only add it when there's actual pure logic to extract
+- **Generic helpers belong in shared packages** - if a util isn't scoped to this feature (e.g. time/date helpers, string formatting), put it in `@microlearn/time`, `@microlearn/validators`, etc., not here
 
 ### CQRS (Command Query Responsibility Segregation)
 
@@ -371,7 +382,7 @@ External code must import from package root:
 "exports": { ".": { ... } }
 ```
 
-Never export `"./types"`, `"./persistence"`, or `"./application"`.
+Never export `"./types"`, `"./utils"`, `"./persistence"`, or `"./application"`.
 
 **Why:** Prevents bypassing auth checks, allows internal refactoring without breaking consumers.
 
@@ -439,6 +450,9 @@ Before any feature package is complete:
 
 - [ ] Types folder uses one file per type (no monolithic types.ts)
 - [ ] Zod schemas and inferred types live in the same file
+- [ ] Pure logic lives in `utils/`, not `application/` (when present)
+- [ ] Utils functions are pure: no DB, no actor, no clock reads (`now: Date` is injected)
+- [ ] Generic time/string/etc. helpers live in shared packages (`@microlearn/time`, `@microlearn/validators`), not in a feature's `utils/`
 - [ ] Persistence uses CQRS (`*.queries.ts` / `*.mutations.ts`)
 - [ ] Functions accept `db: DbOrTx` as first param
 - [ ] Application functions accept `actor: Actor` as second param

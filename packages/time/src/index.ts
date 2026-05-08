@@ -2,7 +2,14 @@ export { DateTime } from "luxon";
 
 export { isValidTimezone } from "./validation";
 
-export { fromJSDate, fromISO, toJSDate, utcNow } from "./convert";
+export {
+  fromJSDate,
+  fromISO,
+  toJSDate,
+  utcNow,
+  toFloatingDate,
+  fromFloatingDate,
+} from "./convert";
 
 export {
   formatDateTime,

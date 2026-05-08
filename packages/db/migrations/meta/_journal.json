@@ -43,6 +43,13 @@
       "when": 1777949259209,
       "tag": "0005_elite_pandemic",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1778210233959,
+      "tag": "0006_plain_ares",
+      "breakpoints": true
     }
   ]
 }
