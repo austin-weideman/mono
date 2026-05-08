@@ -11,3 +11,11 @@ export { loadScheduledTasks } from "./application/loadScheduledTasks";
 export { pauseScheduledTask } from "./application/pauseScheduledTask";
 export { resumeScheduledTask } from "./application/resumeScheduledTask";
 export { updateScheduledTask } from "./application/updateScheduledTask";
+
+// Handler registry (public — for executor wiring + handler authoring)
+export { getTaskHandler, taskHandlers } from "./handlers/registry";
+export {
+  scheduledChatHandler,
+  scheduledChatPayloadSchema,
+  type ScheduledChatPayload,
+} from "./handlers/scheduled-chat.handler";

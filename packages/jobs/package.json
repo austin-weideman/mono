@@ -7,6 +7,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./src/index.ts"
+    },
+    "./events/conversation": {
+      "types": "./dist/events/conversation/index.d.ts",
+      "default": "./src/events/conversation/index.ts"
     }
   },
   "scripts": {
@@ -19,7 +23,8 @@
   },
   "dependencies": {
     "@microlearn/env": "workspace:*",
-    "inngest": "catalog:"
+    "inngest": "catalog:",
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@microlearn/eslint-config": "workspace:*",

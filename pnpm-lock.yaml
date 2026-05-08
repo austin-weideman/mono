@@ -848,6 +848,9 @@ importers:
       inngest:
         specifier: 'catalog:'
         version: 4.2.6(@opentelemetry/core@2.7.0(@opentelemetry/api@1.9.0))(next@16.2.4(@opentelemetry/api@1.9.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.1.6(react@19.1.6))(react@19.1.6))(react@19.1.6)(typescript@6.0.3)(zod@4.4.2)
+      zod:
+        specifier: 'catalog:'
+        version: 4.4.2
     devDependencies:
       '@microlearn/eslint-config':
         specifier: workspace:*
@@ -922,6 +925,9 @@ importers:
       '@microlearn/errors':
         specifier: workspace:*
         version: link:../errors
+      '@microlearn/jobs':
+        specifier: workspace:*
+        version: link:../jobs
       '@microlearn/time':
         specifier: workspace:*
         version: link:../time

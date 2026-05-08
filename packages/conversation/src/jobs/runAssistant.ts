@@ -6,6 +6,7 @@ import { createAssistantAgent } from "@microlearn/agent";
 import { systemActor, userActor } from "@microlearn/core-types";
 import { db } from "@microlearn/db/client";
 import { inngest } from "@microlearn/jobs";
+import { conversationRunAssistantEvent } from "@microlearn/jobs/events/conversation";
 import { streamChannel } from "@microlearn/realtime";
 
 import type { Message } from "../types/Message";
@@ -13,7 +14,6 @@ import { loadConversation } from "../application/loadConversation";
 import { sendMessage } from "../application/sendMessage";
 import { setActiveStream } from "../application/setActiveStream";
 import { updateConversationTokenUsage } from "../persistence/conversation.mutations";
-import { conversationRunAssistantEvent } from "./events";
 
 const SYSTEM_SERVICE = "conversation";
 

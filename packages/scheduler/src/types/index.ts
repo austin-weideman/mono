@@ -45,3 +45,6 @@ export {
   type ListScheduledTaskRunsInput,
   type ScheduledTaskRunCursor,
 } from "./ListScheduledTaskRunsInput";
+
+export { TaskType, isTaskType } from "./TaskType";
+export type { HandlerContext, TaskHandler } from "./TaskHandler";

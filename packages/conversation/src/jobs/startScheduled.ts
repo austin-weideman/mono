@@ -3,15 +3,15 @@ import type { InngestFunction } from "inngest";
 import { systemActor } from "@microlearn/core-types";
 import { db } from "@microlearn/db/client";
 import { inngest } from "@microlearn/jobs";
+import {
+  conversationRunAssistantEvent,
+  conversationScheduledStartEvent,
+} from "@microlearn/jobs/events/conversation";
 
 import { generateTitleFromText } from "../application/generateTitleFromText";
 import { sendMessage } from "../application/sendMessage";
 import { setActiveStream } from "../application/setActiveStream";
 import { startConversation } from "../application/startConversation";
-import {
-  conversationRunAssistantEvent,
-  conversationScheduledStartEvent,
-} from "./events";
 
 const SYSTEM_SERVICE = "conversation";
 

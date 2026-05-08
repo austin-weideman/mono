@@ -11,11 +11,11 @@ import {
   setActiveStream,
   startConversation,
 } from "@microlearn/conversation";
-import { conversationRunAssistantEvent } from "@microlearn/conversation/jobs";
 import { userActor } from "@microlearn/core-types";
 import { db } from "@microlearn/db/client";
 import { NotFoundError } from "@microlearn/errors";
 import { inngest } from "@microlearn/jobs";
+import { conversationRunAssistantEvent } from "@microlearn/jobs/events/conversation";
 
 import { getSelectedModelId } from "~/app/(app)/_lib/model";
 import { auth } from "~/auth/server";
