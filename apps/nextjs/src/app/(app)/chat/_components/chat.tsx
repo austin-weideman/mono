@@ -1,7 +1,7 @@
 "use client";
 
 import type { UIMessage } from "ai";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useChat } from "@ai-sdk/react";
 import { useQueryClient } from "@tanstack/react-query";
 import { DefaultChatTransport } from "ai";
@@ -9,12 +9,14 @@ import { DefaultChatTransport } from "ai";
 import type { ModelId } from "@microlearn/ai";
 import type { Message } from "@microlearn/conversation";
 import { convertDbMessagesToUIMessages } from "@microlearn/chat-utils";
-import { SidebarTrigger } from "@microlearn/ui";
+import { ChevronDownIcon, SidebarTrigger } from "@microlearn/ui";
 
 import { ModelSelector } from "~/app/(app)/_components/model-selector";
 import { useTRPC } from "~/trpc/react";
 import { ChatInput } from "./chat-input";
 import { Messages } from "./messages";
+
+const AT_BOTTOM_THRESHOLD_PX = 100;
 
 interface ChatProps {
   conversationId: string;
@@ -146,12 +148,30 @@ export function Chat({
     }
   }, [isNew, messages.length, queryClient, trpc.conversation.list]);
 
+  const [isAtBottom, setIsAtBottom] = useState(true);
+
   const scrollToBottom = useCallback(() => {
     scrollContainerRef.current?.scrollTo({
       top: scrollContainerRef.current.scrollHeight,
       behavior: "smooth",
     });
   }, []);
+
+  const checkIsAtBottom = useCallback(() => {
+    const el = scrollContainerRef.current;
+    if (!el) return;
+    setIsAtBottom(
+      el.scrollHeight - el.scrollTop - el.clientHeight < AT_BOTTOM_THRESHOLD_PX,
+    );
+  }, []);
+
+  useEffect(() => {
+    const el = scrollContainerRef.current;
+    if (!el) return;
+    checkIsAtBottom();
+    el.addEventListener("scroll", checkIsAtBottom, { passive: true });
+    return () => el.removeEventListener("scroll", checkIsAtBottom);
+  }, [checkIsAtBottom]);
 
   useEffect(() => {
     const lastMessage = messages[messages.length - 1];
@@ -162,7 +182,8 @@ export function Chat({
       scrollToBottom();
     }
     prevMessageCount.current = messages.length;
-  }, [messages, scrollToBottom]);
+    checkIsAtBottom();
+  }, [messages, scrollToBottom, checkIsAtBottom]);
 
   const handleSubmit = (text: string) => {
     void sendMessage({ text });
@@ -177,7 +198,17 @@ export function Chat({
       <div ref={scrollContainerRef} className="flex-1 overflow-y-auto">
         <Messages messages={messages} status={status} />
       </div>
-      <div className="bg-background mx-auto flex w-full max-w-4xl gap-2 px-2 pb-3 md:px-4 md:pb-4">
+      <div className="bg-background relative mx-auto flex w-full max-w-4xl gap-2 px-2 pb-3 md:px-4 md:pb-4">
+        {!isAtBottom && (
+          <button
+            type="button"
+            onClick={scrollToBottom}
+            aria-label="Scroll to bottom"
+            className="bg-background hover:bg-muted absolute -top-12 left-1/2 flex size-9 -translate-x-1/2 cursor-pointer items-center justify-center rounded-full border shadow-sm transition-colors"
+          >
+            <ChevronDownIcon size={18} />
+          </button>
+        )}
         <ChatInput onSubmit={handleSubmit} disabled={status !== "ready"} />
       </div>
     </div>
