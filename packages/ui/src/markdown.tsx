@@ -13,7 +13,7 @@ export const Markdown = memo(
     <Streamdown
       linkSafety={{ enabled: false }}
       className={cn(
-        "size-full [&_code]:break-words [&_code]:whitespace-pre-wrap [&_pre]:max-w-full [&_pre]:overflow-x-auto [&>*:first-child]:mt-0 [&>*:last-child]:mb-0",
+        "size-full [&_code]:wrap-break-word [&_code]:whitespace-pre-wrap [&_ol]:list-outside [&_ol]:pl-6 [&_pre]:max-w-full [&_pre]:overflow-x-auto [&_ul]:list-outside [&_ul]:pl-6 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0",
         className,
       )}
       {...props}
