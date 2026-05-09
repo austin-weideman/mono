@@ -1,7 +1,8 @@
 import type { UseChatHelpers } from "@ai-sdk/react";
 import type { UIMessage } from "ai";
+import { motion } from "framer-motion";
 
-import { SparklesIcon } from "@microlearn/ui";
+import { popMotion, riseMotion, SparklesIcon, withDelay } from "@microlearn/ui";
 
 import { Message } from "./message";
 
@@ -13,14 +14,25 @@ interface MessagesProps {
 function EmptyState() {
   return (
     <div className="flex flex-1 flex-col items-center justify-center gap-4 py-16">
-      <div className="bg-primary/10 flex size-14 items-center justify-center rounded-full">
+      <motion.div
+        {...popMotion}
+        className="bg-primary/10 flex size-14 items-center justify-center rounded-full"
+      >
         <SparklesIcon size={32} className="text-primary" />
-      </div>
+      </motion.div>
       <div className="flex flex-col items-center gap-1 text-center">
-        <h2 className="text-2xl font-bold">How can I help you?</h2>
-        <p className="text-muted-foreground max-w-sm text-base">
+        <motion.h2
+          {...withDelay(riseMotion, 0.15)}
+          className="text-2xl font-bold"
+        >
+          How can I help you?
+        </motion.h2>
+        <motion.p
+          {...withDelay(riseMotion, 0.25)}
+          className="text-muted-foreground max-w-sm text-base"
+        >
           Ask me anything...
-        </p>
+        </motion.p>
       </div>
     </div>
   );

@@ -1,8 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
-import { AutoResizeTextarea, cn, SendIcon } from "@microlearn/ui";
+import {
+  AutoResizeTextarea,
+  popMotion,
+  SendIcon,
+  tactileMotion,
+} from "@microlearn/ui";
 
 interface ChatInputProps {
   onSubmit: (text: string) => void;
@@ -44,20 +50,21 @@ export function ChatInput({ onSubmit, disabled }: ChatInputProps) {
         wrapperClassName="rounded-[1.25rem] border border-border bg-background transition-colors focus-within:border-primary disabled:cursor-not-allowed disabled:opacity-50"
         className="placeholder:text-muted-foreground px-4 py-2.5 pr-12 text-base"
       />
-      <button
-        type="submit"
-        disabled={disabled || !hasContent}
-        aria-label="Send message"
-        className={cn(
-          "absolute right-2 bottom-2 flex size-7 items-center justify-center rounded-full transition-all",
-          hasContent
-            ? "bg-primary text-primary-foreground hover:opacity-90"
-            : "text-muted-foreground bg-transparent",
-          "disabled:cursor-not-allowed disabled:opacity-50",
+      <AnimatePresence>
+        {hasContent && (
+          <motion.button
+            key="send"
+            type="submit"
+            disabled={disabled}
+            aria-label="Send message"
+            {...popMotion}
+            {...tactileMotion}
+            className="bg-primary text-primary-foreground absolute right-2 bottom-2 flex size-7 cursor-pointer items-center justify-center rounded-full disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            <SendIcon />
+          </motion.button>
         )}
-      >
-        <SendIcon />
-      </button>
+      </AnimatePresence>
     </form>
   );
 }

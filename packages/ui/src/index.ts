@@ -11,6 +11,7 @@ export * from "./icons";
 export * from "./input";
 export * from "./label";
 export * from "./markdown";
+export * from "./motion-presets";
 export * from "./separator";
 export * from "./sheet";
 export * from "./sidebar";
