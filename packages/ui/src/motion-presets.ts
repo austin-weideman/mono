@@ -44,6 +44,64 @@ export const riseMotion = {
   },
 };
 
+// Scroll-triggered rise: fades + lifts up when the element enters the viewport.
+// Spread on any motion.* element to reveal it once on scroll.
+export const viewportRiseMotion = {
+  initial: { opacity: 0, y: 20 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-80px" },
+  transition: {
+    duration: 0.55,
+    ease: [0.22, 1, 0.36, 1] as const,
+  },
+};
+
+// Subtle press response for buttons. Less aggressive than tactileMotion —
+// designed for primary CTAs where we want a soft, premium feel.
+export const pressMotion = {
+  whileHover: { scale: 1.03 },
+  whileTap: { scale: 0.97 },
+  transition: { type: "spring" as const, stiffness: 500, damping: 25 },
+};
+
+// Subtle hover lift for cards. Pairs well with shadow transitions in CSS.
+export const liftMotion = {
+  whileHover: { y: -4 },
+  transition: { type: "spring" as const, stiffness: 400, damping: 25 },
+};
+
+// Container that staggers its motion children when scrolled into view.
+// Pair with `staggerItemMotion` on each child.
+export const staggerContainerMotion = {
+  initial: "hidden",
+  whileInView: "visible",
+  viewport: { once: true, margin: "-80px" },
+  variants: {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.09,
+        delayChildren: 0.05,
+      },
+    },
+  },
+};
+
+// Child of a `staggerContainerMotion` — fades + lifts in sequence with siblings.
+export const staggerItemMotion = {
+  variants: {
+    hidden: { opacity: 0, y: 18 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: [0.22, 1, 0.36, 1] as const,
+      },
+    },
+  },
+};
+
 // Returns a copy of a preset with a transition delay applied — for staggering
 // sibling elements without reaching for variants/staggerChildren.
 export function withDelay<T extends { transition?: object }>(

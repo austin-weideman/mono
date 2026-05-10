@@ -39,10 +39,12 @@ export function MarketingHeader({
         <div className="flex items-center gap-10">
           <Link
             href="/"
-            className="text-obsidian flex items-center gap-2 text-[15px] font-medium tracking-tight"
+            className="text-obsidian group flex items-center gap-2 text-[15px] font-medium tracking-tight"
           >
             <Logomark />
-            <span>{SITE.name}</span>
+            <span className="transition-transform duration-300 ease-out group-hover:translate-x-0.5">
+              {SITE.name}
+            </span>
           </Link>
 
           <div className="hidden items-center gap-7 md:flex">
@@ -50,9 +52,13 @@ export function MarketingHeader({
               <ScrollLink
                 key={link.label}
                 href={link.href}
-                className="text-gravel hover:text-obsidian text-sm font-normal transition-colors"
+                className="text-gravel hover:text-obsidian group relative text-sm font-normal transition-colors"
               >
-                {link.label}
+                <span>{link.label}</span>
+                <span
+                  aria-hidden
+                  className="bg-obsidian pointer-events-none absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 transition-transform duration-300 ease-out group-hover:scale-x-100"
+                />
               </ScrollLink>
             ))}
           </div>
@@ -110,9 +116,9 @@ function Logomark() {
   return (
     <span
       aria-hidden="true"
-      className="bg-obsidian inline-flex size-5 items-center justify-center rounded-full"
+      className="bg-obsidian inline-flex size-5 items-center justify-center rounded-full transition-transform duration-300 ease-out group-hover:scale-110 group-hover:rotate-[10deg]"
     >
-      <span className="bg-eggshell size-1.5 rounded-full" />
+      <span className="bg-eggshell size-1.5 rounded-full transition-transform duration-300 ease-out group-hover:scale-125" />
     </span>
   );
 }

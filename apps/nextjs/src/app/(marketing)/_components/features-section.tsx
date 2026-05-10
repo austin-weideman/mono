@@ -1,4 +1,9 @@
+"use client";
+
+import { motion } from "framer-motion";
+
 import { FEATURES_SECTION } from "../_lib/content";
+import { RevealItem, RevealStagger } from "./animations";
 import { Section } from "./section";
 import { SectionHeader } from "./section-header";
 
@@ -11,11 +16,11 @@ export function FeaturesSection() {
         size="lg"
       />
 
-      <div className="border-chalk grid border-t md:grid-cols-2">
+      <RevealStagger className="border-chalk grid border-t md:grid-cols-2">
         {FEATURES_SECTION.features.map((feature, index) => (
           <FeatureBlock key={feature.title} feature={feature} index={index} />
         ))}
-      </div>
+      </RevealStagger>
     </Section>
   );
 }
@@ -35,19 +40,32 @@ function FeatureBlock({ feature, index }: FeatureBlockProps) {
   const dotClass = feature.accent === "signal" ? "bg-signal-blue" : "bg-ember";
 
   return (
-    <div className={`${borderClasses} px-0 py-10 md:px-10`}>
+    <RevealItem
+      className={`${borderClasses} group relative overflow-hidden px-0 py-10 md:px-10`}
+    >
+      {/* Soft hover wash — fades the powder background in from the left edge. */}
+      <span
+        aria-hidden
+        className="bg-powder pointer-events-none absolute inset-0 -z-10 origin-left scale-x-0 opacity-0 transition-[opacity,transform] duration-500 ease-out group-hover:scale-x-100 group-hover:opacity-100"
+      />
+
       <div className="flex items-center gap-2.5">
-        <span aria-hidden className={`size-2 rounded-full ${dotClass}`} />
+        <motion.span
+          aria-hidden
+          className={`size-2 rounded-full ${dotClass}`}
+          whileHover={{ scale: 1.6 }}
+          transition={{ type: "spring", stiffness: 400, damping: 20 }}
+        />
         <span className="text-obsidian text-[13px] font-medium tracking-[0.3px] uppercase">
           {feature.label}
         </span>
       </div>
-      <h3 className="font-display text-obsidian mt-5 text-[24px] leading-[1.2] font-light tracking-[-0.4px] md:text-[28px] md:tracking-[-0.5px]">
+      <h3 className="font-display text-obsidian mt-5 text-[24px] leading-[1.2] font-light tracking-[-0.4px] transition-transform duration-300 ease-out group-hover:-translate-y-0.5 md:text-[28px] md:tracking-[-0.5px]">
         {feature.title}
       </h3>
       <p className="text-gravel mt-3 max-w-[480px] text-[15px] leading-[1.55]">
         {feature.description}
       </p>
-    </div>
+    </RevealItem>
   );
 }
