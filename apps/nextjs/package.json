@@ -39,7 +39,7 @@
     "ai": "catalog:",
     "better-auth": "catalog:",
     "date-fns": "^4.1.0",
-    "framer-motion": "^12.23.28",
+    "framer-motion": "^12.38.0",
     "inngest": "catalog:",
     "next": "^16.1.7",
     "react": "catalog:react19",
