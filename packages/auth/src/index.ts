@@ -6,6 +6,20 @@ import { oAuthProxy } from "better-auth/plugins";
 
 import { db } from "@microlearn/db/client";
 
+type EmailVerificationOptions = NonNullable<
+  BetterAuthOptions["emailVerification"]
+>;
+type EmailAndPasswordOptions = NonNullable<
+  BetterAuthOptions["emailAndPassword"]
+>;
+
+export type SendVerificationEmail = NonNullable<
+  EmailVerificationOptions["sendVerificationEmail"]
+>;
+export type OnExistingUserSignUp = NonNullable<
+  EmailAndPasswordOptions["onExistingUserSignUp"]
+>;
+
 export function initAuth<
   TExtraPlugins extends BetterAuthPlugin[] = [],
 >(options: {
@@ -16,6 +30,15 @@ export function initAuth<
 
   googleClientId?: string;
   googleClientSecret?: string;
+
+  /**
+   * Email-delivery callbacks. The auth package stays generic so the Better
+   * Auth CLI (`script/auth-cli.ts`) can generate the schema without needing
+   * email infrastructure or env vars; consumers wire these up at runtime.
+   */
+  sendVerificationEmail?: SendVerificationEmail;
+  onExistingUserSignUp?: OnExistingUserSignUp;
+
   extraPlugins?: TExtraPlugins;
 }) {
   if (options.useOauthProxy && !options.productionUrl) {
@@ -45,6 +68,26 @@ export function initAuth<
             clientSecret: options.googleClientSecret,
           },
         }),
+    },
+    emailAndPassword: {
+      enabled: true,
+      requireEmailVerification: true,
+      ...(options.onExistingUserSignUp && {
+        onExistingUserSignUp: options.onExistingUserSignUp,
+      }),
+    },
+    ...(options.sendVerificationEmail && {
+      emailVerification: {
+        sendVerificationEmail: options.sendVerificationEmail,
+        sendOnSignUp: true,
+        autoSignInAfterVerification: true,
+      },
+    }),
+    account: {
+      accountLinking: {
+        enabled: true,
+        trustedProviders: ["google"],
+      },
     },
     trustedOrigins: ["expo://", "exp://"],
     onAPIError: {

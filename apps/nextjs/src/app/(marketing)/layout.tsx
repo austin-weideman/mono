@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
 
-import { GoogleSignInButton } from "./_components/google-sign-in-button";
 import { MarketingFooter } from "./_components/marketing-footer";
 import { MarketingHeader } from "./_components/marketing-header";
+import { NavAuthLink } from "./_components/nav-auth-link";
 
 interface MarketingLayoutProps {
   children: ReactNode;
@@ -16,10 +16,14 @@ export default function MarketingLayout({ children }: MarketingLayoutProps) {
     >
       <MarketingHeader
         signInButton={
-          <GoogleSignInButton variant="ghost">Log in</GoogleSignInButton>
+          <NavAuthLink href="/login" variant="ghost">
+            Log in
+          </NavAuthLink>
         }
         signUpButton={
-          <GoogleSignInButton variant="primary">Sign up</GoogleSignInButton>
+          <NavAuthLink href="/signup" variant="primary">
+            Sign up
+          </NavAuthLink>
         }
       />
       <main className="flex-1 pt-14">{children}</main>
