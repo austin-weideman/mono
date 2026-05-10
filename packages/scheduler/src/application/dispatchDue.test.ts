@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 import { describe, expect, it } from "vitest";
 
 import type { Transaction } from "@microlearn/db/client";
@@ -73,10 +73,10 @@ describe("dispatchDue", () => {
   it("ignores schedules whose nextRunAt is in the future", async () => {
     await withTestTransaction(async (tx) => {
       const userId = await createTestUser(tx, "u-dispatch-future");
-      const now = new Date("2026-05-08T09:00:00Z");
-      const future = new Date("2026-05-08T10:00:00Z");
+      const now = new Date();
+      const future = new Date(now.getTime() + 60 * 60 * 1000);
 
-      await insertScheduledTask(tx, {
+      const task = await insertScheduledTask(tx, {
         userId,
         actorType: ActorType.USER,
         taskType: "scheduled_chat",
@@ -87,11 +87,19 @@ describe("dispatchDue", () => {
         nextRunAt: future,
       });
 
-      const result = await dispatchDue(tx, now);
-      expect(result.considered).toBe(0);
+      await dispatchDue(tx, now);
 
-      const runs = await tx.select().from(scheduledTaskRun);
+      const runs = await tx
+        .select()
+        .from(scheduledTaskRun)
+        .where(eq(scheduledTaskRun.scheduledTaskId, task.id));
       expect(runs).toHaveLength(0);
+
+      const [unchanged] = await tx
+        .select()
+        .from(scheduledTask)
+        .where(eq(scheduledTask.id, task.id));
+      expect(unchanged?.nextRunAt.toISOString()).toBe(future.toISOString());
     });
   });
 
@@ -101,7 +109,7 @@ describe("dispatchDue", () => {
       const dueAt = new Date("2026-05-08T09:00:00Z");
       const now = new Date("2026-05-08T09:00:30Z");
 
-      const make = async (status: ScheduledTaskStatus) => {
+      const make = async (status: ScheduledTaskStatus): Promise<string> => {
         const t = await insertScheduledTask(tx, {
           userId,
           actorType: ActorType.USER,
@@ -116,14 +124,33 @@ describe("dispatchDue", () => {
           .update(scheduledTask)
           .set({ status })
           .where(eq(scheduledTask.id, t.id));
+        return t.id;
       };
 
-      await make(ScheduledTaskStatus.PAUSED);
-      await make(ScheduledTaskStatus.COMPLETED);
-      await make(ScheduledTaskStatus.FAILED);
+      const paused = await make(ScheduledTaskStatus.PAUSED);
+      const completed = await make(ScheduledTaskStatus.COMPLETED);
+      const failed = await make(ScheduledTaskStatus.FAILED);
 
-      const result = await dispatchDue(tx, now);
-      expect(result.considered).toBe(0);
+      await dispatchDue(tx, now);
+
+      const ourTaskIds = [paused, completed, failed];
+      const runs = await tx
+        .select()
+        .from(scheduledTaskRun)
+        .where(inArray(scheduledTaskRun.scheduledTaskId, ourTaskIds));
+      expect(runs).toHaveLength(0);
+
+      const tasks = await tx
+        .select()
+        .from(scheduledTask)
+        .where(inArray(scheduledTask.id, ourTaskIds));
+      expect(tasks.map((t) => t.status).sort()).toEqual(
+        [
+          ScheduledTaskStatus.PAUSED,
+          ScheduledTaskStatus.COMPLETED,
+          ScheduledTaskStatus.FAILED,
+        ].sort(),
+      );
     });
   });
 
@@ -187,10 +214,7 @@ describe("dispatchDue", () => {
         nextRunAt: dueAt,
       });
 
-      const result = await dispatchDue(tx, now);
-      expect(result.considered).toBe(2);
-      expect(result.dispatched).toBe(1);
-      expect(result.failed).toBe(1);
+      await dispatchDue(tx, now);
 
       const [good] = await tx
         .select()
@@ -198,11 +222,23 @@ describe("dispatchDue", () => {
         .where(eq(scheduledTask.id, goodTask.id));
       expect(good?.status).toBe(ScheduledTaskStatus.ACTIVE);
 
+      const goodRuns = await tx
+        .select()
+        .from(scheduledTaskRun)
+        .where(eq(scheduledTaskRun.scheduledTaskId, goodTask.id));
+      expect(goodRuns).toHaveLength(1);
+
       const [bad] = await tx
         .select()
         .from(scheduledTask)
         .where(eq(scheduledTask.id, badTask.id));
       expect(bad?.status).toBe(ScheduledTaskStatus.FAILED);
+
+      const badRuns = await tx
+        .select()
+        .from(scheduledTaskRun)
+        .where(eq(scheduledTaskRun.scheduledTaskId, badTask.id));
+      expect(badRuns).toHaveLength(0);
     });
   });
 

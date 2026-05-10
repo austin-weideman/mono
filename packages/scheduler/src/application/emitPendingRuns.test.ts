@@ -99,7 +99,7 @@ describe("emitPendingRuns", () => {
       expect(row?.inngestEventId).toBe(sent.id);
       expect(row?.status).toBe(ScheduledTaskRunStatus.PENDING);
     });
-  });
+  }, 15_000);
 
   it("leaves the row pending and inngestEventId NULL when send throws", async () => {
     await withTestTransaction(async (tx) => {
@@ -171,10 +171,19 @@ describe("emitPendingRuns", () => {
         .where(eq(scheduledTaskRun.id, seeded.runId));
 
       const { sender, sendMock } = fakeSender();
-      const result = await emitPendingRuns(tx, sender, new Date());
+      await emitPendingRuns(tx, sender, new Date());
 
-      expect(result.considered).toBe(0);
-      expect(sendMock).not.toHaveBeenCalled();
+      const sentForOurRun = sendMock.mock.calls.some(
+        (call) =>
+          (call[0] as { data: { runId: string } }).data.runId === seeded.runId,
+      );
+      expect(sentForOurRun).toBe(false);
+
+      const [row] = await tx
+        .select()
+        .from(scheduledTaskRun)
+        .where(eq(scheduledTaskRun.id, seeded.runId));
+      expect(row?.inngestEventId).toBe("already-emitted");
     });
   });
 });

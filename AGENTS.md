@@ -248,8 +248,11 @@ All async / background work runs on Inngest. Architecture: a leaf `@microlearn/j
 - **DRY** - Modular, composable, reusable code
 - **Extract reusable infrastructure immediately** - When something is clearly reusable, extract it to a shared location right away.
 - **Use `cn()` for Tailwind** - Not template strings
-- **No verbose comments allowed** - Code should be self-documenting (exception: genuinely complex logic)
 - **File organization** - Code is split into organized directories according to domain or function.
+
+## Comments
+
+- **NO VERBOSE COMMENTS ALLOWED** - Code should be self-documenting. There should be almost ZERO comments. The only exception is something genuinely counterintuitive that cannot be discerned from the code alone. In these rare cases, a 1-line comment is permitted.
 
 ## Module System
 
