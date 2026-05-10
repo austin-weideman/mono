@@ -1,0 +1,9 @@
+{
+  "extends": "@microlearn/tsconfig/compiled-package.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "types": ["node"]
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}
