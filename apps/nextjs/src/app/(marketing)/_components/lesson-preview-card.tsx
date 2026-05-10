@@ -171,7 +171,7 @@ function ChatBubble({ role, children, delay }: ChatBubbleProps) {
         initial={{ opacity: 0, x: fromX, y: 4 }}
         animate={{ opacity: 1, x: 0, y: 0 }}
         transition={{ duration: 0.45, delay, ease: [0.22, 1, 0.36, 1] }}
-        className="border-chalk text-obsidian ml-auto max-w-[85%] rounded-[12px] border bg-white px-3 py-2 text-[12.5px] leading-[1.5]"
+        className="border-chalk text-obsidian ml-auto max-w-[85%] rounded-[12px] border bg-white px-3 py-2 text-[12.5px] leading-normal"
       >
         {children}
       </motion.div>

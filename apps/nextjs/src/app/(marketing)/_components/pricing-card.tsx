@@ -60,7 +60,7 @@ export function PricingCard({ tier, ctaButton }: PricingCardProps) {
         {tier.features.map((feature) => (
           <li
             key={feature}
-            className="text-obsidian flex items-start gap-3 text-[14px] leading-[1.5]"
+            className="text-obsidian flex items-start gap-3 text-[14px] leading-normal"
           >
             <CheckIcon className="text-obsidian mt-[3px] size-3.5 shrink-0" />
             {feature}
