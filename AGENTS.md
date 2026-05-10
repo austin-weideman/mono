@@ -218,6 +218,18 @@ The local dev server lives at `https://multifaced-dazedly-brain.ngrok-free.dev/`
 
 The Inngest dev server lives at `http://localhost:8288`. No event/signing keys are needed locally — the Inngest client derives `isDev` from `NODE_ENV` (set to `development` automatically by `next dev`), which skips signature verification and points at the local dev server.
 
+### Agents starting dev servers
+
+Agents must use `pnpm dev:next` (or `doppler run -- pnpm dev:next`), not `d dev`.
+
+## Browser Automation (agent-browser)
+
+Agents drive a real Chrome via [agent-browser](https://github.com/vercel-labs/agent-browser). Full workflow lives in the skill at `.agents/skills/agent-browser/SKILL.md`.
+
+- Always target `https://multifaced-dazedly-brain.ngrok-free.dev/`. Google OAuth's redirect URI is registered against ngrok.
+- Send the `ngrok-skip-browser-warning: 1` header on every request to skip the ngrok-free interstitial.
+- Once testing is complete, stop every dev server, tunnel, and browser session you started. Don't leave background processes running.
+
 ## Background Jobs (Inngest)
 
 All async / background work runs on Inngest. Architecture: a leaf `@microlearn/jobs` package owns the shared Inngest client **and the cross-package event contracts**. Feature packages own their own functions under `src/jobs/` (or `src/inngest/` for runtime infrastructure like the scheduler). The Next.js inngest serve handler at `apps/nextjs/src/app/api/inngest/route.ts` is the single roof — it imports every feature's jobs and registers them with `serve({ client, functions: [...] })`.
