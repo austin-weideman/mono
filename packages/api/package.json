@@ -24,6 +24,7 @@
     "@microlearn/user": "workspace:*",
     "@microlearn/validators": "workspace:*",
     "@trpc/server": "catalog:",
+    "drizzle-orm": "catalog:",
     "superjson": "catalog:",
     "zod": "catalog:"
   },

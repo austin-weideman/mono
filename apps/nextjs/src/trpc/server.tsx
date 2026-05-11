@@ -32,6 +32,16 @@ export const trpc = createTRPCOptionsProxy<AppRouter>({
   queryClient: getQueryClient,
 });
 
+/**
+ * Direct server-side tRPC caller for one-shot reads/mutations in server
+ * components. Bypasses the React Query layer — use `trpc` + `prefetch` /
+ * `HydrateClient` instead when the same data is also needed on the client.
+ */
+export const getServerTrpc = cache(async () => {
+  const ctx = await createContext();
+  return appRouter.createCaller(ctx);
+});
+
 export function HydrateClient(props: { children: React.ReactNode }) {
   const queryClient = getQueryClient();
   return (

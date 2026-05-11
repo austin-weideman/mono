@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 
 import { getInitials } from "@microlearn/chat-utils";
 import {
@@ -8,7 +9,9 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
+  SettingsIcon,
   SidebarMenu,
   SidebarMenuItem,
 } from "@microlearn/ui";
@@ -79,6 +82,16 @@ export function SidebarUserNav({ user }: SidebarUserNavProps) {
             side="top"
             align="start"
           >
+            <DropdownMenuItem asChild>
+              <Link
+                href="/settings"
+                className="w-full cursor-pointer rounded-md"
+              >
+                <SettingsIcon className="size-4" />
+                Settings
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
             <form action={signOutAction}>
               <DropdownMenuItem asChild>
                 <button
