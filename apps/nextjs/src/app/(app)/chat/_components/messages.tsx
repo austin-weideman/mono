@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { popMotion, riseMotion, SparklesIcon, withDelay } from "@microlearn/ui";
 
 import { Message } from "./message";
+import { ThinkingIndicator } from "./thinking-indicator";
 
 interface MessagesProps {
   messages: UIMessage[];
@@ -39,6 +40,11 @@ function EmptyState() {
 }
 
 export function Messages({ messages, status }: MessagesProps) {
+  const lastMessage = messages[messages.length - 1];
+  const showPendingIndicator =
+    (status === "submitted" || status === "streaming") &&
+    lastMessage?.role === "user";
+
   return (
     <div className="mx-auto flex max-w-4xl min-w-0 flex-col">
       <div className="flex flex-col gap-4 px-2 py-4 md:gap-6 md:px-4">
@@ -51,6 +57,15 @@ export function Messages({ messages, status }: MessagesProps) {
             isLoading={status === "streaming" && messages.length - 1 === index}
           />
         ))}
+
+        {showPendingIndicator && (
+          <div className="flex w-full items-start gap-2.5">
+            <div className="bg-muted flex size-7 shrink-0 items-center justify-center rounded-full">
+              <SparklesIcon size={14} />
+            </div>
+            <ThinkingIndicator />
+          </div>
+        )}
       </div>
     </div>
   );
