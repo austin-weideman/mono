@@ -7,6 +7,7 @@ import { cn } from "@mono/ui";
 
 import { NAV_LINKS, SITE } from "../_lib/content";
 import { CloseIcon, MenuIcon } from "./icons";
+import { Logomark } from "./logomark";
 import { ScrollLink } from "./scroll-link";
 
 interface MarketingHeaderProps {
@@ -109,16 +110,5 @@ export function MarketingHeader({
         </div>
       </div>
     </header>
-  );
-}
-
-function Logomark() {
-  return (
-    <span
-      aria-hidden="true"
-      className="bg-obsidian inline-flex size-5 items-center justify-center rounded-full transition-transform duration-300 ease-out group-hover:scale-110 group-hover:rotate-[10deg]"
-    >
-      <span className="bg-eggshell size-1.5 rounded-full transition-transform duration-300 ease-out group-hover:scale-125" />
-    </span>
   );
 }

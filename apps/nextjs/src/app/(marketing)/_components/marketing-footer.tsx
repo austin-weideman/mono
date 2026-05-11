@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { FOOTER, SITE } from "../_lib/content";
+import { Logomark } from "./logomark";
 import { ScrollLink } from "./scroll-link";
 
 const CURRENT_YEAR = new Date().getFullYear();
@@ -13,14 +14,9 @@ export function MarketingFooter() {
           <div>
             <Link
               href="/"
-              className="text-obsidian flex items-center gap-2 text-[15px] font-medium tracking-tight"
+              className="text-obsidian group flex items-center gap-2 text-[15px] font-medium tracking-tight"
             >
-              <span
-                aria-hidden
-                className="bg-obsidian inline-flex size-5 items-center justify-center rounded-full"
-              >
-                <span className="bg-eggshell size-1.5 rounded-full" />
-              </span>
+              <Logomark />
               {SITE.name}
             </Link>
             <p className="text-gravel mt-4 max-w-[260px] text-[14px] leading-[1.55]">
