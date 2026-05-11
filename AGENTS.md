@@ -14,31 +14,11 @@ You treat this as a serious, multi-engineer, multi-year project where code is pr
 
 ---
 
-# Project Context - MicroLearn
+# Project Context - BillSentry
 
-## Summary
+BillSentry is an AI-native legislative tracking and analysis platform for California government affairs firms. It ingests every bill in the California legislature, analyzes each one against client-specific position profiles using AI, and proactively surfaces relevant bills, amendments, and procedural events to each customer. The product delivers the _output_ of legislative analysis work — bill summaries, amendment diffs, client-ready memos, hearing briefs — rather than just a tracking interface. This positions it as services-as-software replacing junior-associate labor, not just a productivity tool.
 
-An AI-Powered Microlearning application that teaches users new concepts via daily lessons in an interactive chat interface.
-
-## Example Use Case
-
-Imagine you want to learn more about a topic, such as corporate finance, but you are a busy software engineer with a day-job. You don’t have time to enroll in a class or a full course. You do have 5-10 minutes to spare each night to learn a new concept. For instance, one night might be: “What is EBITDA, and how do you calculate it?” MicroLearn sends you a reminder to complete your daily lesson. You open the app on your phone to a “New Lesson”. AI explains intuitively in a chat interface what EBITDA is and gives a few examples. If you have clarifying questions, simply ask in the chat to have a back-and-forth with the AI. Once you’ve understood the concept, take a short quiz (1-3 questions). Boom - you’re done for the day. You learned a new concept and the whole process only took 5-10 minutes.
-
-AI keeps track of what topics you’ve already mastered, so you don’t need to repeat them in the future. It also tracks a streak - how many days in a row you’ve done your microlearning. This keeps the user motivated to stay consistent.
-
-Over time, by learning a new concept every day for months, you can build up a foundation of knowledge on a particular subject.
-
-## Features
-
-- Scheduled daily micro-lessons about a subject
-- Push notifications / daily reminders
-- In-app chat with AI
-- Ask clarifying questions or follow-ups in a back and forth chat with AI
-- Roadmap / list of topics to progress through
-- Pre-built roadmaps on popular subjects
-- Quiz scores - what topics have been learned / mastered? What still needs work?
-- Streaks / progress tracking
-- A calendar where you see a green check for every day that you completed your micro-learning
+The primary customer is contract lobbying firms in California (~330+ firms) representing multiple clients with distinct policy concerns. The competitive landscape: Capitol Track is the dated legacy incumbent for California; Quorum dominates the broader public affairs market but is built for in-house corporate GA teams, not contract firms, and is priced for enterprise. The wedge is the underserved contract-firm segment where the multi-client, multi-position workflow doesn't fit existing tools. California legislative data is freely available and public domain, published nightly by the state at `downloads.leginfo.legislature.ca.gov` as a complete relational database (`capublic` schema) — no third-party data dependency required.
 
 ## Tech Stack
 
