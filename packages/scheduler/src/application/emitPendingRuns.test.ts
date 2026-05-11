@@ -37,6 +37,7 @@ async function seedPendingRun(
   const task = await insertScheduledTask(tx, {
     userId,
     actorType: ActorType.USER,
+    name: "test schedule",
     taskType: "scheduled_chat",
     payload: {},
     rrule: "FREQ=DAILY",

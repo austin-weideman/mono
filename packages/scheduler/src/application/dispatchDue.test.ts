@@ -37,6 +37,7 @@ describe("dispatchDue", () => {
       const task = await insertScheduledTask(tx, {
         userId,
         actorType: ActorType.USER,
+        name: "test schedule",
         taskType: "scheduled_chat",
         payload: { prompt: "hi", gatewayModelId: "openai/gpt-4o" },
         rrule: "FREQ=DAILY;BYHOUR=9;BYMINUTE=0;BYSECOND=0",
@@ -79,6 +80,7 @@ describe("dispatchDue", () => {
       const task = await insertScheduledTask(tx, {
         userId,
         actorType: ActorType.USER,
+        name: "test schedule",
         taskType: "scheduled_chat",
         payload: {},
         rrule: "FREQ=DAILY",
@@ -113,6 +115,7 @@ describe("dispatchDue", () => {
         const t = await insertScheduledTask(tx, {
           userId,
           actorType: ActorType.USER,
+          name: "test schedule",
           taskType: "scheduled_chat",
           payload: {},
           rrule: "FREQ=DAILY",
@@ -164,6 +167,7 @@ describe("dispatchDue", () => {
       const task = await insertScheduledTask(tx, {
         userId,
         actorType: ActorType.USER,
+        name: "test schedule",
         taskType: "scheduled_chat",
         payload: {},
         rrule: "FREQ=DAILY;COUNT=1",
@@ -193,6 +197,7 @@ describe("dispatchDue", () => {
       const goodTask = await insertScheduledTask(tx, {
         userId,
         actorType: ActorType.USER,
+        name: "test schedule",
         taskType: "scheduled_chat",
         payload: {},
         rrule: "FREQ=DAILY",
@@ -206,6 +211,7 @@ describe("dispatchDue", () => {
       const badTask = await insertScheduledTask(tx, {
         userId,
         actorType: ActorType.USER,
+        name: "test schedule",
         taskType: "scheduled_chat",
         payload: {},
         rrule: "NOT_A_REAL_RRULE",
@@ -251,6 +257,7 @@ describe("dispatchDue", () => {
       const task = await insertScheduledTask(tx, {
         userId,
         actorType: ActorType.USER,
+        name: "test schedule",
         taskType: "scheduled_chat",
         payload: {},
         rrule: "FREQ=DAILY",

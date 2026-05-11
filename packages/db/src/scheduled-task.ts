@@ -66,6 +66,7 @@ export const scheduledTask = pgTable(
     userId: t.text().references(() => user.id, { onDelete: "cascade" }),
     actorType: scheduledTaskActorTypeEnum().notNull(),
 
+    name: t.text().notNull(),
     taskType: t.text().notNull(),
     payload: t.jsonb().notNull(),
 

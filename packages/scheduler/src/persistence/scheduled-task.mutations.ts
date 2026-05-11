@@ -11,6 +11,7 @@ import type { ScheduledTaskStatus } from "../types/ScheduledTaskStatus";
 export interface InsertScheduledTaskInput {
   userId: string | null;
   actorType: ScheduledTaskActorType;
+  name: string;
   taskType: string;
   payload: unknown;
   rrule: string;
@@ -28,6 +29,7 @@ export async function insertScheduledTask(
     .values({
       userId: input.userId,
       actorType: input.actorType,
+      name: input.name,
       taskType: input.taskType,
       payload: input.payload,
       rrule: input.rrule,
@@ -44,6 +46,7 @@ export async function insertScheduledTask(
 }
 
 export interface UpdateScheduledTaskFieldsInput {
+  name?: string;
   rrule?: string;
   timezone?: string;
   dtstart?: Date;

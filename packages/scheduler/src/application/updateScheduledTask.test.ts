@@ -35,6 +35,7 @@ describe("updateScheduledTask", () => {
         {
           actorType: ActorType.USER,
           userId: u,
+          name: "test schedule",
           taskType: "x",
           payload: {},
           rrule: "FREQ=WEEKLY;BYDAY=MO;BYHOUR=9;BYMINUTE=0;BYSECOND=0",
@@ -71,6 +72,7 @@ describe("updateScheduledTask", () => {
         {
           actorType: ActorType.USER,
           userId: u,
+          name: "test schedule",
           taskType: "x",
           payload: {},
           rrule: "FREQ=DAILY;BYHOUR=9;BYMINUTE=0;BYSECOND=0",
@@ -102,6 +104,7 @@ describe("updateScheduledTask", () => {
         {
           actorType: ActorType.USER,
           userId: u,
+          name: "test schedule",
           taskType: "x",
           payload: { v: 1 },
           rrule: "FREQ=DAILY;BYHOUR=9",
@@ -134,6 +137,7 @@ describe("updateScheduledTask", () => {
         {
           actorType: ActorType.USER,
           userId: owner,
+          name: "test schedule",
           taskType: "x",
           payload: {},
           rrule: "FREQ=DAILY",
@@ -178,6 +182,7 @@ describe("updateScheduledTask", () => {
         {
           actorType: ActorType.USER,
           userId: u,
+          name: "test schedule",
           taskType: "x",
           payload: {},
           rrule: "FREQ=DAILY",

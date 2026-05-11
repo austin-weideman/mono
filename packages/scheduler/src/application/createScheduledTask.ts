@@ -62,6 +62,7 @@ export async function createScheduledTask(
   return await insertScheduledTask(db, {
     userId: input.userId ?? null,
     actorType: input.actorType,
+    name: input.name,
     taskType: input.taskType,
     payload: input.payload,
     rrule: input.rrule,

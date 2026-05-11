@@ -28,6 +28,7 @@ async function createTestTask(
   const task = await insertScheduledTask(tx, {
     userId,
     actorType: ActorType.USER,
+    name: "test schedule",
     taskType: "test",
     payload: {},
     rrule: "FREQ=DAILY",

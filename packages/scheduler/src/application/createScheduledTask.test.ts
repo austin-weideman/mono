@@ -35,6 +35,7 @@ describe("createScheduledTask", () => {
         {
           actorType: ActorType.USER,
           userId,
+          name: "test schedule",
           taskType: "test_task",
           payload: { foo: "bar" },
           rrule: "FREQ=WEEKLY;BYDAY=TU;BYHOUR=9;BYMINUTE=0;BYSECOND=0",
@@ -60,6 +61,7 @@ describe("createScheduledTask", () => {
         {
           actorType: ActorType.SYSTEM,
           userId: null,
+          name: "test schedule",
           taskType: "system_sweep",
           payload: {},
           rrule: "FREQ=DAILY;BYHOUR=3",
@@ -83,6 +85,7 @@ describe("createScheduledTask", () => {
           {
             actorType: ActorType.USER,
             userId: "owner",
+            name: "test schedule",
             taskType: "x",
             payload: {},
             rrule: "FREQ=DAILY",
@@ -104,6 +107,7 @@ describe("createScheduledTask", () => {
           {
             actorType: ActorType.SYSTEM,
             userId: null,
+            name: "test schedule",
             taskType: "x",
             payload: {},
             rrule: "FREQ=DAILY",
@@ -124,6 +128,7 @@ describe("createScheduledTask", () => {
           {
             actorType: ActorType.USER,
             userId: null,
+            name: "test schedule",
             taskType: "x",
             payload: {},
             rrule: "FREQ=DAILY",
@@ -145,6 +150,7 @@ describe("createScheduledTask", () => {
           {
             actorType: ActorType.SYSTEM,
             userId: u,
+            name: "test schedule",
             taskType: "x",
             payload: {},
             rrule: "FREQ=DAILY",
@@ -166,6 +172,7 @@ describe("createScheduledTask", () => {
           {
             actorType: ActorType.USER,
             userId: u,
+            name: "test schedule",
             taskType: "x",
             payload: {},
             rrule: "FREQ=DAILY",
@@ -187,6 +194,7 @@ describe("createScheduledTask", () => {
           {
             actorType: ActorType.USER,
             userId: u,
+            name: "test schedule",
             taskType: "x",
             payload: {},
             rrule: "NOT_VALID",
@@ -208,6 +216,7 @@ describe("createScheduledTask", () => {
           {
             actorType: ActorType.USER,
             userId: u,
+            name: "test schedule",
             taskType: "x",
             payload: {},
             rrule: "FREQ=DAILY;UNTIL=20200101T000000Z",

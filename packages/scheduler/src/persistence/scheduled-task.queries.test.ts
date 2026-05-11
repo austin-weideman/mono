@@ -30,6 +30,7 @@ async function makeTask(tx: Transaction, opts: TaskOptions): Promise<string> {
   const t = await insertScheduledTask(tx, {
     userId: opts.userId,
     actorType: ActorType.USER,
+    name: "test schedule",
     taskType: opts.taskType ?? "test",
     payload: {},
     rrule: "FREQ=DAILY",

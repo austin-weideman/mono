@@ -32,6 +32,7 @@ describe("pause / resume", () => {
         {
           actorType: ActorType.USER,
           userId: u,
+          name: "test schedule",
           taskType: "x",
           payload: {},
           rrule: "FREQ=DAILY;BYHOUR=9",
@@ -58,6 +59,7 @@ describe("pause / resume", () => {
         {
           actorType: ActorType.USER,
           userId: u,
+          name: "test schedule",
           taskType: "x",
           payload: {},
           rrule: "FREQ=DAILY;BYHOUR=9",
@@ -89,6 +91,7 @@ describe("pause / resume", () => {
         {
           actorType: ActorType.USER,
           userId: u,
+          name: "test schedule",
           taskType: "x",
           payload: {},
           rrule: "FREQ=DAILY;BYHOUR=9",
@@ -121,6 +124,7 @@ describe("pause / resume", () => {
         {
           actorType: ActorType.USER,
           userId: u,
+          name: "test schedule",
           taskType: "x",
           payload: {},
           rrule: "FREQ=DAILY",
@@ -144,6 +148,7 @@ describe("pause / resume", () => {
         {
           actorType: ActorType.USER,
           userId: owner,
+          name: "test schedule",
           taskType: "x",
           payload: {},
           rrule: "FREQ=DAILY",

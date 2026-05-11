@@ -42,6 +42,7 @@ export async function updateScheduledTask(
   }
 
   const patch: Parameters<typeof updateScheduledTaskById>[2] = {};
+  if (input.name !== undefined) patch.name = input.name;
   if (input.rrule !== undefined) patch.rrule = input.rrule;
   if (input.timezone !== undefined) patch.timezone = input.timezone;
   if (input.dtstart !== undefined) patch.dtstart = input.dtstart;
