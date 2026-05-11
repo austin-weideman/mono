@@ -16,7 +16,7 @@
   "dependencies": {
     "@ai-sdk/react": "catalog:",
     "@better-auth/expo": "catalog:",
-    "@expo/vector-icons": "^15.0.3",
+    "@expo/vector-icons": "^15.1.1",
     "@legendapp/list": "^2.0.19",
     "@mono/chat-utils": "workspace:*",
     "@mono/conversation": "workspace:*",
