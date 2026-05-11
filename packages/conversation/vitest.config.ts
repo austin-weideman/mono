@@ -5,5 +5,8 @@ export default defineConfig({
     globals: false,
     environment: "node",
     include: ["src/**/*.test.ts"],
+    // DB-backed tests open a real Neon transaction; 5s default is flaky on
+    // cold connections and slow CI runners.
+    testTimeout: 15_000,
   },
 });
