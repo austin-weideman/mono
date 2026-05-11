@@ -4,11 +4,11 @@ packages:
   - tooling/*
 
 catalog:
-  "@ai-sdk/anthropic": ^3.0.72
-  "@ai-sdk/gateway": ^3.0.107
-  "@ai-sdk/mcp": ^1.0.37
-  "@ai-sdk/openai": ^3.0.54
-  "@ai-sdk/react": ^3.0.172
+  "@ai-sdk/anthropic": ^3.0.76
+  "@ai-sdk/gateway": ^3.0.111
+  "@ai-sdk/mcp": ^1.0.41
+  "@ai-sdk/openai": ^3.0.63
+  "@ai-sdk/react": ^3.0.178
   "@better-auth/cli": 1.4.21
   "@better-auth/expo": 1.6.9
   "@eslint/js": ^9.38.0
@@ -21,7 +21,7 @@ catalog:
   "@trpc/tanstack-react-query": ^11.17.0
   "@types/node": 24.12.2
   "@vitejs/plugin-react": 6.0.1
-  ai: ^6.0.172
+  ai: ^6.0.176
   better-auth: 1.6.9
   drizzle-orm: ^0.44.7
   eslint: ^9.38.0
