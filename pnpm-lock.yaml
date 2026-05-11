@@ -61,8 +61,8 @@ catalogs:
       specifier: ^9.38.0
       version: 9.38.0
     inngest:
-      specifier: 4.2.6
-      version: 4.2.6
+      specifier: 4.3.0
+      version: 4.3.0
     prettier:
       specifier: ^3.6.2
       version: 3.6.2
@@ -400,7 +400,7 @@ importers:
         version: 12.38.0(react-dom@19.1.6(react@19.1.6))(react@19.1.6)
       inngest:
         specifier: 'catalog:'
-        version: 4.2.6(@opentelemetry/core@2.7.0(@opentelemetry/api@1.9.0))(next@16.2.4(@opentelemetry/api@1.9.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.1.6(react@19.1.6))(react@19.1.6))(react@19.1.6)(typescript@6.0.3)(zod@4.4.2)
+        version: 4.3.0(@opentelemetry/core@2.7.0(@opentelemetry/api@1.9.0))(next@16.2.4(@opentelemetry/api@1.9.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.1.6(react@19.1.6))(react@19.1.6))(react@19.1.6)(typescript@6.0.3)(zod@4.4.2)
       next:
         specifier: ^16.1.7
         version: 16.2.4(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.1.6(react@19.1.6))(react@19.1.6)
@@ -697,7 +697,7 @@ importers:
         version: 0.44.7(@neondatabase/serverless@1.0.2)(@opentelemetry/api@1.9.0)(@prisma/client@5.22.0)(@types/pg@8.15.6)(@upstash/redis@1.37.0)(better-sqlite3@12.2.0)(kysely@0.28.17)(pg@8.20.0)
       inngest:
         specifier: 'catalog:'
-        version: 4.2.6(@opentelemetry/core@2.7.0(@opentelemetry/api@1.9.0))(next@16.2.4(@opentelemetry/api@1.9.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.1.6(react@19.1.6))(react@19.1.6))(react@19.1.6)(typescript@6.0.3)(zod@4.4.2)
+        version: 4.3.0(@opentelemetry/core@2.7.0(@opentelemetry/api@1.9.0))(next@16.2.4(@opentelemetry/api@1.9.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.1.6(react@19.1.6))(react@19.1.6))(react@19.1.6)(typescript@6.0.3)(zod@4.4.2)
       zod:
         specifier: 'catalog:'
         version: 4.4.2
@@ -899,7 +899,7 @@ importers:
         version: link:../env
       inngest:
         specifier: 'catalog:'
-        version: 4.2.6(@opentelemetry/core@2.7.0(@opentelemetry/api@1.9.0))(next@16.2.4(@opentelemetry/api@1.9.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.1.6(react@19.1.6))(react@19.1.6))(react@19.1.6)(typescript@6.0.3)(zod@4.4.2)
+        version: 4.3.0(@opentelemetry/core@2.7.0(@opentelemetry/api@1.9.0))(next@16.2.4(@opentelemetry/api@1.9.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.1.6(react@19.1.6))(react@19.1.6))(react@19.1.6)(typescript@6.0.3)(zod@4.4.2)
       zod:
         specifier: 'catalog:'
         version: 4.4.2
@@ -991,7 +991,7 @@ importers:
         version: 0.44.7(@neondatabase/serverless@1.0.2)(@opentelemetry/api@1.9.0)(@prisma/client@5.22.0)(@types/pg@8.15.6)(@upstash/redis@1.37.0)(better-sqlite3@12.2.0)(kysely@0.28.17)(pg@8.20.0)
       inngest:
         specifier: 'catalog:'
-        version: 4.2.6(@opentelemetry/core@2.7.0(@opentelemetry/api@1.9.0))(next@16.2.4(@opentelemetry/api@1.9.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.1.6(react@19.1.6))(react@19.1.6))(react@19.1.6)(typescript@6.0.3)(zod@4.4.2)
+        version: 4.3.0(@opentelemetry/core@2.7.0(@opentelemetry/api@1.9.0))(next@16.2.4(@opentelemetry/api@1.9.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.1.6(react@19.1.6))(react@19.1.6))(react@19.1.6)(typescript@6.0.3)(zod@4.4.2)
       rrule:
         specifier: ^2.8.1
         version: 2.8.1
@@ -5372,6 +5372,7 @@ packages:
 
   '@ungap/structured-clone@1.3.0':
     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}
+    deprecated: Potential CWE-502 - Update to 1.3.1 or higher
 
   '@upsetjs/venn.js@2.0.0':
     resolution: {integrity: sha512-WbBhLrooyePuQ1VZxrJjtLvTc4NVfpOyKx0sKqioq9bX1C1m7Jgykkn8gLrtwumBioXIqam8DLxp88Adbue6Hw==}
@@ -7588,8 +7589,8 @@ packages:
   inline-style-parser@0.2.7:
     resolution: {integrity: sha512-Nb2ctOyNR8DqQoR0OwRG95uNWIC0C1lCgf5Naz5H6Ji72KZ8OcFZLz2P5sNgwlyoJ8Yif11oMuYs5pBQa86csA==}
 
-  inngest@4.2.6:
-    resolution: {integrity: sha512-d6oFhG4CXIyJHJ8Z029shqENn9R2Etn/5PPZHXVlK0YgHOW77DchO5gnMu9TQdUoyWnZeXKq1veZQL+NCRmRNQ==}
+  inngest@4.3.0:
+    resolution: {integrity: sha512-UYx2fFbtcEDq092yL088iEeB0j57+6fjvTbrkH3JX+c87j2YsSNVxUddr20EHzd5psXQX5CC5+39hA16OcxdzQ==}
     engines: {node: '>=20'}
     peerDependencies:
       '@sveltejs/kit': '>=1.27.3'
@@ -17230,7 +17231,7 @@ snapshots:
 
   inline-style-parser@0.2.7: {}
 
-  inngest@4.2.6(@opentelemetry/core@2.7.0(@opentelemetry/api@1.9.0))(next@16.2.4(@opentelemetry/api@1.9.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.1.6(react@19.1.6))(react@19.1.6))(react@19.1.6)(typescript@6.0.3)(zod@4.4.2):
+  inngest@4.3.0(@opentelemetry/core@2.7.0(@opentelemetry/api@1.9.0))(next@16.2.4(@opentelemetry/api@1.9.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.1.6(react@19.1.6))(react@19.1.6))(react@19.1.6)(typescript@6.0.3)(zod@4.4.2):
     dependencies:
       '@bufbuild/protobuf': 2.12.0
       '@inngest/ai': 0.1.7
