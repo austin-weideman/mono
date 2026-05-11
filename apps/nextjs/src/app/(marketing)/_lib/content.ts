@@ -75,7 +75,7 @@ export const HOW_IT_WORKS = {
       number: "03",
       title: "Start each day with everything teed up",
       description:
-        "Your team opens BillSentry to a queue of scored bills, drafted client memos, and hearing briefs, ready to review, refine, and send.",
+        "Your team opens BillSentry to a queue of scored bills, drafted client memos, and hearing briefs, ready to review and send.",
     },
   ],
 } as const;
