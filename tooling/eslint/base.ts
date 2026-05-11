@@ -8,7 +8,7 @@ import tseslint from "typescript-eslint";
 
 /**
  * Forbids direct `process.env` access; forces imports through the validated
- * `env` module (`@microlearn/env` or app-local `~/env`). Apply this in any
+ * `env` module (`@mono/env` or app-local `~/env`). Apply this in any
  * package that consumes a typed env.
  */
 export const restrictEnvAccess = defineConfig(

@@ -1,10 +1,10 @@
 import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 
-import { loadConversation } from "@microlearn/conversation";
-import { userActor } from "@microlearn/core-types";
-import { db } from "@microlearn/db/client";
-import { NotFoundError } from "@microlearn/errors";
+import { loadConversation } from "@mono/conversation";
+import { userActor } from "@mono/core-types";
+import { db } from "@mono/db/client";
+import { NotFoundError } from "@mono/errors";
 
 import { getSession } from "~/auth/server";
 import { Chat } from "../_components/chat";

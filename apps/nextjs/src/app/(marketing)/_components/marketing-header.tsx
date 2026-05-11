@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
-import { cn } from "@microlearn/ui";
+import { cn } from "@mono/ui";
 
 import { NAV_LINKS, SITE } from "../_lib/content";
 import { CloseIcon, MenuIcon } from "./icons";

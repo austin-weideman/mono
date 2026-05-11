@@ -2,7 +2,7 @@ import { Alert, Pressable, StyleSheet, Text } from "react-native";
 import * as Haptics from "expo-haptics";
 import { router } from "expo-router";
 
-import type { Conversation } from "@microlearn/conversation";
+import type { Conversation } from "@mono/conversation";
 
 import { fontSize, spacing, useTheme } from "~/lib";
 

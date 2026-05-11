@@ -3,7 +3,7 @@ import { createTRPCClient, httpBatchLink, loggerLink } from "@trpc/client";
 import { createTRPCOptionsProxy } from "@trpc/tanstack-react-query";
 import superjson from "superjson";
 
-import type { AppRouter } from "@microlearn/api";
+import type { AppRouter } from "@mono/api";
 
 import { authClient } from "./auth";
 import { getBaseUrl } from "./base-url";
@@ -49,4 +49,4 @@ export const trpc = createTRPCOptionsProxy<AppRouter>({
   queryClient,
 });
 
-export type { RouterInputs, RouterOutputs } from "@microlearn/api";
+export type { RouterInputs, RouterOutputs } from "@mono/api";

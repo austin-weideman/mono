@@ -1,6 +1,6 @@
-import type { DbOrTx } from "@microlearn/db/client";
-import { userProfile } from "@microlearn/db";
-import { InternalServerError } from "@microlearn/errors";
+import type { DbOrTx } from "@mono/db/client";
+import { userProfile } from "@mono/db";
+import { InternalServerError } from "@mono/errors";
 
 export async function upsertUserProfile(
   db: DbOrTx,

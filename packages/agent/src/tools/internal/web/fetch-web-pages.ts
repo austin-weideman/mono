@@ -1,8 +1,8 @@
 import { tool } from "ai";
 import { z } from "zod";
 
-import { env } from "@microlearn/env";
-import { InternalServerError } from "@microlearn/errors";
+import { env } from "@mono/env";
+import { InternalServerError } from "@mono/errors";
 
 import type { ToolMetadata } from "../../../types";
 

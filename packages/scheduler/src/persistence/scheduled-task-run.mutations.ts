@@ -1,8 +1,8 @@
 import { eq, sql } from "drizzle-orm";
 
-import type { DbOrTx } from "@microlearn/db/client";
-import { scheduledTaskRun } from "@microlearn/db";
-import { InternalServerError } from "@microlearn/errors";
+import type { DbOrTx } from "@mono/db/client";
+import { scheduledTaskRun } from "@mono/db";
+import { InternalServerError } from "@mono/errors";
 
 import type { ScheduledTaskRun } from "../types/ScheduledTaskRun";
 import type { ScheduledTaskRunStatus } from "../types/ScheduledTaskRunStatus";

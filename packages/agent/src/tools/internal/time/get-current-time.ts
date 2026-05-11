@@ -1,8 +1,8 @@
 import { tool } from "ai";
 import { z } from "zod";
 
-import { formatFullDateTime, utcNow } from "@microlearn/time";
-import { getMyUserInfo } from "@microlearn/user";
+import { formatFullDateTime, utcNow } from "@mono/time";
+import { getMyUserInfo } from "@mono/user";
 
 import type { ToolContext, ToolMetadata } from "../../../types";
 

@@ -13,7 +13,7 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@microlearn/ui";
+} from "@mono/ui";
 
 interface MessageActionsProps {
   message: UIMessage;

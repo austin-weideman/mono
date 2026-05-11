@@ -1,8 +1,8 @@
-import type { Actor } from "@microlearn/core-types";
-import type { DbOrTx } from "@microlearn/db/client";
-import { isUserActor } from "@microlearn/core-types";
-import { BadRequestError, ForbiddenError } from "@microlearn/errors";
-import { isValidTimezone } from "@microlearn/time";
+import type { Actor } from "@mono/core-types";
+import type { DbOrTx } from "@mono/db/client";
+import { isUserActor } from "@mono/core-types";
+import { BadRequestError, ForbiddenError } from "@mono/errors";
+import { isValidTimezone } from "@mono/time";
 
 import type { UpdateTimezoneInput } from "../types";
 import { upsertUserProfile } from "../persistence/user-profile.mutations";

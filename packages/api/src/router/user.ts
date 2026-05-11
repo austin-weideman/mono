@@ -1,9 +1,9 @@
-import { userActor } from "@microlearn/core-types";
+import { userActor } from "@mono/core-types";
 import {
   getMyUserInfo,
   updateMyTimezone,
   updateTimezoneInputSchema,
-} from "@microlearn/user";
+} from "@mono/user";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 

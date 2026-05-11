@@ -6,8 +6,8 @@ import {
   loadConversation,
   loadConversationInputSchema,
   startConversation,
-} from "@microlearn/conversation";
-import { userActor } from "@microlearn/core-types";
+} from "@mono/conversation";
+import { userActor } from "@mono/core-types";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 

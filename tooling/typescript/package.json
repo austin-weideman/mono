@@ -1,5 +1,5 @@
 {
-  "name": "@microlearn/tsconfig",
+  "name": "@mono/tsconfig",
   "private": true,
   "files": [
     "*.json"

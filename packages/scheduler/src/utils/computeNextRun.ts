@@ -1,11 +1,7 @@
 import { RRule } from "rrule";
 
-import { BadRequestError } from "@microlearn/errors";
-import {
-  fromFloatingDate,
-  isValidTimezone,
-  toFloatingDate,
-} from "@microlearn/time";
+import { BadRequestError } from "@mono/errors";
+import { fromFloatingDate, isValidTimezone, toFloatingDate } from "@mono/time";
 
 export interface ComputeNextRunInput {
   rrule: string;
@@ -20,7 +16,7 @@ export interface ComputeNextRunInput {
 // local timezone into BYHOUR resolution. Instead we run rrule in pure
 // "floating UTC" mode (a Date whose UTC fields represent the wall-clock time
 // in the schedule's IANA tz) and own the wall-clock ↔ absolute UTC conversion
-// at the boundaries via @microlearn/time. rrule's recurrence math (BYDAY,
+// at the boundaries via @mono/time. rrule's recurrence math (BYDAY,
 // BYHOUR, INTERVAL, BYMONTHDAY, etc.) is purely calendrical, so this gives
 // correct DST behavior — each occurrence's floating fields are a wall-clock
 // spec that luxon resolves to the right absolute instant in the schedule's tz.

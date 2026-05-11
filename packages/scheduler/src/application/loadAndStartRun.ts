@@ -1,8 +1,8 @@
-import type { Actor } from "@microlearn/core-types";
-import type { DbOrTx } from "@microlearn/db/client";
-import { systemActor, userActor } from "@microlearn/core-types";
-import { ScheduledTaskActorType, ScheduledTaskRunStatus } from "@microlearn/db";
-import { InternalServerError, NotFoundError } from "@microlearn/errors";
+import type { Actor } from "@mono/core-types";
+import type { DbOrTx } from "@mono/db/client";
+import { systemActor, userActor } from "@mono/core-types";
+import { ScheduledTaskActorType, ScheduledTaskRunStatus } from "@mono/db";
+import { InternalServerError, NotFoundError } from "@mono/errors";
 
 import type { ScheduledTask } from "../types/ScheduledTask";
 import { updateScheduledTaskRunById } from "../persistence/scheduled-task-run.mutations";

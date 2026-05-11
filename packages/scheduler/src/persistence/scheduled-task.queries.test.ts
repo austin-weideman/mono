@@ -1,10 +1,10 @@
 import { eq } from "drizzle-orm";
 import { describe, expect, it } from "vitest";
 
-import type { Transaction } from "@microlearn/db/client";
-import { ActorType } from "@microlearn/core-types";
-import { scheduledTask, user } from "@microlearn/db";
-import { withTestTransaction } from "@microlearn/testing";
+import type { Transaction } from "@mono/db/client";
+import { ActorType } from "@mono/core-types";
+import { scheduledTask, user } from "@mono/db";
+import { withTestTransaction } from "@mono/testing";
 
 import { insertScheduledTask } from "./scheduled-task.mutations";
 import { loadScheduledTasksForUser } from "./scheduled-task.queries";

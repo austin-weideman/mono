@@ -1,5 +1,5 @@
 {
-  "extends": "@microlearn/tsconfig/compiled-package.json",
+  "extends": "@mono/tsconfig/compiled-package.json",
   "compilerOptions": {
     "jsx": "react-jsx",
     "types": ["node"]

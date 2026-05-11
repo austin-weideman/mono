@@ -1,5 +1,5 @@
-import type { Actor } from "@microlearn/core-types";
-import type { DbOrTx } from "@microlearn/db/client";
+import type { Actor } from "@mono/core-types";
+import type { DbOrTx } from "@mono/db/client";
 
 export interface ToolContext {
   db: DbOrTx;

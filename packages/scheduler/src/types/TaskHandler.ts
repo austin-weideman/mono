@@ -1,7 +1,7 @@
 import type { z } from "zod";
 
-import type { Actor } from "@microlearn/core-types";
-import type { DbOrTx } from "@microlearn/db/client";
+import type { Actor } from "@mono/core-types";
+import type { DbOrTx } from "@mono/db/client";
 
 import type { TaskType } from "./TaskType";
 

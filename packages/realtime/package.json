@@ -1,5 +1,5 @@
 {
-  "name": "@microlearn/realtime",
+  "name": "@mono/realtime",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -18,20 +18,20 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "@microlearn/env": "workspace:*",
+    "@mono/env": "workspace:*",
     "@upstash/realtime": "^1.0.3",
     "@upstash/redis": "^1.37.0",
     "ai": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@microlearn/eslint-config": "workspace:*",
-    "@microlearn/prettier-config": "workspace:*",
-    "@microlearn/tsconfig": "workspace:*",
+    "@mono/eslint-config": "workspace:*",
+    "@mono/prettier-config": "workspace:*",
+    "@mono/tsconfig": "workspace:*",
     "@types/node": "catalog:",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:"
   },
-  "prettier": "@microlearn/prettier-config"
+  "prettier": "@mono/prettier-config"
 }

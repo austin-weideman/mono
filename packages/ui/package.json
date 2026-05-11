@@ -1,5 +1,5 @@
 {
-  "name": "@microlearn/ui",
+  "name": "@mono/ui",
   "private": true,
   "type": "module",
   "exports": {
@@ -29,9 +29,9 @@
     "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {
-    "@microlearn/eslint-config": "workspace:*",
-    "@microlearn/prettier-config": "workspace:*",
-    "@microlearn/tsconfig": "workspace:*",
+    "@mono/eslint-config": "workspace:*",
+    "@mono/prettier-config": "workspace:*",
+    "@mono/tsconfig": "workspace:*",
     "@types/react": "catalog:react19",
     "eslint": "catalog:",
     "prettier": "catalog:",
@@ -43,5 +43,5 @@
     "react": "catalog:react19",
     "zod": "catalog:"
   },
-  "prettier": "@microlearn/prettier-config"
+  "prettier": "@mono/prettier-config"
 }

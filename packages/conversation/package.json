@@ -1,5 +1,5 @@
 {
-  "name": "@microlearn/conversation",
+  "name": "@mono/conversation",
   "private": true,
   "type": "module",
   "exports": {
@@ -23,22 +23,22 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "@microlearn/agent": "workspace:*",
-    "@microlearn/core-types": "workspace:*",
-    "@microlearn/db": "workspace:*",
-    "@microlearn/errors": "workspace:*",
-    "@microlearn/jobs": "workspace:*",
-    "@microlearn/realtime": "workspace:*",
+    "@mono/agent": "workspace:*",
+    "@mono/core-types": "workspace:*",
+    "@mono/db": "workspace:*",
+    "@mono/errors": "workspace:*",
+    "@mono/jobs": "workspace:*",
+    "@mono/realtime": "workspace:*",
     "@neondatabase/serverless": "catalog:",
     "drizzle-orm": "catalog:",
     "inngest": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@microlearn/eslint-config": "workspace:*",
-    "@microlearn/prettier-config": "workspace:*",
-    "@microlearn/testing": "workspace:*",
-    "@microlearn/tsconfig": "workspace:*",
+    "@mono/eslint-config": "workspace:*",
+    "@mono/prettier-config": "workspace:*",
+    "@mono/testing": "workspace:*",
+    "@mono/tsconfig": "workspace:*",
     "ai": "catalog:",
     "eslint": "catalog:",
     "prettier": "catalog:",
@@ -48,5 +48,5 @@
   "peerDependencies": {
     "ai": ">=6.0.170"
   },
-  "prettier": "@microlearn/prettier-config"
+  "prettier": "@mono/prettier-config"
 }

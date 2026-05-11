@@ -1,8 +1,8 @@
 import type { ReactElement } from "react";
 import { Resend } from "resend";
 
-import { env } from "@microlearn/env";
-import { InternalServerError } from "@microlearn/errors";
+import { env } from "@mono/env";
+import { InternalServerError } from "@mono/errors";
 
 export interface SendEmailInput {
   to: string | string[];

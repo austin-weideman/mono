@@ -3,7 +3,7 @@
 import * as React from "react";
 import { Switch as SwitchPrimitive } from "radix-ui";
 
-import { cn } from "@microlearn/ui";
+import { cn } from "@mono/ui";
 
 function Switch({
   className,

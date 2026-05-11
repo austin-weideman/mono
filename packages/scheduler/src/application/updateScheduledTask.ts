@@ -1,12 +1,8 @@
-import type { Actor } from "@microlearn/core-types";
-import type { DbOrTx } from "@microlearn/db/client";
-import { isUserActor } from "@microlearn/core-types";
-import {
-  BadRequestError,
-  ForbiddenError,
-  NotFoundError,
-} from "@microlearn/errors";
-import { isValidTimezone } from "@microlearn/time";
+import type { Actor } from "@mono/core-types";
+import type { DbOrTx } from "@mono/db/client";
+import { isUserActor } from "@mono/core-types";
+import { BadRequestError, ForbiddenError, NotFoundError } from "@mono/errors";
+import { isValidTimezone } from "@mono/time";
 
 import type { ScheduledTask } from "../types/ScheduledTask";
 import type { UpdateScheduledTaskInput } from "../types/UpdateScheduledTaskInput";

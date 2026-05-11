@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 
-import { staggerItemMotion } from "@microlearn/ui";
+import { staggerItemMotion } from "@mono/ui";
 
 import { TESTIMONIALS_SECTION } from "../_lib/content";
 import { RevealStagger } from "./animations";

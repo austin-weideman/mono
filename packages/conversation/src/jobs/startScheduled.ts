@@ -1,12 +1,12 @@
 import type { InngestFunction } from "inngest";
 
-import { systemActor } from "@microlearn/core-types";
-import { db } from "@microlearn/db/client";
-import { inngest } from "@microlearn/jobs";
+import { systemActor } from "@mono/core-types";
+import { db } from "@mono/db/client";
+import { inngest } from "@mono/jobs";
 import {
   conversationRunAssistantEvent,
   conversationScheduledStartEvent,
-} from "@microlearn/jobs/events/conversation";
+} from "@mono/jobs/events/conversation";
 
 import { generateTitleFromText } from "../application/generateTitleFromText";
 import { sendMessage } from "../application/sendMessage";

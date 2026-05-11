@@ -10,8 +10,8 @@ import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { z, ZodError } from "zod/v4";
 
-import type { Auth } from "@microlearn/auth";
-import { db } from "@microlearn/db/client";
+import type { Auth } from "@mono/auth";
+import { db } from "@mono/db/client";
 
 /**
  * 1. CONTEXT

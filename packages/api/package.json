@@ -1,5 +1,5 @@
 {
-  "name": "@microlearn/api",
+  "name": "@mono/api",
   "private": true,
   "type": "module",
   "exports": {
@@ -17,24 +17,24 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "@microlearn/auth": "workspace:*",
-    "@microlearn/conversation": "workspace:*",
-    "@microlearn/core-types": "workspace:*",
-    "@microlearn/db": "workspace:*",
-    "@microlearn/user": "workspace:*",
-    "@microlearn/validators": "workspace:*",
+    "@mono/auth": "workspace:*",
+    "@mono/conversation": "workspace:*",
+    "@mono/core-types": "workspace:*",
+    "@mono/db": "workspace:*",
+    "@mono/user": "workspace:*",
+    "@mono/validators": "workspace:*",
     "@trpc/server": "catalog:",
     "drizzle-orm": "catalog:",
     "superjson": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@microlearn/eslint-config": "workspace:*",
-    "@microlearn/prettier-config": "workspace:*",
-    "@microlearn/tsconfig": "workspace:*",
+    "@mono/eslint-config": "workspace:*",
+    "@mono/prettier-config": "workspace:*",
+    "@mono/tsconfig": "workspace:*",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:"
   },
-  "prettier": "@microlearn/prettier-config"
+  "prettier": "@mono/prettier-config"
 }

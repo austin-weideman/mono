@@ -15,7 +15,7 @@ import {
   Input,
   LoaderIcon,
   toast,
-} from "@microlearn/ui";
+} from "@mono/ui";
 
 import { useTRPC } from "~/trpc/react";
 

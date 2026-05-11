@@ -1,1 +1,1 @@
-export { ScheduledTaskStatus, scheduledTaskStatusSchema } from "@microlearn/db";
+export { ScheduledTaskStatus, scheduledTaskStatusSchema } from "@mono/db";

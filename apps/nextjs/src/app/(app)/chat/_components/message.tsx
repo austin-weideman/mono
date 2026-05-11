@@ -1,6 +1,6 @@
 import type { UIMessage } from "ai";
 
-import { cn, Markdown, SparklesIcon } from "@microlearn/ui";
+import { cn, Markdown, SparklesIcon } from "@mono/ui";
 
 import { MessageActions } from "./message-actions";
 import { Reasoning } from "./reasoning";

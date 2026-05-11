@@ -1,4 +1,3 @@
 setup:
-  - project: microlearn
+  - project: mono
     config: dev_personal
-

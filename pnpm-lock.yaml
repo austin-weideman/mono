@@ -103,7 +103,7 @@ importers:
 
   .:
     devDependencies:
-      '@microlearn/prettier-config':
+      '@mono/prettier-config':
         specifier: workspace:*
         version: link:tooling/prettier
       '@turbo/gen':
@@ -142,10 +142,10 @@ importers:
       '@legendapp/list':
         specifier: ^2.0.19
         version: 2.0.19(react-native@0.81.6(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.1.6))(react@19.1.6)
-      '@microlearn/chat-utils':
+      '@mono/chat-utils':
         specifier: workspace:*
         version: link:../../packages/chat-utils
-      '@microlearn/conversation':
+      '@mono/conversation':
         specifier: workspace:*
         version: link:../../packages/conversation
       '@react-navigation/drawer':
@@ -275,19 +275,19 @@ importers:
         specifier: ^14.0.0
         version: 14.0.0
     devDependencies:
-      '@microlearn/api':
+      '@mono/api':
         specifier: workspace:*
         version: link:../../packages/api
-      '@microlearn/eslint-config':
+      '@mono/eslint-config':
         specifier: workspace:*
         version: link:../../tooling/eslint
-      '@microlearn/prettier-config':
+      '@mono/prettier-config':
         specifier: workspace:*
         version: link:../../tooling/prettier
-      '@microlearn/tailwind-config':
+      '@mono/tailwind-config':
         specifier: workspace:*
         version: link:../../tooling/tailwind
-      '@microlearn/tsconfig':
+      '@mono/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
       '@types/react':
@@ -326,52 +326,52 @@ importers:
       '@hookform/resolvers':
         specifier: ^5.2.2
         version: 5.2.2(react-hook-form@7.75.0(react@19.1.6))
-      '@microlearn/agent':
+      '@mono/agent':
         specifier: workspace:*
         version: link:../../packages/agent
-      '@microlearn/ai':
+      '@mono/ai':
         specifier: workspace:*
         version: link:../../packages/ai
-      '@microlearn/api':
+      '@mono/api':
         specifier: workspace:*
         version: link:../../packages/api
-      '@microlearn/auth':
+      '@mono/auth':
         specifier: workspace:*
         version: link:../../packages/auth
-      '@microlearn/chat-utils':
+      '@mono/chat-utils':
         specifier: workspace:*
         version: link:../../packages/chat-utils
-      '@microlearn/conversation':
+      '@mono/conversation':
         specifier: workspace:*
         version: link:../../packages/conversation
-      '@microlearn/core-types':
+      '@mono/core-types':
         specifier: workspace:*
         version: link:../../packages/core-types
-      '@microlearn/db':
+      '@mono/db':
         specifier: workspace:*
         version: link:../../packages/db
-      '@microlearn/email':
+      '@mono/email':
         specifier: workspace:*
         version: link:../../packages/email
-      '@microlearn/env':
+      '@mono/env':
         specifier: workspace:*
         version: link:../../packages/env
-      '@microlearn/errors':
+      '@mono/errors':
         specifier: workspace:*
         version: link:../../packages/errors
-      '@microlearn/jobs':
+      '@mono/jobs':
         specifier: workspace:*
         version: link:../../packages/jobs
-      '@microlearn/realtime':
+      '@mono/realtime':
         specifier: workspace:*
         version: link:../../packages/realtime
-      '@microlearn/scheduler':
+      '@mono/scheduler':
         specifier: workspace:*
         version: link:../../packages/scheduler
-      '@microlearn/ui':
+      '@mono/ui':
         specifier: workspace:*
         version: link:../../packages/ui
-      '@microlearn/validators':
+      '@mono/validators':
         specifier: workspace:*
         version: link:../../packages/validators
       '@tanstack/react-query':
@@ -426,16 +426,16 @@ importers:
         specifier: 'catalog:'
         version: 4.4.2
     devDependencies:
-      '@microlearn/eslint-config':
+      '@mono/eslint-config':
         specifier: workspace:*
         version: link:../../tooling/eslint
-      '@microlearn/prettier-config':
+      '@mono/prettier-config':
         specifier: workspace:*
         version: link:../../tooling/prettier
-      '@microlearn/tailwind-config':
+      '@mono/tailwind-config':
         specifier: workspace:*
         version: link:../../tooling/tailwind
-      '@microlearn/tsconfig':
+      '@mono/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
       '@types/node':
@@ -471,22 +471,22 @@ importers:
       '@ai-sdk/gateway':
         specifier: 'catalog:'
         version: 3.0.109(zod@4.4.2)
-      '@microlearn/core-types':
+      '@mono/core-types':
         specifier: workspace:*
         version: link:../core-types
-      '@microlearn/db':
+      '@mono/db':
         specifier: workspace:*
         version: link:../db
-      '@microlearn/env':
+      '@mono/env':
         specifier: workspace:*
         version: link:../env
-      '@microlearn/errors':
+      '@mono/errors':
         specifier: workspace:*
         version: link:../errors
-      '@microlearn/time':
+      '@mono/time':
         specifier: workspace:*
         version: link:../time
-      '@microlearn/user':
+      '@mono/user':
         specifier: workspace:*
         version: link:../user
       ai:
@@ -496,13 +496,13 @@ importers:
         specifier: 'catalog:'
         version: 4.4.2
     devDependencies:
-      '@microlearn/eslint-config':
+      '@mono/eslint-config':
         specifier: workspace:*
         version: link:../../tooling/eslint
-      '@microlearn/prettier-config':
+      '@mono/prettier-config':
         specifier: workspace:*
         version: link:../../tooling/prettier
-      '@microlearn/tsconfig':
+      '@mono/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
       eslint:
@@ -530,13 +530,13 @@ importers:
         specifier: 'catalog:'
         version: 4.4.2
     devDependencies:
-      '@microlearn/eslint-config':
+      '@mono/eslint-config':
         specifier: workspace:*
         version: link:../../tooling/eslint
-      '@microlearn/prettier-config':
+      '@mono/prettier-config':
         specifier: workspace:*
         version: link:../../tooling/prettier
-      '@microlearn/tsconfig':
+      '@mono/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
       eslint:
@@ -551,22 +551,22 @@ importers:
 
   packages/api:
     dependencies:
-      '@microlearn/auth':
+      '@mono/auth':
         specifier: workspace:*
         version: link:../auth
-      '@microlearn/conversation':
+      '@mono/conversation':
         specifier: workspace:*
         version: link:../conversation
-      '@microlearn/core-types':
+      '@mono/core-types':
         specifier: workspace:*
         version: link:../core-types
-      '@microlearn/db':
+      '@mono/db':
         specifier: workspace:*
         version: link:../db
-      '@microlearn/user':
+      '@mono/user':
         specifier: workspace:*
         version: link:../user
-      '@microlearn/validators':
+      '@mono/validators':
         specifier: workspace:*
         version: link:../validators
       '@trpc/server':
@@ -582,13 +582,13 @@ importers:
         specifier: 'catalog:'
         version: 4.4.2
     devDependencies:
-      '@microlearn/eslint-config':
+      '@mono/eslint-config':
         specifier: workspace:*
         version: link:../../tooling/eslint
-      '@microlearn/prettier-config':
+      '@mono/prettier-config':
         specifier: workspace:*
         version: link:../../tooling/prettier
-      '@microlearn/tsconfig':
+      '@mono/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
       eslint:
@@ -606,7 +606,7 @@ importers:
       '@better-auth/expo':
         specifier: 'catalog:'
         version: 1.6.9(@better-auth/core@1.6.9(@better-auth/utils@0.4.0)(@better-fetch/fetch@1.1.21)(@opentelemetry/api@1.9.0)(better-call@1.3.5(zod@4.4.2))(jose@6.2.3)(kysely@0.28.17)(nanostores@1.3.0))(better-auth@1.6.9(@opentelemetry/api@1.9.0)(@prisma/client@5.22.0)(better-sqlite3@12.2.0)(drizzle-kit@0.31.10)(next@16.2.4(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.1.6(react@19.1.6))(react@19.1.6))(pg@8.20.0)(react-dom@19.1.6(react@19.1.6))(react@19.1.6)(vitest@4.1.5(@opentelemetry/api@1.9.0)(@types/node@24.12.2)(esbuild@0.27.7)(jiti@2.6.1)(terser@5.46.2)(tsx@4.21.0)(yaml@2.8.3)))(expo-constants@18.0.13)(expo-linking@8.0.12)(expo-network@8.0.8(expo@54.0.34)(react@19.1.6))(expo-web-browser@15.0.11(expo@54.0.34)(react-native@0.81.6(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.1.6)))
-      '@microlearn/db':
+      '@mono/db':
         specifier: workspace:*
         version: link:../db
       better-auth:
@@ -619,13 +619,13 @@ importers:
       '@better-auth/cli':
         specifier: 'catalog:'
         version: 1.4.21(@better-fetch/fetch@1.1.21)(@neondatabase/serverless@1.0.2)(@opentelemetry/api@1.9.0)(better-call@1.3.5(zod@4.4.2))(drizzle-kit@0.31.10)(jose@6.2.3)(kysely@0.28.17)(nanostores@1.3.0)(next@16.2.4(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.1.6(react@19.1.6))(react@19.1.6))(react-dom@19.1.6(react@19.1.6))(react@19.1.6)(vitest@4.1.5(@opentelemetry/api@1.9.0)(@types/node@24.12.2)(esbuild@0.27.7)(jiti@2.6.1)(terser@5.46.2)(tsx@4.21.0)(yaml@2.8.3))
-      '@microlearn/eslint-config':
+      '@mono/eslint-config':
         specifier: workspace:*
         version: link:../../tooling/eslint
-      '@microlearn/prettier-config':
+      '@mono/prettier-config':
         specifier: workspace:*
         version: link:../../tooling/prettier
-      '@microlearn/tsconfig':
+      '@mono/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
       eslint:
@@ -640,20 +640,20 @@ importers:
 
   packages/chat-utils:
     dependencies:
-      '@microlearn/conversation':
+      '@mono/conversation':
         specifier: workspace:*
         version: link:../conversation
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
     devDependencies:
-      '@microlearn/eslint-config':
+      '@mono/eslint-config':
         specifier: workspace:*
         version: link:../../tooling/eslint
-      '@microlearn/prettier-config':
+      '@mono/prettier-config':
         specifier: workspace:*
         version: link:../../tooling/prettier
-      '@microlearn/tsconfig':
+      '@mono/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
       ai:
@@ -671,22 +671,22 @@ importers:
 
   packages/conversation:
     dependencies:
-      '@microlearn/agent':
+      '@mono/agent':
         specifier: workspace:*
         version: link:../agent
-      '@microlearn/core-types':
+      '@mono/core-types':
         specifier: workspace:*
         version: link:../core-types
-      '@microlearn/db':
+      '@mono/db':
         specifier: workspace:*
         version: link:../db
-      '@microlearn/errors':
+      '@mono/errors':
         specifier: workspace:*
         version: link:../errors
-      '@microlearn/jobs':
+      '@mono/jobs':
         specifier: workspace:*
         version: link:../jobs
-      '@microlearn/realtime':
+      '@mono/realtime':
         specifier: workspace:*
         version: link:../realtime
       '@neondatabase/serverless':
@@ -702,16 +702,16 @@ importers:
         specifier: 'catalog:'
         version: 4.4.2
     devDependencies:
-      '@microlearn/eslint-config':
+      '@mono/eslint-config':
         specifier: workspace:*
         version: link:../../tooling/eslint
-      '@microlearn/prettier-config':
+      '@mono/prettier-config':
         specifier: workspace:*
         version: link:../../tooling/prettier
-      '@microlearn/testing':
+      '@mono/testing':
         specifier: workspace:*
         version: link:../testing
-      '@microlearn/tsconfig':
+      '@mono/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
       ai:
@@ -732,13 +732,13 @@ importers:
 
   packages/core-types:
     devDependencies:
-      '@microlearn/eslint-config':
+      '@mono/eslint-config':
         specifier: workspace:*
         version: link:../../tooling/eslint
-      '@microlearn/prettier-config':
+      '@mono/prettier-config':
         specifier: workspace:*
         version: link:../../tooling/prettier
-      '@microlearn/tsconfig':
+      '@mono/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
       '@types/node':
@@ -756,7 +756,7 @@ importers:
 
   packages/db:
     dependencies:
-      '@microlearn/env':
+      '@mono/env':
         specifier: workspace:*
         version: link:../env
       '@neondatabase/serverless':
@@ -772,13 +772,13 @@ importers:
         specifier: 'catalog:'
         version: 4.4.2
     devDependencies:
-      '@microlearn/eslint-config':
+      '@mono/eslint-config':
         specifier: workspace:*
         version: link:../../tooling/eslint
-      '@microlearn/prettier-config':
+      '@mono/prettier-config':
         specifier: workspace:*
         version: link:../../tooling/prettier
-      '@microlearn/tsconfig':
+      '@mono/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
       '@types/node':
@@ -799,10 +799,10 @@ importers:
 
   packages/email:
     dependencies:
-      '@microlearn/env':
+      '@mono/env':
         specifier: workspace:*
         version: link:../env
-      '@microlearn/errors':
+      '@mono/errors':
         specifier: workspace:*
         version: link:../errors
       '@react-email/components':
@@ -815,13 +815,13 @@ importers:
         specifier: ^6.12.3
         version: 6.12.3(@react-email/render@2.0.6(react-dom@19.1.6(react@19.1.6))(react@19.1.6))
     devDependencies:
-      '@microlearn/eslint-config':
+      '@mono/eslint-config':
         specifier: workspace:*
         version: link:../../tooling/eslint
-      '@microlearn/prettier-config':
+      '@mono/prettier-config':
         specifier: workspace:*
         version: link:../../tooling/prettier
-      '@microlearn/tsconfig':
+      '@mono/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
       '@types/node':
@@ -846,13 +846,13 @@ importers:
         specifier: 'catalog:'
         version: 4.4.2
     devDependencies:
-      '@microlearn/eslint-config':
+      '@mono/eslint-config':
         specifier: workspace:*
         version: link:../../tooling/eslint
-      '@microlearn/prettier-config':
+      '@mono/prettier-config':
         specifier: workspace:*
         version: link:../../tooling/prettier
-      '@microlearn/tsconfig':
+      '@mono/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
       '@types/node':
@@ -870,13 +870,13 @@ importers:
 
   packages/errors:
     devDependencies:
-      '@microlearn/eslint-config':
+      '@mono/eslint-config':
         specifier: workspace:*
         version: link:../../tooling/eslint
-      '@microlearn/prettier-config':
+      '@mono/prettier-config':
         specifier: workspace:*
         version: link:../../tooling/prettier
-      '@microlearn/tsconfig':
+      '@mono/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
       '@types/node':
@@ -894,7 +894,7 @@ importers:
 
   packages/jobs:
     dependencies:
-      '@microlearn/env':
+      '@mono/env':
         specifier: workspace:*
         version: link:../env
       inngest:
@@ -904,13 +904,13 @@ importers:
         specifier: 'catalog:'
         version: 4.4.2
     devDependencies:
-      '@microlearn/eslint-config':
+      '@mono/eslint-config':
         specifier: workspace:*
         version: link:../../tooling/eslint
-      '@microlearn/prettier-config':
+      '@mono/prettier-config':
         specifier: workspace:*
         version: link:../../tooling/prettier
-      '@microlearn/tsconfig':
+      '@mono/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
       '@types/node':
@@ -928,7 +928,7 @@ importers:
 
   packages/realtime:
     dependencies:
-      '@microlearn/env':
+      '@mono/env':
         specifier: workspace:*
         version: link:../env
       '@upstash/realtime':
@@ -944,13 +944,13 @@ importers:
         specifier: 'catalog:'
         version: 4.4.2
     devDependencies:
-      '@microlearn/eslint-config':
+      '@mono/eslint-config':
         specifier: workspace:*
         version: link:../../tooling/eslint
-      '@microlearn/prettier-config':
+      '@mono/prettier-config':
         specifier: workspace:*
         version: link:../../tooling/prettier
-      '@microlearn/tsconfig':
+      '@mono/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
       '@types/node':
@@ -968,22 +968,22 @@ importers:
 
   packages/scheduler:
     dependencies:
-      '@microlearn/core-types':
+      '@mono/core-types':
         specifier: workspace:*
         version: link:../core-types
-      '@microlearn/db':
+      '@mono/db':
         specifier: workspace:*
         version: link:../db
-      '@microlearn/env':
+      '@mono/env':
         specifier: workspace:*
         version: link:../env
-      '@microlearn/errors':
+      '@mono/errors':
         specifier: workspace:*
         version: link:../errors
-      '@microlearn/jobs':
+      '@mono/jobs':
         specifier: workspace:*
         version: link:../jobs
-      '@microlearn/time':
+      '@mono/time':
         specifier: workspace:*
         version: link:../time
       drizzle-orm:
@@ -999,16 +999,16 @@ importers:
         specifier: 'catalog:'
         version: 4.4.2
     devDependencies:
-      '@microlearn/eslint-config':
+      '@mono/eslint-config':
         specifier: workspace:*
         version: link:../../tooling/eslint
-      '@microlearn/prettier-config':
+      '@mono/prettier-config':
         specifier: workspace:*
         version: link:../../tooling/prettier
-      '@microlearn/testing':
+      '@mono/testing':
         specifier: workspace:*
         version: link:../testing
-      '@microlearn/tsconfig':
+      '@mono/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
       eslint:
@@ -1026,17 +1026,17 @@ importers:
 
   packages/testing:
     dependencies:
-      '@microlearn/db':
+      '@mono/db':
         specifier: workspace:*
         version: link:../db
     devDependencies:
-      '@microlearn/eslint-config':
+      '@mono/eslint-config':
         specifier: workspace:*
         version: link:../../tooling/eslint
-      '@microlearn/prettier-config':
+      '@mono/prettier-config':
         specifier: workspace:*
         version: link:../../tooling/prettier
-      '@microlearn/tsconfig':
+      '@mono/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
       '@types/node':
@@ -1058,13 +1058,13 @@ importers:
         specifier: ^3.7.2
         version: 3.7.2
     devDependencies:
-      '@microlearn/eslint-config':
+      '@mono/eslint-config':
         specifier: workspace:*
         version: link:../../tooling/eslint
-      '@microlearn/prettier-config':
+      '@mono/prettier-config':
         specifier: workspace:*
         version: link:../../tooling/prettier
-      '@microlearn/tsconfig':
+      '@mono/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
       '@types/luxon':
@@ -1125,13 +1125,13 @@ importers:
         specifier: ^3.3.1
         version: 3.5.0
     devDependencies:
-      '@microlearn/eslint-config':
+      '@mono/eslint-config':
         specifier: workspace:*
         version: link:../../tooling/eslint
-      '@microlearn/prettier-config':
+      '@mono/prettier-config':
         specifier: workspace:*
         version: link:../../tooling/prettier
-      '@microlearn/tsconfig':
+      '@mono/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
       '@types/react':
@@ -1155,16 +1155,16 @@ importers:
 
   packages/user:
     dependencies:
-      '@microlearn/core-types':
+      '@mono/core-types':
         specifier: workspace:*
         version: link:../core-types
-      '@microlearn/db':
+      '@mono/db':
         specifier: workspace:*
         version: link:../db
-      '@microlearn/errors':
+      '@mono/errors':
         specifier: workspace:*
         version: link:../errors
-      '@microlearn/time':
+      '@mono/time':
         specifier: workspace:*
         version: link:../time
       drizzle-orm:
@@ -1174,13 +1174,13 @@ importers:
         specifier: 'catalog:'
         version: 4.4.2
     devDependencies:
-      '@microlearn/eslint-config':
+      '@mono/eslint-config':
         specifier: workspace:*
         version: link:../../tooling/eslint
-      '@microlearn/prettier-config':
+      '@mono/prettier-config':
         specifier: workspace:*
         version: link:../../tooling/prettier
-      '@microlearn/tsconfig':
+      '@mono/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
       eslint:
@@ -1199,13 +1199,13 @@ importers:
         specifier: 'catalog:'
         version: 4.4.2
     devDependencies:
-      '@microlearn/eslint-config':
+      '@mono/eslint-config':
         specifier: workspace:*
         version: link:../../tooling/eslint
-      '@microlearn/prettier-config':
+      '@mono/prettier-config':
         specifier: workspace:*
         version: link:../../tooling/prettier
-      '@microlearn/tsconfig':
+      '@mono/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
       eslint:
@@ -1248,10 +1248,10 @@ importers:
         specifier: ^8.46.4
         version: 8.59.1(eslint@9.38.0(jiti@2.6.1))(typescript@6.0.3)
     devDependencies:
-      '@microlearn/prettier-config':
+      '@mono/prettier-config':
         specifier: workspace:*
         version: link:../prettier
-      '@microlearn/tsconfig':
+      '@mono/tsconfig':
         specifier: workspace:*
         version: link:../typescript
       '@types/node':
@@ -1281,7 +1281,7 @@ importers:
         specifier: ^0.7.4
         version: 0.7.4(@ianvs/prettier-plugin-sort-imports@4.7.1(prettier@3.6.2))(prettier@3.6.2)
     devDependencies:
-      '@microlearn/tsconfig':
+      '@mono/tsconfig':
         specifier: workspace:*
         version: link:../typescript
       '@types/node':
@@ -1303,13 +1303,13 @@ importers:
         specifier: 'catalog:'
         version: 4.2.4
     devDependencies:
-      '@microlearn/eslint-config':
+      '@mono/eslint-config':
         specifier: workspace:*
         version: link:../eslint
-      '@microlearn/prettier-config':
+      '@mono/prettier-config':
         specifier: workspace:*
         version: link:../prettier
-      '@microlearn/tsconfig':
+      '@mono/tsconfig':
         specifier: workspace:*
         version: link:../typescript
       '@types/node':

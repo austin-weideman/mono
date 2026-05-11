@@ -1,5 +1,5 @@
 {
-  "name": "@microlearn/expo",
+  "name": "@mono/expo",
   "private": true,
   "main": "index.ts",
   "scripts": {
@@ -18,8 +18,8 @@
     "@better-auth/expo": "catalog:",
     "@expo/vector-icons": "^15.0.3",
     "@legendapp/list": "^2.0.19",
-    "@microlearn/chat-utils": "workspace:*",
-    "@microlearn/conversation": "workspace:*",
+    "@mono/chat-utils": "workspace:*",
+    "@mono/conversation": "workspace:*",
     "@react-navigation/drawer": "^7.7.13",
     "@react-navigation/native": "^7.1.34",
     "@stardazed/streams-text-encoding": "^1.0.2",
@@ -64,11 +64,11 @@
     "uuid": "^14.0.0"
   },
   "devDependencies": {
-    "@microlearn/api": "workspace:*",
-    "@microlearn/eslint-config": "workspace:*",
-    "@microlearn/prettier-config": "workspace:*",
-    "@microlearn/tailwind-config": "workspace:*",
-    "@microlearn/tsconfig": "workspace:*",
+    "@mono/api": "workspace:*",
+    "@mono/eslint-config": "workspace:*",
+    "@mono/prettier-config": "workspace:*",
+    "@mono/tailwind-config": "workspace:*",
+    "@mono/tsconfig": "workspace:*",
     "@types/react": "catalog:react19",
     "@types/uuid": "11.0.0",
     "eslint": "catalog:",
@@ -76,5 +76,5 @@
     "tailwindcss": "catalog:",
     "typescript": "catalog:"
   },
-  "prettier": "@microlearn/prettier-config"
+  "prettier": "@mono/prettier-config"
 }

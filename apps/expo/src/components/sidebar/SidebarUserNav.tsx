@@ -1,7 +1,7 @@
 import { Alert, Image, Pressable, StyleSheet, Text, View } from "react-native";
 import * as Haptics from "expo-haptics";
 
-import { getInitials } from "@microlearn/chat-utils";
+import { getInitials } from "@mono/chat-utils";
 
 import { fontSize, sizing, spacing, useTheme } from "~/lib";
 import { authClient } from "~/utils/auth";

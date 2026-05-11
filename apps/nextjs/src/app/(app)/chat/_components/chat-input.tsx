@@ -8,7 +8,7 @@ import {
   popMotion,
   SendIcon,
   tactileMotion,
-} from "@microlearn/ui";
+} from "@mono/ui";
 
 interface ChatInputProps {
   onSubmit: (text: string) => void;

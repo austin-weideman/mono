@@ -16,7 +16,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         type: "input",
         name: "name",
         message:
-          "What is the name of the package? (You can skip the `@microlearn/` prefix)",
+          "What is the name of the package? (You can skip the `@mono/` prefix)",
       },
       {
         type: "input",
@@ -28,8 +28,8 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
     actions: [
       (answers) => {
         if ("name" in answers && typeof answers.name === "string") {
-          if (answers.name.startsWith("@microlearn/")) {
-            answers.name = answers.name.replace("@microlearn/", "");
+          if (answers.name.startsWith("@mono/")) {
+            answers.name = answers.name.replace("@mono/", "");
           }
         }
         return "Config sanitized";

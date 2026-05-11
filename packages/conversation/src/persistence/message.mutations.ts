@@ -1,6 +1,6 @@
-import type { DbOrTx } from "@microlearn/db/client";
-import { message } from "@microlearn/db";
-import { InternalServerError } from "@microlearn/errors";
+import type { DbOrTx } from "@mono/db/client";
+import { message } from "@mono/db";
+import { InternalServerError } from "@mono/errors";
 
 import type { Message } from "../types/Message";
 import type { MessageRole } from "../types/MessageRole";

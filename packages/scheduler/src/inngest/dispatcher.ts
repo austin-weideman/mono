@@ -1,8 +1,8 @@
 import type { InngestFunction } from "inngest";
 
-import { db } from "@microlearn/db/client";
-import { env } from "@microlearn/env";
-import { inngest } from "@microlearn/jobs";
+import { db } from "@mono/db/client";
+import { env } from "@mono/env";
+import { inngest } from "@mono/jobs";
 
 import { dispatchDue } from "../application/dispatchDue";
 import { emitPendingRuns } from "../application/emitPendingRuns";

@@ -1,5 +1,5 @@
 {
-  "name": "@microlearn/agent",
+  "name": "@mono/agent",
   "private": true,
   "type": "module",
   "exports": {
@@ -18,22 +18,22 @@
   },
   "dependencies": {
     "@ai-sdk/gateway": "catalog:",
-    "@microlearn/core-types": "workspace:*",
-    "@microlearn/db": "workspace:*",
-    "@microlearn/env": "workspace:*",
-    "@microlearn/errors": "workspace:*",
-    "@microlearn/time": "workspace:*",
-    "@microlearn/user": "workspace:*",
+    "@mono/core-types": "workspace:*",
+    "@mono/db": "workspace:*",
+    "@mono/env": "workspace:*",
+    "@mono/errors": "workspace:*",
+    "@mono/time": "workspace:*",
+    "@mono/user": "workspace:*",
     "ai": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@microlearn/eslint-config": "workspace:*",
-    "@microlearn/prettier-config": "workspace:*",
-    "@microlearn/tsconfig": "workspace:*",
+    "@mono/eslint-config": "workspace:*",
+    "@mono/prettier-config": "workspace:*",
+    "@mono/tsconfig": "workspace:*",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:"
   },
-  "prettier": "@microlearn/prettier-config"
+  "prettier": "@mono/prettier-config"
 }

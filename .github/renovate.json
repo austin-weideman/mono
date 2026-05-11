@@ -22,7 +22,7 @@
   "packageRules": [
     {
       "description": "Internal workspace packages — resolved via pnpm workspace:* protocol",
-      "matchPackageNames": ["@microlearn/**"],
+      "matchPackageNames": ["@mono/**"],
       "enabled": false
     },
     {

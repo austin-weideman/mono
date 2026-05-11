@@ -6,7 +6,7 @@ import {
   SidebarInset,
   SidebarProvider,
   ThemeToggle,
-} from "@microlearn/ui";
+} from "@mono/ui";
 
 import { getSession } from "~/auth/server";
 import { AppSidebar } from "./_components/app-sidebar";

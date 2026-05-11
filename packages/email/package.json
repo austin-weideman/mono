@@ -1,5 +1,5 @@
 {
-  "name": "@microlearn/email",
+  "name": "@mono/email",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -18,21 +18,21 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "@microlearn/env": "workspace:*",
-    "@microlearn/errors": "workspace:*",
+    "@mono/env": "workspace:*",
+    "@mono/errors": "workspace:*",
     "@react-email/components": "^1.0.12",
     "react": "catalog:react19",
     "resend": "^6.12.3"
   },
   "devDependencies": {
-    "@microlearn/eslint-config": "workspace:*",
-    "@microlearn/prettier-config": "workspace:*",
-    "@microlearn/tsconfig": "workspace:*",
+    "@mono/eslint-config": "workspace:*",
+    "@mono/prettier-config": "workspace:*",
+    "@mono/tsconfig": "workspace:*",
     "@types/node": "catalog:",
     "@types/react": "catalog:react19",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:"
   },
-  "prettier": "@microlearn/prettier-config"
+  "prettier": "@mono/prettier-config"
 }

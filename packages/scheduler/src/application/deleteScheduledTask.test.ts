@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
 
-import type { Transaction } from "@microlearn/db/client";
-import { ActorType, userActor } from "@microlearn/core-types";
-import { user } from "@microlearn/db";
-import { ForbiddenError, NotFoundError } from "@microlearn/errors";
-import { withTestTransaction } from "@microlearn/testing";
+import type { Transaction } from "@mono/db/client";
+import { ActorType, userActor } from "@mono/core-types";
+import { user } from "@mono/db";
+import { ForbiddenError, NotFoundError } from "@mono/errors";
+import { withTestTransaction } from "@mono/testing";
 
 import { getScheduledTaskById } from "../persistence/scheduled-task.queries";
 import { createScheduledTask } from "./createScheduledTask";

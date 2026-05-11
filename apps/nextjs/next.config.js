@@ -9,11 +9,11 @@ await jiti.import("./src/env");
 const config = {
   /** Enables hot reloading for local packages without a build step */
   transpilePackages: [
-    "@microlearn/api",
-    "@microlearn/auth",
-    "@microlearn/db",
-    "@microlearn/ui",
-    "@microlearn/validators",
+    "@mono/api",
+    "@mono/auth",
+    "@mono/db",
+    "@mono/ui",
+    "@mono/validators",
   ],
 
   /** Allow dev resources to be served to the ngrok tunnel used for local OAuth/Expo testing */

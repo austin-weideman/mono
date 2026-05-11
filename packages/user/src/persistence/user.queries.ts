@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 
-import type { DbOrTx } from "@microlearn/db/client";
-import { user, userProfile } from "@microlearn/db";
+import type { DbOrTx } from "@mono/db/client";
+import { user, userProfile } from "@mono/db";
 
 import type { User } from "../types";
 

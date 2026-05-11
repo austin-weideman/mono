@@ -3,12 +3,12 @@
 import { startTransition, useOptimistic, useState } from "react";
 import Image from "next/image";
 
-import type { ModelId, ModelProvider } from "@microlearn/ai";
+import type { ModelId, ModelProvider } from "@mono/ai";
 import {
   getModelConfig,
   getModelsGroupedByProvider,
   PROVIDER_DISPLAY_NAMES,
-} from "@microlearn/ai";
+} from "@mono/ai";
 import {
   Button,
   CheckIcon,
@@ -20,7 +20,7 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from "@microlearn/ui";
+} from "@mono/ui";
 
 import { saveModelPreference } from "../_actions/model";
 

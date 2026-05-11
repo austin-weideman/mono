@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
 
-import type { SystemActor } from "@microlearn/core-types";
-import type { Transaction } from "@microlearn/db/client";
-import { ActorType, systemActor, userActor } from "@microlearn/core-types";
-import { user } from "@microlearn/db";
-import { BadRequestError, ForbiddenError } from "@microlearn/errors";
-import { withTestTransaction } from "@microlearn/testing";
+import type { SystemActor } from "@mono/core-types";
+import type { Transaction } from "@mono/db/client";
+import { ActorType, systemActor, userActor } from "@mono/core-types";
+import { user } from "@mono/db";
+import { BadRequestError, ForbiddenError } from "@mono/errors";
+import { withTestTransaction } from "@mono/testing";
 
 import { createScheduledTask } from "./createScheduledTask";
 

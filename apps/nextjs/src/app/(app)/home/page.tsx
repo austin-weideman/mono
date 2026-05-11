@@ -1,4 +1,4 @@
-import { SidebarTrigger } from "@microlearn/ui";
+import { SidebarTrigger } from "@mono/ui";
 
 export default function HomePage() {
   return (

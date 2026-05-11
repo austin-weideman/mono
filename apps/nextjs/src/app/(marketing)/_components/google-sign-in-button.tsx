@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-import { cn } from "@microlearn/ui";
+import { cn } from "@mono/ui";
 
 import { auth } from "~/auth/server";
 

@@ -1,9 +1,9 @@
 import type { InngestFunction } from "inngest";
 
-import { db } from "@microlearn/db/client";
-import { InternalServerError } from "@microlearn/errors";
-import { inngest } from "@microlearn/jobs";
-import { scheduledTaskDueEvent } from "@microlearn/jobs/events/scheduler";
+import { db } from "@mono/db/client";
+import { InternalServerError } from "@mono/errors";
+import { inngest } from "@mono/jobs";
+import { scheduledTaskDueEvent } from "@mono/jobs/events/scheduler";
 
 import { completeRun, failRun } from "../application/completeRun";
 import { loadAndStartRun } from "../application/loadAndStartRun";

@@ -1,1 +1,1 @@
-export { default } from "@microlearn/tailwind-config/postcss-config";
+export { default } from "@mono/tailwind-config/postcss-config";

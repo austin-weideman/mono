@@ -1,4 +1,1 @@
-export {
-  ScheduledTaskActorType,
-  scheduledTaskActorTypeSchema,
-} from "@microlearn/db";
+export { ScheduledTaskActorType, scheduledTaskActorTypeSchema } from "@mono/db";

@@ -4,7 +4,7 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { oAuthProxy } from "better-auth/plugins";
 
-import { db } from "@microlearn/db/client";
+import { db } from "@mono/db/client";
 
 type EmailVerificationOptions = NonNullable<
   BetterAuthOptions["emailVerification"]

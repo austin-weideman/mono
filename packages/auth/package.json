@@ -1,5 +1,5 @@
 {
-  "name": "@microlearn/auth",
+  "name": "@mono/auth",
   "private": true,
   "type": "module",
   "exports": {
@@ -16,18 +16,18 @@
   },
   "dependencies": {
     "@better-auth/expo": "catalog:",
-    "@microlearn/db": "workspace:*",
+    "@mono/db": "workspace:*",
     "better-auth": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {
     "@better-auth/cli": "catalog:",
-    "@microlearn/eslint-config": "workspace:*",
-    "@microlearn/prettier-config": "workspace:*",
-    "@microlearn/tsconfig": "workspace:*",
+    "@mono/eslint-config": "workspace:*",
+    "@mono/prettier-config": "workspace:*",
+    "@mono/tsconfig": "workspace:*",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:"
   },
-  "prettier": "@microlearn/prettier-config"
+  "prettier": "@mono/prettier-config"
 }

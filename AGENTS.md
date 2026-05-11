@@ -219,13 +219,13 @@ When you need an authenticated session, sign in with **email and password**, not
 3. Fill `Password` with `password`.
 4. Click `Sign in`. You land on `/chat`.
 
-The session cookie is scoped to the ngrok domain only — it authorizes MicroLearn-as-Austin, nothing else.
+The session cookie is scoped to the ngrok domain only — it authorizes BillSentry-as-Austin, nothing else.
 
 ## Background Jobs (Inngest)
 
-All async / background work runs on Inngest. Architecture: a leaf `@microlearn/jobs` package owns the shared Inngest client **and the cross-package event contracts**. Feature packages own their own functions under `src/jobs/` (or `src/inngest/` for runtime infrastructure like the scheduler). The Next.js inngest serve handler at `apps/nextjs/src/app/api/inngest/route.ts` is the single roof — it imports every feature's jobs and registers them with `serve({ client, functions: [...] })`.
+All async / background work runs on Inngest. Architecture: a leaf `@mono/jobs` package owns the shared Inngest client **and the cross-package event contracts**. Feature packages own their own functions under `src/jobs/` (or `src/inngest/` for runtime infrastructure like the scheduler). The Next.js inngest serve handler at `apps/nextjs/src/app/api/inngest/route.ts` is the single roof — it imports every feature's jobs and registers them with `serve({ client, functions: [...] })`.
 
-**Why events live in `@microlearn/jobs`, not in the feature package:** events are a shared _contract_ between producer and consumer. Putting them in a leaf package lets any package emit any event by depending only on `@microlearn/jobs` — never on the consumer feature package. This is the load-bearing fix for the dependency-direction trap: a low-level package (e.g. `scheduler`) can fire an event consumed by a higher-level package (e.g. `conversation`) without forming a cycle. `eventType()` definitions are inert metadata — no `inngest.createFunction(...)` lives in the events folder, only the wire-format declarations — so importing an event never drags in a function-creation side effect.
+**Why events live in `@mono/jobs`, not in the feature package:** events are a shared _contract_ between producer and consumer. Putting them in a leaf package lets any package emit any event by depending only on `@mono/jobs` — never on the consumer feature package. This is the load-bearing fix for the dependency-direction trap: a low-level package (e.g. `scheduler`) can fire an event consumed by a higher-level package (e.g. `conversation`) without forming a cycle. `eventType()` definitions are inert metadata — no `inngest.createFunction(...)` lives in the events folder, only the wire-format declarations — so importing an event never drags in a function-creation side effect.
 
 **Adding a new background job:**
 
@@ -323,18 +323,18 @@ packages/<feature>/
 
 ### Database-Backed Types
 
-- **Define in `@microlearn/db`** - Drizzle table + `createSelectSchema`/`createInsertSchema` + `$inferSelect`/`$inferInsert`
-- **Re-export in feature packages** - `export type { Conversation } from "@microlearn/db"` (don't redefine)
+- **Define in `@mono/db`** - Drizzle table + `createSelectSchema`/`createInsertSchema` + `$inferSelect`/`$inferInsert`
+- **Re-export in feature packages** - `export type { Conversation } from "@mono/db"` (don't redefine)
 - **Why:** Guarantees DB-to-application type sync with zero duplication
 
 ### Layer Rules
 
-| Layer            | Contains                                                                                                                     | Imports Allowed                                                     |
-| ---------------- | ---------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| **types/**       | Zod schemas, inferred types, pure interfaces                                                                                 | `zod`, other types in same folder                                   |
-| **utils/**       | Pure functions: calculations, validation, business rules. No I/O, no DB, no actor, no clock reads — `now: Date` is injected. | types, `@microlearn/errors`, `@microlearn/time`, other compute libs |
-| **persistence/** | DB queries/mutations                                                                                                         | `@microlearn/db`, types                                             |
-| **application/** | Use-cases, auth, orchestration                                                                                               | utils, persistence, types, `@microlearn/errors`                     |
+| Layer            | Contains                                                                                                                     | Imports Allowed                                         |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
+| **types/**       | Zod schemas, inferred types, pure interfaces                                                                                 | `zod`, other types in same folder                       |
+| **utils/**       | Pure functions: calculations, validation, business rules. No I/O, no DB, no actor, no clock reads — `now: Date` is injected. | types, `@mono/errors`, `@mono/time`, other compute libs |
+| **persistence/** | DB queries/mutations                                                                                                         | `@mono/db`, types                                       |
+| **application/** | Use-cases, auth, orchestration                                                                                               | utils, persistence, types, `@mono/errors`               |
 
 ### Utils Rules
 
@@ -342,7 +342,7 @@ packages/<feature>/
 - **Inject the clock** - functions that need "now" accept `now: Date` as a parameter so tests can advance time deterministically
 - **Return primitive types or `types/` types** - never tRPC/HTTP/React primitives
 - **Optional layer** - small features may not need a `utils/` folder. Only add it when there's actual pure logic to extract
-- **Generic helpers belong in shared packages** - if a util isn't scoped to this feature (e.g. time/date helpers, string formatting), put it in `@microlearn/time`, `@microlearn/validators`, etc., not here
+- **Generic helpers belong in shared packages** - if a util isn't scoped to this feature (e.g. time/date helpers, string formatting), put it in `@mono/time`, `@mono/validators`, etc., not here
 
 ### CQRS (Command Query Responsibility Segregation)
 
@@ -355,12 +355,12 @@ packages/<feature>/
 - Accept `db: DbOrTx` as first parameter (dependency injection)
 - Return types from `types/` folder
 - No business rules - just data access
-- Use `InternalServerError` from `@microlearn/errors` for write failures
+- Use `InternalServerError` from `@mono/errors` for write failures
 
 ### Application Rules
 
 - Accept `db: DbOrTx` as first parameter
-- Accept `actor: Actor` as second parameter (from `@microlearn/core-types`)
+- Accept `actor: Actor` as second parameter (from `@mono/core-types`)
 - Handle all auth/ownership checks here
 - Return types from `types/` folder (no tRPC, React, HTTP primitives)
 
@@ -381,8 +381,8 @@ packages/<feature>/
 
 External code must import from package root:
 
-- ✅ `import { startConversation } from "@microlearn/conversation"`
-- ❌ `import { insertMessage } from "@microlearn/conversation/persistence"`
+- ✅ `import { startConversation } from "@mono/conversation"`
+- ❌ `import { insertMessage } from "@mono/conversation/persistence"`
 
 ### package.json exports ONLY root
 
@@ -460,7 +460,7 @@ Before any feature package is complete:
 - [ ] Zod schemas and inferred types live in the same file
 - [ ] Pure logic lives in `utils/`, not `application/` (when present)
 - [ ] Utils functions are pure: no DB, no actor, no clock reads (`now: Date` is injected)
-- [ ] Generic time/string/etc. helpers live in shared packages (`@microlearn/time`, `@microlearn/validators`), not in a feature's `utils/`
+- [ ] Generic time/string/etc. helpers live in shared packages (`@mono/time`, `@mono/validators`), not in a feature's `utils/`
 - [ ] Persistence uses CQRS (`*.queries.ts` / `*.mutations.ts`)
 - [ ] Functions accept `db: DbOrTx` as first param
 - [ ] Application functions accept `actor: Actor` as second param

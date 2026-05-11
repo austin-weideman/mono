@@ -1,9 +1,9 @@
 import { eq } from "drizzle-orm";
 import { describe, expect, it } from "vitest";
 
-import type { Transaction } from "@microlearn/db/client";
-import { conversation, user } from "@microlearn/db";
-import { withTestTransaction } from "@microlearn/testing";
+import type { Transaction } from "@mono/db/client";
+import { conversation, user } from "@mono/db";
+import { withTestTransaction } from "@mono/testing";
 
 import { insertConversation } from "./conversation.mutations";
 import {

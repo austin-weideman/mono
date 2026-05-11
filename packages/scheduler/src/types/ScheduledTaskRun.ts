@@ -1,3 +1,3 @@
-import type { ScheduledTaskRun as DbScheduledTaskRun } from "@microlearn/db";
+import type { ScheduledTaskRun as DbScheduledTaskRun } from "@mono/db";
 
 export type ScheduledTaskRun = DbScheduledTaskRun;

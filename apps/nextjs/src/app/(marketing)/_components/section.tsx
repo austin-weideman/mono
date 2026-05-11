@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-import { cn } from "@microlearn/ui";
+import { cn } from "@mono/ui";
 
 interface SectionProps {
   id?: string;

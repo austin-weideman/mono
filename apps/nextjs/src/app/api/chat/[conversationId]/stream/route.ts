@@ -3,11 +3,11 @@ import { headers } from "next/headers";
 import { UI_MESSAGE_STREAM_HEADERS } from "ai";
 import { z } from "zod";
 
-import { loadConversation } from "@microlearn/conversation";
-import { userActor } from "@microlearn/core-types";
-import { db } from "@microlearn/db/client";
-import { ForbiddenError, NotFoundError } from "@microlearn/errors";
-import { streamChannel } from "@microlearn/realtime";
+import { loadConversation } from "@mono/conversation";
+import { userActor } from "@mono/core-types";
+import { db } from "@mono/db/client";
+import { ForbiddenError, NotFoundError } from "@mono/errors";
+import { streamChannel } from "@mono/realtime";
 
 import { auth } from "~/auth/server";
 

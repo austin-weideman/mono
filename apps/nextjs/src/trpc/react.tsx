@@ -11,7 +11,7 @@ import {
 import { createTRPCContext } from "@trpc/tanstack-react-query";
 import SuperJSON from "superjson";
 
-import type { AppRouter } from "@microlearn/api";
+import type { AppRouter } from "@mono/api";
 
 import { createQueryClient } from "./query-client";
 

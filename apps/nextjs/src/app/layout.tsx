@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Fraunces, Inter } from "next/font/google";
 
-import { cn, ThemeProvider, Toaster } from "@microlearn/ui";
+import { cn, ThemeProvider, Toaster } from "@mono/ui";
 
 import { env } from "~/env";
 import { TRPCReactProvider } from "~/trpc/react";

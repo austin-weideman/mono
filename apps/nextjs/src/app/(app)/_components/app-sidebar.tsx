@@ -20,7 +20,7 @@ import {
   TooltipContent,
   TooltipTrigger,
   useSidebar,
-} from "@microlearn/ui";
+} from "@mono/ui";
 
 import { SidebarHistory } from "./sidebar-history";
 import { SidebarUserNav } from "./sidebar-user-nav";
@@ -55,7 +55,7 @@ export function AppSidebar({ user }: AppSidebarProps) {
               }}
             >
               <span className="hover:bg-muted cursor-pointer rounded-md px-2 text-lg font-semibold">
-                MicroLearn
+                BillSentry
               </span>
             </Link>
             <Tooltip>

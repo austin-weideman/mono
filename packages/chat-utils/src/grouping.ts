@@ -1,6 +1,6 @@
 import { isToday, isYesterday, subMonths, subWeeks } from "date-fns";
 
-import type { Conversation } from "@microlearn/conversation";
+import type { Conversation } from "@mono/conversation";
 
 export interface GroupedConversations {
   today: Conversation[];

@@ -1,6 +1,6 @@
 import type { UIMessage } from "ai";
 
-import type { Message } from "@microlearn/conversation";
+import type { Message } from "@mono/conversation";
 
 export function convertDbMessagesToUIMessages(
   messages: Message[],

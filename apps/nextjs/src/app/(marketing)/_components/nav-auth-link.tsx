@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { cn } from "@microlearn/ui";
+import { cn } from "@mono/ui";
 
 interface NavAuthLinkProps {
   href: string;

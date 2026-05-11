@@ -2,7 +2,7 @@ import type { NeonDatabase } from "drizzle-orm/neon-serverless";
 import { Pool } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-serverless";
 
-import { env } from "@microlearn/env";
+import { env } from "@mono/env";
 
 import * as schema from "./schema";
 

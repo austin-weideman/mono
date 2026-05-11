@@ -3,7 +3,7 @@ import { TRPCError } from "@trpc/server";
 import { and, eq, isNotNull } from "drizzle-orm";
 import { z } from "zod/v4";
 
-import { account } from "@microlearn/db";
+import { account } from "@mono/db";
 
 import { protectedProcedure, publicProcedure } from "../trpc";
 

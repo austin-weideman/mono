@@ -29,18 +29,18 @@ export function VerifyEmail({
   return (
     <Html>
       <BrandHead />
-      <Preview>Verify your email to start learning with MicroLearn</Preview>
+      <Preview>Verify your email to get started with BillSentry</Preview>
       <Body style={styles.body}>
         <Container style={styles.container}>
           <Section style={styles.header}>
-            <Text style={styles.logo}>MicroLearn</Text>
+            <Text style={styles.logo}>BillSentry</Text>
           </Section>
 
           <Heading style={styles.heading}>Verify your email</Heading>
 
           <Text style={styles.paragraph}>
-            Hi {firstName}, welcome to MicroLearn. Click the button below to
-            verify your email address and start your first lesson.
+            Hi {firstName}, welcome to BillSentry. Click the button below to
+            verify your email address and get started.
           </Text>
 
           <Section style={styles.buttonContainer}>
@@ -59,12 +59,10 @@ export function VerifyEmail({
           <Hr style={styles.hr} />
 
           <Text style={styles.footer}>
-            If you didn't sign up for MicroLearn, you can safely ignore this
+            If you didn't sign up for BillSentry, you can safely ignore this
             email.
           </Text>
-          <Text style={styles.footerBrand}>
-            MicroLearn · Five minutes a day, compounding.
-          </Text>
+          <Text style={styles.footerBrand}>BillSentry</Text>
         </Container>
       </Body>
     </Html>

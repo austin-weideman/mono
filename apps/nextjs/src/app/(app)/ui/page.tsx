@@ -34,7 +34,7 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@microlearn/ui";
+} from "@mono/ui";
 
 export default function UiPlaygroundPage() {
   const [toggle, setToggle] = useState(false);
@@ -54,7 +54,7 @@ export default function UiPlaygroundPage() {
         <div className="mx-auto flex max-w-3xl flex-col gap-10 pt-4">
           <Section
             title="Buttons"
-            description="All variants and sizes from @microlearn/ui."
+            description="All variants and sizes from @mono/ui."
           >
             <div className="flex flex-wrap gap-2">
               <Button variant="default">Default</Button>

@@ -1,9 +1,9 @@
 import { z } from "zod";
 
-import { isUserActor } from "@microlearn/core-types";
-import { ForbiddenError } from "@microlearn/errors";
-import { inngest } from "@microlearn/jobs";
-import { conversationScheduledStartEvent } from "@microlearn/jobs/events/conversation";
+import { isUserActor } from "@mono/core-types";
+import { ForbiddenError } from "@mono/errors";
+import { inngest } from "@mono/jobs";
+import { conversationScheduledStartEvent } from "@mono/jobs/events/conversation";
 
 import type { TaskHandler } from "../types/TaskHandler";
 import { TaskType } from "../types/TaskType";

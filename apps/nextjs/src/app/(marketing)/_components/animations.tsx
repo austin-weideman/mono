@@ -9,7 +9,7 @@ import {
   staggerItemMotion,
   viewportRiseMotion,
   withDelay,
-} from "@microlearn/ui";
+} from "@mono/ui";
 
 interface RevealProps {
   children: ReactNode;

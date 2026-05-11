@@ -1,5 +1,5 @@
-import type { DbOrTx } from "@microlearn/db/client";
-import { ScheduledTaskRunStatus } from "@microlearn/db";
+import type { DbOrTx } from "@mono/db/client";
+import { ScheduledTaskRunStatus } from "@mono/db";
 
 import { updateScheduledTaskRunById } from "../persistence/scheduled-task-run.mutations";
 

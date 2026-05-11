@@ -1,5 +1,5 @@
 {
-  "name": "@microlearn/prettier-config",
+  "name": "@mono/prettier-config",
   "private": true,
   "type": "module",
   "exports": {
@@ -16,9 +16,9 @@
     "prettier-plugin-tailwindcss": "^0.7.4"
   },
   "devDependencies": {
-    "@microlearn/tsconfig": "workspace:*",
+    "@mono/tsconfig": "workspace:*",
     "@types/node": "catalog:",
     "typescript": "catalog:"
   },
-  "prettier": "@microlearn/prettier-config"
+  "prettier": "@mono/prettier-config"
 }

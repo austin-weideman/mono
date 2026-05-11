@@ -6,7 +6,7 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@microlearn/ui";
+} from "@mono/ui";
 
 interface ReasoningProps {
   text: string;

@@ -1,6 +1,6 @@
 import type { Config } from "drizzle-kit";
 
-import { env } from "@microlearn/env";
+import { env } from "@mono/env";
 
 // Use direct (non-pooled) connection for migrations
 if (!env.DATABASE_URL_UNPOOLED) {

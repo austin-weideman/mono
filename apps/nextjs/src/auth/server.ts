@@ -4,12 +4,12 @@ import { cache } from "react";
 import { headers } from "next/headers";
 import { nextCookies } from "better-auth/next-js";
 
-import { initAuth } from "@microlearn/auth";
+import { initAuth } from "@mono/auth";
 import {
   ExistingUserSignupAttemptEmail,
   sendEmail,
   VerifyEmail,
-} from "@microlearn/email";
+} from "@mono/email";
 
 import { env } from "~/env";
 
@@ -25,7 +25,7 @@ export const auth = initAuth({
   sendVerificationEmail: async ({ user, url, token }) => {
     await sendEmail({
       to: user.email,
-      subject: "Verify your MicroLearn email",
+      subject: "Verify your BillSentry email",
       react: VerifyEmail({ name: user.name, url }),
       idempotencyKey: `verify-email:${user.id}:${token}`,
       tags: { category: "verify_email" },

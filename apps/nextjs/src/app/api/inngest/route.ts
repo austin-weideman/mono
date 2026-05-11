@@ -1,8 +1,8 @@
 import { serve } from "inngest/next";
 
-import { runAssistant, startScheduled } from "@microlearn/conversation/jobs";
-import { inngest } from "@microlearn/jobs";
-import { dispatcher, executor } from "@microlearn/scheduler/inngest";
+import { runAssistant, startScheduled } from "@mono/conversation/jobs";
+import { inngest } from "@mono/jobs";
+import { dispatcher, executor } from "@mono/scheduler/inngest";
 
 export const maxDuration = 300;
 

@@ -1,5 +1,5 @@
-import type { Transaction } from "@microlearn/db/client";
-import { db } from "@microlearn/db/client";
+import type { Transaction } from "@mono/db/client";
+import { db } from "@mono/db/client";
 
 /**
  * Executes a test function within a database transaction that is always rolled back.

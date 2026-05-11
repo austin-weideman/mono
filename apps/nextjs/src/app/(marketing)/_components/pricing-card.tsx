@@ -3,7 +3,7 @@
 import type { ReactNode } from "react";
 import { motion } from "framer-motion";
 
-import { cn, staggerItemMotion } from "@microlearn/ui";
+import { cn, staggerItemMotion } from "@mono/ui";
 
 import type { PRICING } from "../_lib/content";
 import { CheckIcon } from "./icons";

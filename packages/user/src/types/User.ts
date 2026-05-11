@@ -1,1 +1,1 @@
-export type { User, NewUser } from "@microlearn/db";
+export type { User, NewUser } from "@mono/db";

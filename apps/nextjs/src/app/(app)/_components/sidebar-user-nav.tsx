@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { getInitials } from "@microlearn/chat-utils";
+import { getInitials } from "@mono/chat-utils";
 import {
   cn,
   DropdownMenu,
@@ -14,7 +14,7 @@ import {
   SettingsIcon,
   SidebarMenu,
   SidebarMenuItem,
-} from "@microlearn/ui";
+} from "@mono/ui";
 
 import { signOutAction } from "~/auth/actions";
 

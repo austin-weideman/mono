@@ -1,6 +1,6 @@
 import { defineConfig } from "eslint/config";
 
-import { baseConfig } from "@microlearn/eslint-config/base";
+import { baseConfig } from "@mono/eslint-config/base";
 
 export default defineConfig(
   {

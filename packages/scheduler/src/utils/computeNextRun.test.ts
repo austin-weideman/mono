@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { BadRequestError } from "@microlearn/errors";
+import { BadRequestError } from "@mono/errors";
 
 import { computeNextRun } from "./computeNextRun";
 

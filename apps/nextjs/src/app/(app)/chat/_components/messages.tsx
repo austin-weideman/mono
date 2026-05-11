@@ -2,7 +2,7 @@ import type { UseChatHelpers } from "@ai-sdk/react";
 import type { UIMessage } from "ai";
 import { motion } from "framer-motion";
 
-import { popMotion, riseMotion, SparklesIcon, withDelay } from "@microlearn/ui";
+import { popMotion, riseMotion, SparklesIcon, withDelay } from "@mono/ui";
 
 import { Message } from "./message";
 import { ThinkingIndicator } from "./thinking-indicator";

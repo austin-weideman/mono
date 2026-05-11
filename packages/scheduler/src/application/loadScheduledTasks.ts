@@ -1,7 +1,7 @@
-import type { Actor } from "@microlearn/core-types";
-import type { DbOrTx } from "@microlearn/db/client";
-import { isUserActor } from "@microlearn/core-types";
-import { ForbiddenError } from "@microlearn/errors";
+import type { Actor } from "@mono/core-types";
+import type { DbOrTx } from "@mono/db/client";
+import { isUserActor } from "@mono/core-types";
+import { ForbiddenError } from "@mono/errors";
 
 import type { ScheduledTask } from "../types/ScheduledTask";
 import { loadScheduledTasksForUser } from "../persistence/scheduled-task.queries";

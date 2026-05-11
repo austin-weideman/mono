@@ -1,7 +1,7 @@
 import { and, desc, eq, isNull, lt, or } from "drizzle-orm";
 
-import type { DbOrTx } from "@microlearn/db/client";
-import { conversation } from "@microlearn/db";
+import type { DbOrTx } from "@mono/db/client";
+import { conversation } from "@mono/db";
 
 import type { Conversation } from "../types/Conversation";
 

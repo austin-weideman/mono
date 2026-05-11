@@ -16,7 +16,7 @@ import {
   FieldLabel,
   Input,
   LoaderIcon,
-} from "@microlearn/ui";
+} from "@mono/ui";
 
 import { authClient } from "~/auth/client";
 import { CheckEmailPrompt } from "./check-email-prompt";

@@ -1,4 +1,4 @@
-import { SidebarTrigger } from "@microlearn/ui";
+import { SidebarTrigger } from "@mono/ui";
 
 import { getServerTrpc } from "~/trpc/server";
 import { SetPasswordSection } from "./_components/set-password-section";

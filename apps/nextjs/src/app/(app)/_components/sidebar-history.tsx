@@ -10,7 +10,7 @@ import {
 } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 
-import type { Conversation } from "@microlearn/conversation";
+import type { Conversation } from "@mono/conversation";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -34,7 +34,7 @@ import {
   SidebarMenuItem,
   TrashIcon,
   useSidebar,
-} from "@microlearn/ui";
+} from "@mono/ui";
 
 import { useTRPC } from "~/trpc/react";
 

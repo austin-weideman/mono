@@ -6,10 +6,10 @@ import { useChat } from "@ai-sdk/react";
 import { useQueryClient } from "@tanstack/react-query";
 import { DefaultChatTransport } from "ai";
 
-import type { ModelId } from "@microlearn/ai";
-import type { Message } from "@microlearn/conversation";
-import { convertDbMessagesToUIMessages } from "@microlearn/chat-utils";
-import { ChevronDownIcon, SidebarTrigger } from "@microlearn/ui";
+import type { ModelId } from "@mono/ai";
+import type { Message } from "@mono/conversation";
+import { convertDbMessagesToUIMessages } from "@mono/chat-utils";
+import { ChevronDownIcon, SidebarTrigger } from "@mono/ui";
 
 import { ModelSelector } from "~/app/(app)/_components/model-selector";
 import { useTRPC } from "~/trpc/react";

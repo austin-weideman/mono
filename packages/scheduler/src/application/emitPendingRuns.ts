@@ -1,7 +1,7 @@
 import type { Inngest } from "inngest";
 
-import type { DbOrTx } from "@microlearn/db/client";
-import { scheduledTaskDueEvent } from "@microlearn/jobs/events/scheduler";
+import type { DbOrTx } from "@mono/db/client";
+import { scheduledTaskDueEvent } from "@mono/jobs/events/scheduler";
 
 import { updateScheduledTaskRunById } from "../persistence/scheduled-task-run.mutations";
 import { findPendingEmitRuns } from "../persistence/scheduled-task-run.queries";

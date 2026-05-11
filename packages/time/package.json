@@ -1,5 +1,5 @@
 {
-  "name": "@microlearn/time",
+  "name": "@mono/time",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -21,13 +21,13 @@
     "luxon": "^3.7.2"
   },
   "devDependencies": {
-    "@microlearn/eslint-config": "workspace:*",
-    "@microlearn/prettier-config": "workspace:*",
-    "@microlearn/tsconfig": "workspace:*",
+    "@mono/eslint-config": "workspace:*",
+    "@mono/prettier-config": "workspace:*",
+    "@mono/tsconfig": "workspace:*",
     "@types/luxon": "3.7.1",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:"
   },
-  "prettier": "@microlearn/prettier-config"
+  "prettier": "@mono/prettier-config"
 }

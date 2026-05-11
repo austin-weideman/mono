@@ -2,20 +2,20 @@ import type { UIMessage } from "ai";
 import { cookies, headers } from "next/headers";
 import { z } from "zod";
 
-import { getGatewayId } from "@microlearn/ai";
-import { extractTextFromUIMessage } from "@microlearn/chat-utils";
+import { getGatewayId } from "@mono/ai";
+import { extractTextFromUIMessage } from "@mono/chat-utils";
 import {
   generateTitleFromText,
   loadConversation,
   sendMessage,
   setActiveStream,
   startConversation,
-} from "@microlearn/conversation";
-import { userActor } from "@microlearn/core-types";
-import { db } from "@microlearn/db/client";
-import { NotFoundError } from "@microlearn/errors";
-import { inngest } from "@microlearn/jobs";
-import { conversationRunAssistantEvent } from "@microlearn/jobs/events/conversation";
+} from "@mono/conversation";
+import { userActor } from "@mono/core-types";
+import { db } from "@mono/db/client";
+import { NotFoundError } from "@mono/errors";
+import { inngest } from "@mono/jobs";
+import { conversationRunAssistantEvent } from "@mono/jobs/events/conversation";
 
 import { getSelectedModelId } from "~/app/(app)/_lib/model";
 import { auth } from "~/auth/server";

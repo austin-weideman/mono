@@ -1,5 +1,5 @@
 {
-  "name": "@microlearn/scheduler",
+  "name": "@mono/scheduler",
   "private": true,
   "type": "module",
   "exports": {
@@ -23,26 +23,26 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "@microlearn/core-types": "workspace:*",
-    "@microlearn/db": "workspace:*",
-    "@microlearn/env": "workspace:*",
-    "@microlearn/errors": "workspace:*",
-    "@microlearn/jobs": "workspace:*",
-    "@microlearn/time": "workspace:*",
+    "@mono/core-types": "workspace:*",
+    "@mono/db": "workspace:*",
+    "@mono/env": "workspace:*",
+    "@mono/errors": "workspace:*",
+    "@mono/jobs": "workspace:*",
+    "@mono/time": "workspace:*",
     "drizzle-orm": "catalog:",
     "inngest": "catalog:",
     "rrule": "^2.8.1",
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@microlearn/eslint-config": "workspace:*",
-    "@microlearn/prettier-config": "workspace:*",
-    "@microlearn/testing": "workspace:*",
-    "@microlearn/tsconfig": "workspace:*",
+    "@mono/eslint-config": "workspace:*",
+    "@mono/prettier-config": "workspace:*",
+    "@mono/testing": "workspace:*",
+    "@mono/tsconfig": "workspace:*",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:",
     "vitest": "4.1.5"
   },
-  "prettier": "@microlearn/prettier-config"
+  "prettier": "@mono/prettier-config"
 }

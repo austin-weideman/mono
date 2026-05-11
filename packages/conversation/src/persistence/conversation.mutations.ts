@@ -1,8 +1,8 @@
 import { eq, sql } from "drizzle-orm";
 
-import type { DbOrTx } from "@microlearn/db/client";
-import { conversation } from "@microlearn/db";
-import { InternalServerError } from "@microlearn/errors";
+import type { DbOrTx } from "@mono/db/client";
+import { conversation } from "@mono/db";
+import { InternalServerError } from "@mono/errors";
 
 import type { Conversation } from "../types/Conversation";
 

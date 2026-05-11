@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { scheduledTaskActorTypeSchema } from "@microlearn/db";
+import { scheduledTaskActorTypeSchema } from "@mono/db";
 
 export const createScheduledTaskInputSchema = z.object({
   actorType: scheduledTaskActorTypeSchema,

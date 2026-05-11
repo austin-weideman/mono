@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
 
-import type { Transaction } from "@microlearn/db/client";
-import { ActorType } from "@microlearn/core-types";
-import { user } from "@microlearn/db";
-import { withTestTransaction } from "@microlearn/testing";
+import type { Transaction } from "@mono/db/client";
+import { ActorType } from "@mono/core-types";
+import { user } from "@mono/db";
+import { withTestTransaction } from "@mono/testing";
 
 import { insertScheduledTaskRun } from "./scheduled-task-run.mutations";
 import { listScheduledTaskRunsForTask } from "./scheduled-task-run.queries";

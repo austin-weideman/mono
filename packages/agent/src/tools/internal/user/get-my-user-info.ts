@@ -1,7 +1,7 @@
 import { tool } from "ai";
 import { z } from "zod";
 
-import { getMyUserInfo } from "@microlearn/user";
+import { getMyUserInfo } from "@mono/user";
 
 import type { ToolContext, ToolMetadata } from "../../../types";
 

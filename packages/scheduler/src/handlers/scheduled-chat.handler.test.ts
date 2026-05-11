@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { systemActor, userActor } from "@microlearn/core-types";
-import { ForbiddenError } from "@microlearn/errors";
+import { systemActor, userActor } from "@mono/core-types";
+import { ForbiddenError } from "@mono/errors";
 
 import type { HandlerContext } from "../types/TaskHandler";
 import { scheduledChatHandler } from "./scheduled-chat.handler";
@@ -11,7 +11,7 @@ const sendMock = vi.hoisted(() =>
   vi.fn(async (_event: unknown): Promise<void> => undefined),
 );
 
-vi.mock("@microlearn/jobs", () => ({
+vi.mock("@mono/jobs", () => ({
   inngest: {
     send: sendMock,
   },

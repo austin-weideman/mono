@@ -1,6 +1,6 @@
 import { z } from "zod/v4";
 
-import { env as sharedEnv } from "@microlearn/env";
+import { env as sharedEnv } from "@mono/env";
 
 const vercelSchema = z.object({
   VERCEL_ENV: z.enum(["development", "preview", "production"]).optional(),

@@ -2,12 +2,12 @@ import type { UIMessage } from "ai";
 import type { InngestFunction } from "inngest";
 import { convertToModelMessages } from "ai";
 
-import { createAssistantAgent } from "@microlearn/agent";
-import { systemActor, userActor } from "@microlearn/core-types";
-import { db } from "@microlearn/db/client";
-import { inngest } from "@microlearn/jobs";
-import { conversationRunAssistantEvent } from "@microlearn/jobs/events/conversation";
-import { streamChannel } from "@microlearn/realtime";
+import { createAssistantAgent } from "@mono/agent";
+import { systemActor, userActor } from "@mono/core-types";
+import { db } from "@mono/db/client";
+import { inngest } from "@mono/jobs";
+import { conversationRunAssistantEvent } from "@mono/jobs/events/conversation";
+import { streamChannel } from "@mono/realtime";
 
 import type { Message } from "../types/Message";
 import { loadConversation } from "../application/loadConversation";

@@ -8,8 +8,8 @@ import { useChat } from "@ai-sdk/react";
 import { useQueryClient } from "@tanstack/react-query";
 import { DefaultChatTransport } from "ai";
 
-import type { Message as DbMessage } from "@microlearn/conversation";
-import { convertDbMessagesToUIMessages } from "@microlearn/chat-utils";
+import type { Message as DbMessage } from "@mono/conversation";
+import { convertDbMessagesToUIMessages } from "@mono/chat-utils";
 
 import { useTheme } from "~/lib";
 import { trpc } from "~/utils/api";

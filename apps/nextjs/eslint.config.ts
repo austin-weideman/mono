@@ -1,8 +1,8 @@
 import { defineConfig } from "eslint/config";
 
-import { baseConfig, restrictEnvAccess } from "@microlearn/eslint-config/base";
-import { nextjsConfig } from "@microlearn/eslint-config/nextjs";
-import { reactConfig } from "@microlearn/eslint-config/react";
+import { baseConfig, restrictEnvAccess } from "@mono/eslint-config/base";
+import { nextjsConfig } from "@mono/eslint-config/nextjs";
+import { reactConfig } from "@mono/eslint-config/react";
 
 export default defineConfig(
   {

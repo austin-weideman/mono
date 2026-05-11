@@ -1,7 +1,7 @@
 import { and, asc, desc, eq, isNull, lt, or } from "drizzle-orm";
 
-import type { DbOrTx } from "@microlearn/db/client";
-import { scheduledTaskRun, ScheduledTaskRunStatus } from "@microlearn/db";
+import type { DbOrTx } from "@mono/db/client";
+import { scheduledTaskRun, ScheduledTaskRunStatus } from "@mono/db";
 
 import type { ScheduledTaskRunCursor } from "../types/ListScheduledTaskRunsInput";
 import type { ScheduledTaskRun } from "../types/ScheduledTaskRun";

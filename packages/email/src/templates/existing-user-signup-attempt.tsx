@@ -23,11 +23,11 @@ export function ExistingUserSignupAttemptEmail({
   return (
     <Html>
       <BrandHead />
-      <Preview>Someone tried to sign up with your MicroLearn email</Preview>
+      <Preview>Someone tried to sign up with your BillSentry email</Preview>
       <Body style={styles.body}>
         <Container style={styles.container}>
           <Section style={styles.header}>
-            <Text style={styles.logo}>MicroLearn</Text>
+            <Text style={styles.logo}>BillSentry</Text>
           </Section>
 
           <Heading style={styles.heading}>
@@ -35,7 +35,7 @@ export function ExistingUserSignupAttemptEmail({
           </Heading>
 
           <Text style={styles.paragraph}>
-            Someone tried to create a MicroLearn account using{" "}
+            Someone tried to create a BillSentry account using{" "}
             <strong>{email}</strong>.
           </Text>
 
@@ -47,9 +47,7 @@ export function ExistingUserSignupAttemptEmail({
 
           <Hr style={styles.hr} />
 
-          <Text style={styles.footerBrand}>
-            MicroLearn · Five minutes a day, compounding.
-          </Text>
+          <Text style={styles.footerBrand}>BillSentry</Text>
         </Container>
       </Body>
     </Html>

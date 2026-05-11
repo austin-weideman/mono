@@ -14,8 +14,8 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 
-import type { Conversation } from "@microlearn/conversation";
-import { groupConversationsByDate } from "@microlearn/chat-utils";
+import type { Conversation } from "@mono/conversation";
+import { groupConversationsByDate } from "@mono/chat-utils";
 
 import { useTheme } from "~/lib";
 import { trpc } from "~/utils/api";

@@ -1,7 +1,7 @@
-import type { Actor } from "@microlearn/core-types";
-import type { DbOrTx } from "@microlearn/db/client";
-import { isUserActor } from "@microlearn/core-types";
-import { BadRequestError } from "@microlearn/errors";
+import type { Actor } from "@mono/core-types";
+import type { DbOrTx } from "@mono/db/client";
+import { isUserActor } from "@mono/core-types";
+import { BadRequestError } from "@mono/errors";
 
 import type { Conversation } from "../types/Conversation";
 import type { StartConversationInput } from "../types/StartConversationInput";

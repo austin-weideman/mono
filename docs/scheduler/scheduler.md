@@ -91,13 +91,13 @@ packages/scheduler/src/
   inngest/
     dispatcher.ts         cron function (one tick)
     executor.ts           event handler for scheduled_task/due
-  test-setup.ts           global vitest mock of @microlearn/jobs (leak guard)
+  test-setup.ts           global vitest mock of @mono/jobs (leak guard)
   index.ts                ONLY public API entry
 ```
 
 Follows the standard feature-package rules in [AGENTS.md](../../AGENTS.md): `index.ts` is the only public export, `package.json` exports only `"."` (plus `./inngest` for serve-handler registration), persistence is private.
 
-The Inngest functions are registered in [`apps/nextjs/src/app/api/inngest/route.ts`](../../apps/nextjs/src/app/api/inngest/route.ts) via the `@microlearn/scheduler/inngest` subpath.
+The Inngest functions are registered in [`apps/nextjs/src/app/api/inngest/route.ts`](../../apps/nextjs/src/app/api/inngest/route.ts) via the `@mono/scheduler/inngest` subpath.
 
 ---
 
@@ -173,7 +173,7 @@ Instead:
 
 This makes "9am daily in America/Los_Angeles" remain 9am local across DST — each occurrence is resolved through luxon's IANA database at the boundary, so the absolute UTC instant shifts by an hour when the offset shifts.
 
-The conversion helpers (`toFloatingDate`, `fromFloatingDate`, `isValidTimezone`) live in [`@microlearn/time`](../../packages/time/) because they're not scheduler-specific.
+The conversion helpers (`toFloatingDate`, `fromFloatingDate`, `isValidTimezone`) live in [`@mono/time`](../../packages/time/) because they're not scheduler-specific.
 
 ### What we don't materialize
 
@@ -263,7 +263,7 @@ export interface HandlerContext {
 
 ## Cross-package events
 
-The Inngest client and cross-package event contracts both live in [`@microlearn/jobs`](../../packages/jobs/), the leaf package. The scheduler imports `inngest` from there rather than constructing its own client.
+The Inngest client and cross-package event contracts both live in [`@mono/jobs`](../../packages/jobs/), the leaf package. The scheduler imports `inngest` from there rather than constructing its own client.
 
 The dispatcher emits [`scheduledTaskDueEvent`](../../packages/jobs/src/events/scheduler/index.ts):
 
@@ -277,13 +277,13 @@ eventType("scheduled_task/due", {
 });
 ```
 
-Events live in `@microlearn/jobs` (not the producing or consuming feature package) to **break dependency cycles**: a low-level package like `scheduler` can fire an event consumed by a higher-level package like `conversation` without forming a cycle, because both depend only on the leaf `jobs` package. `eventType()` is inert metadata (no `createFunction(...)` side effect), so importing an event never drags in a function registration.
+Events live in `@mono/jobs` (not the producing or consuming feature package) to **break dependency cycles**: a low-level package like `scheduler` can fire an event consumed by a higher-level package like `conversation` without forming a cycle, because both depend only on the leaf `jobs` package. `eventType()` is inert metadata (no `createFunction(...)` side effect), so importing an event never drags in a function registration.
 
 ---
 
 ## Actor model
 
-Every application function takes an `Actor` (`@microlearn/core-types`). The scheduler enforces:
+Every application function takes an `Actor` (`@mono/core-types`). The scheduler enforces:
 
 - `createScheduledTask`: `USER` actors can only create their own `USER` tasks. Mismatch between `actorType` and presence of `userId` → `BadRequestError`.
 - `updateScheduledTask` / `pauseScheduledTask` / `resumeScheduledTask` / `deleteScheduledTask` / `getScheduledTask`: `UserActor` can only touch its own schedules → otherwise `ForbiddenError`.
@@ -393,7 +393,7 @@ Batch limits are `LIMIT 1000` on both the dispatch and emit queries (`DISPATCH_B
 
 ## Public API
 
-Today the only public API is the `@microlearn/scheduler` package exports — [`src/index.ts`](../../packages/scheduler/src/index.ts):
+Today the only public API is the `@mono/scheduler` package exports — [`src/index.ts`](../../packages/scheduler/src/index.ts):
 
 - `createScheduledTask`, `updateScheduledTask`, `pauseScheduledTask`, `resumeScheduledTask`, `deleteScheduledTask`
 - `getScheduledTask`, `loadScheduledTasks`, `listScheduledTaskRuns`
@@ -401,7 +401,7 @@ Today the only public API is the `@microlearn/scheduler` package exports — [`s
 - `getTaskHandler`, `taskHandlers`, `scheduledChatHandler`, `scheduledChatPayloadSchema`
 - All types from `./types`
 
-The tRPC router (`scheduler.create`, `scheduler.list`, `scheduler.get`, `scheduler.update`, `scheduler.pause`, `scheduler.resume`, `scheduler.delete`, `scheduler.listRuns`) is **not yet implemented** — see Step 5 of the plan. Frontend code should not import from `@microlearn/scheduler` directly; wait for the tRPC surface.
+The tRPC router (`scheduler.create`, `scheduler.list`, `scheduler.get`, `scheduler.update`, `scheduler.pause`, `scheduler.resume`, `scheduler.delete`, `scheduler.listRuns`) is **not yet implemented** — see Step 5 of the plan. Frontend code should not import from `@mono/scheduler` directly; wait for the tRPC surface.
 
 ---
 
@@ -412,12 +412,12 @@ One disciplined choice makes the rest easy: **inject the clock.** No application
 | Layer                 | Strategy                                                                                                                                                                                   |
 | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `computeNextRun`      | Pure-function unit tests, ~20 cases. DST spring-forward + fall-back, `BYMONTHDAY=-1`, exhaustion via `UNTIL`, inclusive flag, plus a "walk N occurrences" proof suite for common patterns. |
-| Application functions | Real dev Postgres via `withTestTransaction` from `@microlearn/testing` (transaction-per-test, rolled back). Auth, validation, recompute-on-update, no-fire-storm-on-resume, pagination.    |
+| Application functions | Real dev Postgres via `withTestTransaction` from `@mono/testing` (transaction-per-test, rolled back). Auth, validation, recompute-on-update, no-fire-storm-on-resume, pagination.          |
 | Dispatcher            | Real Postgres. Test `dispatchDue` directly: happy path, future-skip, paused/completed/failed skip, exhaustion → completed, malformed-rrule containment, idempotent replay.                 |
 | Emit                  | Fake `inngest.send` (we own the contract). Asserts event-id composition, that `inngestEventId` is set only on success, and that failed sends leave the row pending.                        |
 | Executor              | Tested at the application layer (`loadAndStartRun`, `completeRun`/`failRun`); the Inngest function body is a thin shell.                                                                   |
 
-**Leak guard:** [`packages/scheduler/src/test-setup.ts`](../../packages/scheduler/src/test-setup.ts) (wired via vitest `setupFiles`) globally replaces `@microlearn/jobs`'s `inngest.send` with a `vi.fn()` that throws an instructional error. Reason: `NODE_ENV=test` under vitest makes the real client's `isDev=false`, so it would point at _production_ Inngest with the Doppler-injected `INNGEST_EVENT_KEY`. Tests that need to assert on emitted events override the mock locally with a recording fake.
+**Leak guard:** [`packages/scheduler/src/test-setup.ts`](../../packages/scheduler/src/test-setup.ts) (wired via vitest `setupFiles`) globally replaces `@mono/jobs`'s `inngest.send` with a `vi.fn()` that throws an instructional error. Reason: `NODE_ENV=test` under vitest makes the real client's `isDev=false`, so it would point at _production_ Inngest with the Doppler-injected `INNGEST_EVENT_KEY`. Tests that need to assert on emitted events override the mock locally with a recording fake.
 
 What we **don't** test:
 
@@ -439,7 +439,7 @@ What we **don't** test:
 7. **Best-effort delivery, no catch-up.** Missed occurrences during outages are dropped. Catch-up logic belongs in the handler if a task type needs it.
 8. **Fixed timezone per schedule.** Snapshot at creation, change only on explicit edit. No cascade from user profile.
 9. **Handler registry, not switch statements.** New task type = new file + one registry entry. Zero scheduler-internal changes.
-10. **Cross-package events live in `@microlearn/jobs`.** Breaks producer↔consumer dependency cycles between feature packages.
+10. **Cross-package events live in `@mono/jobs`.** Breaks producer↔consumer dependency cycles between feature packages.
 11. **Inject the clock everywhere.** Makes every "wait for X seconds" test into "advance the clock". Cron entry points are the only place `new Date()` is called.
 12. **`ON CONFLICT DO UPDATE` (no-op) over `DO NOTHING`.** Needed so `RETURNING` always yields a row, including on the dedupe path.
 
