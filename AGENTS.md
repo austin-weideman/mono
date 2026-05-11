@@ -230,6 +230,17 @@ Agents drive a real Chrome via [agent-browser](https://github.com/vercel-labs/ag
 - Send the `ngrok-skip-browser-warning: 1` header on every request to skip the ngrok-free interstitial.
 - Once testing is complete, stop every dev server, tunnel, and browser session you started. Don't leave background processes running.
 
+### Signing in
+
+When you need an authenticated session, sign in with **email and password**, not Google.
+
+1. Open `https://multifaced-dazedly-brain.ngrok-free.dev/login` (with the ngrok-skip header).
+2. Fill `Email` with `austinweideman@gmail.com`.
+3. Fill `Password` with `password`.
+4. Click `Sign in`. You land on `/chat`.
+
+The session cookie is scoped to the ngrok domain only — it authorizes MicroLearn-as-Austin, nothing else.
+
 ## Background Jobs (Inngest)
 
 All async / background work runs on Inngest. Architecture: a leaf `@microlearn/jobs` package owns the shared Inngest client **and the cross-package event contracts**. Feature packages own their own functions under `src/jobs/` (or `src/inngest/` for runtime infrastructure like the scheduler). The Next.js inngest serve handler at `apps/nextjs/src/app/api/inngest/route.ts` is the single roof — it imports every feature's jobs and registers them with `serve({ client, functions: [...] })`.
