@@ -18,10 +18,10 @@ export default async function SignupPage() {
       <div className="mx-auto w-full max-w-[440px]">
         <header className="mb-10 text-center">
           <h1 className="text-obsidian font-display text-[32px] leading-[1.1] font-light tracking-[-0.64px]">
-            Start your daily five minutes
+            Get early access
           </h1>
           <p className="text-gravel mt-3 text-[15px] leading-[1.55]">
-            Create an account to begin learning.
+            Create your BillSentry account.
           </p>
         </header>
 

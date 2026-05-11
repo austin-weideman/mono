@@ -19,7 +19,7 @@ interface RevealProps {
 }
 
 /**
- * Fades + lifts a block into view on scroll. One-shot — once visible, stays.
+ * Fades + lifts a block into view on scroll. One-shot; once visible, stays.
  * Use at the section level, or as a fine-grained wrapper around a single
  * heading/paragraph/button row when you want sequenced entrance.
  */

@@ -43,7 +43,7 @@ function FeatureBlock({ feature, index }: FeatureBlockProps) {
     <RevealItem
       className={`${borderClasses} group relative overflow-hidden px-0 py-10 md:px-10`}
     >
-      {/* Soft hover wash — fades the powder background in from the left edge. */}
+      {/* Soft hover wash, fades the powder background in from the left edge. */}
       <span
         aria-hidden
         className="bg-powder pointer-events-none absolute inset-0 -z-10 origin-left scale-x-0 opacity-0 transition-[opacity,transform] duration-500 ease-out group-hover:scale-x-100 group-hover:opacity-100"

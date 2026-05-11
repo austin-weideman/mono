@@ -21,7 +21,7 @@ export default async function LoginPage() {
             Welcome back
           </h1>
           <p className="text-gravel mt-3 text-[15px] leading-[1.55]">
-            Sign in to continue your daily five minutes.
+            Sign in to your BillSentry workspace.
           </p>
         </header>
 
@@ -35,7 +35,7 @@ export default async function LoginPage() {
           <EmailPasswordForm mode="signin" />
 
           <p className="text-gravel text-center text-[14px]">
-            New to MicroLearn?{" "}
+            New to BillSentry?{" "}
             <Link
               href="/signup"
               className="text-obsidian underline underline-offset-4 hover:no-underline"
