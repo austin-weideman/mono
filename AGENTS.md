@@ -16,7 +16,11 @@ You treat this as a serious, multi-engineer, multi-year project where code is pr
 
 # Project Context - BillSentry
 
-BillSentry is an AI-native legislative tracking and analysis platform for California government affairs firms. It ingests every bill in the California legislature, analyzes each one against client-specific position profiles using AI, and proactively surfaces relevant bills, amendments, and procedural events to each customer. The product delivers the _output_ of legislative analysis work — bill summaries, amendment diffs, client-ready memos, hearing briefs — rather than just a tracking interface. This positions it as services-as-software replacing junior-associate labor, not just a productivity tool.
+BillSentry is an AI-native legislative tracking and analysis platform for California government affairs firms. It ingests every bill in the California legislature, analyzes each one against client-specific position profiles using AI, proactively flags bills of concern, tracks amendments and procedural events, and provides professional-quality analysis to each client.
+
+The product features an AI agent with tool-calling ability. This allows users to chat with bills in natural language, ask precise questions, and benefit from deep analysis.
+
+The product strives to deliver the ouput of legislative analysis work — bill summaries, amendment summaries, client-ready memos, hearing briefs — rather than just a tracking interface. Tracking is a tablestakes feature that is also supported.
 
 The primary customer is contract lobbying firms in California (~330+ firms) representing multiple clients with distinct policy concerns. The competitive landscape: Capitol Track is the dated legacy incumbent for California; Quorum dominates the broader public affairs market but is built for in-house corporate GA teams, not contract firms, and is priced for enterprise. The wedge is the underserved contract-firm segment where the multi-client, multi-position workflow doesn't fit existing tools. California legislative data is freely available and public domain, published nightly by the state at `downloads.leginfo.legislature.ca.gov` as a complete relational database (`capublic` schema) — no third-party data dependency required.
 
