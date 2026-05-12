@@ -1,5 +1,5 @@
 /**
- * Color palette for MicroLearn.
+ * Color palette.
  * Follows semantic naming conventions for consistency.
  * Matches the Next.js app's theme.css for cross-platform consistency.
  */
