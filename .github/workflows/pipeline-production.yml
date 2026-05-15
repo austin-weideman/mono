@@ -32,12 +32,11 @@ jobs:
     secrets:
       DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN_PRODUCTION }}
 
-  deploy:
-    name: Deploy to Production
+  deploy-staged:
+    name: Deploy (staged, no domain)
     needs: migrate
     runs-on: ubuntu-latest
-    environment:
-      name: production
+    outputs:
       url: ${{ steps.deploy.outputs.url }}
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
@@ -60,12 +59,49 @@ jobs:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
-      - name: Deploy to Production
+      - name: Deploy (skip-domain)
         id: deploy
         run: |
-          url=$(vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }})
+          url=$(vercel deploy --prebuilt --prod --skip-domain --token=${{ secrets.VERCEL_TOKEN }})
           echo "url=$url" >> $GITHUB_OUTPUT
-          echo "Deployed to: $url"
+          echo "Staged deployment: $url"
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+  health-check:
+    name: Health Check
+    needs: deploy-staged
+    runs-on: ubuntu-latest
+    steps:
+      - name: Probe /api/health (with cold-start retries)
+        run: |
+          curl --retry 10 --retry-delay 5 --retry-all-errors --fail --show-error \
+            "${{ needs.deploy-staged.outputs.url }}/api/health"
+
+      - name: Verify deployed SHA matches commit
+        run: |
+          deployed_sha=$(curl -s --fail "${{ needs.deploy-staged.outputs.url }}/api/health" | jq -r .sha)
+          echo "Deployed SHA: $deployed_sha"
+          echo "Commit SHA:   ${{ github.sha }}"
+          if [ "$deployed_sha" != "${{ github.sha }}" ]; then
+            echo "::error::SHA mismatch — staged deployment is not serving this commit"
+            exit 1
+          fi
+
+  promote:
+    name: Promote to Production
+    needs: [deploy-staged, health-check]
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: ${{ needs.deploy-staged.outputs.url }}
+    steps:
+      - name: Install Vercel CLI
+        run: npm install -g vercel
+
+      - name: Promote staged deployment
+        run: vercel promote ${{ needs.deploy-staged.outputs.url }} --yes --token=${{ secrets.VERCEL_TOKEN }}
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
