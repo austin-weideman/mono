@@ -54,6 +54,7 @@ interface ChatInputProps {
 
 const ACCEPTED_TYPES = "application/pdf";
 const MAX_BYTES = 32 * 1024 * 1024;
+const MAX_ATTACHMENTS = 10;
 
 export function ChatInput({ onSubmit, disabled }: ChatInputProps) {
   const trpc = useTRPC();
@@ -153,7 +154,17 @@ export function ChatInput({ onSubmit, disabled }: ChatInputProps) {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
-    Array.from(files).forEach((f) => void startUpload(f));
+    const remaining = MAX_ATTACHMENTS - attachments.length;
+    if (remaining <= 0) {
+      toast.error(`Up to ${MAX_ATTACHMENTS} PDFs per message`);
+      e.target.value = "";
+      return;
+    }
+    const picked = Array.from(files);
+    if (picked.length > remaining) {
+      toast.error(`Up to ${MAX_ATTACHMENTS} PDFs per message`);
+    }
+    picked.slice(0, remaining).forEach((f) => void startUpload(f));
     e.target.value = "";
   };
 
@@ -255,7 +266,7 @@ export function ChatInput({ onSubmit, disabled }: ChatInputProps) {
           <button
             type="button"
             onClick={handleAttachClick}
-            disabled={disabled}
+            disabled={disabled || attachments.length >= MAX_ATTACHMENTS}
             aria-label="Attach PDF"
             className="text-muted-foreground hover:bg-muted flex size-8 cursor-pointer items-center justify-center rounded-full disabled:cursor-not-allowed disabled:opacity-50"
           >

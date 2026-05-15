@@ -22,11 +22,13 @@ import { getSelectedModelId } from "~/app/(app)/_lib/model";
 import { auth } from "~/auth/server";
 import { validateJson } from "~/lib/api-validation";
 
+const MAX_ATTACHMENTS_PER_MESSAGE = 10;
+
 const chatRequestSchema = z.object({
   conversationId: z.uuid(),
   streamId: z.uuid(),
   message: z.custom<UIMessage>(),
-  attachmentIds: z.array(z.uuid()).default([]),
+  attachmentIds: z.array(z.uuid()).max(MAX_ATTACHMENTS_PER_MESSAGE).default([]),
 });
 
 export async function POST(req: Request): Promise<Response> {

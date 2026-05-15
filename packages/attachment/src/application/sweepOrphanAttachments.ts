@@ -20,9 +20,9 @@ export interface SweepOrphanAttachmentsResult {
 
 /**
  * Sweep attachments that were uploaded but never linked to a message within
- * 24h. Best-effort: a Blob `del()` failure does not block the DB row deletion,
- * because we'd rather lose track of the Blob than block the sweep — the
- * Vercel store's own lifecycle policies are the long-tail cleanup.
+ * 24h. The DB row is the only pointer back to the Blob, so we only delete the
+ * row after `del()` succeeds — otherwise we'd lose the URL and leak the file
+ * permanently. Failed rows stay in the table and get retried on the next sweep.
  */
 export async function sweepOrphanAttachments(
   db: DbOrTx,
@@ -41,6 +41,8 @@ export async function sweepOrphanAttachments(
   for (const row of orphans) {
     try {
       await del(row.blobUrl);
+      await deleteAttachmentRow(db, row.id);
+      deleted += 1;
     } catch (err) {
       failed += 1;
       console.error("sweepOrphanAttachments: del() failed", {
@@ -49,8 +51,6 @@ export async function sweepOrphanAttachments(
         error: err instanceof Error ? err.message : String(err),
       });
     }
-    await deleteAttachmentRow(db, row.id);
-    deleted += 1;
   }
 
   return { scanned: orphans.length, deleted, failed };
