@@ -64,6 +64,14 @@ export function ChatInput({ onSubmit, disabled }: ChatInputProps) {
   const [input, setInput] = useState("");
   const [attachments, setAttachments] = useState<PendingAttachment[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const handleContainerMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLElement;
+    if (target.closest("button, textarea, input, a")) return;
+    e.preventDefault();
+    containerRef.current?.querySelector("textarea")?.focus();
+  };
 
   const updateAttachment = (
     id: string,
@@ -214,7 +222,11 @@ export function ChatInput({ onSubmit, disabled }: ChatInputProps) {
         </div>
       )}
 
-      <div className="relative flex w-full items-end gap-2">
+      <div
+        ref={containerRef}
+        onMouseDown={handleContainerMouseDown}
+        className="border-border bg-background focus-within:border-primary flex w-full cursor-text flex-col rounded-[1.25rem] border transition-colors"
+      >
         <input
           ref={fileInputRef}
           type="file"
@@ -235,35 +247,36 @@ export function ChatInput({ onSubmit, disabled }: ChatInputProps) {
             }
           }}
           disabled={disabled}
-          placeholder="Message"
+          placeholder="Write a message..."
           maxHeight={200}
-          wrapperClassName="rounded-[1.25rem] border border-border bg-background transition-colors focus-within:border-primary disabled:cursor-not-allowed disabled:opacity-50"
-          className="placeholder:text-muted-foreground px-4 py-2.5 pr-20 pl-11 text-base"
+          className="placeholder:text-muted-foreground px-4 pt-3 pb-1 text-base disabled:cursor-not-allowed disabled:opacity-50"
         />
-        <button
-          type="button"
-          onClick={handleAttachClick}
-          disabled={disabled}
-          aria-label="Attach PDF"
-          className="text-muted-foreground hover:bg-muted absolute bottom-2 left-2 flex size-7 cursor-pointer items-center justify-center rounded-full disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          <PaperclipIcon size={16} />
-        </button>
-        <AnimatePresence>
-          {hasContent && (
-            <motion.button
-              key="send"
-              type="submit"
-              disabled={sendDisabled}
-              aria-label="Send message"
-              {...popMotion}
-              {...tactileMotion}
-              className="bg-primary text-primary-foreground absolute right-2 bottom-2 flex size-7 cursor-pointer items-center justify-center rounded-full disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              <SendIcon />
-            </motion.button>
-          )}
-        </AnimatePresence>
+        <div className="flex items-center justify-between p-2">
+          <button
+            type="button"
+            onClick={handleAttachClick}
+            disabled={disabled}
+            aria-label="Attach PDF"
+            className="text-muted-foreground hover:bg-muted flex size-8 cursor-pointer items-center justify-center rounded-full disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            <PaperclipIcon size={18} />
+          </button>
+          <AnimatePresence>
+            {hasContent && (
+              <motion.button
+                key="send"
+                type="submit"
+                disabled={sendDisabled}
+                aria-label="Send message"
+                {...popMotion}
+                {...tactileMotion}
+                className="bg-primary text-primary-foreground flex size-8 cursor-pointer items-center justify-center rounded-full disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                <SendIcon />
+              </motion.button>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
     </form>
   );
