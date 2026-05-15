@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertTriangleIcon, FileTextIcon, XIcon } from "./icons";
+import { AlertTriangleIcon, CameraIcon, FileTextIcon, XIcon } from "./icons";
 import { cn } from "./utils";
 
 export type AttachmentChipState = "uploading" | "ready" | "failed";
@@ -8,6 +8,7 @@ export type AttachmentChipState = "uploading" | "ready" | "failed";
 interface AttachmentChipProps {
   filename: string;
   sizeBytes?: number;
+  mediaType?: string;
   state: AttachmentChipState;
   progress?: number;
   onRemove?: () => void;
@@ -19,6 +20,15 @@ function formatBytes(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`;
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(0)} KB`;
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+function labelFromMediaType(mediaType: string | undefined): string {
+  if (!mediaType) return "File";
+  if (mediaType === "application/pdf") return "PDF";
+  if (mediaType.startsWith("image/")) {
+    return mediaType.slice("image/".length).toUpperCase();
+  }
+  return "File";
 }
 
 function truncate(filename: string, max = 28): string {
@@ -35,6 +45,7 @@ function truncate(filename: string, max = 28): string {
 export function AttachmentChip({
   filename,
   sizeBytes,
+  mediaType,
   state,
   progress,
   onRemove,
@@ -44,6 +55,8 @@ export function AttachmentChip({
   const isFailed = state === "failed";
   const isUploading = state === "uploading";
   const clickable = state === "ready" && !!onOpen;
+  const isImage = mediaType?.startsWith("image/") ?? false;
+  const Icon = isImage ? CameraIcon : FileTextIcon;
 
   const body = (
     <>
@@ -56,7 +69,7 @@ export function AttachmentChip({
         {isFailed ? (
           <AlertTriangleIcon size={16} className="text-destructive" />
         ) : (
-          <FileTextIcon
+          <Icon
             size={16}
             className={cn("text-muted-foreground", isUploading && "opacity-50")}
           />
@@ -88,7 +101,7 @@ export function AttachmentChip({
               ? `Uploading… ${Math.round(progress ?? 0)}%`
               : sizeBytes !== undefined
                 ? formatBytes(sizeBytes)
-                : "PDF"}
+                : labelFromMediaType(mediaType)}
         </span>
       </div>
     </>

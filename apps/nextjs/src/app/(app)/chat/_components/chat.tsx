@@ -197,7 +197,7 @@ export function Chat({
     }
     const fileParts: FileUIPart[] = attachments.map((a) => ({
       type: "file",
-      mediaType: "application/pdf",
+      mediaType: a.contentType,
       url: a.url,
       filename: a.filename,
     }));

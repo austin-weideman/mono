@@ -11,7 +11,13 @@ import { db } from "@mono/db/client";
 import { auth } from "~/auth/server";
 import { attachmentUploadRateLimit } from "~/lib/rate-limit";
 
-const ALLOWED_CONTENT_TYPES = ["application/pdf"] as const;
+const ALLOWED_CONTENT_TYPES = [
+  "application/pdf",
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/gif",
+] as const;
 const MAX_BYTES = 32 * 1024 * 1024;
 const TOKEN_VALID_MS = 30 * 60_000;
 const SYSTEM_SERVICE = "attachment";

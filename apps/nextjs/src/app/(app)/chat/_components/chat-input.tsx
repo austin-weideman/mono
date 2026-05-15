@@ -21,6 +21,7 @@ export interface AttachmentDraft {
   id: string;
   filename: string;
   sizeBytes: number;
+  contentType: string;
   url: string;
 }
 
@@ -28,6 +29,7 @@ export type PendingAttachment =
   | {
       id: string;
       filename: string;
+      contentType: string;
       file: File;
       state: "uploading";
       progress: number;
@@ -36,6 +38,7 @@ export type PendingAttachment =
   | {
       id: string;
       filename: string;
+      contentType: string;
       sizeBytes: number;
       url: string;
       state: "ready";
@@ -52,7 +55,15 @@ interface ChatInputProps {
   disabled: boolean;
 }
 
-const ACCEPTED_TYPES = "application/pdf";
+const ACCEPTED_TYPES_LIST = [
+  "application/pdf",
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/gif",
+] as const;
+const ACCEPTED_TYPES = ACCEPTED_TYPES_LIST.join(",");
+const ACCEPTED_TYPE_SET = new Set<string>(ACCEPTED_TYPES_LIST);
 const MAX_BYTES = 32 * 1024 * 1024;
 const MAX_ATTACHMENTS = 10;
 
@@ -86,8 +97,8 @@ export function ChatInput({ onSubmit, disabled }: ChatInputProps) {
   };
 
   const startUpload = async (file: File) => {
-    if (file.type !== "application/pdf") {
-      toast.error(`${file.name} is not a PDF`);
+    if (!ACCEPTED_TYPE_SET.has(file.type)) {
+      toast.error(`${file.name} is not a supported file type`);
       return;
     }
     if (file.size > MAX_BYTES) {
@@ -102,6 +113,7 @@ export function ChatInput({ onSubmit, disabled }: ChatInputProps) {
       {
         id,
         filename: file.name,
+        contentType: file.type,
         file,
         state: "uploading",
         progress: 0,
@@ -129,6 +141,7 @@ export function ChatInput({ onSubmit, disabled }: ChatInputProps) {
       updateAttachment(id, () => ({
         id,
         filename: file.name,
+        contentType: file.type,
         sizeBytes: file.size,
         url: result.url,
         state: "ready",
@@ -205,6 +218,7 @@ export function ChatInput({ onSubmit, disabled }: ChatInputProps) {
         id: a.id,
         filename: a.filename,
         sizeBytes: a.sizeBytes,
+        contentType: a.contentType,
         url: a.url,
       })),
     );
@@ -224,6 +238,7 @@ export function ChatInput({ onSubmit, disabled }: ChatInputProps) {
               key={item.id}
               filename={item.filename}
               sizeBytes={item.state === "ready" ? item.sizeBytes : undefined}
+              mediaType={item.state === "failed" ? undefined : item.contentType}
               state={item.state}
               progress={item.state === "uploading" ? item.progress : undefined}
               onRemove={() => handleRemove(item)}

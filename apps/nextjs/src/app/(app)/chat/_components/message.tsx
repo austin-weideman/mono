@@ -109,6 +109,7 @@ export function Message({ message, isLoading }: MessageProps) {
                     <AttachmentChip
                       key={i}
                       filename={f.filename}
+                      mediaType={f.mediaType}
                       state="ready"
                       onOpen={() =>
                         window.open(f.url, "_blank", "noopener,noreferrer")
