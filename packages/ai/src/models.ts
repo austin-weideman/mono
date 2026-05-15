@@ -21,45 +21,38 @@ export interface ModelConfig {
 }
 
 export const ModelId = {
+  CLAUDE_SONNET_4_6: "claude-sonnet-4.6",
   CLAUDE_HAIKU_4_5: "claude-haiku-4.5",
-  GEMINI_3_FLASH: "gemini-3-flash",
+  GPT_5_4: "gpt-5.4",
   GPT_5_4_MINI: "gpt-5.4-mini",
-  GROK_4_3: "grok-4.3",
-  DEEPSEEK_V4_PRO: "deepseek-v4-pro",
 } as const;
 
 export type ModelId = (typeof ModelId)[keyof typeof ModelId];
 
 export const MODEL_REGISTRY: Record<ModelId, ModelConfig> = {
+  [ModelId.CLAUDE_SONNET_4_6]: {
+    gatewayId: "anthropic/claude-sonnet-4.6",
+    provider: "anthropic",
+    displayName: "Claude Sonnet 4.6",
+    contextWindowTokens: 1000000,
+  },
   [ModelId.CLAUDE_HAIKU_4_5]: {
     gatewayId: "anthropic/claude-haiku-4.5",
     provider: "anthropic",
     displayName: "Claude Haiku 4.5",
     contextWindowTokens: 200000,
   },
-  [ModelId.GEMINI_3_FLASH]: {
-    gatewayId: "google/gemini-3-flash",
-    provider: "google",
-    displayName: "Gemini 3 Flash",
-    contextWindowTokens: 1000000,
+  [ModelId.GPT_5_4]: {
+    gatewayId: "openai/gpt-5.4",
+    provider: "openai",
+    displayName: "GPT 5.4",
+    contextWindowTokens: 1100000,
   },
   [ModelId.GPT_5_4_MINI]: {
     gatewayId: "openai/gpt-5.4-mini",
     provider: "openai",
     displayName: "GPT 5.4 Mini",
     contextWindowTokens: 400000,
-  },
-  [ModelId.GROK_4_3]: {
-    gatewayId: "xai/grok-4.3",
-    provider: "xai",
-    displayName: "Grok 4.3",
-    contextWindowTokens: 1000000,
-  },
-  [ModelId.DEEPSEEK_V4_PRO]: {
-    gatewayId: "deepseek/deepseek-v4-pro",
-    provider: "deepseek",
-    displayName: "DeepSeek V4 Pro",
-    contextWindowTokens: 1000000,
   },
 } as const;
 
