@@ -52,9 +52,6 @@ export function Chat({
   // subscription. We track the latest in-flight fetch ourselves and abort the
   // prior one on every new fetch.
   const lastFetchController = useRef<AbortController | null>(null);
-  // Set by handleSubmit immediately before sendMessage; read inside
-  // prepareSendMessagesRequest so the server can link uploads to the message.
-  const pendingAttachmentIdsRef = useRef<string[]>([]);
   const initialUIMessages = convertDbMessagesToUIMessages(initialMessages);
 
   const transport = useMemo(
@@ -65,11 +62,11 @@ export function Chat({
       // eslint-disable-next-line react-hooks/refs
       new DefaultChatTransport({
         api: "/api/chat",
-        prepareSendMessagesRequest: ({ messages }) => {
+        prepareSendMessagesRequest: ({ messages, body }) => {
           const streamId = crypto.randomUUID();
           activeStreamIdRef.current = streamId;
-          const attachmentIds = pendingAttachmentIdsRef.current;
-          pendingAttachmentIdsRef.current = [];
+          const attachmentIds =
+            (body?.attachmentIds as string[] | undefined) ?? [];
           return {
             body: {
               conversationId,
@@ -193,9 +190,9 @@ export function Chat({
   }, [messages, scrollToBottom, checkIsAtBottom]);
 
   const handleSubmit = (text: string, attachments: AttachmentDraft[]) => {
-    pendingAttachmentIdsRef.current = attachments.map((a) => a.id);
+    const attachmentIds = attachments.map((a) => a.id);
     if (attachments.length === 0) {
-      void sendMessage({ text });
+      void sendMessage({ text }, { body: { attachmentIds } });
       return;
     }
     const fileParts: FileUIPart[] = attachments.map((a) => ({
@@ -207,7 +204,7 @@ export function Chat({
     const parts: UIMessage["parts"] = text.trim().length
       ? [...fileParts, { type: "text", text }]
       : fileParts;
-    void sendMessage({ parts });
+    void sendMessage({ parts }, { body: { attachmentIds } });
   };
 
   return (
