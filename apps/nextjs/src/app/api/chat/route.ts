@@ -3,6 +3,7 @@ import { cookies, headers } from "next/headers";
 import { z } from "zod";
 
 import { getGatewayId } from "@mono/ai";
+import { linkAttachmentsToMessage } from "@mono/attachment";
 import { extractTextFromUIMessage } from "@mono/chat-utils";
 import {
   generateTitleFromText,
@@ -25,6 +26,7 @@ const chatRequestSchema = z.object({
   conversationId: z.uuid(),
   streamId: z.uuid(),
   message: z.custom<UIMessage>(),
+  attachmentIds: z.array(z.uuid()).default([]),
 });
 
 export async function POST(req: Request): Promise<Response> {
@@ -42,7 +44,7 @@ export async function POST(req: Request): Promise<Response> {
     return validation.error;
   }
 
-  const { conversationId, streamId, message } = validation.data;
+  const { conversationId, streamId, message, attachmentIds } = validation.data;
   const userId = session.user.id;
   const actor = userActor(userId);
 
@@ -61,10 +63,19 @@ export async function POST(req: Request): Promise<Response> {
     }
   }
 
-  await sendMessage(db, actor, {
-    conversationId,
-    role: "user",
-    parts: message.parts,
+  await db.transaction(async (tx) => {
+    const persisted = await sendMessage(tx, actor, {
+      conversationId,
+      role: "user",
+      parts: message.parts,
+    });
+    if (attachmentIds.length > 0) {
+      await linkAttachmentsToMessage(tx, actor, {
+        messageId: persisted.id,
+        conversationId,
+        attachmentIds,
+      });
+    }
   });
 
   await setActiveStream(db, actor, { conversationId, streamId });

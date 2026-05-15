@@ -1,6 +1,6 @@
 "use client";
 
-import type { UIMessage } from "ai";
+import type { FileUIPart, UIMessage } from "ai";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useChat } from "@ai-sdk/react";
 import { useQueryClient } from "@tanstack/react-query";
@@ -11,6 +11,7 @@ import type { Message } from "@mono/conversation";
 import { convertDbMessagesToUIMessages } from "@mono/chat-utils";
 import { ChevronDownIcon, SidebarTrigger } from "@mono/ui";
 
+import type { AttachmentDraft } from "./chat-input";
 import { ModelSelector } from "~/app/(app)/_components/model-selector";
 import { useTRPC } from "~/trpc/react";
 import { ChatInput } from "./chat-input";
@@ -51,6 +52,9 @@ export function Chat({
   // subscription. We track the latest in-flight fetch ourselves and abort the
   // prior one on every new fetch.
   const lastFetchController = useRef<AbortController | null>(null);
+  // Set by handleSubmit immediately before sendMessage; read inside
+  // prepareSendMessagesRequest so the server can link uploads to the message.
+  const pendingAttachmentIdsRef = useRef<string[]>([]);
   const initialUIMessages = convertDbMessagesToUIMessages(initialMessages);
 
   const transport = useMemo(
@@ -64,11 +68,14 @@ export function Chat({
         prepareSendMessagesRequest: ({ messages }) => {
           const streamId = crypto.randomUUID();
           activeStreamIdRef.current = streamId;
+          const attachmentIds = pendingAttachmentIdsRef.current;
+          pendingAttachmentIdsRef.current = [];
           return {
             body: {
               conversationId,
               streamId,
               message: messages.at(-1),
+              attachmentIds,
             },
           };
         },
@@ -185,8 +192,22 @@ export function Chat({
     checkIsAtBottom();
   }, [messages, scrollToBottom, checkIsAtBottom]);
 
-  const handleSubmit = (text: string) => {
-    void sendMessage({ text });
+  const handleSubmit = (text: string, attachments: AttachmentDraft[]) => {
+    pendingAttachmentIdsRef.current = attachments.map((a) => a.id);
+    if (attachments.length === 0) {
+      void sendMessage({ text });
+      return;
+    }
+    const fileParts: FileUIPart[] = attachments.map((a) => ({
+      type: "file",
+      mediaType: "application/pdf",
+      url: a.url,
+      filename: a.filename,
+    }));
+    const parts: UIMessage["parts"] = text.trim().length
+      ? [...fileParts, { type: "text", text }]
+      : fileParts;
+    void sendMessage({ parts });
   };
 
   return (

@@ -1,6 +1,6 @@
 import type { UIMessage } from "ai";
 
-import { cn, Markdown, SparklesIcon } from "@mono/ui";
+import { AttachmentChip, cn, Markdown, SparklesIcon } from "@mono/ui";
 
 import { MessageActions } from "./message-actions";
 import { Reasoning } from "./reasoning";
@@ -11,9 +11,16 @@ interface MessageProps {
   isLoading?: boolean;
 }
 
+interface FileItem {
+  url: string;
+  filename: string;
+  mediaType: string;
+}
+
 type RenderItem =
   | { kind: "reasoning"; text: string; isStreaming: boolean }
-  | { kind: "text"; text: string };
+  | { kind: "text"; text: string }
+  | { kind: "files"; files: FileItem[] };
 
 function buildRenderItems(
   parts: UIMessage["parts"],
@@ -37,6 +44,18 @@ function buildRenderItems(
       }
     } else if (part.type === "text") {
       items.push({ kind: "text", text: part.text });
+    } else if (part.type === "file") {
+      const last = items[items.length - 1];
+      const file: FileItem = {
+        url: part.url,
+        filename: part.filename ?? "Document",
+        mediaType: part.mediaType,
+      };
+      if (last?.kind === "files") {
+        last.files.push(file);
+      } else {
+        items.push({ kind: "files", files: [file] });
+      }
     }
   });
   return items;
@@ -76,6 +95,27 @@ export function Message({ message, isLoading }: MessageProps) {
                   text={item.text}
                   isStreaming={item.isStreaming}
                 />
+              );
+            }
+            if (item.kind === "files") {
+              return (
+                <div
+                  key={idx}
+                  className={cn("flex flex-wrap gap-2", {
+                    "justify-end": isUser,
+                  })}
+                >
+                  {item.files.map((f, i) => (
+                    <AttachmentChip
+                      key={i}
+                      filename={f.filename}
+                      state="ready"
+                      onOpen={() =>
+                        window.open(f.url, "_blank", "noopener,noreferrer")
+                      }
+                    />
+                  ))}
+                </div>
               );
             }
             return (

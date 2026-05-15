@@ -24,6 +24,8 @@ const envSchema = z.object({
   UPSTASH_REDIS_REST_URL: z.url(),
   UPSTASH_REDIS_REST_TOKEN: z.string().min(1),
 
+  BLOB_READ_WRITE_TOKEN: z.string().min(1),
+
   RESEND_API_KEY: z.string().min(1),
   EMAIL_FROM: z.string().min(1).default("BillSentry <onboarding@resend.dev>"),
 

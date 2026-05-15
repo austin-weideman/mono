@@ -17,6 +17,7 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
+    "@mono/attachment": "workspace:*",
     "@mono/auth": "workspace:*",
     "@mono/conversation": "workspace:*",
     "@mono/core-types": "workspace:*",

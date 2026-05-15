@@ -2,6 +2,7 @@ export { cn } from "./utils";
 export { BorderBeam } from "border-beam";
 
 export * from "./alert-dialog";
+export * from "./attachment-chip";
 export * from "./auto-resize-textarea";
 export * from "./button";
 export * from "./collapsible";
