@@ -165,19 +165,6 @@ Run from `packages/db` directory. All require Doppler.
 3. Review migration in `packages/db/migrations/`
 4. Run `d migrate` to apply
 
-### Migrations must be backwards-compatible (expand/contract)
-
-In CI/CD, migrations run **before** the app deploys, and the app deploy is gated by a post-deploy health check. If the health check fails the deploy does not promote — but the migration has already been applied, so the **previous** running app version is now talking to the **new** schema. Every migration must therefore be safe against the prior app version.
-
-Use the expand/contract pattern:
-
-- Adding a column → must be nullable or have a default. Never `NOT NULL` without a default in the same migration.
-- Renaming → ship as `add new column → backfill → switch reads → switch writes → drop old` across multiple deploys. Never rename in one step.
-- Dropping a column/table → only after a deploy has shipped that no longer references it.
-- Type changes → add a new column, migrate data, switch over, drop old.
-
-If a migration cannot be made backwards-compatible, flag it explicitly and coordinate a maintenance window.
-
 ### Ad-hoc Queries (psql)
 
 Agents can query the dev database directly with `psql` against the Neon `POSTGRES_URL` Doppler injects. No local Postgres, dev server, or Drizzle Studio needs to be running — psql opens its own connection to Neon over the standard wire protocol.
