@@ -132,6 +132,10 @@ A modular monolith in TypeScript with a functional core (pure domain logic), thi
 
 App-specific patterns and gotchas are documented in `AGENTS.md` files colocated with the relevant code. Check for these when working in a new area.
 
+## Repo-level Documentation
+
+Repo-level docs of important systems or aspects of the product are located in `docs/` under relevant subdirectories. It is critical that these docs remain up to date and do not become stale. They should always be a reflection of the current state of the codebase and product.
+
 ## Environment Variables (Doppler)
 
 **All commands require Doppler** (`doppler run --`) to inject env vars. Without Doppler: runtime env checks fail, DB connections fail.
