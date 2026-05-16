@@ -14,3 +14,17 @@ export const attachmentUploadRateLimit = new Ratelimit({
   analytics: false,
   prefix: "rl:attachment-upload",
 });
+
+export const chatBurstRateLimit = new Ratelimit({
+  redis,
+  limiter: Ratelimit.slidingWindow(4, "10 s"),
+  analytics: false,
+  prefix: "rl:chat-burst",
+});
+
+export const chatSustainedRateLimit = new Ratelimit({
+  redis,
+  limiter: Ratelimit.slidingWindow(30, "5 m"),
+  analytics: false,
+  prefix: "rl:chat-sustained",
+});

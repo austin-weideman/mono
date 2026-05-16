@@ -21,6 +21,7 @@ import { conversationRunAssistantEvent } from "@mono/jobs/events/conversation";
 import { getSelectedModelId } from "~/app/(app)/_lib/model";
 import { auth } from "~/auth/server";
 import { validateJson } from "~/lib/api-validation";
+import { chatBurstRateLimit, chatSustainedRateLimit } from "~/lib/rate-limit";
 
 const MAX_ATTACHMENTS_PER_MESSAGE = 10;
 
@@ -39,6 +40,29 @@ export async function POST(req: Request): Promise<Response> {
 
   if (!session?.user) {
     return Response.json({ error: "Authentication required" }, { status: 401 });
+  }
+
+  const [burst, sustained] = await Promise.all([
+    chatBurstRateLimit.limit(session.user.id),
+    chatSustainedRateLimit.limit(session.user.id),
+  ]);
+  const limited = !burst.success
+    ? burst
+    : !sustained.success
+      ? sustained
+      : null;
+  if (limited) {
+    const retryAfterSeconds = Math.max(
+      1,
+      Math.ceil((limited.reset - Date.now()) / 1000),
+    );
+    return Response.json(
+      { error: "Rate limit exceeded" },
+      {
+        status: 429,
+        headers: { "Retry-After": String(retryAfterSeconds) },
+      },
+    );
   }
 
   const validation = await validateJson(req, chatRequestSchema);
