@@ -2,11 +2,11 @@
 
 **$100 per seat per month. Monthly billing. No free tier. No annual contracts (pilot stage).**
 
-**What the user sees:** $100/seat/month for full product access. AI usage is "included for typical use." Heavy users can raise their overage cap to keep going. No mention of tokens or specific limits on the pricing page.
+**What the user sees (marketing):** "$100 per seat per month. AI usage included. Heavy users move to usage-based pricing." No mention of allowance dollars, tokens, or specific limits on the pricing page.
 
-**What happens internally:**
+**What happens internally (not advertised):**
 
-- $20/seat/month of the subscription is an implicit AI allowance, denominated in gateway cost (i.e., the seat gets $20 worth of actual inference before the wall).
+- $20/seat/month of the subscription is an implicit AI allowance, denominated in gateway cost (i.e., the seat gets $20 worth of actual inference before usage-based pricing kicks in). **This split is internal-only — never shown to users or quoted in sales.**
 - $80/seat/month is product margin — covers hosting, billing, sales/support, dev time, profit.
 - AI allowance resets every billing cycle. No rollover.
 - When the allowance is depleted, overages are auto-billed to the card on file, up to a per-user monthly cap.
@@ -22,6 +22,7 @@
 
 - Settings page surfaces current cycle usage in dollars, e.g. `$14 of $20 included used this cycle` plus `$0 of $50 overage cap`.
 - No token counts, no model names. Gateway cost in dollars only.
+- The $20 included figure is exposed here (in the in-product usage UI) but not on the public pricing page or in sales materials.
 
 **Request flow:**
 

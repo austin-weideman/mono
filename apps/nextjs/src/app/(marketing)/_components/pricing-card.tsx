@@ -3,7 +3,7 @@
 import type { ReactNode } from "react";
 import { motion } from "framer-motion";
 
-import { cn, staggerItemMotion } from "@mono/ui";
+import { staggerItemMotion } from "@mono/ui";
 
 import type { PRICING } from "../_lib/content";
 import { CheckIcon } from "./icons";
@@ -20,28 +20,12 @@ export function PricingCard({ tier, ctaButton }: PricingCardProps) {
       {...staggerItemMotion}
       whileHover={{ y: -6 }}
       transition={{ type: "spring", stiffness: 380, damping: 26 }}
-      className={cn(
-        "group relative flex flex-col rounded-[16px] p-8",
-        "transition-shadow duration-300 ease-out",
-        tier.highlighted
-          ? "bg-white hover:shadow-[0_24px_56px_-20px_rgba(0,0,0,0.22)]"
-          : "bg-eggshell border-chalk border hover:shadow-[0_16px_40px_-16px_rgba(0,0,0,0.14)]",
-      )}
-      style={
-        tier.highlighted
-          ? {
-              boxShadow:
-                "rgba(0, 0, 0, 0.4) 0px 0px 1px 0px, rgba(0, 0, 0, 0.04) 0px 4px 12px 0px",
-            }
-          : undefined
-      }
+      className="group relative flex flex-col rounded-[16px] bg-white p-8 transition-shadow duration-300 ease-out hover:shadow-[0_24px_56px_-20px_rgba(0,0,0,0.22)]"
+      style={{
+        boxShadow:
+          "rgba(0, 0, 0, 0.4) 0px 0px 1px 0px, rgba(0, 0, 0, 0.04) 0px 4px 12px 0px",
+      }}
     >
-      {tier.highlighted && (
-        <span className="bg-obsidian text-eggshell absolute -top-3 left-8 inline-flex items-center rounded-full px-3 py-1 text-[11px] font-medium tracking-[0.3px] uppercase">
-          Most popular
-        </span>
-      )}
-
       <div>
         <h3 className="font-display text-obsidian text-[24px] leading-[1.2] font-light tracking-[-0.4px]">
           {tier.name}

@@ -37,16 +37,13 @@ function PricingHero() {
           size="lg"
         />
 
-        <RevealStagger className="grid gap-5 md:grid-cols-2">
+        <RevealStagger className="mx-auto grid max-w-[480px] gap-5">
           {PRICING.tiers.map((tier) => (
             <PricingCard
               key={tier.name}
               tier={tier}
               ctaButton={
-                <GoogleSignInButton
-                  variant={tier.highlighted ? "primary" : "ghost"}
-                  className="w-full"
-                >
+                <GoogleSignInButton variant="primary" className="w-full">
                   {tier.cta}
                 </GoogleSignInButton>
               }

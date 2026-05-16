@@ -115,51 +115,51 @@ export const CTA = {
 
 export const PRICING = {
   eyebrow: "Pricing",
-  headline: "Priced for firms, not seats.",
+  headline: "One plan. Per seat. No surprises.",
   subheadline:
-    "A flat fee covers your team and a standard amount of AI analysis. Firms with heavier coverage needs move to a usage-scaled plan with priority capacity.",
+    "$100 per seat per month, billed monthly. AI usage is included for typical work. Heavy users move to transparent usage-based pricing, with no overage charges without your say-so.",
   tiers: [
     {
-      name: "Pilot",
-      price: "$199",
-      period: "per month",
-      description: "For firms joining BillSentry during early access.",
+      name: "BillSentry",
+      price: "$100",
+      period: "per seat / month",
+      description: "Everything in the product, for every seat on your team.",
       features: [
         "Unlimited client profiles",
         "California legislature coverage",
         "Proactive relevance flags & email alerts",
         "Chat with any bill, compare versions",
         "Weekly client memo drafts",
-        "Standard AI usage included",
-      ],
-      cta: "Apply for pilot",
-      highlighted: false,
-    },
-    {
-      name: "Firm",
-      price: "Custom",
-      period: "based on usage & seats",
-      description: "For firms running a full roster of clients.",
-      features: [
-        "Everything in Pilot",
-        "Higher AI usage limits & priority capacity",
-        "White-labeled client deliverables",
         "Hearing briefs & position letters",
         "Shared firm dashboard & assignments",
-        "Conflict detection across clients",
-        "Onboarding & dedicated support",
+        "AI usage included for typical work",
+        "Monthly billing, cancel anytime",
       ],
-      cta: "Talk to sales",
-      highlighted: true,
+      cta: "Apply for pilot",
     },
   ],
 } as const;
 
 export const PRICING_FAQ = [
   {
-    question: "Why isn't pricing strictly per-seat?",
+    question: 'What does "AI usage included" actually mean?',
     answer:
-      "The cost driver for BillSentry isn't how many people log in. It's how much AI analysis your firm runs against how many bills and clients. Pilot is a flat monthly fee that covers your team and standard usage; heavier firms move to a Firm plan scaled to actual analysis volume. There are no surprise overage charges. If usage grows, we'll work with you on a plan that fits.",
+      "Every seat comes with a standard amount of AI analysis included. That covers chatting with bills, generating memos, and running relevance checks across your client roster. Heavier use is billed on a usage basis at cost plus a small margin, with a cap you control so you're never charged more than you intend.",
+  },
+  {
+    question: "What happens if I become a heavy user?",
+    answer:
+      "You set a monthly cap. Any AI usage beyond what's included gets billed at our cost plus a small margin, up to that cap. When the cap is reached, AI stops and we ask you to raise it. No surprise overage charges, ever. You see your usage in dollars in settings at any time.",
+  },
+  {
+    question: "Can I cancel anytime?",
+    answer:
+      "Yes. Billing is monthly and you can cancel at the end of any cycle. There are no annual contracts during pilot.",
+  },
+  {
+    question: "How do seats work when I add or remove someone?",
+    answer:
+      "Add a seat mid-cycle and it's billed for the full month with full AI included. Remove a seat and access continues to the end of the cycle, then the charge stops. Simple and predictable.",
   },
   {
     question: "What jurisdictions are covered today?",
