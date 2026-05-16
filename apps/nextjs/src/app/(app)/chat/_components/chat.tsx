@@ -94,21 +94,26 @@ export function Chat({
             return fetch(input, { ...init, signal: ctrl.signal });
           }
 
-          // Send path: fire POST and GET in parallel using the same
-          // client-generated streamId.
+          // Send path: POST first, then GET. The stream endpoint requires
+          // the conversation row to exist (it auth-checks via loadConversation),
+          // and for a brand-new chat that row is created lazily by POST — so
+          // firing them in parallel races and the GET 404s when it loses.
+          // History buffering on the realtime channel covers the gap between
+          // POST returning and GET subscribing.
           const body = JSON.parse(init?.body as string) as { streamId: string };
-          const [getRes] = await Promise.all([
-            fetch(
-              `/api/chat/${conversationId}/stream?streamId=${body.streamId}`,
-              {
-                method: "GET",
-                credentials: "include",
-                signal: ctrl.signal,
-              },
-            ),
-            fetch("/api/chat", { ...init, signal: ctrl.signal }),
-          ]);
-          return getRes;
+          const postRes = await fetch("/api/chat", {
+            ...init,
+            signal: ctrl.signal,
+          });
+          if (!postRes.ok) return postRes;
+          return fetch(
+            `/api/chat/${conversationId}/stream?streamId=${body.streamId}`,
+            {
+              method: "GET",
+              credentials: "include",
+              signal: ctrl.signal,
+            },
+          );
         },
       }),
     [conversationId],
