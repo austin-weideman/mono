@@ -3,7 +3,7 @@
 import type { FileUIPart, UIMessage } from "ai";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useChat } from "@ai-sdk/react";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { DefaultChatTransport } from "ai";
 
 import type { ModelId } from "@mono/ai";
@@ -126,6 +126,23 @@ export function Chat({
     transport,
   });
 
+  const spendQuery = useQuery(
+    trpc.billing.conversationSpend.queryOptions({ conversationId }),
+  );
+  const totalUsd = Number(spendQuery.data?.totalUsd ?? "0");
+  const spendLabel =
+    totalUsd > 0 ? `$${totalUsd.toFixed(2)} spent on this chat` : null;
+
+  const prevStatus = useRef(status);
+  useEffect(() => {
+    if (prevStatus.current === "streaming" && status === "ready") {
+      void queryClient.invalidateQueries({
+        queryKey: trpc.billing.conversationSpend.pathKey(),
+      });
+    }
+    prevStatus.current = status;
+  }, [status, queryClient, trpc.billing.conversationSpend]);
+
   // Abort any in-flight stream fetch when conversation switches or component
   // unmounts. Otherwise leaving an actively-streaming chat for one with no
   // active stream leaves the SSE subscription dangling.
@@ -221,7 +238,7 @@ export function Chat({
       <div ref={scrollContainerRef} className="flex-1 overflow-y-auto">
         <Messages messages={messages} status={status} />
       </div>
-      <div className="bg-background relative mx-auto flex w-full max-w-4xl gap-2 px-2 pb-3 md:px-4 md:pb-4">
+      <div className="bg-background relative mx-auto flex w-full max-w-4xl flex-col gap-1 px-2 pb-3 md:px-4 md:pb-4">
         {!isAtBottom && (
           <button
             type="button"
@@ -233,6 +250,11 @@ export function Chat({
           </button>
         )}
         <ChatInput onSubmit={handleSubmit} disabled={status !== "ready"} />
+        {spendLabel && (
+          <div className="text-muted-foreground self-end pr-1 text-xs">
+            {spendLabel}
+          </div>
+        )}
       </div>
     </div>
   );

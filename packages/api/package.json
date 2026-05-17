@@ -19,6 +19,7 @@
   "dependencies": {
     "@mono/attachment": "workspace:*",
     "@mono/auth": "workspace:*",
+    "@mono/billing": "workspace:*",
     "@mono/conversation": "workspace:*",
     "@mono/core-types": "workspace:*",
     "@mono/db": "workspace:*",

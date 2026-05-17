@@ -26,6 +26,7 @@ const REASONING_PROVIDER_OPTIONS = {
 export interface CreateAssistantAgentOptions {
   gatewayModelId: string;
   context: ToolContext;
+  userId: string;
 }
 
 export interface AssistantAgentResult {
@@ -57,7 +58,7 @@ Be concise and helpful. Cite sources when using search results.`;
 export function createAssistantAgent(
   options: CreateAssistantAgentOptions,
 ): AssistantAgentResult {
-  const { gatewayModelId, context } = options;
+  const { gatewayModelId, context, userId } = options;
 
   const { tools, metadata, close } = createTools(
     context,
@@ -69,7 +70,13 @@ export function createAssistantAgent(
     instructions: buildInstructions(metadata),
     tools,
     stopWhen: stepCountIs(MAX_AGENT_STEPS),
-    providerOptions: REASONING_PROVIDER_OPTIONS,
+    providerOptions: {
+      ...REASONING_PROVIDER_OPTIONS,
+      gateway: {
+        user: userId,
+        tags: ["feature:chat"],
+      },
+    },
   });
 
   return {

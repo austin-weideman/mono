@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@mono/agent": "workspace:*",
+    "@mono/billing": "workspace:*",
     "@mono/core-types": "workspace:*",
     "@mono/db": "workspace:*",
     "@mono/errors": "workspace:*",

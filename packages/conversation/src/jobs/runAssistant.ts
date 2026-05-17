@@ -1,8 +1,10 @@
 import type { UIMessage } from "ai";
 import type { InngestFunction } from "inngest";
 import { convertToModelMessages } from "ai";
+import { z } from "zod";
 
 import { createAssistantAgent } from "@mono/agent";
+import { recordUsageEvent } from "@mono/billing";
 import { systemActor, userActor } from "@mono/core-types";
 import { db } from "@mono/db/client";
 import { inngest } from "@mono/jobs";
@@ -16,6 +18,11 @@ import { setActiveStream } from "../application/setActiveStream";
 import { updateConversationTokenUsage } from "../persistence/conversation.mutations";
 
 const SYSTEM_SERVICE = "conversation";
+
+const gatewayStepMetadataSchema = z.object({
+  generationId: z.string().min(1).optional(),
+  cost: z.string().min(1).optional(),
+});
 
 function toUIMessages(messages: Message[]): UIMessage[] {
   return messages.map((msg) => ({
@@ -46,6 +53,7 @@ const runAssistantFn = inngest.createFunction(
       const { agent, close } = createAssistantAgent({
         gatewayModelId,
         context: { db, actor: usrActor },
+        userId,
       });
 
       const uiMessages = toUIMessages(dbMessages);
@@ -53,6 +61,27 @@ const runAssistantFn = inngest.createFunction(
       try {
         const result = await agent.stream({
           messages: await convertToModelMessages(uiMessages),
+          // Blocks the step boundary while the insert runs. Single row against
+          // Neon, and runAssistant is serialized per conversation, so the cost
+          // is bounded. Errors are NOT swallowed — a billing-write failure
+          // throws and propagates to the outer catch, which emits an error
+          // chunk. The user will have already seen any output streamed from
+          // earlier steps; subsequent steps are abandoned. This is by design:
+          // we'd rather break the chat partway than silently lose spend data.
+          onStepFinish: async ({ providerMetadata }) => {
+            const gw = gatewayStepMetadataSchema.parse(
+              providerMetadata?.gateway ?? {},
+            );
+            if (!gw.generationId) return;
+
+            await recordUsageEvent(db, sysActor, {
+              userId,
+              conversationId,
+              generationId: gw.generationId,
+              gatewayModelId,
+              costUsd: gw.cost ?? null,
+            });
+          },
         });
 
         const stream = result.toUIMessageStream({
