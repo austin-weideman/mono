@@ -9,7 +9,7 @@ export default function HomePage() {
       </header>
       <div className="flex flex-1 items-center justify-center px-4 pb-16">
         <div className="text-muted-foreground max-w-md text-center text-sm">
-          Your dashboard will live here soon — daily lesson, streaks, and news.
+          Your dashboard will live here soon.
         </div>
       </div>
     </div>
