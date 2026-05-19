@@ -25,6 +25,7 @@ export const ModelId = {
   CLAUDE_HAIKU_4_5: "claude-haiku-4.5",
   GPT_5_4: "gpt-5.4",
   GPT_5_4_MINI: "gpt-5.4-mini",
+  GEMINI_3_5_FLASH: "gemini-3.5-flash",
 } as const;
 
 export type ModelId = (typeof ModelId)[keyof typeof ModelId];
@@ -53,6 +54,12 @@ export const MODEL_REGISTRY: Record<ModelId, ModelConfig> = {
     provider: "openai",
     displayName: "GPT 5.4 Mini",
     contextWindowTokens: 400000,
+  },
+  [ModelId.GEMINI_3_5_FLASH]: {
+    gatewayId: "google/gemini-3.5-flash",
+    provider: "google",
+    displayName: "Gemini 3.5 Flash",
+    contextWindowTokens: 1000000,
   },
 } as const;
 
