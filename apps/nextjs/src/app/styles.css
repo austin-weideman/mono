@@ -3,6 +3,7 @@
 @import "@mono/tailwind-config/theme";
 
 @source "../../../../packages/ui/src/*.{ts,tsx}";
+/* Glob must be *.js, not index.js — Streamdown's utility classes live in its chunk files, not the entrypoint. */
 @source "../../node_modules/streamdown/dist/*.js";
 
 @custom-variant dark (&:where(.dark, .dark *));
