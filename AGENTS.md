@@ -251,6 +251,14 @@ All async / background work runs on Inngest. Architecture: a leaf `@mono/jobs` p
 - Pass an idempotency `id` on `inngest.send()` whenever a natural dedupe key exists (job row id, etc.) — Inngest dedupes within 24h.
 - Handlers contain orchestration only; domain logic lives in the feature's `application/` layer.
 
+## Dependencies
+
+**Pin everything.** No `^` or `~` on any dep in any `package.json` or in the `pnpm-workspace.yaml` catalogs. Bumps are explicit edits — don't run `pnpm update`.
+
+Exceptions: `engines` fields and `peerDependencyRules.allowedVersions` (with a `TODO` comment) are allowed to be ranges.
+
+Enforcement: `.npmrc` sets `strict-peer-dependencies=true`; CI uses `pnpm install --frozen-lockfile`.
+
 ## Code Quality
 
 - **Explicit types** - Function return types and interfaces for inputs/outputs
