@@ -4,39 +4,38 @@ packages:
   - tooling/*
 
 catalog:
-  "@ai-sdk/anthropic": ^3.0.72
-  "@ai-sdk/gateway": ^3.0.107
-  "@ai-sdk/mcp": ^1.0.37
-  "@ai-sdk/openai": ^3.0.54
-  "@ai-sdk/react": ^3.0.172
+  "@ai-sdk/anthropic": 3.0.74
+  "@ai-sdk/gateway": 3.0.109
+  "@ai-sdk/mcp": 1.0.39
+  "@ai-sdk/openai": 3.0.58
+  "@ai-sdk/react": 3.0.176
   "@better-auth/cli": 1.4.21
   "@better-auth/expo": 1.6.9
-  "@eslint/js": ^9.38.0
-  "@neondatabase/serverless": ^1.0.2
-  "@tailwindcss/postcss": ^4.2.4
-  "@tailwindcss/vite": ^4.2.4
-  "@tanstack/react-query": ^5.100.6
-  "@trpc/client": ^11.17.0
-  "@trpc/server": ^11.17.0
-  "@trpc/tanstack-react-query": ^11.17.0
+  "@eslint/js": 9.38.0
+  "@neondatabase/serverless": 1.0.2
+  "@tailwindcss/postcss": 4.2.4
+  "@tanstack/react-query": 5.100.8
+  "@trpc/client": 11.17.0
+  "@trpc/server": 11.17.0
+  "@trpc/tanstack-react-query": 11.17.0
   "@types/node": 24.12.2
   "@vitejs/plugin-react": 6.0.1
-  ai: ^6.0.172
+  ai: 6.0.174
   better-auth: 1.6.9
-  drizzle-orm: ^0.45.2
-  eslint: ^9.38.0
+  drizzle-orm: 0.45.2
+  eslint: 9.38.0
   inngest: 4.2.6
-  prettier: ^3.6.2
+  prettier: 3.6.2
   superjson: 2.2.6
-  tailwindcss: ^4.2.4
-  typescript: ^6.0.3
+  tailwindcss: 4.2.4
+  typescript: 6.0.3
   vite: 8.0.10
-  zod: ^4.3.6
+  zod: 4.4.2
 
 catalogs:
   react19:
-    "@types/react": ^19.1.17
-    "@types/react-dom": ^19.1.11
+    "@types/react": 19.2.14
+    "@types/react-dom": 19.2.3
     react: 19.1.6
     react-dom: 19.1.6
 

@@ -25,7 +25,7 @@
     "@mono/db": "workspace:*",
     "@mono/errors": "workspace:*",
     "@mono/jobs": "workspace:*",
-    "@vercel/blob": "^2.3.3",
+    "@vercel/blob": "2.3.3",
     "drizzle-orm": "catalog:",
     "inngest": "catalog:",
     "zod": "catalog:"

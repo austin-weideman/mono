@@ -31,7 +31,7 @@
     "@mono/time": "workspace:*",
     "drizzle-orm": "catalog:",
     "inngest": "catalog:",
-    "rrule": "^2.8.1",
+    "rrule": "2.8.1",
     "zod": "catalog:"
   },
   "devDependencies": {

@@ -18,7 +18,7 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "luxon": "^3.7.2"
+    "luxon": "3.7.2"
   },
   "devDependencies": {
     "@mono/eslint-config": "workspace:*",

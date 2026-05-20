@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@mono/conversation": "workspace:*",
-    "date-fns": "^4.1.0"
+    "date-fns": "4.1.0"
   },
   "devDependencies": {
     "@mono/eslint-config": "workspace:*",

@@ -32,7 +32,7 @@
     "@mono/env": "workspace:*",
     "@neondatabase/serverless": "catalog:",
     "drizzle-orm": "catalog:",
-    "drizzle-zod": "^0.8.3",
+    "drizzle-zod": "0.8.3",
     "zod": "catalog:"
   },
   "devDependencies": {
