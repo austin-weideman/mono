@@ -19,6 +19,9 @@ export type SendVerificationEmail = NonNullable<
 export type OnExistingUserSignUp = NonNullable<
   EmailAndPasswordOptions["onExistingUserSignUp"]
 >;
+export type SecondaryStorage = NonNullable<
+  BetterAuthOptions["secondaryStorage"]
+>;
 
 export function initAuth<
   TExtraPlugins extends BetterAuthPlugin[] = [],
@@ -38,6 +41,14 @@ export function initAuth<
    */
   sendVerificationEmail?: SendVerificationEmail;
   onExistingUserSignUp?: OnExistingUserSignUp;
+
+  /**
+   * Backing store for rate-limit counters (and other ephemeral state).
+   * Required for rate limiting to function correctly on serverless runtimes,
+   * where in-memory counters don't share across invocations. The CLI script
+   * (`script/auth-cli.ts`) omits this — schema generation doesn't need it.
+   */
+  secondaryStorage?: SecondaryStorage;
 
   extraPlugins?: TExtraPlugins;
 }) {
@@ -90,6 +101,18 @@ export function initAuth<
       },
     },
     trustedOrigins: ["expo://", "exp://"],
+    advanced: {
+      ipAddress: {
+        ipv6Subnet: 64,
+      },
+    },
+    ...(options.secondaryStorage && {
+      secondaryStorage: options.secondaryStorage,
+      rateLimit: {
+        enabled: true,
+        storage: "secondary-storage" as const,
+      },
+    }),
     onAPIError: {
       onError(error, ctx) {
         console.error("BETTER AUTH API ERROR", error, ctx);

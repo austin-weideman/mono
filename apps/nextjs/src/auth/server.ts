@@ -12,6 +12,7 @@ import {
 } from "@mono/email";
 
 import { env } from "~/env";
+import { redisSecondaryStorage } from "./redis-secondary-storage";
 
 export const auth = initAuth({
   baseUrl: env.AUTH_BASE_URL,
@@ -40,6 +41,7 @@ export const auth = initAuth({
       tags: { category: "existing_user_signup_attempt" },
     });
   },
+  secondaryStorage: redisSecondaryStorage,
   extraPlugins: [nextCookies()],
 });
 
