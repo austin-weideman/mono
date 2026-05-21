@@ -28,7 +28,7 @@ The primary customer is contract lobbying firms in California (~330+ firms) repr
 
 ### Frontend
 
-Expo + React Native with React Native Web for shared UI, plus Next.js (App Router) for the marketing site & server components
+Next.js (App Router) for the web app, marketing site, and server components. The Expo / React Native app at `apps/expo/` is **not under active development** — it remains in the workspace but should not be modified or relied on. All current feature work targets `apps/nextjs/` only.
 
 ### Backend
 
