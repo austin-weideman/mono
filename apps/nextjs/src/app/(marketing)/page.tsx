@@ -1,11 +1,11 @@
 import { redirect } from "next/navigation";
 
 import { getSession } from "~/auth/server";
-import { CtaSection } from "./_components/cta-section";
-import { FeaturesSection } from "./_components/features-section";
-import { HeroSection } from "./_components/hero-section";
-import { HowItWorksSection } from "./_components/how-it-works-section";
-import { TestimonialsSection } from "./_components/testimonials-section";
+import { CapabilitiesSection } from "./_components/capabilities-section";
+import { ClosingSection } from "./_components/closing-section";
+import { LabHero } from "./_components/lab-hero";
+import { LoopSection } from "./_components/loop-section";
+import { MethodSection } from "./_components/method-section";
 
 export default async function LandingPage() {
   const session = await getSession();
@@ -16,11 +16,11 @@ export default async function LandingPage() {
 
   return (
     <>
-      <HeroSection />
-      <FeaturesSection />
-      <HowItWorksSection />
-      <TestimonialsSection />
-      <CtaSection />
+      <LabHero />
+      <LoopSection />
+      <CapabilitiesSection />
+      <MethodSection />
+      <ClosingSection />
     </>
   );
 }

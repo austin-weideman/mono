@@ -46,6 +46,27 @@ export function SendIcon({ size = 16, className }: IconProps) {
   );
 }
 
+export function FlaskIcon({ size = 16, className }: IconProps) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M10 2v7.31a2 2 0 0 1-.34 1.11l-5.43 8.14A2 2 0 0 0 5.9 22h12.2a2 2 0 0 0 1.67-3.44l-5.43-8.14A2 2 0 0 1 14 9.31V2" />
+      <path d="M8.5 2h7" />
+      <path d="M7 16h10" />
+    </svg>
+  );
+}
+
 export function HouseIcon({ size = 16, className }: IconProps) {
   return (
     <svg

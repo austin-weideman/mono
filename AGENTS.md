@@ -14,15 +14,15 @@ You treat this as a serious, multi-engineer, multi-year project where code is pr
 
 ---
 
-# Project Context - BillSentry
+# Project Context - Autolab
 
-BillSentry is an AI-native legislative tracking and analysis platform for California government affairs firms. It ingests every bill in the California legislature, analyzes each one against client-specific position profiles using AI, proactively flags bills of concern, tracks amendments and procedural events, and provides professional-quality analysis to each client.
+Autolab is an autonomous closed-loop research platform: an AI "scientist" agent that proposes, runs, measures, and learns from experiments in a loop. A campaign is a conversation. The agent finds the best recipe in a small budget of tries by calling one tool, `run_experiment`, in a chat, committing a numeric prediction with every experiment and revising its working theory as results come back. A human can supervise by reading the chat and typing into it, or let the agent run the whole budget autonomously.
 
-The product features an AI agent with tool-calling ability. This allows users to chat with bills in natural language, ask precise questions, and benefit from deep analysis.
+The product models the _decision layer_ of closed-loop experimentation (what to try, predict, interpret, revise), not physical manipulation or perception. Execution flows through a single seam, `runExperiment(campaign, params)`, that today looks the recipe up in a vendored, published dataset (a reductive amination reaction, 768 combinations). The same seam is where a simulator or a real lab backend would later plug in without changing anything upstream.
 
-The product strives to deliver the ouput of legislative analysis work — bill summaries, amendment summaries, client-ready memos, hearing briefs — rather than just a tracking interface. Tracking is a tablestakes feature that is also supported.
+Each campaign is backed by a chat conversation; the scientist agent reuses the existing assistant chat pipeline (Inngest turn, realtime streaming, message persistence, usage/cost tracking) end to end. Built-in study controls (scrambled feedback, hidden parameter names) let the platform ask the live research question it ships as a feature: is the agent actually learning from results, or just recalling a dataset it may have seen in training?
 
-The primary customer is contract lobbying firms in California (~330+ firms) representing multiple clients with distinct policy concerns. The competitive landscape: Capitol Track is the dated legacy incumbent for California; Quorum dominates the broader public affairs market but is built for in-house corporate GA teams, not contract firms, and is priced for enterprise. The wedge is the underserved contract-firm segment where the multi-client, multi-position workflow doesn't fit existing tools. California legislative data is freely available and public domain, published nightly by the state at `downloads.leginfo.legislature.ca.gov` as a complete relational database (`capublic` schema) — no third-party data dependency required.
+The `@mono/experiment` package owns the environment, the scientist agent and its tool, persistence, the application layer, and the Inngest job. It depends on `@mono/agent` and `@mono/conversation` (one-way, never the reverse). The Lab UI lives at `apps/nextjs/src/app/(app)/lab`: a campaign list, and a per-campaign view pairing the chat with a live trajectory chart.
 
 ## Tech Stack
 
@@ -227,7 +227,7 @@ When you need an authenticated session, sign in with **email and password**, not
 3. Fill `Password` with `password`.
 4. Click `Sign in`. You land on `/chat`.
 
-The session cookie is scoped to the ngrok domain only — it authorizes BillSentry-as-Austin, nothing else.
+The session cookie is scoped to the ngrok domain only — it authorizes Autolab-as-Austin, nothing else.
 
 ## Background Jobs (Inngest)
 

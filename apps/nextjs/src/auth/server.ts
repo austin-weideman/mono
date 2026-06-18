@@ -26,7 +26,7 @@ export const auth = initAuth({
   sendVerificationEmail: async ({ user, url, token }) => {
     await sendEmail({
       to: user.email,
-      subject: "Verify your BillSentry email",
+      subject: "Verify your Autolab email",
       react: VerifyEmail({ name: user.name, url }),
       idempotencyKey: `verify-email:${user.id}:${token}`,
       tags: { category: "verify_email" },

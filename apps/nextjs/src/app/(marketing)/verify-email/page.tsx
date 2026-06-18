@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { getSession } from "~/auth/server";
+import { FilledButton } from "../_components/lab-ui";
 
 export default async function VerifyEmailPage() {
   const session = await getSession();
@@ -11,25 +12,22 @@ export default async function VerifyEmailPage() {
   }
 
   return (
-    <section className="px-6 pt-16 pb-20 md:pt-24 md:pb-28">
-      <div className="mx-auto w-full max-w-[440px] text-center">
-        <h1 className="text-obsidian font-display text-[32px] leading-[1.1] font-light tracking-[-0.64px]">
+    <section className="bg-abyssal-ink flex min-h-[calc(100vh-4rem)] items-center justify-center px-6 py-16">
+      <div className="border-lichen text-abyssal-ink bg-paper w-full max-w-[420px] rounded-[28px] border p-8 text-center md:p-10">
+        <h1 className="text-[28px] leading-[1.1] tracking-[-0.03em]">
           Verification link expired
         </h1>
-        <p className="text-gravel mt-4 text-[15px] leading-[1.55]">
+        <p className="text-graphite mt-4 text-[15px] leading-[1.5]">
           This verification link is invalid or has already been used. Sign in to
           request a new one, or create a new account.
         </p>
-        <div className="mt-8 flex flex-col gap-3">
-          <Link
-            href="/login"
-            className="bg-obsidian text-eggshell hover:bg-cinder inline-flex h-11 items-center justify-center rounded-full px-6 text-[14px] font-medium transition-[transform,background-color,box-shadow] duration-150 ease-out hover:scale-[1.01] hover:shadow-[0_8px_20px_-8px_rgba(0,0,0,0.35)] active:scale-[0.99]"
-          >
+        <div className="mt-8 flex flex-col items-center gap-3">
+          <FilledButton href="/login" surface="light" className="w-full">
             Sign in
-          </Link>
+          </FilledButton>
           <Link
             href="/signup"
-            className="text-gravel hover:text-obsidian text-[14px] underline underline-offset-4 hover:no-underline"
+            className="text-graphite hover:text-abyssal-ink text-[14px] underline underline-offset-4 hover:no-underline"
           >
             Create a new account
           </Link>

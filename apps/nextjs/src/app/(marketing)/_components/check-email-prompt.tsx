@@ -4,19 +4,19 @@ interface CheckEmailPromptProps {
 
 export function CheckEmailPrompt({ email }: CheckEmailPromptProps) {
   return (
-    <div className="bg-eggshell border-chalk rounded-2xl border p-8 text-center">
-      <div className="bg-powder border-chalk mx-auto mb-5 flex size-12 items-center justify-center rounded-full border">
+    <div className="text-center">
+      <div className="bg-frost border-lichen mx-auto mb-5 flex size-12 items-center justify-center rounded-full border">
         <MailIcon />
       </div>
-      <h2 className="text-obsidian font-display text-[24px] font-light tracking-[-0.48px]">
+      <h2 className="text-abyssal-ink text-[24px] tracking-[-0.02em]">
         Check your email
       </h2>
-      <p className="text-gravel mt-3 text-[15px] leading-[1.55]">
+      <p className="text-graphite mt-3 text-[15px] leading-[1.5]">
         We sent a verification link to{" "}
-        <span className="text-obsidian font-medium">{email}</span>. Click the
-        link to finish creating your account.
+        <span className="text-abyssal-ink">{email}</span>. Click the link to
+        finish creating your account.
       </p>
-      <p className="text-gravel mt-6 text-[13px] leading-[1.55]">
+      <p className="text-graphite mt-6 text-[13px] leading-[1.5]">
         Didn't get it? Check your spam folder, or wait a minute and try again.
       </p>
     </div>
@@ -35,7 +35,7 @@ function MailIcon() {
       strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="text-obsidian"
+      className="text-abyssal-ink"
       aria-hidden
     >
       <rect x="3" y="5" width="18" height="14" rx="2" />

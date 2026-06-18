@@ -25,18 +25,18 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(
     env.VERCEL_ENV === "production"
-      ? "https://billsentry.com"
+      ? "https://autolab.dev"
       : "http://localhost:3000",
   ),
-  title: "BillSentry",
+  title: "Autolab",
   description:
-    "AI-native legislative tracking for California government affairs firms. Every bill watched. Every client briefed.",
+    "An AI scientist that proposes, runs, and learns from experiments in a closed loop. Watch it optimize, one prediction at a time.",
   openGraph: {
-    title: "BillSentry",
+    title: "Autolab",
     description:
-      "AI-native legislative tracking for California government affairs firms. Every bill watched. Every client briefed.",
-    url: "https://billsentry.com",
-    siteName: "BillSentry",
+      "An AI scientist that proposes, runs, and learns from experiments in a closed loop. Watch it optimize, one prediction at a time.",
+    url: "https://autolab.dev",
+    siteName: "Autolab",
   },
 };
 

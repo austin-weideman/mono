@@ -1,0 +1,55 @@
+{
+  "name": "@mono/experiment",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./src/index.ts"
+    },
+    "./jobs": {
+      "types": "./dist/jobs/index.d.ts",
+      "default": "./src/jobs/index.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "dev": "tsc",
+    "format": "prettier --check . --ignore-path ../../.gitignore",
+    "lint": "eslint --flag unstable_native_nodejs_ts_config",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false",
+    "study": "tsx scripts/run-study.ts",
+    "study:baseline": "tsx scripts/random-baseline.ts"
+  },
+  "dependencies": {
+    "@ai-sdk/gateway": "catalog:",
+    "@mono/agent": "workspace:*",
+    "@mono/ai": "workspace:*",
+    "@mono/billing": "workspace:*",
+    "@mono/conversation": "workspace:*",
+    "@mono/core-types": "workspace:*",
+    "@mono/db": "workspace:*",
+    "@mono/errors": "workspace:*",
+    "@mono/jobs": "workspace:*",
+    "@mono/realtime": "workspace:*",
+    "ai": "catalog:",
+    "drizzle-orm": "catalog:",
+    "inngest": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@mono/eslint-config": "workspace:*",
+    "@mono/prettier-config": "workspace:*",
+    "@mono/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "prettier": "catalog:",
+    "tsx": "4.22.4",
+    "typescript": "catalog:"
+  },
+  "peerDependencies": {
+    "ai": ">=6.0.170"
+  },
+  "prettier": "@mono/prettier-config"
+}

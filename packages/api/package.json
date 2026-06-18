@@ -23,6 +23,7 @@
     "@mono/conversation": "workspace:*",
     "@mono/core-types": "workspace:*",
     "@mono/db": "workspace:*",
+    "@mono/experiment": "workspace:*",
     "@mono/user": "workspace:*",
     "@mono/validators": "workspace:*",
     "@trpc/server": "catalog:",

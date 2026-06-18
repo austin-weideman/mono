@@ -22,9 +22,8 @@ import { authClient } from "~/auth/client";
 import { CheckEmailPrompt } from "./check-email-prompt";
 
 const inputClass = cn(
-  "bg-eggshell border-chalk text-obsidian placeholder:text-fog h-11 text-[15px]",
-  "dark:bg-eggshell dark:border-chalk dark:text-obsidian",
-  "focus-visible:border-obsidian focus-visible:ring-obsidian/15",
+  "bg-bone-white border-lichen text-abyssal-ink placeholder:text-graphite/50 h-11 text-[15px]",
+  "focus-visible:border-abyssal-ink focus-visible:ring-abyssal-ink/15",
   "aria-invalid:border-destructive aria-invalid:ring-destructive/20",
 );
 
@@ -224,10 +223,10 @@ function SubmitButton({ isSubmitting, children }: SubmitButtonProps) {
       type="submit"
       disabled={isSubmitting}
       className={cn(
-        "bg-obsidian text-eggshell hover:bg-cinder border-obsidian h-11 w-full rounded-full border text-[14px] font-medium",
-        "transition-[transform,background-color,box-shadow] duration-150 ease-out",
-        "hover:scale-[1.01] hover:shadow-[0_8px_20px_-8px_rgba(0,0,0,0.35)] active:scale-[0.99]",
-        "disabled:hover:scale-100 disabled:hover:shadow-none",
+        "bg-abyssal-ink text-paper hover:bg-abyssal-ink/90 font-roboto-mono h-11 w-full rounded-lg text-[13px] tracking-[-0.02em] uppercase",
+        "transition-transform duration-150 ease-out",
+        "hover:scale-[1.01] active:scale-[0.99]",
+        "disabled:hover:scale-100",
       )}
     >
       {isSubmitting && <LoaderIcon className="animate-spin" />}

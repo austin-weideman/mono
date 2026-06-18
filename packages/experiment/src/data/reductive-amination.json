@@ -1,0 +1,7823 @@
+{
+  "source": {
+    "dataset": "Reductive Amination",
+    "environmentKey": "reductive_amination",
+    "upstreamRepo": "https://github.com/gomesgroup/olympus",
+    "upstreamPath": "src/olympus/datasets/dataset_Reductive_Amination",
+    "upstreamCommit": "7b4bb35c04eb31dc57a8e46cc79a9cab71dee06d",
+    "license": "MIT",
+    "licenseAttribution": "Olympus (Gomes Group), MIT License. https://github.com/gomesgroup/olympus",
+    "paperTitle": "Miniaturization of popular reactions from the medicinal chemists' toolbox for ultrahigh-throughput experimentation",
+    "paperDoi": "10.1038/s44160-023-00351-1",
+    "retrievedAt": "2026-06-18",
+    "note": "Vendored once from upstream config.json + data.csv + description.txt and frozen. data.csv has no header; column order comes from config.json parameter order followed by the percent_conversion measurement. Reshaped: parameters carry plain-language label/description for the prompt and per-option descriptor vectors (used only by the Bayesian-optimization follow-up); measurements are {params, value} records. The answer key never leaves this file; the agent only ever sees results of experiments it runs."
+  },
+  "description": "Reductive amination of staurosporine.\n\nReaction Setup:\n\nSPT Labtech Mosquito®HTS liquid handling robot was used to generate a reaction plate containing all possible reaction\nconditions per aldehyde building block. 2 solvents x 2 concentrations x 3 AcOH loadings x 4 TTIP loadings = 48 reaction\nconditions per aldehyde building block. \n48 reaction conditions x 16 building blocks = 768 reactions. \n\nThe reactions were mixed (core, aldehyde/ketone, acetic acid, titanium tetraisopropoxide) \nand allowed to sit for 4 hours before addition of STAB to the reaction mixtures. \nAfter 18 hours, reactions were quenched and examined. 3x1 µL 0.5 M AcOH in DMSO\n(containing PhPh internal standard) quench solution was added to each reaction well. \n1 µL of each quenched reaction (4 µL total volume) was transferred from the 1,536 plate \nreaction well to a 384-well analytical plate containing 60 µL DMSO per well. \nResults of this screen are presented in Figure 3 as a heat map arrayed by reaction conditions after quenching.\nReactions are represented by relative percent conversion, calculated from UV peak area of product and staurosporine core.\n\nDataset source:\nMiniturization of popular reactions from medicial chemists' toolbox for ultrahigh-throughput experimentation\nDOI: https://doi.org/10.1038/s44160-023-00351-1\n\n=================================================================\n                Summary\n-----------------------------------------------------------------\n    Number of Samples             768\n    Dimensionality                  5\n    Features:\n        substrate                   categorical (16 options)\n        AcOH_equiv                  discrete (3 options)\n        TTIP_equiv                  discrete (4 options)\n        solvent                     categorical (2 options)\n        reaction_concentration_mM   discrete (2 options)\n    Targets:\n        conversion                  continuous (0 to 100)\n==================================================================",
+  "objective": {
+    "name": "percent_conversion",
+    "label": "percent conversion",
+    "unit": "%",
+    "direction": "maximize",
+    "min": 0,
+    "max": 100
+  },
+  "parameters": [
+    {
+      "name": "substrate",
+      "label": "substrate",
+      "description": "The aldehyde or ketone building block coupled to the staurosporine core. Aldehydes generally react readily; hindered ketones are harder.",
+      "type": "categorical",
+      "options": [
+        {
+          "value": "2-bromo-4-formylbenzonitrile",
+          "descriptor": [0, 0, 0, 0, 0, 1, 0, 0, 0, 0.81]
+        },
+        {
+          "value": "N-(4-formylphenyl)acetamide",
+          "descriptor": [1, 0, 1, 0, 0.33, 1, 0, 0, 0.75, 0.99]
+        },
+        {
+          "value": "3,4-dimethylbenzaldehyde",
+          "descriptor": [0, 0, 0, 0, 0.67, 1, 0, 0, 0, 0]
+        },
+        {
+          "value": "3-phenylpropanal",
+          "descriptor": [0, 0, 0, 0, 0, 1, 0, 0.66, 1, 0]
+        },
+        {
+          "value": "(E)-3-phenylprop-2-enal",
+          "descriptor": [1, 0, 0, 0, 0, 1, 0, 0.79, 1, 0]
+        },
+        {
+          "value": "benzyl 4-formylpiperidine-1-carboxylate",
+          "descriptor": [1, 1, 1, 1, 1, 1, 1, 0.89, 0.15, 1]
+        },
+        {
+          "value": "1,3-benzothiazole-2-carbaldehyde",
+          "descriptor": [0, 0, 0, 1, 0, 1, 0, 1, 0, 0.44]
+        },
+        {
+          "value": "3,7-dimethyloct-6-enal",
+          "descriptor": [1, 0, 0, 0, 1, 0, 1, 0, 0.75, 0]
+        },
+        {
+          "value": "benzyl 4-oxopiperidine-1-carboxylate",
+          "descriptor": [1, 1, 1, 1, 1, 1, 0, 0.9, 0.18, 1]
+        },
+        {
+          "value": "1-(3,4-difluorophenyl)piperidin-4-one",
+          "descriptor": [0, 1, 1, 1, 0.67, 1, 0, 0.97, 0.73, 0.11]
+        },
+        {
+          "value": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+          "descriptor": [0, 0, 1, 0, 1, 1, 0, 0, 0, 0]
+        },
+        {
+          "value": "1-(3,5-dimethylphenyl)ethanone",
+          "descriptor": [0, 0, 0, 0, 1, 1, 0, 0, 0, 0]
+        },
+        {
+          "value": "(E)-4-phenylbut-3-en-2-one",
+          "descriptor": [1, 0, 0, 0, 0.33, 1, 0, 0.86, 1, 0]
+        },
+        {
+          "value": "3-pyrazol-1-ylcyclopentan-1-one",
+          "descriptor": [0, 1, 0, 1, 0, 0, 1, 0.71, 0, 0.6]
+        },
+        {
+          "value": "cyclopentanone",
+          "descriptor": [0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+        },
+        {
+          "value": "2-(3-oxocyclopentyl)acetonitrile",
+          "descriptor": [0, 1, 0, 0, 0, 0, 1, 0, 0, 0.81]
+        }
+      ]
+    },
+    {
+      "name": "AcOH_equiv",
+      "label": "acetic acid loading (equiv)",
+      "description": "Equivalents of acetic acid (AcOH) catalyst.",
+      "type": "discrete",
+      "low": 1,
+      "high": 5,
+      "options": [1, 5, 3]
+    },
+    {
+      "name": "TTIP_equiv",
+      "label": "titanium(IV) isopropoxide loading (equiv)",
+      "description": "Equivalents of titanium tetraisopropoxide (TTIP) Lewis acid.",
+      "type": "discrete",
+      "low": 1,
+      "high": 5,
+      "options": [1, 3, 5, 2]
+    },
+    {
+      "name": "solvent",
+      "label": "solvent",
+      "description": "Reaction solvent (DMA = dimethylacetamide, NMP = N-methyl-2-pyrrolidone).",
+      "type": "categorical",
+      "options": [
+        {
+          "value": "DMA",
+          "descriptor": [-1, -1, 1, -1, -1, -1, -1, -1, -1, -1]
+        },
+        {
+          "value": "NMP",
+          "descriptor": [1, 1, -1, 1, 1, 1, 1, 1, 1, 1]
+        }
+      ]
+    },
+    {
+      "name": "reaction_concentration_mM",
+      "label": "reaction concentration (mM)",
+      "description": "Concentration of the reaction mixture in millimolar.",
+      "type": "discrete",
+      "low": 50,
+      "high": 100,
+      "options": [50, 100]
+    }
+  ],
+  "measurements": [
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 11
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 7
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 100
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 14
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 13
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 15
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 96
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 7
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 77
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 67
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 90
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 100
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 33
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 100
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 45
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 100
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 98
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 89
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 100
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 40
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 11
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 26
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 70
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 100
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 25
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 46
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 89
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 100
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 84
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 11
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 96
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 13
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 16
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 3
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 100
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 98
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 58
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 26
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 9
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 98
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 4
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 89
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 7
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 92
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 100
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 100
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 5
+    },
+    {
+      "params": {
+        "substrate": "2-bromo-4-formylbenzonitrile",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 88
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 9
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 72
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 92
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 98
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 97
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 74
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 59
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 82
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 80
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 97
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 91
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 96
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 97
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 88
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 82
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 94
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 80
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 87
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 82
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 99
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 90
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 85
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 40
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 86
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 93
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 78
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 90
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 90
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 87
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 74
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 95
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 80
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 95
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 75
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 85
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 80
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 97
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 95
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 97
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 88
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 52
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 96
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 58
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 96
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 80
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 65
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 73
+    },
+    {
+      "params": {
+        "substrate": "N-(4-formylphenyl)acetamide",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 74
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 52
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 77
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 74
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 100
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 13
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 32
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 64
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 39
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 97
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 79
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 78
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 98
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 73
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 72
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 91
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 56
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 44
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 49
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 82
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 53
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 55
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 16
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 70
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 50
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 46
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 33
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 44
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 66
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 50
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 94
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 45
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 62
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 33
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 75
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 55
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 92
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 96
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 98
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 70
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 38
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 75
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 42
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 97
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 52
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 36
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 51
+    },
+    {
+      "params": {
+        "substrate": "3,4-dimethylbenzaldehyde",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 32
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 23
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 29
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 28
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 36
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 13
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 33
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 30
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 26
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 39
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 27
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 31
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 43
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 31
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 24
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 55
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 24
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 20
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 38
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 31
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 19
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 27
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 27
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 27
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 22
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 21
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 18
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 21
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 39
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 26
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 57
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 27
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 21
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 18
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 47
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 25
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 38
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 54
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 40
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 40
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 20
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 30
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 30
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 44
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 27
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 36
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 24
+    },
+    {
+      "params": {
+        "substrate": "3-phenylpropanal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 25
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 7
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 37
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 22
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 20
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 37
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 23
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 43
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 37
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 23
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 46
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 30
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 24
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 35
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 32
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 29
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 74
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 29
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 32
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 70
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 23
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 35
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 32
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 35
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 31
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 27
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 38
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 34
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 34
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 40
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 35
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 62
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 24
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 28
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 28
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 60
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 35
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 33
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 53
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 52
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 49
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 34
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 21
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 35
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 41
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 30
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 49
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 24
+    },
+    {
+      "params": {
+        "substrate": "(E)-3-phenylprop-2-enal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 48
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 15
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 10
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 12
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 18
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 11
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 12
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 13
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 18
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 14
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 14
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 11
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 13
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 11
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 22
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 13
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 9
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 30
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 20
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 14
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 22
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 14
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 24
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 9
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-formylpiperidine-1-carboxylate",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 7
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 21
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 98
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 15
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 22
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 18
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 70
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 24
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 40
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 64
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 88
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 96
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 34
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 99
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 80
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 91
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 68
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 60
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 92
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 45
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 8
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 39
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 60
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 97
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 36
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 41
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 45
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 58
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 77
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 47
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 81
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 17
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 15
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 14
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 90
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 99
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 57
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 50
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 24
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 79
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 6
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 73
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 7
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 80
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 81
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 80
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 8
+    },
+    {
+      "params": {
+        "substrate": "1,3-benzothiazole-2-carbaldehyde",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 61
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 30
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 64
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 35
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 70
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 17
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 76
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 40
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 36
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 60
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 42
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 57
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 90
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 64
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 37
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 98
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 46
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 30
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 73
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 50
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 23
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 35
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 69
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 43
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 41
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 32
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 28
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 37
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 93
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 69
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 97
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 34
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 30
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 99
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 45
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 90
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 90
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 46
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 67
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 25
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 49
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 51
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 89
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 48
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 92
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 29
+    },
+    {
+      "params": {
+        "substrate": "3,7-dimethyloct-6-enal",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 37
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 45
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 5
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 3
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 5
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 6
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 18
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 19
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 29
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 26
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 44
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 13
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 28
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 24
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 13
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 13
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 36
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 23
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 44
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 3
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 4
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 19
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 10
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 40
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 15
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 41
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 13
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 37
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 13
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 25
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 24
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 29
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 8
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "benzyl 4-oxopiperidine-1-carboxylate",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 8
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 45
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 5
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 3
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 5
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 5
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 16
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 16
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 28
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 24
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 46
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 10
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 36
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 24
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 15
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 19
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 36
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 20
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 40
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 4
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 4
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 3
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 25
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 10
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 41
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 10
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 25
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 48
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 11
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 44
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 3
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 16
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 20
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 22
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 34
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 9
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "1-(3,4-difluorophenyl)piperidin-4-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 15
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-[3,5-bis(trifluoromethyl)phenyl]ethanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "1-(3,5-dimethylphenyl)ethanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 6
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 4
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 3
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 3
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 3
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 3
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 3
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "(E)-4-phenylbut-3-en-2-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 8
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 3
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 5
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 3
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 5
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 4
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 5
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 3
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 3
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 4
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 3
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 4
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "3-pyrazol-1-ylcyclopentan-1-one",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 18
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 3
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 5
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 4
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 3
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 11
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 9
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 21
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 10
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 12
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 9
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 17
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 4
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 6
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 5
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 12
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 10
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 4
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 5
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 10
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 5
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 7
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 11
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 20
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 8
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "cyclopentanone",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 4
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 31
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 4
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 4
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 5
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 7
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 13
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 19
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 7
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 35
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 11
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 19
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 19
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 9
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 14
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 24
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 13
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 32
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 3
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 3
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 10
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 5
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 1
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 23
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 3,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 0
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 10
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 100
+      },
+      "value": 29
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 5
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 10
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 2,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 9
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 16
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 2
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 3,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 12
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 29
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 5,
+        "TTIP_equiv": 1,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 50
+      },
+      "value": 7
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 1,
+        "TTIP_equiv": 5,
+        "solvent": "NMP",
+        "reaction_concentration_mM": 100
+      },
+      "value": 4
+    },
+    {
+      "params": {
+        "substrate": "2-(3-oxocyclopentyl)acetonitrile",
+        "AcOH_equiv": 3,
+        "TTIP_equiv": 1,
+        "solvent": "DMA",
+        "reaction_concentration_mM": 50
+      },
+      "value": 8
+    }
+  ]
+}

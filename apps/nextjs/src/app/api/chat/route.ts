@@ -15,8 +15,12 @@ import {
 import { userActor } from "@mono/core-types";
 import { db } from "@mono/db/client";
 import { NotFoundError } from "@mono/errors";
+import { getCampaignByConversationId } from "@mono/experiment";
 import { inngest } from "@mono/jobs";
-import { conversationRunAssistantEvent } from "@mono/jobs/events/conversation";
+import {
+  conversationRunAssistantEvent,
+  conversationRunScientistEvent,
+} from "@mono/jobs/events/conversation";
 
 import { getSelectedModelId } from "~/app/(app)/_lib/model";
 import { auth } from "~/auth/server";
@@ -106,11 +110,26 @@ export async function POST(req: Request): Promise<Response> {
 
   await setActiveStream(db, actor, { conversationId, streamId });
 
+  // A conversation backed by a campaign runs the scientist agent; everything
+  // else runs the assistant. Both feed the same realtime channel + SSE route.
+  const campaign = await getCampaignByConversationId(db, conversationId);
+
   await inngest.send(
-    conversationRunAssistantEvent.create(
-      { conversationId, userId, streamId, gatewayModelId },
-      { id: streamId },
-    ),
+    campaign
+      ? conversationRunScientistEvent.create(
+          {
+            conversationId,
+            campaignId: campaign.id,
+            userId,
+            streamId,
+            gatewayModelId,
+          },
+          { id: streamId },
+        )
+      : conversationRunAssistantEvent.create(
+          { conversationId, userId, streamId, gatewayModelId },
+          { id: streamId },
+        ),
   );
 
   return Response.json({ streamId }, { status: 202 });

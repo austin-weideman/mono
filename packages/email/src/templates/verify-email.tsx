@@ -29,18 +29,18 @@ export function VerifyEmail({
   return (
     <Html>
       <BrandHead />
-      <Preview>Verify your email to get started with BillSentry</Preview>
+      <Preview>Verify your email to get started with Autolab</Preview>
       <Body style={styles.body}>
         <Container style={styles.container}>
           <Section style={styles.header}>
-            <Text style={styles.logo}>BillSentry</Text>
+            <Text style={styles.logo}>Autolab</Text>
           </Section>
 
           <Heading style={styles.heading}>Verify your email</Heading>
 
           <Text style={styles.paragraph}>
-            Hi {firstName}, welcome to BillSentry. Click the button below to
-            verify your email address and get started.
+            Hi {firstName}, welcome to Autolab. Click the button below to verify
+            your email address and get started.
           </Text>
 
           <Section style={styles.buttonContainer}>
@@ -59,10 +59,9 @@ export function VerifyEmail({
           <Hr style={styles.hr} />
 
           <Text style={styles.footer}>
-            If you didn't sign up for BillSentry, you can safely ignore this
-            email.
+            If you didn't sign up for Autolab, you can safely ignore this email.
           </Text>
-          <Text style={styles.footerBrand}>BillSentry</Text>
+          <Text style={styles.footerBrand}>Autolab</Text>
         </Container>
       </Body>
     </Html>

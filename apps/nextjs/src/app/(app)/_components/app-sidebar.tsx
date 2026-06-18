@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 
 import {
   Button,
+  FlaskIcon,
   HouseIcon,
   PlusIcon,
   Sidebar,
@@ -41,6 +42,7 @@ export function AppSidebar({ user }: AppSidebarProps) {
   const pathname = usePathname();
   const { setOpenMobile } = useSidebar();
   const isHomeActive = pathname === "/home";
+  const isLabActive = pathname === "/lab" || pathname.startsWith("/lab/");
 
   return (
     <Sidebar className="group-data-[side=left]:border-r-0">
@@ -55,7 +57,7 @@ export function AppSidebar({ user }: AppSidebarProps) {
               }}
             >
               <span className="hover:bg-muted cursor-pointer rounded-md px-2 text-lg font-semibold">
-                BillSentry
+                Autolab
               </span>
             </Link>
             <Tooltip>
@@ -90,6 +92,14 @@ export function AppSidebar({ user }: AppSidebarProps) {
                   <Link href="/home" onClick={() => setOpenMobile(false)}>
                     <HouseIcon />
                     <span>Home</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild isActive={isLabActive}>
+                  <Link href="/lab" onClick={() => setOpenMobile(false)}>
+                    <FlaskIcon />
+                    <span>Lab</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>

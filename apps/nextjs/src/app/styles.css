@@ -18,17 +18,18 @@
     "SF Mono", ui-monospace, SFMono-Regular, "Roboto Mono", Menlo, Monaco,
     Consolas, "Liberation Mono", "Courier New", monospace;
 
-  /* Marketing palette — ElevenLabs-inspired, achromatic + 2 accent dots */
-  --eggshell: #fdfcfc;
-  --powder: #f5f3f1;
-  --chalk: #e5e5e5;
-  --fog: #b1b0b0;
-  --gravel: #777169;
-  --slate: #a59f97;
-  --cinder: #575347;
-  --obsidian: #000000;
-  --signal-blue: #0447ff;
-  --ember: #ff4704;
+  /* Marketing palette — Autolab, "bioluminescent laboratory at midnight"
+     (Integrated Biosciences reference). Near-black canvas with a cool green
+     undertone, restrained whites, one rationed lime signal. */
+  --abyssal-ink: #222f30; /* dark canvas, nav, primary text on light */
+  --bone-white: #f7f7f5; /* light-section canvas */
+  --paper: #ffffff; /* card surface, body text on dark */
+  --graphite: #4d5757; /* secondary text, dark-surface hairlines */
+  --lichen: #c9cbbe; /* muted metadata, light-surface hairlines */
+  --tissue: #e7e8e1; /* warm alternate card surface */
+  --frost: #eeeeee; /* neutral light card surface */
+  --void: #000000; /* footer ground */
+  --bioluminescent-lime: #cef79e; /* the one accent — micro-surfaces only */
 }
 
 @utility container {
@@ -43,29 +44,31 @@
 }
 
 @theme inline {
-  /* Display = Fraunces (variable, weight 300 is the signature heading weight)
-     Body = Inter (loaded in layout.tsx) */
+  /* Display = Fraunces, Body = Inter — used by the app shell (loaded in
+     layout.tsx). Left intact; the marketing site uses the lab fonts below. */
   --font-display: var(--font-display), Georgia, "Times New Roman", serif;
   --font-body: var(--font-body), var(--font-system);
 
-  /* Marketing color tokens */
-  --color-eggshell: var(--eggshell);
-  --color-powder: var(--powder);
-  --color-chalk: var(--chalk);
-  --color-fog: var(--fog);
-  --color-gravel: var(--gravel);
-  --color-slate: var(--slate);
-  --color-cinder: var(--cinder);
-  --color-obsidian: var(--obsidian);
-  --color-signal-blue: var(--signal-blue);
-  --color-ember: var(--ember);
+  /* Marketing fonts — Aspekta is proprietary, so Inter Tight is the named
+     substitute (single weight, hierarchy by size + tracking). Roboto Mono
+     carries technical labels. Both loaded in the marketing layout. */
+  --font-aspekta:
+    var(--font-aspekta), "Inter Tight", ui-sans-serif, system-ui, -apple-system,
+    sans-serif;
+  --font-roboto-mono:
+    var(--font-roboto-mono), ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, monospace;
 
-  /* Marketing shadows — hairline elevation only */
-  --shadow-hairline:
-    rgba(0, 0, 0, 0.4) 0px 0px 1px 0px, rgba(0, 0, 0, 0.04) 0px 2px 4px 0px;
-  --shadow-hairline-lg:
-    rgba(0, 0, 0, 0.4) 0px 0px 1px 0px, rgba(0, 0, 0, 0.04) 0px 4px 12px 0px;
-  --shadow-inset-hairline: rgba(0, 0, 0, 0.075) 0px 0px 0px 0.5px inset;
+  /* Autolab marketing color tokens */
+  --color-abyssal-ink: var(--abyssal-ink);
+  --color-bone-white: var(--bone-white);
+  --color-paper: var(--paper);
+  --color-graphite: var(--graphite);
+  --color-lichen: var(--lichen);
+  --color-tissue: var(--tissue);
+  --color-frost: var(--frost);
+  --color-void: var(--void);
+  --color-bioluminescent-lime: var(--bioluminescent-lime);
 }
 
 @layer base {

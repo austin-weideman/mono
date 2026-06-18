@@ -5,8 +5,7 @@ import { stepCountIs, ToolLoopAgent } from "ai";
 import type { AgentToolConfig, ToolContext, ToolMetadata } from "../types";
 import { createTools, generateToolInstructions } from "../tools";
 import { InternalTool } from "../types";
-
-const MAX_AGENT_STEPS = 50;
+import { MAX_AGENT_STEPS } from "./constants";
 
 const REASONING_PROVIDER_OPTIONS = {
   anthropic: {

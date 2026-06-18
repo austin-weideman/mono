@@ -1,16 +1,23 @@
+// A closed-loop mark: an orbit with a node on its path, suggesting search that
+// circles back on its own results. Monochrome, inherits text color.
 export function Logomark() {
   return (
     <svg
       aria-hidden="true"
-      viewBox="0 0 30 36"
-      fill="currentColor"
-      className="text-obsidian size-5 transition-transform duration-300 ease-out group-hover:scale-110"
+      viewBox="0 0 24 24"
+      fill="none"
+      className="size-5 transition-transform duration-300 ease-out group-hover:rotate-45"
     >
-      <rect x="5" y="4" width="4" height="6" />
-      <rect x="13" y="4" width="4" height="6" />
-      <rect x="21" y="4" width="4" height="6" />
-      <rect x="5" y="10" width="20" height="20" />
-      <rect x="2" y="30" width="26" height="4" />
+      <circle
+        cx="12"
+        cy="12"
+        r="8"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeDasharray="2.5 3"
+      />
+      <circle cx="12" cy="12" r="2.5" fill="currentColor" />
+      <circle cx="20" cy="12" r="2" fill="var(--color-bioluminescent-lime)" />
     </svg>
   );
 }

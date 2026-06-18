@@ -1,0 +1,14 @@
+{
+  "description": "Best-so-far conversion under uniform random sampling without replacement, averaged over random orderings (Monte Carlo). The study's random floor.",
+  "datasetSize": 768,
+  "budget": 20,
+  "trials": 10000,
+  "seed": 42,
+  "generatedAt": "2026-06-18T23:36:48.010Z",
+  "curve": [
+    27.062, 43.941, 54.264, 62.113, 68.022, 72.757, 76.377, 79.377, 81.858,
+    83.935, 85.526, 87.049, 88.319, 89.389, 90.319, 91.156, 91.827, 92.479,
+    93.05, 93.541
+  ],
+  "finalMean": 93.541
+}

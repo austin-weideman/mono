@@ -8,19 +8,19 @@ interface NavAuthLinkProps {
   children: React.ReactNode;
 }
 
+// Nav auth actions in the instrumentation voice: Roboto Mono, uppercase,
+// hairline geometry. Primary is a filled paper rectangle on the dark nav
+// (opposite surface); ghost is an outlined hairline. Lime is never used here.
 export function NavAuthLink({ href, variant, children }: NavAuthLinkProps) {
   return (
     <Link
       href={href}
       className={cn(
-        "inline-flex items-center justify-center rounded-full font-medium",
-        "h-9 px-4 text-[14px] leading-none",
-        "transition-[transform,background-color,box-shadow,border-color] duration-150 ease-out will-change-transform",
-        "hover:scale-[1.03] active:scale-[0.97]",
-        variant === "primary" &&
-          "bg-obsidian text-eggshell border-obsidian hover:bg-cinder border hover:shadow-[0_8px_20px_-8px_rgba(0,0,0,0.35)]",
+        "font-roboto-mono inline-flex h-9 items-center justify-center rounded-lg px-4 text-[13px] tracking-[-0.02em] uppercase",
+        "transition-[transform,border-color,background-color] duration-150 ease-out hover:scale-[1.03] active:scale-[0.97]",
+        variant === "primary" && "bg-paper text-abyssal-ink",
         variant === "ghost" &&
-          "bg-eggshell text-obsidian border-chalk hover:bg-powder border hover:shadow-[0_4px_12px_-6px_rgba(0,0,0,0.15)]",
+          "border-graphite text-paper hover:border-lichen border",
       )}
     >
       {children}

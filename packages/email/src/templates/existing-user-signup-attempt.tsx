@@ -23,11 +23,11 @@ export function ExistingUserSignupAttemptEmail({
   return (
     <Html>
       <BrandHead />
-      <Preview>Someone tried to sign up with your BillSentry email</Preview>
+      <Preview>Someone tried to sign up with your Autolab email</Preview>
       <Body style={styles.body}>
         <Container style={styles.container}>
           <Section style={styles.header}>
-            <Text style={styles.logo}>BillSentry</Text>
+            <Text style={styles.logo}>Autolab</Text>
           </Section>
 
           <Heading style={styles.heading}>
@@ -35,7 +35,7 @@ export function ExistingUserSignupAttemptEmail({
           </Heading>
 
           <Text style={styles.paragraph}>
-            Someone tried to create a BillSentry account using{" "}
+            Someone tried to create a Autolab account using{" "}
             <strong>{email}</strong>.
           </Text>
 
@@ -47,7 +47,7 @@ export function ExistingUserSignupAttemptEmail({
 
           <Hr style={styles.hr} />
 
-          <Text style={styles.footerBrand}>BillSentry</Text>
+          <Text style={styles.footerBrand}>Autolab</Text>
         </Container>
       </Body>
     </Html>

@@ -1,5 +1,7 @@
 # Mono
 
+Monorepo for **Autolab**, an autonomous closed-loop research platform: an AI scientist agent that proposes, predicts, runs, and learns from experiments in a chat-driven loop, with a live trajectory chart beside the transcript.
+
 See [AGENTS.md](./AGENTS.md) for the full project overview, architectural rules, and conventions for AI agents working in this repo.
 
 ## Quick Start

@@ -5,6 +5,7 @@ import { getSession } from "~/auth/server";
 import { AuthOrSeparator } from "../_components/auth-or-separator";
 import { EmailPasswordForm } from "../_components/email-password-form";
 import { GoogleSignInButton } from "../_components/google-sign-in-button";
+import { PubTag } from "../_components/lab-ui";
 
 export default async function SignupPage() {
   const session = await getSession();
@@ -14,14 +15,15 @@ export default async function SignupPage() {
   }
 
   return (
-    <section className="px-6 pt-16 pb-20 md:pt-24 md:pb-28">
-      <div className="mx-auto w-full max-w-[440px]">
-        <header className="mb-10 text-center">
-          <h1 className="text-obsidian font-display text-[32px] leading-[1.1] font-light tracking-[-0.64px]">
-            Get early access
+    <section className="bg-abyssal-ink flex min-h-[calc(100vh-4rem)] items-center justify-center px-6 py-16">
+      <div className="border-lichen text-abyssal-ink bg-paper w-full max-w-[420px] rounded-[28px] border p-8 md:p-10">
+        <header className="mb-8">
+          <PubTag surface="light">Autolab</PubTag>
+          <h1 className="mt-4 text-[32px] leading-[1.05] tracking-[-0.03em]">
+            Run your first campaign
           </h1>
-          <p className="text-gravel mt-3 text-[15px] leading-[1.55]">
-            Create your BillSentry account.
+          <p className="text-graphite mt-2 text-[15px] leading-[1.5]">
+            Create an account and put the scientist to work.
           </p>
         </header>
 
@@ -34,11 +36,11 @@ export default async function SignupPage() {
 
           <EmailPasswordForm mode="signup" />
 
-          <p className="text-gravel text-center text-[14px]">
+          <p className="text-graphite text-center text-[14px]">
             Already have an account?{" "}
             <Link
               href="/login"
-              className="text-obsidian underline underline-offset-4 hover:no-underline"
+              className="text-abyssal-ink underline underline-offset-4 hover:no-underline"
             >
               Sign in
             </Link>
