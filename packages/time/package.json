@@ -24,7 +24,7 @@
     "@mono/eslint-config": "workspace:*",
     "@mono/prettier-config": "workspace:*",
     "@mono/tsconfig": "workspace:*",
-    "@types/luxon": "3.7.1",
+    "@types/luxon": "3.7.6",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:"
