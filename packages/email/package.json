@@ -22,7 +22,7 @@
     "@mono/errors": "workspace:*",
     "@react-email/components": "1.0.12",
     "react": "catalog:react19",
-    "resend": "6.12.3"
+    "resend": "6.12.4"
   },
   "devDependencies": {
     "@mono/eslint-config": "workspace:*",
