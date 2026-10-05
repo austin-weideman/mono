@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@mono/env": "workspace:*",
-    "@upstash/realtime": "1.0.3",
+    "@upstash/realtime": "1.0.4",
     "@upstash/redis": "1.37.0",
     "ai": "catalog:",
     "zod": "catalog:"
