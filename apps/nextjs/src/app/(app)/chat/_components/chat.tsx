@@ -1,21 +1,21 @@
 "use client";
 
 import type { FileUIPart, UIMessage } from "ai";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useChat } from "@ai-sdk/react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { DefaultChatTransport } from "ai";
 
 import type { ModelId } from "@mono/ai";
-import type { Message } from "@mono/conversation";
+import type { Message, TurnSnapshot } from "@mono/conversation";
 import { convertDbMessagesToUIMessages } from "@mono/chat-utils";
 import { ChevronDownIcon, SidebarTrigger } from "@mono/ui";
 
 import type { AttachmentDraft } from "./chat-input";
 import { ModelSelector } from "~/app/(app)/_components/model-selector";
+import { useChatTurns } from "~/app/(app)/_lib/use-chat-turns";
 import { useTRPC } from "~/trpc/react";
 import { ChatInput } from "./chat-input";
 import { Messages } from "./messages";
+import { TurnOutcomeNotice } from "./turn-outcome-notice";
 
 const AT_BOTTOM_THRESHOLD_PX = 100;
 
@@ -24,7 +24,7 @@ interface ChatProps {
   initialMessages: Message[];
   selectedModelId: ModelId;
   isNew?: boolean;
-  activeStreamId?: string | null;
+  initialTurn?: TurnSnapshot | null;
 }
 
 export function Chat({
@@ -32,7 +32,7 @@ export function Chat({
   initialMessages,
   selectedModelId,
   isNew,
-  activeStreamId,
+  initialTurn = null,
 }: ChatProps) {
   const trpc = useTRPC();
   const queryClient = useQueryClient();
@@ -41,90 +41,16 @@ export function Chat({
   const hasInvalidated = useRef(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const prevMessageCount = useRef(0);
-
-  // Tracks the streamId that is currently associated with this conversation:
-  // - Initialized from the server-rendered activeStreamId for resume on mount.
-  // - Updated to a fresh UUID on each new send.
-  // - Used by prepareReconnectToStreamRequest if useChat re-mounts mid-stream.
-  const activeStreamIdRef = useRef<string | null>(activeStreamId ?? null);
-  // useChat (AI SDK 6) does NOT propagate an AbortSignal through reconnect
-  // fetches, so without manual cancellation each navigation-back leaks an SSE
-  // subscription. We track the latest in-flight fetch ourselves and abort the
-  // prior one on every new fetch.
-  const lastFetchController = useRef<AbortController | null>(null);
-  const initialUIMessages = convertDbMessagesToUIMessages(initialMessages);
-
-  const transport = useMemo(
-    () =>
-      // The transport's callbacks read/write activeStreamIdRef, but only inside
-      // request-time closures — not during render. The lint rule can't see this
-      // statically, so we suppress here.
-      // eslint-disable-next-line react-hooks/refs
-      new DefaultChatTransport({
-        api: "/api/chat",
-        prepareSendMessagesRequest: ({ messages, body }) => {
-          const streamId = crypto.randomUUID();
-          activeStreamIdRef.current = streamId;
-          const attachmentIds =
-            (body?.attachmentIds as string[] | undefined) ?? [];
-          return {
-            body: {
-              conversationId,
-              streamId,
-              message: messages.at(-1),
-              attachmentIds,
-            },
-          };
-        },
-        prepareReconnectToStreamRequest: () => ({
-          api: `/api/chat/${conversationId}/stream?streamId=${activeStreamIdRef.current ?? ""}`,
-          credentials: "include",
-        }),
-        fetch: async (input, init) => {
-          // Abort any previous in-flight fetch so SSE subscribers can't
-          // accumulate when useChat fires a fresh reconnect on navigation.
-          // useChat (AI SDK 6) does not propagate an AbortSignal of its own,
-          // so we have to manage cancellation manually.
-          lastFetchController.current?.abort();
-          const ctrl = new AbortController();
-          lastFetchController.current = ctrl;
-
-          if (init?.method === "GET") {
-            // Reconnect path: useChat already prepared the URL.
-            return fetch(input, { ...init, signal: ctrl.signal });
-          }
-
-          // Send path: POST first, then GET. The stream endpoint requires
-          // the conversation row to exist (it auth-checks via loadConversation),
-          // and for a brand-new chat that row is created lazily by POST — so
-          // firing them in parallel races and the GET 404s when it loses.
-          // History buffering on the realtime channel covers the gap between
-          // POST returning and GET subscribing.
-          const body = JSON.parse(init?.body as string) as { streamId: string };
-          const postRes = await fetch("/api/chat", {
-            ...init,
-            signal: ctrl.signal,
-          });
-          if (!postRes.ok) return postRes;
-          return fetch(
-            `/api/chat/${conversationId}/stream?streamId=${body.streamId}`,
-            {
-              method: "GET",
-              credentials: "include",
-              signal: ctrl.signal,
-            },
-          );
-        },
-      }),
-    [conversationId],
+  const [initialUIMessages] = useState(() =>
+    convertDbMessagesToUIMessages(initialMessages),
   );
 
-  const { messages, sendMessage, status } = useChat<UIMessage>({
-    id: conversationId,
-    messages: initialUIMessages,
-    resume: Boolean(activeStreamId),
-    transport,
-  });
+  const { messages, status, outcome, isStopping, send, stop, retry } =
+    useChatTurns({
+      conversationId,
+      initialMessages: initialUIMessages,
+      initialTurn,
+    });
 
   const spendQuery = useQuery(
     trpc.billing.conversationSpend.queryOptions({ conversationId }),
@@ -135,22 +61,13 @@ export function Chat({
 
   const prevStatus = useRef(status);
   useEffect(() => {
-    if (prevStatus.current === "streaming" && status === "ready") {
+    if (prevStatus.current !== "ready" && status === "ready") {
       void queryClient.invalidateQueries({
         queryKey: trpc.billing.conversationSpend.pathKey(),
       });
     }
     prevStatus.current = status;
   }, [status, queryClient, trpc.billing.conversationSpend]);
-
-  // Abort any in-flight stream fetch when conversation switches or component
-  // unmounts. Otherwise leaving an actively-streaming chat for one with no
-  // active stream leaves the SSE subscription dangling.
-  useEffect(() => {
-    return () => {
-      lastFetchController.current?.abort();
-    };
-  }, [conversationId]);
 
   // Update URL when first message is sent (only on new chat page)
   useEffect(() => {
@@ -213,10 +130,6 @@ export function Chat({
 
   const handleSubmit = (text: string, attachments: AttachmentDraft[]) => {
     const attachmentIds = attachments.map((a) => a.id);
-    if (attachments.length === 0) {
-      void sendMessage({ text }, { body: { attachmentIds } });
-      return;
-    }
     const fileParts: FileUIPart[] = attachments.map((a) => ({
       type: "file",
       mediaType: a.contentType,
@@ -226,8 +139,10 @@ export function Chat({
     const parts: UIMessage["parts"] = text.trim().length
       ? [...fileParts, { type: "text", text }]
       : fileParts;
-    void sendMessage({ parts }, { body: { attachmentIds } });
+    void send(parts, attachmentIds);
   };
+
+  const isGenerating = status !== "ready";
 
   return (
     <div className="bg-background flex h-full min-w-0 flex-col">
@@ -237,6 +152,11 @@ export function Chat({
       </header>
       <div ref={scrollContainerRef} className="flex-1 overflow-y-auto">
         <Messages messages={messages} status={status} />
+        {outcome && (
+          <div className="mx-auto max-w-4xl px-2 pb-4 md:px-4">
+            <TurnOutcomeNotice outcome={outcome} onRetry={() => void retry()} />
+          </div>
+        )}
       </div>
       <div className="bg-background relative mx-auto flex w-full max-w-4xl flex-col gap-1 px-2 pb-3 md:px-4 md:pb-4">
         {!isAtBottom && (
@@ -249,7 +169,13 @@ export function Chat({
             <ChevronDownIcon size={18} />
           </button>
         )}
-        <ChatInput onSubmit={handleSubmit} disabled={status !== "ready"} />
+        <ChatInput
+          onSubmit={handleSubmit}
+          disabled={isGenerating}
+          isGenerating={isGenerating}
+          isStopping={isStopping}
+          onStop={stop}
+        />
         {spendLabel && (
           <div className="text-muted-foreground self-end pr-1 text-xs">
             {spendLabel}

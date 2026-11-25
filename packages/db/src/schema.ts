@@ -2,6 +2,7 @@ export * from "./attachment";
 export * from "./auth-schema";
 export * from "./auth-types";
 export * from "./billing";
+export * from "./chat-turn";
 export * from "./conversation";
 export * from "./experiment";
 export * from "./scheduled-task";

@@ -1,2 +1,3 @@
-export { runAssistant } from "./runAssistant";
+export { runAssistantTurn } from "./runAssistantTurn";
 export { startScheduled } from "./startScheduled";
+export { sweepTurns } from "./sweepTurns";

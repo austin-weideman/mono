@@ -1,11 +1,14 @@
 import {
+  cancelTurn,
   deleteConversation,
   deleteConversationInputSchema,
+  getTurn,
   listUserConversations,
   listUserConversationsInputSchema,
   loadConversation,
   loadConversationInputSchema,
   startConversation,
+  turnIdInputSchema,
 } from "@mono/conversation";
 import { userActor } from "@mono/core-types";
 
@@ -39,6 +42,19 @@ export const conversationRouter = createTRPCRouter({
       userId: ctx.session.user.id,
     });
   }),
+
+  getTurn: protectedProcedure
+    .input(turnIdInputSchema)
+    .query(async ({ ctx, input }) => {
+      return await getTurn(ctx.db, userActor(ctx.session.user.id), input);
+    }),
+
+  cancelTurn: protectedProcedure
+    .input(turnIdInputSchema)
+    .mutation(async ({ ctx, input }) => {
+      await cancelTurn(ctx.db, userActor(ctx.session.user.id), input);
+      return { success: true };
+    }),
 
   delete: protectedProcedure
     .input(deleteConversationInputSchema)

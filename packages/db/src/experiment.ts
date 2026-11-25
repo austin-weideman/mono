@@ -72,6 +72,9 @@ export const experimentRun = pgTable(
 
     iteration: t.integer().notNull(),
 
+    // The run_experiment tool call that ran this experiment; retries reuse it.
+    toolCallId: t.text().notNull(),
+
     params: t.jsonb().notNull(),
 
     // Committed in the same tool call, before the result exists.
@@ -88,6 +91,10 @@ export const experimentRun = pgTable(
     uniqueIndex("uniq_experiment_run_campaign_iteration").on(
       table.campaignId,
       table.iteration,
+    ),
+    uniqueIndex("uniq_experiment_run_campaign_tool_call").on(
+      table.campaignId,
+      table.toolCallId,
     ),
     index("idx_experiment_run_campaign_created").on(
       table.campaignId,

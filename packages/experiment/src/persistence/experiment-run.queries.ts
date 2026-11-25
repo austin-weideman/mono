@@ -1,4 +1,4 @@
-import { asc, eq, max } from "drizzle-orm";
+import { and, asc, eq, max } from "drizzle-orm";
 
 import type { DbOrTx } from "@mono/db/client";
 import { experimentRun } from "@mono/db";
@@ -28,4 +28,22 @@ export async function getMaxIteration(
     .where(eq(experimentRun.campaignId, campaignId));
 
   return row?.maxIteration ?? 0;
+}
+
+export async function getExperimentRunByToolCallId(
+  db: DbOrTx,
+  campaignId: string,
+  toolCallId: string,
+): Promise<ExperimentRun | null> {
+  const [row] = await db
+    .select()
+    .from(experimentRun)
+    .where(
+      and(
+        eq(experimentRun.campaignId, campaignId),
+        eq(experimentRun.toolCallId, toolCallId),
+      ),
+    )
+    .limit(1);
+  return row ?? null;
 }

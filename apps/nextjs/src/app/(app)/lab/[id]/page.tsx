@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 
-import { loadConversation } from "@mono/conversation";
+import { loadConversation, toTurnSnapshot } from "@mono/conversation";
 import { userActor } from "@mono/core-types";
 import { db } from "@mono/db/client";
 import { ForbiddenError, NotFoundError } from "@mono/errors";
@@ -37,7 +37,7 @@ export default async function LabCampaignPage({
     throw error;
   }
 
-  const { conversation, messages } = await loadConversation(db, actor, {
+  const { messages, latestTurn } = await loadConversation(db, actor, {
     conversationId: campaign.conversationId,
   });
 
@@ -55,7 +55,7 @@ export default async function LabCampaignPage({
       objectiveLabel={objective.label}
       objectiveMax={objective.max}
       initialMessages={messages}
-      activeStreamId={conversation.activeStreamId}
+      initialTurn={latestTurn ? toTurnSnapshot(latestTurn) : null}
       selectedModelId={selectedModelId}
     />
   );

@@ -3,15 +3,12 @@ import type { InngestFunction } from "inngest";
 import { systemActor } from "@mono/core-types";
 import { db } from "@mono/db/client";
 import { inngest } from "@mono/jobs";
-import {
-  conversationRunAssistantEvent,
-  conversationScheduledStartEvent,
-} from "@mono/jobs/events/conversation";
+import { conversationScheduledStartEvent } from "@mono/jobs/events/conversation";
 
+import { dispatchTurn } from "../application/dispatchTurn";
+import { ensureConversation } from "../application/ensureConversation";
 import { generateTitleFromText } from "../application/generateTitleFromText";
-import { sendMessage } from "../application/sendMessage";
-import { setActiveStream } from "../application/setActiveStream";
-import { startConversation } from "../application/startConversation";
+import { startTurn } from "../application/startTurn";
 
 const SYSTEM_SERVICE = "conversation";
 
@@ -27,42 +24,37 @@ const startScheduledFn = inngest.createFunction(
     const { userId, prompt, gatewayModelId } = event.data;
     const sysActor = systemActor(SYSTEM_SERVICE);
 
-    const { conversationId } = await step.run(
-      "create-conversation",
-      async () => {
-        const title = generateTitleFromText(prompt);
-        const conversation = await startConversation(db, sysActor, {
-          userId,
-          title,
-        });
-        return { conversationId: conversation.id };
-      },
+    const ids = await step.run("generate-ids", () =>
+      Promise.resolve({
+        conversationId: crypto.randomUUID(),
+        turnId: crypto.randomUUID(),
+        userMessageId: crypto.randomUUID(),
+      }),
     );
 
-    await step.run("insert-user-message", async () => {
-      await sendMessage(db, sysActor, {
-        conversationId,
-        role: "user",
-        parts: [{ type: "text", text: prompt }],
+    const turn = await step.run("start-turn", async () => {
+      return await db.transaction(async (tx) => {
+        await ensureConversation(tx, sysActor, {
+          id: ids.conversationId,
+          userId,
+          title: generateTitleFromText(prompt),
+        });
+        const { turn: started } = await startTurn(tx, sysActor, {
+          turnId: ids.turnId,
+          conversationId: ids.conversationId,
+          agent: "assistant",
+          gatewayModelId,
+          userMessage: {
+            id: ids.userMessageId,
+            parts: [{ type: "text", text: prompt }],
+          },
+        });
+        return started;
       });
     });
 
-    const { streamId } = await step.run("set-active-stream", async () => {
-      const id = crypto.randomUUID();
-      await setActiveStream(db, sysActor, {
-        conversationId,
-        streamId: id,
-      });
-      return { streamId: id };
-    });
-
-    await step.run("trigger-run-assistant", async () => {
-      await inngest.send(
-        conversationRunAssistantEvent.create(
-          { conversationId, userId, streamId, gatewayModelId },
-          { id: streamId },
-        ),
-      );
+    await step.run("dispatch-turn", async () => {
+      await dispatchTurn(turn);
     });
   },
 );

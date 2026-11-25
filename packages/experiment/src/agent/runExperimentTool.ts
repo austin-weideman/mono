@@ -8,7 +8,10 @@ import type { ParameterSpace } from "../types/ParameterSpace";
 import { runExperiment } from "../environment/runExperiment";
 import { validateParams } from "../environment/validateParams";
 import { insertExperimentRun } from "../persistence/experiment-run.mutations";
-import { getMaxIteration } from "../persistence/experiment-run.queries";
+import {
+  getExperimentRunByToolCallId,
+  getMaxIteration,
+} from "../persistence/experiment-run.queries";
 
 export const RUN_EXPERIMENT_TOOL_NAME = "run_experiment";
 
@@ -24,11 +27,33 @@ export interface CreateRunExperimentToolOptions {
   ) => Record<string, number | string>;
 }
 
-// One tool, executes inline. Validates, assigns the next iteration, runs the
-// experiment (the single seam), and writes the complete experiment_run row in
-// one insert. Returns the shown value — under scrambled feedback this differs
-// from the true measurement, but the tool just returns whatever the environment
-// gives back.
+// Validates, assigns the next iteration, runs the experiment (the single seam),
+// and writes the complete experiment_run row in one insert. A repeated
+// toolCallId returns the saved result instead of running a second experiment.
+// Returns the shown value — under scrambled feedback this differs from the
+// true measurement, but the tool just returns whatever the environment gives
+// back.
+function toToolResult(
+  campaign: Campaign,
+  iteration: number,
+  shownValue: number,
+  predictedValue: number,
+) {
+  const remaining = Math.max(0, campaign.maxIterations - iteration);
+  return {
+    ok: true as const,
+    iteration,
+    // The value the agent sees (= true measurement unless feedback is
+    // scrambled). Deliberately NOT named measuredValue: under scrambled
+    // feedback this is a different recipe's value, not this experiment's
+    // true result.
+    shownValue,
+    predictedValue,
+    remainingExperiments: remaining,
+    budgetExhausted: remaining === 0,
+  };
+}
+
 export function createRunExperimentTool(
   options: CreateRunExperimentToolOptions,
 ) {
@@ -49,7 +74,21 @@ export function createRunExperimentTool(
           `Your numeric prediction of the result (${objective.min}-${objective.max}), committed before seeing the outcome.`,
         ),
     }),
-    execute: async ({ params, predictedValue }) => {
+    execute: async ({ params, predictedValue }, { toolCallId }) => {
+      const previous = await getExperimentRunByToolCallId(
+        db,
+        campaign.id,
+        toolCallId,
+      );
+      if (previous) {
+        return toToolResult(
+          campaign,
+          previous.iteration,
+          Number(previous.shownValue),
+          Number(previous.predictedValue),
+        );
+      }
+
       const validation = validateParams(presentedSpace, params);
       if (!validation.ok) {
         return {
@@ -68,25 +107,14 @@ export function createRunExperimentTool(
       await insertExperimentRun(db, {
         campaignId: campaign.id,
         iteration,
+        toolCallId,
         params: realParams,
         predictedValue: String(predictedValue),
         measuredValue: String(measured),
         shownValue: String(shown),
       });
 
-      const remaining = Math.max(0, campaign.maxIterations - iteration);
-      return {
-        ok: true as const,
-        iteration,
-        // The value the agent sees (= true measurement unless feedback is
-        // scrambled). Deliberately NOT named measuredValue: under scrambled
-        // feedback this is a different recipe's value, not this experiment's
-        // true result.
-        shownValue: shown,
-        predictedValue,
-        remainingExperiments: remaining,
-        budgetExhausted: remaining === 0,
-      };
+      return toToolResult(campaign, iteration, shown, predictedValue);
     },
   });
 }

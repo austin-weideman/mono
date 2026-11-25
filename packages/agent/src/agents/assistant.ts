@@ -1,8 +1,11 @@
-import type { InferAgentUIMessage } from "ai";
 import { gateway } from "@ai-sdk/gateway";
-import { stepCountIs, ToolLoopAgent } from "ai";
 
-import type { AgentToolConfig, ToolContext, ToolMetadata } from "../types";
+import type {
+  AgentToolConfig,
+  ChatAgent,
+  ToolContext,
+  ToolMetadata,
+} from "../types";
 import { createTools, generateToolInstructions } from "../tools";
 import { InternalTool } from "../types";
 import { MAX_AGENT_STEPS } from "./constants";
@@ -28,11 +31,6 @@ export interface CreateAssistantAgentOptions {
   userId: string;
 }
 
-export interface AssistantAgentResult {
-  agent: ToolLoopAgent;
-  close: () => Promise<void>;
-}
-
 const ASSISTANT_TOOL_CONFIG: AgentToolConfig = {
   internal: [
     InternalTool.GET_MY_USER_INFO,
@@ -56,7 +54,7 @@ Be concise and helpful. Cite sources when using search results.`;
 
 export function createAssistantAgent(
   options: CreateAssistantAgentOptions,
-): AssistantAgentResult {
+): ChatAgent {
   const { gatewayModelId, context, userId } = options;
 
   const { tools, metadata, close } = createTools(
@@ -64,11 +62,11 @@ export function createAssistantAgent(
     ASSISTANT_TOOL_CONFIG,
   );
 
-  const agent = new ToolLoopAgent({
+  return {
     model: gateway(gatewayModelId),
     instructions: buildInstructions(metadata),
     tools,
-    stopWhen: stepCountIs(MAX_AGENT_STEPS),
+    maxSteps: MAX_AGENT_STEPS,
     providerOptions: {
       ...REASONING_PROVIDER_OPTIONS,
       gateway: {
@@ -76,14 +74,6 @@ export function createAssistantAgent(
         tags: ["feature:chat"],
       },
     },
-  });
-
-  return {
-    agent,
     close,
   };
 }
-
-export type AssistantMessage = InferAgentUIMessage<
-  ReturnType<typeof createAssistantAgent>["agent"]
->;

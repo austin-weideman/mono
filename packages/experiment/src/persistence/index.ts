@@ -13,6 +13,7 @@ export {
   type InsertExperimentRunInput,
 } from "./experiment-run.mutations";
 export {
+  getExperimentRunByToolCallId,
   getMaxIteration,
   listExperimentRunsForCampaign,
 } from "./experiment-run.queries";

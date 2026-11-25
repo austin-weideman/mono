@@ -19,10 +19,7 @@
   },
   "dependencies": {
     "@mono/env": "workspace:*",
-    "@upstash/realtime": "1.0.3",
-    "@upstash/redis": "1.37.0",
-    "ai": "catalog:",
-    "zod": "catalog:"
+    "@upstash/redis": "1.37.0"
   },
   "devDependencies": {
     "@mono/eslint-config": "workspace:*",

@@ -1,5 +1,4 @@
-import type { UseChatHelpers } from "@ai-sdk/react";
-import type { UIMessage } from "ai";
+import type { ChatStatus, UIMessage } from "ai";
 
 import { SparklesIcon } from "@mono/ui";
 
@@ -8,7 +7,7 @@ import { LabMessage } from "./lab-message";
 
 interface LabMessagesProps {
   messages: UIMessage[];
-  status: UseChatHelpers<UIMessage>["status"];
+  status: ChatStatus;
   scrambled: boolean;
 }
 

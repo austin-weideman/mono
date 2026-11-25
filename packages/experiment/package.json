@@ -32,7 +32,6 @@
     "@mono/db": "workspace:*",
     "@mono/errors": "workspace:*",
     "@mono/jobs": "workspace:*",
-    "@mono/realtime": "workspace:*",
     "ai": "catalog:",
     "drizzle-orm": "catalog:",
     "inngest": "catalog:",

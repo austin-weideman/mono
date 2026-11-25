@@ -8,6 +8,7 @@ import type { ParameterValues } from "../types/ParameterSpace";
 export interface InsertExperimentRunInput {
   campaignId: string;
   iteration: number;
+  toolCallId: string;
   params: ParameterValues;
   // numeric columns round-trip as strings in Drizzle.
   predictedValue: string;

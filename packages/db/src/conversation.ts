@@ -1,3 +1,4 @@
+import { sql } from "drizzle-orm";
 import { index, pgEnum, pgTable } from "drizzle-orm/pg-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
@@ -23,8 +24,6 @@ export const conversation = pgTable(
       .references(() => user.id, { onDelete: "cascade" }),
 
     title: t.text(),
-
-    activeStreamId: t.uuid(),
 
     lastTotalTokens: t.integer().notNull().default(0),
 
@@ -58,7 +57,12 @@ export const message = pgTable(
     role: messageRoleEnum().notNull(),
     parts: t.jsonb().notNull(),
 
-    createdAt: t.timestamp({ withTimezone: true }).notNull().defaultNow(),
+    // clock_timestamp, not now(): messages inserted in one transaction must
+    // still sort in insert order.
+    createdAt: t
+      .timestamp({ withTimezone: true })
+      .notNull()
+      .default(sql`clock_timestamp()`),
 
     archivedAt: t.timestamp({ withTimezone: true }),
   }),

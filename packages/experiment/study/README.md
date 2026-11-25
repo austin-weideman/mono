@@ -26,8 +26,9 @@ The random floor is free and has no dependencies:
 pnpm -F @mono/experiment study:baseline
 ```
 
-The agent study calls the model and **costs money**. It needs database +
-gateway credentials (Doppler) and a real user id to own the campaigns:
+The agent study calls the model and **costs money**. It needs database,
+gateway, and Redis credentials (Doppler) and a real user id to own the
+campaigns:
 
 ```bash
 STUDY_USER_ID=<user-id> doppler run -- pnpm -F @mono/experiment study

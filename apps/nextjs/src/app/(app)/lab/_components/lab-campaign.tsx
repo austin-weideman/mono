@@ -1,7 +1,7 @@
 "use client";
 
 import type { ModelId } from "@mono/ai";
-import type { Message } from "@mono/conversation";
+import type { Message, TurnSnapshot } from "@mono/conversation";
 import { SidebarTrigger } from "@mono/ui";
 
 import { ModelSelector } from "~/app/(app)/_components/model-selector";
@@ -19,7 +19,7 @@ interface LabCampaignProps {
   objectiveLabel: string;
   objectiveMax: number;
   initialMessages: Message[];
-  activeStreamId?: string | null;
+  initialTurn: TurnSnapshot | null;
   selectedModelId: ModelId;
 }
 
@@ -42,7 +42,7 @@ export function LabCampaign({
   objectiveLabel,
   objectiveMax,
   initialMessages,
-  activeStreamId,
+  initialTurn,
   selectedModelId,
 }: LabCampaignProps) {
   return (
@@ -61,11 +61,11 @@ export function LabCampaign({
       <div className="flex min-h-0 flex-1 flex-col md:flex-row">
         <div className="min-h-0 min-w-0 flex-1">
           <LabChat
+            key={conversationId}
             conversationId={conversationId}
-            campaignId={campaignId}
             scrambled={scrambled}
             initialMessages={initialMessages}
-            activeStreamId={activeStreamId}
+            initialTurn={initialTurn}
           />
         </div>
         <div className="h-72 shrink-0 border-t md:h-auto md:w-[380px] md:border-t-0 md:border-l">

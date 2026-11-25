@@ -18,8 +18,9 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
+import type { TurnLogger, TurnStepRunner } from "@mono/conversation";
 import { getGatewayId, isValidModelId, ModelId } from "@mono/ai";
-import { sendMessage } from "@mono/conversation";
+import { runChatTurn, startTurn } from "@mono/conversation";
 import { userActor } from "@mono/core-types";
 import { db } from "@mono/db/client";
 
@@ -28,10 +29,22 @@ import {
   createCampaign,
   listExperimentRuns,
   meanCurve,
-  runScientistTurn,
+  scientistTurnAgent,
 } from "../src/index";
 
 const MAX_ITERATIONS = 20;
+
+// The same turn runner the app uses, with each step called directly.
+const directSteps: TurnStepRunner = {
+  run: (_id, fn) => fn(),
+  attempt: 0,
+};
+
+const quietLogger: TurnLogger = {
+  info: () => undefined,
+  warn: (message, fields) => console.warn(message, fields),
+  error: (message, fields) => console.error(message, fields),
+};
 const KICKOFF =
   "Begin the campaign now. Run the entire budget of experiments autonomously, committing a numeric prediction with each one, and finish with a summary of the best settings you found.";
 
@@ -85,16 +98,22 @@ async function runOneCampaign(
     maxIterations: MAX_ITERATIONS,
   });
 
-  await sendMessage(db, actor, {
+  const { turn } = await startTurn(db, actor, {
+    turnId: crypto.randomUUID(),
     conversationId: campaign.conversationId,
-    role: "user",
-    parts: [{ type: "text", text: KICKOFF }],
+    agent: "scientist",
+    gatewayModelId,
+    userMessage: {
+      id: crypto.randomUUID(),
+      parts: [{ type: "text", text: KICKOFF }],
+    },
   });
 
-  await runScientistTurn(db, {
-    campaignId: campaign.id,
-    userId,
-    gatewayModelId,
+  await runChatTurn(db, {
+    turnId: turn.id,
+    createAgent: scientistTurnAgent(db),
+    steps: directSteps,
+    logger: quietLogger,
   });
 
   const runs = await listExperimentRuns(db, actor, { campaignId: campaign.id });

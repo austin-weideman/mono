@@ -1,9 +1,8 @@
 export {
   createScientistAgent,
   type CreateScientistAgentOptions,
-  type ScientistAgentResult,
-  type ScientistMessage,
 } from "./scientist";
+export { scientistTurnAgent } from "./scientistTurnAgent";
 export {
   createRunExperimentTool,
   RUN_EXPERIMENT_TOOL_NAME,

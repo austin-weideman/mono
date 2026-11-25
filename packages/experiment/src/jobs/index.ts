@@ -1,1 +1,1 @@
-export { runScientist } from "./runScientist";
+export { runScientistTurn } from "./runScientistTurn";

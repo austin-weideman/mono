@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 
-import { loadConversation } from "@mono/conversation";
+import { loadConversation, toTurnSnapshot } from "@mono/conversation";
 import { userActor } from "@mono/core-types";
 import { db } from "@mono/db/client";
 import { NotFoundError } from "@mono/errors";
@@ -26,6 +26,7 @@ export default async function ChatPage({ params }: ChatPageProps) {
 
   let conversation;
   let messages;
+  let latestTurn;
 
   try {
     const result = await loadConversation(db, userActor(session.user.id), {
@@ -33,6 +34,7 @@ export default async function ChatPage({ params }: ChatPageProps) {
     });
     conversation = result.conversation;
     messages = result.messages;
+    latestTurn = result.latestTurn;
   } catch (error) {
     if (error instanceof NotFoundError) {
       notFound();
@@ -42,10 +44,11 @@ export default async function ChatPage({ params }: ChatPageProps) {
 
   return (
     <Chat
+      key={conversation.id}
       conversationId={conversation.id}
       initialMessages={messages}
       selectedModelId={selectedModelId}
-      activeStreamId={conversation.activeStreamId}
+      initialTurn={latestTurn ? toTurnSnapshot(latestTurn) : null}
     />
   );
 }

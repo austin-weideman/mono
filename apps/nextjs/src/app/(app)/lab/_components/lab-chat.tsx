@@ -1,108 +1,75 @@
 "use client";
 
-import type { UIMessage } from "ai";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useChat } from "@ai-sdk/react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { DefaultChatTransport } from "ai";
 
-import type { Message } from "@mono/conversation";
+import type { Message, TurnEvent, TurnSnapshot } from "@mono/conversation";
 import { convertDbMessagesToUIMessages } from "@mono/chat-utils";
 import { ChevronDownIcon } from "@mono/ui";
 
+import { useChatTurns } from "~/app/(app)/_lib/use-chat-turns";
 import { useTRPC } from "~/trpc/react";
 import { ChatInput } from "../../chat/_components/chat-input";
+import { TurnOutcomeNotice } from "../../chat/_components/turn-outcome-notice";
 import { LabMessages } from "./lab-messages";
 
 const AT_BOTTOM_THRESHOLD_PX = 100;
 
 interface LabChatProps {
   conversationId: string;
-  campaignId: string;
   scrambled: boolean;
   initialMessages: Message[];
-  activeStreamId?: string | null;
+  initialTurn: TurnSnapshot | null;
+}
+
+function hasToolResult(event: TurnEvent): boolean {
+  return (
+    event.type === "chunks" &&
+    event.chunks.some(
+      (chunk) =>
+        chunk.type === "tool-output-available" ||
+        chunk.type === "tool-output-error",
+    )
+  );
 }
 
 export function LabChat({
   conversationId,
-  campaignId,
   scrambled,
   initialMessages,
-  activeStreamId,
+  initialTurn,
 }: LabChatProps) {
   const trpc = useTRPC();
   const queryClient = useQueryClient();
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const prevMessageCount = useRef(0);
-  const activeStreamIdRef = useRef<string | null>(activeStreamId ?? null);
-  const lastFetchController = useRef<AbortController | null>(null);
-  const initialUIMessages = convertDbMessagesToUIMessages(initialMessages);
-
-  // Same transport contract as the main chat: POST /api/chat (which routes to
-  // the scientist agent for campaign conversations), then GET the SSE stream.
-  const transport = useMemo(
-    () =>
-      // eslint-disable-next-line react-hooks/refs
-      new DefaultChatTransport({
-        api: "/api/chat",
-        prepareSendMessagesRequest: ({ messages }) => {
-          const streamId = crypto.randomUUID();
-          activeStreamIdRef.current = streamId;
-          return {
-            body: {
-              conversationId,
-              streamId,
-              message: messages.at(-1),
-              attachmentIds: [],
-            },
-          };
-        },
-        prepareReconnectToStreamRequest: () => ({
-          api: `/api/chat/${conversationId}/stream?streamId=${activeStreamIdRef.current ?? ""}`,
-          credentials: "include",
-        }),
-        fetch: async (input, init) => {
-          lastFetchController.current?.abort();
-          const ctrl = new AbortController();
-          lastFetchController.current = ctrl;
-
-          if (init?.method === "GET") {
-            return fetch(input, { ...init, signal: ctrl.signal });
-          }
-
-          const body = JSON.parse(init?.body as string) as { streamId: string };
-          const postRes = await fetch("/api/chat", {
-            ...init,
-            signal: ctrl.signal,
-          });
-          if (!postRes.ok) return postRes;
-          return fetch(
-            `/api/chat/${conversationId}/stream?streamId=${body.streamId}`,
-            {
-              method: "GET",
-              credentials: "include",
-              signal: ctrl.signal,
-            },
-          );
-        },
-      }),
-    [conversationId],
+  const [initialUIMessages] = useState(() =>
+    convertDbMessagesToUIMessages(initialMessages),
   );
 
-  const { messages, sendMessage, status } = useChat<UIMessage>({
-    id: conversationId,
-    messages: initialUIMessages,
-    resume: Boolean(activeStreamId),
-    transport,
-  });
+  // Each finished experiment is a tool result; refresh the trajectory as it lands.
+  const onEvent = useCallback(
+    (event: TurnEvent) => {
+      if (!hasToolResult(event)) return;
+      void queryClient.invalidateQueries({
+        queryKey: trpc.experiment.listExperimentRuns.pathKey(),
+      });
+    },
+    [queryClient, trpc.experiment.listExperimentRuns],
+  );
 
-  // When a turn finishes, refetch the trajectory (new experiment rows) and the
-  // campaign cost — the same "message done -> refresh" trick the main chat uses.
+  const { messages, status, outcome, isStopping, send, stop, retry } =
+    useChatTurns({
+      conversationId,
+      initialMessages: initialUIMessages,
+      initialTurn,
+      onEvent,
+    });
+
   const prevStatus = useRef(status);
   useEffect(() => {
-    if (prevStatus.current === "streaming" && status === "ready") {
+    if (prevStatus.current !== "ready" && status === "ready") {
       void queryClient.invalidateQueries({
         queryKey: trpc.experiment.listExperimentRuns.pathKey(),
       });
@@ -117,12 +84,6 @@ export function LabChat({
     trpc.experiment.listExperimentRuns,
     trpc.billing.conversationSpend,
   ]);
-
-  useEffect(() => {
-    return () => {
-      lastFetchController.current?.abort();
-    };
-  }, [conversationId]);
 
   const [isAtBottom, setIsAtBottom] = useState(true);
 
@@ -161,13 +122,12 @@ export function LabChat({
     checkIsAtBottom();
   }, [messages, scrollToBottom, checkIsAtBottom]);
 
-  // campaignId is referenced so the chat re-keys cleanly per campaign.
-  void campaignId;
-
   const handleSubmit = (text: string) => {
     if (!text.trim()) return;
-    void sendMessage({ text }, { body: { attachmentIds: [] } });
+    void send([{ type: "text", text }], []);
   };
+
+  const isGenerating = status !== "ready";
 
   return (
     <div className="bg-background flex h-full min-w-0 flex-col">
@@ -177,6 +137,11 @@ export function LabChat({
           status={status}
           scrambled={scrambled}
         />
+        {outcome && (
+          <div className="mx-auto max-w-3xl px-2 pb-4 md:px-4">
+            <TurnOutcomeNotice outcome={outcome} onRetry={() => void retry()} />
+          </div>
+        )}
       </div>
       <div className="bg-background relative mx-auto flex w-full max-w-3xl flex-col gap-1 px-2 pb-3 md:px-4 md:pb-4">
         {!isAtBottom && (
@@ -189,7 +154,13 @@ export function LabChat({
             <ChevronDownIcon size={18} />
           </button>
         )}
-        <ChatInput onSubmit={handleSubmit} disabled={status !== "ready"} />
+        <ChatInput
+          onSubmit={handleSubmit}
+          disabled={isGenerating}
+          isGenerating={isGenerating}
+          isStopping={isStopping}
+          onStop={stop}
+        />
       </div>
     </div>
   );

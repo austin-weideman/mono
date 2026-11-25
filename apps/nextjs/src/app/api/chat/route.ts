@@ -2,39 +2,99 @@ import type { UIMessage } from "ai";
 import { cookies, headers } from "next/headers";
 import { z } from "zod";
 
+import type { StartedTurn } from "@mono/conversation";
 import { getGatewayId } from "@mono/ai";
 import { linkAttachmentsToMessage } from "@mono/attachment";
 import { extractTextFromUIMessage } from "@mono/chat-utils";
 import {
+  dispatchTurn,
+  ensureConversation,
   generateTitleFromText,
-  loadConversation,
-  sendMessage,
-  setActiveStream,
-  startConversation,
+  retryTurn,
+  startTurn,
+  toTurnSnapshot,
 } from "@mono/conversation";
 import { userActor } from "@mono/core-types";
 import { db } from "@mono/db/client";
-import { NotFoundError } from "@mono/errors";
 import { getCampaignByConversationId } from "@mono/experiment";
-import { inngest } from "@mono/jobs";
-import {
-  conversationRunAssistantEvent,
-  conversationRunScientistEvent,
-} from "@mono/jobs/events/conversation";
 
 import { getSelectedModelId } from "~/app/(app)/_lib/model";
 import { auth } from "~/auth/server";
+import { appErrorResponse } from "~/lib/api-errors";
 import { validateJson } from "~/lib/api-validation";
 import { chatBurstRateLimit, chatSustainedRateLimit } from "~/lib/rate-limit";
 
 const MAX_ATTACHMENTS_PER_MESSAGE = 10;
 
-const chatRequestSchema = z.object({
-  conversationId: z.uuid(),
-  streamId: z.uuid(),
-  message: z.custom<UIMessage>(),
-  attachmentIds: z.array(z.uuid()).max(MAX_ATTACHMENTS_PER_MESSAGE).default([]),
-});
+const chatRequestSchema = z.discriminatedUnion("kind", [
+  z.object({
+    kind: z.literal("send"),
+    conversationId: z.uuid(),
+    turnId: z.uuid(),
+    message: z.object({
+      id: z.uuid(),
+      parts: z.array(z.custom<UIMessage["parts"][number]>()).min(1),
+    }),
+    attachmentIds: z
+      .array(z.uuid())
+      .max(MAX_ATTACHMENTS_PER_MESSAGE)
+      .default([]),
+  }),
+  z.object({
+    kind: z.literal("retry"),
+    turnId: z.uuid(),
+    retryOfTurnId: z.uuid(),
+  }),
+]);
+
+type ChatRequest = z.infer<typeof chatRequestSchema>;
+
+async function startRequestedTurn(
+  request: ChatRequest,
+  userId: string,
+  gatewayModelId: string,
+): Promise<StartedTurn> {
+  const actor = userActor(userId);
+
+  switch (request.kind) {
+    case "send": {
+      const { conversationId, turnId, message, attachmentIds } = request;
+      const campaign = await getCampaignByConversationId(db, conversationId);
+      return await db.transaction(async (tx) => {
+        await ensureConversation(tx, actor, {
+          id: conversationId,
+          userId,
+          title: generateTitleFromText(
+            extractTextFromUIMessage({ ...message, role: "user" }),
+          ),
+        });
+        const started = await startTurn(tx, actor, {
+          turnId,
+          conversationId,
+          agent: campaign ? "scientist" : "assistant",
+          gatewayModelId,
+          userMessage: message,
+        });
+        if (started.created && attachmentIds.length > 0) {
+          await linkAttachmentsToMessage(tx, actor, {
+            messageId: started.turn.userMessageId,
+            conversationId,
+            attachmentIds,
+          });
+        }
+        return started;
+      });
+    }
+    case "retry":
+      return await db.transaction((tx) =>
+        retryTurn(tx, actor, {
+          turnId: request.turnId,
+          retryOfTurnId: request.retryOfTurnId,
+          gatewayModelId,
+        }),
+      );
+  }
+}
 
 export async function POST(req: Request): Promise<Response> {
   const [session, cookieStore] = await Promise.all([
@@ -74,63 +134,32 @@ export async function POST(req: Request): Promise<Response> {
     return validation.error;
   }
 
-  const { conversationId, streamId, message, attachmentIds } = validation.data;
-  const userId = session.user.id;
-  const actor = userActor(userId);
+  const gatewayModelId = getGatewayId(getSelectedModelId(cookieStore));
 
-  const modelId = getSelectedModelId(cookieStore);
-  const gatewayModelId = getGatewayId(modelId);
-
+  let started: StartedTurn;
   try {
-    await loadConversation(db, actor, { conversationId });
+    started = await startRequestedTurn(
+      validation.data,
+      session.user.id,
+      gatewayModelId,
+    );
   } catch (error) {
-    if (error instanceof NotFoundError) {
-      const messageText = extractTextFromUIMessage(message);
-      const title = generateTitleFromText(messageText);
-      await startConversation(db, actor, { id: conversationId, userId, title });
-    } else {
-      throw error;
-    }
+    return appErrorResponse(error);
   }
 
-  await db.transaction(async (tx) => {
-    const persisted = await sendMessage(tx, actor, {
-      conversationId,
-      role: "user",
-      parts: message.parts,
+  // A lost dispatch leaves the turn queued; the turn sweeper re-sends it.
+  try {
+    await dispatchTurn(started.turn);
+  } catch (error) {
+    console.error("chat turn dispatch failed", {
+      turnId: started.turn.id,
+      conversationId: started.turn.conversationId,
+      error: error instanceof Error ? error.message : String(error),
     });
-    if (attachmentIds.length > 0) {
-      await linkAttachmentsToMessage(tx, actor, {
-        messageId: persisted.id,
-        conversationId,
-        attachmentIds,
-      });
-    }
-  });
+  }
 
-  await setActiveStream(db, actor, { conversationId, streamId });
-
-  // A conversation backed by a campaign runs the scientist agent; everything
-  // else runs the assistant. Both feed the same realtime channel + SSE route.
-  const campaign = await getCampaignByConversationId(db, conversationId);
-
-  await inngest.send(
-    campaign
-      ? conversationRunScientistEvent.create(
-          {
-            conversationId,
-            campaignId: campaign.id,
-            userId,
-            streamId,
-            gatewayModelId,
-          },
-          { id: streamId },
-        )
-      : conversationRunAssistantEvent.create(
-          { conversationId, userId, streamId, gatewayModelId },
-          { id: streamId },
-        ),
+  return Response.json(
+    { turn: toTurnSnapshot(started.turn) },
+    { status: started.created ? 202 : 200 },
   );
-
-  return Response.json({ streamId }, { status: 202 });
 }

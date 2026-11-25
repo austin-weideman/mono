@@ -36,10 +36,9 @@ export {
   buildScientistInstructions,
   createScientistAgent,
   presentEnvironment,
+  scientistTurnAgent,
   type CreateScientistAgentOptions,
   type PresentedEnvironment,
-  type ScientistAgentResult,
-  type ScientistMessage,
 } from "./agent";
 
 // Application layer.
@@ -48,9 +47,7 @@ export {
   getCampaign,
   listCampaigns,
   listExperimentRuns,
-  runScientistTurn,
-  type RunScientistTurnInput,
 } from "./application";
 
-// Persistence helper used by the chat route to detect campaign conversations.
+// Persistence helper used by the chat route to pick the agent for a conversation.
 export { getCampaignByConversationId } from "./persistence";

@@ -1,31 +1,27 @@
 import { eventType } from "inngest";
 import { z } from "zod/v4";
 
-// Conversation started by the client
-export const conversationRunAssistantEvent = eventType(
-  "conversation/run-assistant",
+// Runs one assistant-agent turn. Everything else about the turn lives on its
+// chat_turn row.
+export const conversationAssistantTurnRequestedEvent = eventType(
+  "conversation/assistant-turn.requested",
   {
     schema: z.object({
+      turnId: z.uuid(),
       conversationId: z.uuid(),
       userId: z.string(),
-      streamId: z.uuid(),
-      gatewayModelId: z.string(),
     }),
   },
 );
 
-// Scientist agent turn for a campaign (the campaign IS this conversation).
-// Mirrors run-assistant; the chat route emits this instead when the
-// conversation has an associated campaign.
-export const conversationRunScientistEvent = eventType(
-  "conversation/run-scientist",
+// Runs one scientist-agent turn for the campaign that owns the conversation.
+export const conversationScientistTurnRequestedEvent = eventType(
+  "conversation/scientist-turn.requested",
   {
     schema: z.object({
+      turnId: z.uuid(),
       conversationId: z.uuid(),
-      campaignId: z.uuid(),
       userId: z.string(),
-      streamId: z.uuid(),
-      gatewayModelId: z.string(),
     }),
   },
 );

@@ -5,6 +5,7 @@ import { ForbiddenError, NotFoundError } from "@mono/errors";
 
 import type { ConversationWithMessages } from "../types/ConversationWithMessages";
 import type { LoadConversationInput } from "../types/LoadConversationInput";
+import { getLatestTurnForConversation } from "../persistence/chat-turn.queries";
 import { getConversationById } from "../persistence/conversation.queries";
 import { listMessagesForConversation } from "../persistence/message.queries";
 
@@ -24,9 +25,11 @@ export async function loadConversation(
   }
 
   const messages = await listMessagesForConversation(db, conversation.id);
+  const latestTurn = await getLatestTurnForConversation(db, conversation.id);
 
   return {
     conversation,
     messages,
+    latestTurn,
   };
 }

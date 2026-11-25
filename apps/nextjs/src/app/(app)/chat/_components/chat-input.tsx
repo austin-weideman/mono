@@ -11,6 +11,7 @@ import {
   PaperclipIcon,
   popMotion,
   SendIcon,
+  StopIcon,
   tactileMotion,
   toast,
 } from "@mono/ui";
@@ -53,6 +54,9 @@ export type PendingAttachment =
 interface ChatInputProps {
   onSubmit: (text: string, attachments: AttachmentDraft[]) => void;
   disabled: boolean;
+  isGenerating?: boolean;
+  isStopping?: boolean;
+  onStop?: () => void;
 }
 
 const ACCEPTED_TYPES_LIST = [
@@ -67,7 +71,13 @@ const ACCEPTED_TYPE_SET = new Set<string>(ACCEPTED_TYPES_LIST);
 const MAX_BYTES = 32 * 1024 * 1024;
 const MAX_ATTACHMENTS = 10;
 
-export function ChatInput({ onSubmit, disabled }: ChatInputProps) {
+export function ChatInput({
+  onSubmit,
+  disabled,
+  isGenerating = false,
+  isStopping = false,
+  onStop,
+}: ChatInputProps) {
   const trpc = useTRPC();
   const deleteAttachmentMutation = useMutation(
     trpc.attachment.delete.mutationOptions(),
@@ -287,19 +297,34 @@ export function ChatInput({ onSubmit, disabled }: ChatInputProps) {
           >
             <PaperclipIcon size={18} />
           </button>
-          <AnimatePresence>
-            {hasContent && (
+          <AnimatePresence mode="popLayout">
+            {isGenerating && onStop ? (
               <motion.button
-                key="send"
-                type="submit"
-                disabled={sendDisabled}
-                aria-label="Send message"
+                key="stop"
+                type="button"
+                onClick={onStop}
+                disabled={isStopping}
+                aria-label="Stop reply"
                 {...popMotion}
                 {...tactileMotion}
                 className="bg-primary text-primary-foreground flex size-8 cursor-pointer items-center justify-center rounded-full disabled:cursor-not-allowed disabled:opacity-50"
               >
-                <SendIcon />
+                <StopIcon size={14} />
               </motion.button>
+            ) : (
+              hasContent && (
+                <motion.button
+                  key="send"
+                  type="submit"
+                  disabled={sendDisabled}
+                  aria-label="Send message"
+                  {...popMotion}
+                  {...tactileMotion}
+                  className="bg-primary text-primary-foreground flex size-8 cursor-pointer items-center justify-center rounded-full disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  <SendIcon />
+                </motion.button>
+              )
             )}
           </AnimatePresence>
         </div>

@@ -1,5 +1,4 @@
-import type { UseChatHelpers } from "@ai-sdk/react";
-import type { UIMessage } from "ai";
+import type { ChatStatus, UIMessage } from "ai";
 import { motion } from "framer-motion";
 
 import { popMotion, riseMotion, SparklesIcon, withDelay } from "@mono/ui";
@@ -9,7 +8,7 @@ import { ThinkingIndicator } from "./thinking-indicator";
 
 interface MessagesProps {
   messages: UIMessage[];
-  status: UseChatHelpers<UIMessage>["status"];
+  status: ChatStatus;
 }
 
 function EmptyState() {

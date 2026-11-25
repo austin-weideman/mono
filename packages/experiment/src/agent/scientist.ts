@@ -1,8 +1,7 @@
-import type { InferAgentUIMessage, ToolSet } from "ai";
+import type { ToolSet } from "ai";
 import { gateway } from "@ai-sdk/gateway";
-import { stepCountIs, ToolLoopAgent } from "ai";
 
-import type { ToolContext } from "@mono/agent";
+import type { ChatAgent, ToolContext } from "@mono/agent";
 import { MAX_AGENT_STEPS } from "@mono/agent";
 
 import type { Campaign } from "../types/Campaign";
@@ -36,21 +35,13 @@ export interface CreateScientistAgentOptions {
   userId: string;
 }
 
-export interface ScientistAgentResult {
-  agent: ToolLoopAgent;
-  close: () => Promise<void>;
-}
-
 export function createScientistAgent(
   options: CreateScientistAgentOptions,
-): ScientistAgentResult {
+): ChatAgent {
   const { gatewayModelId, campaign, context, userId } = options;
 
   const { presentedSpace, toRealParams } = presentEnvironment(campaign);
 
-  // Typed as ToolSet (not the inferred single-tool shape) so the constructed
-  // agent is assignable to the bare ToolLoopAgent in ScientistAgentResult —
-  // same pattern createTools uses for the assistant agent.
   const tools: ToolSet = {
     [RUN_EXPERIMENT_TOOL_NAME]: createRunExperimentTool({
       db: context.db,
@@ -60,11 +51,11 @@ export function createScientistAgent(
     }),
   };
 
-  const agent = new ToolLoopAgent({
+  return {
     model: gateway(gatewayModelId),
     instructions: buildScientistInstructions(presentedSpace, campaign),
     tools,
-    stopWhen: stepCountIs(MAX_AGENT_STEPS),
+    maxSteps: MAX_AGENT_STEPS,
     providerOptions: {
       ...REASONING_PROVIDER_OPTIONS,
       gateway: {
@@ -72,16 +63,6 @@ export function createScientistAgent(
         tags: ["feature:lab"],
       },
     },
-  });
-
-  return {
-    agent,
-    close: async () => {
-      // No external resources to release.
-    },
+    close: () => Promise.resolve(),
   };
 }
-
-export type ScientistMessage = InferAgentUIMessage<
-  ReturnType<typeof createScientistAgent>["agent"]
->;
