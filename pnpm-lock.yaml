@@ -365,6 +365,9 @@ importers:
       '@mono/jobs':
         specifier: workspace:*
         version: link:../../packages/jobs
+      '@mono/realtime':
+        specifier: workspace:*
+        version: link:../../packages/realtime
       '@mono/scheduler':
         specifier: workspace:*
         version: link:../../packages/scheduler
@@ -389,9 +392,6 @@ importers:
       '@upstash/ratelimit':
         specifier: 2.0.8
         version: 2.0.8(@upstash/redis@1.37.0)
-      '@upstash/redis':
-        specifier: 1.37.0
-        version: 1.37.0
       '@vercel/blob':
         specifier: 2.3.3
         version: 2.3.3

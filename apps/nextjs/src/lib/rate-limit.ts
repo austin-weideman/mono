@@ -1,30 +1,42 @@
 import { Ratelimit } from "@upstash/ratelimit";
-import { Redis } from "@upstash/redis";
 
-import { env } from "@mono/env";
+import { getRedis } from "@mono/realtime";
 
-export const redis = new Redis({
-  url: env.UPSTASH_REDIS_REST_URL,
-  token: env.UPSTASH_REDIS_REST_TOKEN,
-});
+type RateLimitConfig = Omit<
+  ConstructorParameters<typeof Ratelimit>[0],
+  "redis" | "analytics"
+>;
 
-export const attachmentUploadRateLimit = new Ratelimit({
-  redis,
+interface LazyRateLimit {
+  limit: Ratelimit["limit"];
+}
+
+// Built on first use, so importing a route never needs Redis credentials.
+function lazyRateLimit(config: RateLimitConfig): LazyRateLimit {
+  let instance: Ratelimit | null = null;
+  return {
+    limit: (...args) => {
+      instance ??= new Ratelimit({
+        ...config,
+        redis: getRedis(),
+        analytics: false,
+      });
+      return instance.limit(...args);
+    },
+  };
+}
+
+export const attachmentUploadRateLimit = lazyRateLimit({
   limiter: Ratelimit.slidingWindow(30, "5 m"),
-  analytics: false,
   prefix: "rl:attachment-upload",
 });
 
-export const chatBurstRateLimit = new Ratelimit({
-  redis,
+export const chatBurstRateLimit = lazyRateLimit({
   limiter: Ratelimit.slidingWindow(4, "10 s"),
-  analytics: false,
   prefix: "rl:chat-burst",
 });
 
-export const chatSustainedRateLimit = new Ratelimit({
-  redis,
+export const chatSustainedRateLimit = lazyRateLimit({
   limiter: Ratelimit.slidingWindow(30, "5 m"),
-  analytics: false,
   prefix: "rl:chat-sustained",
 });

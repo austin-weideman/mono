@@ -1,5 +1,7 @@
+import type { Redis } from "@upstash/redis";
+
 import { compareEventIds } from "./eventIds";
-import { redis } from "./redis";
+import { getRedis } from "./redis";
 
 const LOG_TTL_SECS = 60 * 60 * 6;
 const LOG_MAX_LENGTH = 100_000;
@@ -9,12 +11,21 @@ const PAYLOAD_FIELD = "p";
 
 // XADD, EXPIRE and PUBLISH in one atomic call, so the log and the live feed
 // always agree on order. The published message carries the entry's ID.
-const appendScript = redis.createScript<string>(`
+const APPEND_SCRIPT = `
 local id = redis.call('XADD', KEYS[1], 'MAXLEN', '~', ARGV[3], '*', '${PAYLOAD_FIELD}', ARGV[1])
 redis.call('EXPIRE', KEYS[1], ARGV[2])
 redis.call('PUBLISH', KEYS[1], '{"id":"' .. id .. '","payload":' .. ARGV[1] .. '}')
 return id
-`);
+`;
+
+type AppendScript = ReturnType<Redis["createScript"]>;
+
+let appendScript: AppendScript | null = null;
+
+function getAppendScript(): AppendScript {
+  appendScript ??= getRedis().createScript<string>(APPEND_SCRIPT);
+  return appendScript;
+}
 
 export interface LoggedEvent {
   id: string;
@@ -33,10 +44,14 @@ export async function appendEvent(
   key: string,
   payload: unknown,
 ): Promise<string> {
-  return await appendScript.exec(
+  const id: unknown = await getAppendScript().exec(
     [key],
     [JSON.stringify(payload), String(LOG_TTL_SECS), String(LOG_MAX_LENGTH)],
   );
+  if (typeof id !== "string") {
+    throw new Error(`Unexpected event ID from ${key}: ${JSON.stringify(id)}`);
+  }
+  return id;
 }
 
 export async function readEvents(
@@ -47,7 +62,7 @@ export async function readEvents(
   let start = afterId ? `(${afterId}` : "-";
 
   for (;;) {
-    const page = await redis.xrange<Record<string, unknown>>(
+    const page = await getRedis().xrange<Record<string, unknown>>(
       key,
       start,
       "+",
@@ -90,7 +105,7 @@ export async function subscribeEvents(
     onEvent(event);
   };
 
-  const subscriber = redis.subscribe<unknown>([key]);
+  const subscriber = getRedis().subscribe<unknown>([key]);
   const unsubscribe: Unsubscribe = () => subscriber.unsubscribe();
 
   subscriber.on("message", ({ message }) => {
