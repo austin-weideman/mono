@@ -34,6 +34,8 @@ export function initAuth<
   googleClientId?: string;
   googleClientSecret?: string;
 
+  trustedOrigins?: string[];
+
   /**
    * Email-delivery callbacks. The auth package stays generic so the Better
    * Auth CLI (`script/auth-cli.ts`) can generate the schema without needing
@@ -100,7 +102,7 @@ export function initAuth<
         trustedProviders: ["google"],
       },
     },
-    trustedOrigins: ["expo://", "exp://"],
+    trustedOrigins: ["expo://", "exp://", ...(options.trustedOrigins ?? [])],
     advanced: {
       ipAddress: {
         ipv6Subnet: 64,

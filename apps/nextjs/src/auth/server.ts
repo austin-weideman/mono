@@ -14,8 +14,12 @@ import {
 import { env } from "~/env";
 import { redisSecondaryStorage } from "./redis-secondary-storage";
 
+// Dev AUTH_BASE_URL is the ngrok URL Google redirects to; this also allows localhost.
+const LOCAL_DEV_ORIGIN = "http://localhost:3000";
+
 export const auth = initAuth({
   baseUrl: env.AUTH_BASE_URL,
+  trustedOrigins: env.NODE_ENV === "development" ? [LOCAL_DEV_ORIGIN] : [],
   productionUrl: env.VERCEL_PROJECT_PRODUCTION_URL
     ? `https://${env.VERCEL_PROJECT_PRODUCTION_URL}`
     : undefined,
