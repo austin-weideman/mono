@@ -68,13 +68,11 @@ GitHub Actions runs everything; Vercel's Git integration is disabled.
 
 **Renovate** opens dependency PRs against `main` weekly and skips the PR pipeline; the production pipeline checks them before deploy.
 
-## Secrets (Doppler)
+## Secrets
 
-Doppler is the single source of every secret.
-
-- Doppler project `mono`, configs `dev_personal` (local development), `dev` (CI tests), and `prd` (production). `prd` syncs to Vercel's production environment.
-- Doppler project `mono-ci` syncs CI-only credentials to GitHub Actions secrets: `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`, `TURBO_TOKEN`, and the Doppler service tokens `DOPPLER_TOKEN_DEV` and `DOPPLER_TOKEN_PRODUCTION`. These stay out of `mono` so they never reach the app's runtime environment.
-- Rotate a secret by changing it in Doppler. Commit no secrets and no `.env` files.
+- Doppler project `mono` holds the app's secrets, in configs `dev_personal` (local development), `dev` (CI tests), and `prd` (production). `prd` syncs to Vercel's production environment.
+- GitHub Actions secrets are set directly in the repo's settings: `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`, `TURBO_TOKEN`, and the Doppler service tokens `DOPPLER_TOKEN_DEV` and `DOPPLER_TOKEN_PRODUCTION`. Update them there when a credential changes.
+- Commit no secrets and no `.env` files.
 
 ---
 
@@ -442,11 +440,12 @@ Before any feature package is complete:
 
 Practices this project deliberately skips for now. Each row says what breaks and when to adopt the practice.
 
-| Practice                                         | What breaks without it                                                                                                                                                             | Adopt when                      |
-| ------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------- |
-| Error tracking and LLM tracing                   | Production errors and bad model output leave no trace beyond database rows and Inngest logs                                                                                        | First real users                |
-| Expand/contract migrations                       | Migrations run before the deploy; one that drops or renames a column, or adds a required column without a default, breaks the live app until the deploy finishes (about 2 minutes) | First real users                |
-| A staging or preview environment                 | Changes are verified only locally before they reach production                                                                                                                     | First real users                |
-| Branch protection with required checks on `main` | A direct push to `main` skips PR review; the production pipeline still blocks a deploy that fails checks                                                                           | A second developer              |
-| Tests on a fresh database branch per CI run      | Tests run against the shared dev database, so a test that needs an unapplied migration fails until dev is migrated                                                                 | Tests fail for this reason      |
-| A read-only production database role for agents  | Production queries stay read-only only through `SET default_transaction_read_only = on`, not a database permission                                                                 | Production holds real user data |
+| Practice                                                                  | What breaks without it                                                                                                                                                             | Adopt when                                           |
+| ------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
+| Error tracking and LLM tracing                                            | Production errors and bad model output leave no trace beyond database rows and Inngest logs                                                                                        | First real users                                     |
+| Expand/contract migrations                                                | Migrations run before the deploy; one that drops or renames a column, or adds a required column without a default, breaks the live app until the deploy finishes (about 2 minutes) | First real users                                     |
+| A staging or preview environment                                          | Changes are verified only locally before they reach production                                                                                                                     | First real users                                     |
+| Branch protection with required checks on `main`                          | A direct push to `main` skips PR review; the production pipeline still blocks a deploy that fails checks                                                                           | A second developer                                   |
+| Tests on a fresh database branch per CI run                               | Tests run against the shared dev database, so a test that needs an unapplied migration fails until dev is migrated                                                                 | Tests fail for this reason                           |
+| A read-only production database role for agents                           | Production queries stay read-only only through `SET default_transaction_read_only = on`, not a database permission                                                                 | Production holds real user data                      |
+| GitHub Actions secrets synced from a separate Doppler project (`mono-ci`) | CI credentials are set by hand in GitHub, so one can go stale unnoticed and break deploys                                                                                          | Another credential goes stale, or a second developer |
