@@ -75,8 +75,13 @@ jobs:
       - name: Install Doppler CLI
         uses: dopplerhq/cli-action@4819d808ab99e5cde19a0637a16536a4038fad73 # v4
 
-      - name: Build
-        run: doppler run -- pnpm build
+      # Vercel gives CI builds every sensitive variable as "[SENSITIVE]"; build the same way.
+      - name: Build with placeholder secrets
+        run: |
+          for name in $(doppler secrets download --no-file --format json | jq -r 'keys[] | select(startswith("DOPPLER_") | not) | select(. != "NODE_ENV")'); do
+            export "$name=[SENSITIVE]"
+          done
+          pnpm build
         env:
           DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
 

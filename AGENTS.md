@@ -10,7 +10,7 @@ You are **maximally truth-seeking**.
 - You use your tools to read files and explore the codebase constantly.
 - You support claims with direct evidence from the codebase.
 
-You treat this as a serious, multi-engineer, multi-year project where code is professionally architected.
+Build everything you build to production standard: robust, observable through its stored state, and consistent with the rules below. When the project deliberately skips a practice, that decision is recorded in [Deferred decisions](#deferred-decisions) with what breaks and when to revisit it. Add a row there for any new shortcut; never take one silently.
 
 ---
 
@@ -26,103 +26,55 @@ The `@mono/experiment` package owns the environment, the scientist agent and its
 
 ## Tech Stack
 
-### Frontend
+| Area                   | Choice                                                                                              |
+| ---------------------- | --------------------------------------------------------------------------------------------------- |
+| Web app                | Next.js App Router (`apps/nextjs`): product app, marketing site, API routes                         |
+| Hosting                | Vercel, deployed by GitHub Actions                                                                  |
+| Database               | PostgreSQL on Neon                                                                                  |
+| ORM                    | Drizzle ORM                                                                                         |
+| API                    | tRPC for client components; route handlers for streaming (chat SSE), uploads, and Inngest           |
+| Client data fetching   | TanStack Query through tRPC                                                                         |
+| AI                     | Vercel AI SDK; every model call goes through the Vercel AI Gateway (`@ai-sdk/gateway`)              |
+| Background jobs, crons | Inngest                                                                                             |
+| Live streaming         | Redis Streams on Upstash, served to the browser over Server-Sent Events (`docs/chat/chat-turns.md`) |
+| Auth                   | Better Auth (email and password, Google)                                                            |
+| Email                  | Resend                                                                                              |
+| File uploads           | Vercel Blob                                                                                         |
+| Rate limiting          | Upstash Redis + `@upstash/ratelimit`                                                                |
+| Secrets                | Doppler                                                                                             |
+| Repo                   | Turborepo monorepo, pnpm                                                                            |
 
-Next.js (App Router) for the web app, marketing site, and server components. The Expo / React Native app at `apps/expo/` is **not under active development** — it remains in the workspace but should not be modified or relied on. All current feature work targets `apps/nextjs/` only.
+## Development Workflow
 
-### Backend
+Trunk-based development. `main` is the only long-lived branch and is always deployable; every push to `main` deploys to production.
 
-Vercel (web app + API routes + edge/Node functions, Cron); optional Inngest for background workflows
+- Branch from `main` for each change and keep branches short-lived.
+- Open a pull request into `main`. The PR pipeline runs every check.
+- Merge when checks pass. The production pipeline runs the checks again, migrates the production database, and deploys.
+- Urgent fixes follow the same path.
 
-### Database
+## CI/CD
 
-PostgreSQL (Neon Serverless)
+GitHub Actions runs everything; Vercel's Git integration is disabled.
 
-### ORM
+| Trigger             | Pipeline                                           |
+| ------------------- | -------------------------------------------------- |
+| Pull request → main | Checks                                             |
+| Push to main        | Checks → production migrations → production deploy |
 
-Drizzle ORM
+**Checks:** typecheck, lint, format, workspace lint (sherif), tests against the dev database, schema drift (every schema change has a committed migration), and a build with every secret set to `"[SENSITIVE]"`.
 
-### API Strategy
+**Deploy:** `vercel pull`, `vercel build`, and `vercel deploy --prebuilt`, using the Vercel CLI pinned in the root `package.json`. The build runs in GitHub Actions, where Vercel supplies every sensitive environment variable as the literal string `"[SENSITIVE]"`; real values exist only at runtime. Code must never read a secret at module load: create clients on first use (see `getRedis()` in `@mono/realtime`). The placeholder build in Checks enforces this.
 
-tRPC
+**Renovate** opens dependency PRs against `main` weekly and skips the PR pipeline; the production pipeline checks them before deploy.
 
-### Data Fetching
+## Secrets (Doppler)
 
-fetch + TanStack Query on clients; Next.js server actions/route handlers on the server
+Doppler is the single source of every secret.
 
-### AI Layer
-
-Vercel AI SDK + official OpenAI / Anthropic SDKs (streaming)
-
-### Background jobs / queues / scheduling
-
-Inngest (durable workflows, retries, schedules, cron)
-
-### Auth
-
-Better Auth
-
-### Push Notifications
-
-Expo Notifications (APNs/FCM via EAS)
-
-### Secrets
-
-Doppler syncing to Vercel, GitHub Actions, and EAS
-
-### Observability
-
-Sentry (errors), PostHog (product analytics), Langfuse (LLM traces/costs/evals)
-
-### Rate limiting / KV
-
-Upstash Redis + @upstash/ratelimit
-
-### Payments
-
-Stripe Billing or Revenue Cat
-
-### Repo
-
-Monorepo (Turborepo)
-
-### Package Manager
-
-pnpm
-
-### Development
-
-We use strict Gitflow:
-
-Branch Purpose
-main Production state only. Deploys come from tested release merges.
-dev Active development branch. Most feature work branches off of this.
-release/_ Candidate builds deployed to staging for QA/testing. Merged to main when approved.
-hotfix/_ Urgent fixes branched from main, tested, and merged back into both main and dev.
-
-Rules:
-• Feature development → branch from dev, merge into dev
-• Release prep → create release/x.y.z, deploy to staging, test, merge → main
-• Hotfixes → branch from main, fix, merge to main, then also merge into dev
-• No direct commits to main except hotfix merges
-
-### CI/CD
-
-GitHub Actions orchestrates everything (Vercel auto-deploy disabled).
-
-**Pipeline:** Checks → Migrations → Deploy
-
-**Triggers:**
-
-- PR to dev/main → checks only
-- Push to `release/*` → deploy to staging
-- Push to `main` → deploy to production
-
-**Secrets:** Doppler (no `.env` files). Syncs to Vercel and GitHub Actions.
-
-## Architecture
-
-A modular monolith in TypeScript with a functional core (pure domain logic), thin object-oriented services at the edges, and feature-based React/RN frontends that only talk to the app via tRPC.
+- Doppler project `mono`, configs `dev_personal` (local development), `dev` (CI tests), and `prd` (production). `prd` syncs to Vercel's production environment.
+- Doppler project `mono-ci` syncs CI-only credentials to GitHub Actions secrets: `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`, `TURBO_TOKEN`, and the Doppler service tokens `DOPPLER_TOKEN_DEV` and `DOPPLER_TOKEN_PRODUCTION`. These stay out of `mono` so they never reach the app's runtime environment.
+- Rotate a secret by changing it in Doppler. Commit no secrets and no `.env` files.
 
 ---
 
@@ -138,7 +90,7 @@ Repo-level docs of important systems or aspects of the product are located in `d
 
 ## Environment Variables (Doppler)
 
-**All commands require Doppler** (`doppler run --`) to inject env vars. Without Doppler: runtime env checks fail, DB connections fail.
+**All commands require Doppler** (`doppler run --`) to inject env vars. `doppler.yaml` points the repo at project `mono`, config `dev_personal`.
 
 We have an alias: `alias d='doppler run -- pnpm'`
 
@@ -155,12 +107,11 @@ We have an alias: `alias d='doppler run -- pnpm'`
 
 Run from `packages/db` directory. All require Doppler.
 
-| Command      | Equivalent To                  | Description                                    |
-| ------------ | ------------------------------ | ---------------------------------------------- |
-| `d generate` | `doppler run -- pnpm generate` | Generate migration from schema changes         |
-| `d migrate`  | `doppler run -- pnpm migrate`  | Run pending migrations against the database    |
-| `d push`     | `doppler run -- pnpm push`     | Push schema directly to DB (no migration file) |
-| `d studio`   | `doppler run -- pnpm studio`   | Open Drizzle Studio GUI to browse/edit data    |
+| Command      | Equivalent To                  | Description                                 |
+| ------------ | ------------------------------ | ------------------------------------------- |
+| `d generate` | `doppler run -- pnpm generate` | Generate migration from schema changes      |
+| `d migrate`  | `doppler run -- pnpm migrate`  | Run pending migrations against the database |
+| `d studio`   | `doppler run -- pnpm studio`   | Open Drizzle Studio GUI to browse/edit data |
 
 **Workflow:**
 
@@ -169,15 +120,21 @@ Run from `packages/db` directory. All require Doppler.
 3. Review migration in `packages/db/migrations/`
 4. Run `d migrate` to apply
 
+The Better Auth tables in `packages/db/src/auth-schema.ts` are generated from the auth config. After changing auth plugins or options, run `doppler run -- pnpm auth:generate`, then `d generate` for the migration.
+
 ### Ad-hoc Queries (psql)
 
-Agents can query the dev database directly with `psql` against the Neon `POSTGRES_URL` Doppler injects. No local Postgres, dev server, or Drizzle Studio needs to be running — psql opens its own connection to Neon over the standard wire protocol.
+Agents can query the databases directly with `psql` against the Neon `POSTGRES_URL` Doppler injects. No local Postgres, dev server, or Drizzle Studio needs to be running.
 
 ```bash
+# Dev
 doppler run -- sh -c 'psql "$POSTGRES_URL" -c "<SQL>"'
+
+# Production: always read-only
+doppler run --config prd -- sh -c 'psql "$POSTGRES_URL" -c "SET default_transaction_read_only = on" -c "<SQL>"'
 ```
 
-Quoting matters: wrap the `sh -c` argument in single quotes so the outer shell does not expand `$POSTGRES_URL` before Doppler injects it. Doppler populates `sh`'s env, then `sh` expands the variable for psql.
+Quoting matters: wrap the `sh -c` argument in single quotes so the outer shell does not expand `$POSTGRES_URL` before Doppler injects it.
 
 Useful flags:
 
@@ -185,49 +142,39 @@ Useful flags:
 - `-c "\dt"` — list tables; `-c "\d <table>"` — describe a table
 - `-f script.sql` — run a multi-statement file
 
-Treat this as read-only. Do not run `INSERT` / `UPDATE` / `DELETE` / DDL through psql against the dev DB without explicit user permission — schema changes go through `d generate` + `d migrate`.
+Only read. Run `INSERT` / `UPDATE` / `DELETE` / DDL through psql only with explicit user permission, on dev only; schema changes go through `d generate` + `d migrate`.
 
 ## Local Development Startup
 
-**Local development** requires the Inngest dev server alongside the Next.js dev server:
-
 ```bash
-# Terminal 1: app
+# Terminal 1: app and package watchers
 d dev
 
 # Terminal 2: Inngest dev server (auto-discovers /api/inngest)
 pnpm inngest:dev
-
-# Terminal 3: Ngrok server
-ngrok http 3000
 ```
 
-The local dev server lives at `https://multifaced-dazedly-brain.ngrok-free.dev/` or `http://localhost:3000/`
+The app runs at `http://localhost:3000`. The Inngest dev server runs at `http://localhost:8288`; it needs no keys locally, because the Inngest client derives `isDev` from `NODE_ENV`.
 
-The Inngest dev server lives at `http://localhost:8288`. No event/signing keys are needed locally — the Inngest client derives `isDev` from `NODE_ENV` (set to `development` automatically by `next dev`), which skips signature verification and points at the local dev server.
+Google sign-in needs the ngrok tunnel, because Google's OAuth redirect URI is registered against it: run `ngrok http 3000` and open `https://multifaced-dazedly-brain.ngrok-free.dev/`. Email sign-in works on localhost.
 
-### Agents starting dev servers
+## Browser Testing
 
-Agents must use `pnpm dev:next` (or `doppler run -- pnpm dev:next`), not `d dev`.
+Agents drive a real browser with [agent-browser](https://github.com/vercel-labs/agent-browser) (skill: `.agents/skills/agent-browser/SKILL.md`) or the Claude desktop app's built-in browser.
 
-## Browser Automation (agent-browser)
-
-Agents drive a real Chrome via [agent-browser](https://github.com/vercel-labs/agent-browser). Full workflow lives in the skill at `.agents/skills/agent-browser/SKILL.md`.
-
-- Always target `https://multifaced-dazedly-brain.ngrok-free.dev/`. Google OAuth's redirect URI is registered against ngrok.
-- Send the `ngrok-skip-browser-warning: 1` header on every request to skip the ngrok-free interstitial.
-- Once testing is complete, stop every dev server, tunnel, and browser session you started. Don't leave background processes running.
+- Target `http://localhost:3000/`.
+- Once testing is complete, stop every dev server, tunnel, and browser session you started.
 
 ### Signing in
 
-When you need an authenticated session, sign in with **email and password**, not Google.
+Sign in with **email and password**:
 
-1. Open `https://multifaced-dazedly-brain.ngrok-free.dev/login` (with the ngrok-skip header).
+1. Open `http://localhost:3000/login`.
 2. Fill `Email` with `austinweideman@gmail.com`.
-3. Fill `Password` with `password`.
+3. Fill `Password` with the value of `LOCAL_DEV_PASSWORD` from Doppler (`doppler secrets get LOCAL_DEV_PASSWORD --plain`).
 4. Click `Sign in`. You land on `/chat`.
 
-The session cookie is scoped to the ngrok domain only — it authorizes Autolab-as-Austin, nothing else.
+This account exists only in the dev database. Never commit the password.
 
 ## Background Jobs (Inngest)
 
@@ -246,14 +193,16 @@ All async / background work runs on Inngest. Architecture: a leaf `@mono/jobs` p
 **Conventions:**
 
 - Function `id` is `"<domain>-<verb>"`, kebab-case. Stable forever — changing it breaks in-flight runs.
-- Inngest-triggered work uses `systemActor("<domain>")`, not a user actor.
+- Inngest-triggered work uses `systemActor("<domain>")` for its own bookkeeping; work done on a user's behalf (an agent's tools) runs as that user's actor.
 - Default `retries: 3`. Default `concurrency: { key: "event.data.userId", limit: 1 }` for user-triggered jobs.
+- Assign a `createFunction(...)` result to a local constant, then export it typed as `InngestFunction.Any`; annotating the call directly breaks handler type inference.
 - Pass an idempotency `id` on `inngest.send()` whenever a natural dedupe key exists (job row id, etc.) — Inngest dedupes within 24h.
 - Handlers contain orchestration only; domain logic lives in the feature's `application/` layer.
+- Crons run every minute in development and as rarely as their purpose allows in production, to stay within Inngest's monthly execution budget.
 
 ## Dependencies
 
-**Pin everything.** No `^` or `~` on any dep in any `package.json` or in the `pnpm-workspace.yaml` catalogs. Bumps are explicit edits — don't run `pnpm update`.
+**Pin everything.** No `^` or `~` on any dep in any `package.json` or in the `pnpm-workspace.yaml` catalogs. Bumps are explicit edits — don't run `pnpm update`. CLIs used by scripts and CI (Vercel, Inngest, sherif, turbo) are pinned dev dependencies run from `node_modules`; never `@latest`, `pnpm dlx`, or global installs.
 
 Exceptions: `engines` fields and `peerDependencyRules.allowedVersions` (with a `TODO` comment) are allowed to be ranges.
 
@@ -280,9 +229,7 @@ Enforcement: `.npmrc` sets `strict-peer-dependencies=true`; CI uses `pnpm instal
 
 ## Scale Mindset
 
-- Design for 1000x scale. The app should be able to support millions of users and be a delightful, bug-free experience.
-- Follow industry best practices.
-- Never cut corners.
+Design what you build for production scale: bounded queries, paginated lists, idempotent writes, and recovery from crashes, retries, and concurrent clients.
 
 ---
 
@@ -291,13 +238,23 @@ Enforcement: `.npmrc` sets `strict-peer-dependencies=true`; CI uses `pnpm instal
 ## Structure
 
 ```
-apps/           → Entrypoints (Next.js, Expo)
-packages/       → Reusable libraries & feature modules
-  db/           → Drizzle client + schema
+apps/
+  nextjs/       → Web app, marketing site, API routes, Inngest serve handler
+packages/
+  agent/        → Agent definitions (model, instructions, tools)
   api/          → tRPC routers
-  ui/           → Shared React/RN components
-  conversation/ → Feature package (example)
-  lesson/       → Feature package (example)
+  attachment/   → File uploads (Vercel Blob)
+  auth/         → Better Auth configuration
+  billing/      → AI usage cost tracking
+  conversation/ → Conversations, messages, durable chat turns
+  db/           → Drizzle schema, client, migrations
+  experiment/   → Autolab: environment, scientist agent, campaigns
+  jobs/         → Inngest client and event contracts
+  realtime/     → Redis client and per-turn event log
+  scheduler/    → Scheduled tasks
+  ui/           → Shared React components
+  …             → Small shared libraries (env, errors, time, validators, …)
+tooling/        → Shared ESLint, Prettier, Tailwind, TypeScript, CI setup
 ```
 
 **Dependency rules:**
@@ -326,7 +283,8 @@ packages/<feature>/
       *.queries.ts    # SELECT operations only
       *.mutations.ts  # INSERT/UPDATE/DELETE only
     application/      # Use-cases, auth checks, orchestration
-    index.ts          # Public API (ONLY export point)
+    jobs/             # Inngest functions (optional)
+    index.ts          # Public API
 ```
 
 ### Types Folder Rules
@@ -387,37 +345,43 @@ packages/<feature>/
 - `SystemActor` - internal service (`{ type: "SYSTEM", service: string }`)
 - Use type guards (`isUserActor`, `isSystemActor`) to check actor type before accessing properties
 - Authorization checks happen in application layer, never in persistence layer
-- tRPC routers create actors from session: `userActor(ctx.session.user.id)`
+- Server code creates actors from the session: `userActor(session.user.id)`
 
 ---
 
 ## Encapsulation (Critical)
 
-### index.ts is the ONLY public API
+### index.ts is the public API
 
-External code must import from package root:
+External code imports from the package root:
 
 - ✅ `import { startConversation } from "@mono/conversation"`
 - ❌ `import { insertMessage } from "@mono/conversation/persistence"`
 
-### package.json exports ONLY root
+### Subpath exports are separate entry points
 
-```json
-"exports": { ".": { ... } }
-```
+A package exports a subpath only for an entry point that must load separately from its root:
 
-Never export `"./types"`, `"./utils"`, `"./persistence"`, or `"./application"`.
+| Subpath                              | Why it is separate                                            |
+| ------------------------------------ | ------------------------------------------------------------- |
+| `@mono/db/client`, `@mono/db/schema` | The database connection, apart from the schema types          |
+| `@mono/<feature>/jobs`               | Inngest functions, imported only by the serve route           |
+| `@mono/jobs/events/<domain>`         | Event contracts, importable without any function              |
+| `@mono/scheduler/inngest`            | Scheduler runtime functions, imported only by the serve route |
 
-**Why:** Prevents bypassing auth checks, allows internal refactoring without breaking consumers.
+Export `types`, `utils`, `persistence`, and `application` only through `index.ts`, so every caller goes through the application layer's authorization checks.
 
 ---
 
 ## Integration Points
 
-| Layer                         | Calls Into                               |
-| ----------------------------- | ---------------------------------------- |
-| tRPC routers (`packages/api`) | Application functions                    |
-| Frontends (`apps/*`)          | tRPC only (never direct package imports) |
+| Caller                                          | Calls into                                                |
+| ----------------------------------------------- | --------------------------------------------------------- |
+| Client components                               | tRPC, or a route handler for streaming and uploads        |
+| Server components, route handlers, tRPC routers | A package's public application functions, with an `Actor` |
+| Inngest functions                               | Application functions                                     |
+
+Nothing outside a package imports its persistence layer.
 
 ---
 
@@ -444,27 +408,15 @@ queryClient.invalidateQueries({
 
 ---
 
-## Expo Router (React Navigation)
+## Route Identity and Component State
 
-**Critical behavior:** Navigating to the same route with different params does NOT remount the component—it re-renders with new props.
-
-```
-/chat/abc → /chat/xyz   // Same component instance, NOT remounted
-```
-
-**Implications:**
-
-- `useRef` values persist across navigations
-- `useState` initial values are NOT reset
-- `useEffect` with `[]` deps only runs once (on first mount)
-
-**Solution:** Use React's `key` prop to force remount when identity changes:
+Give a stateful client component a `key` tied to the identity it renders, so navigating from one record to another always starts from fresh state:
 
 ```tsx
-<Chat key={id} conversationId={id} />
+<Chat key={conversation.id} conversationId={conversation.id} />
 ```
 
-When `id` changes, React unmounts the old instance and mounts a new one, naturally resetting all hooks.
+Without the key, React can reuse the component instance across navigations, keeping `useState` values, `useRef` values, and effects from the previous record.
 
 ---
 
@@ -482,5 +434,19 @@ Before any feature package is complete:
 - [ ] Application functions accept `actor: Actor` as second param
 - [ ] Mutations use `InternalServerError`, not generic `Error`
 - [ ] Application layer handles all auth/ownership via Actor checks
-- [ ] `index.ts` is the only public export
-- [ ] `package.json` exports only `"."`
+- [ ] `index.ts` is the public API; subpath exports are only separate entry points
+
+---
+
+# Deferred Decisions
+
+Practices this project deliberately skips for now. Each row says what breaks and when to adopt the practice.
+
+| Practice                                         | What breaks without it                                                                                                                                                             | Adopt when                      |
+| ------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------- |
+| Error tracking and LLM tracing                   | Production errors and bad model output leave no trace beyond database rows and Inngest logs                                                                                        | First real users                |
+| Expand/contract migrations                       | Migrations run before the deploy; one that drops or renames a column, or adds a required column without a default, breaks the live app until the deploy finishes (about 2 minutes) | First real users                |
+| A staging or preview environment                 | Changes are verified only locally before they reach production                                                                                                                     | First real users                |
+| Branch protection with required checks on `main` | A direct push to `main` skips PR review; the production pipeline still blocks a deploy that fails checks                                                                           | A second developer              |
+| Tests on a fresh database branch per CI run      | Tests run against the shared dev database, so a test that needs an unapplied migration fails until dev is migrated                                                                 | Tests fail for this reason      |
+| A read-only production database role for agents  | Production queries stay read-only only through `SET default_transaction_read_only = on`, not a database permission                                                                 | Production holds real user data |

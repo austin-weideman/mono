@@ -1,5 +1,4 @@
 import type { BetterAuthOptions, BetterAuthPlugin } from "better-auth";
-import { expo } from "@better-auth/expo";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { oAuthProxy } from "better-auth/plugins";
@@ -70,7 +69,6 @@ export function initAuth<
       ...(options.useOauthProxy && options.productionUrl
         ? [oAuthProxy({ productionURL: options.productionUrl })]
         : []),
-      expo(),
       ...(options.extraPlugins ?? []),
     ] as BetterAuthPlugin[],
     socialProviders: {
@@ -102,7 +100,7 @@ export function initAuth<
         trustedProviders: ["google"],
       },
     },
-    trustedOrigins: ["expo://", "exp://", ...(options.trustedOrigins ?? [])],
+    trustedOrigins: options.trustedOrigins ?? [],
     advanced: {
       ipAddress: {
         ipv6Subnet: 64,

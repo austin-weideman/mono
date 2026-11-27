@@ -24,7 +24,6 @@
     "lint": "eslint --flag unstable_native_nodejs_ts_config",
     "generate": "drizzle-kit generate",
     "migrate": "drizzle-kit migrate",
-    "push": "drizzle-kit push",
     "studio": "drizzle-kit studio",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },

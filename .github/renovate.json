@@ -1,7 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:best-practices"],
-  "baseBranches": ["dev"],
+  "baseBranches": ["main"],
   "timezone": "America/Los_Angeles",
   "schedule": ["before 6am on Monday"],
   "minimumReleaseAge": "7 days",
@@ -21,12 +21,12 @@
   },
   "packageRules": [
     {
-      "description": "Internal workspace packages — resolved via pnpm workspace:* protocol",
+      "description": "Internal workspace packages \u2014 resolved via pnpm workspace:* protocol",
       "matchPackageNames": ["@mono/**"],
       "enabled": false
     },
     {
-      "description": "better-auth ecosystem — must move together (renovate's monorepo registry doesn't know about better-auth yet, and version skew between cli/core/expo broke us 2026-05)",
+      "description": "better-auth ecosystem \u2014 must move together (renovate's monorepo registry doesn't know about better-auth yet, and version skew between its packages breaks auth)",
       "matchPackageNames": [
         "better-auth",
         "@better-auth/**",
@@ -37,22 +37,22 @@
       "minimumReleaseAge": "14 days"
     },
     {
-      "description": "Vercel AI SDK ecosystem — not in renovate's monorepo registry",
+      "description": "Vercel AI SDK ecosystem \u2014 not in renovate's monorepo registry",
       "matchPackageNames": ["ai", "@ai-sdk/**"],
       "groupName": "ai-sdk"
     },
     {
-      "description": "Drizzle ecosystem — not in renovate's monorepo registry",
+      "description": "Drizzle ecosystem \u2014 not in renovate's monorepo registry",
       "matchPackageNames": ["drizzle-orm", "drizzle-kit", "drizzle-zod"],
       "groupName": "drizzle"
     },
     {
-      "description": "Inngest ecosystem — not in renovate's monorepo registry",
+      "description": "Inngest ecosystem \u2014 not in renovate's monorepo registry",
       "matchPackageNames": ["inngest", "@inngest/**"],
       "groupName": "inngest"
     },
     {
-      "description": "Native-binding packages — extra-long release age (lightningcss 1.30.2 shipped a broken native binary that bricked Expo bundling 2026-05)",
+      "description": "Native-binding packages \u2014 extra-long release age (a broken native binary breaks every CSS build)",
       "matchPackageNames": ["lightningcss", "lightningcss-*"],
       "minimumReleaseAge": "30 days"
     },

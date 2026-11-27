@@ -3,7 +3,6 @@ name: PR Pipeline
 on:
   pull_request:
     branches:
-      - dev
       - main
 
 concurrency:
@@ -12,10 +11,7 @@ concurrency:
 
 jobs:
   checks:
-    # Skip CI for Renovate-opened PRs. Each Renovate rebase onto dev re-triggers
-    # this workflow, and with 30+ open Renovate PRs that burns GitHub Actions
-    # minutes. Renovate version bumps are pre-validated by minimumReleaseAge +
-    # the package authors' own CI; we run our checks on dev after merge.
+    # Skip Renovate PRs to save Actions minutes; the production pipeline runs every check before deploying.
     if: github.event.pull_request.user.login != 'renovate[bot]'
     name: Checks
     uses: ./.github/workflows/checks.yml

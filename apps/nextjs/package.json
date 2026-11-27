@@ -60,6 +60,7 @@
     "@mono/prettier-config": "workspace:*",
     "@mono/tailwind-config": "workspace:*",
     "@mono/tsconfig": "workspace:*",
+    "@tailwindcss/postcss": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:react19",
     "@types/react-dom": "catalog:react19",

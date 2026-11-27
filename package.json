@@ -14,24 +14,20 @@
     "auth:generate": "pnpm -F @mono/auth generate",
     "db:generate": "pnpm -F @mono/db generate",
     "db:migrate": "pnpm -F @mono/db migrate",
-    "db:push": "pnpm -F @mono/db push",
     "db:studio": "pnpm -F @mono/db studio",
     "dev": "turbo watch dev --continue",
-    "dev:next": "turbo watch dev -F @mono/nextjs...",
-    "inngest:dev": "npx inngest-cli@latest dev",
+    "inngest:dev": "inngest-cli dev",
     "start": "pnpm -F @mono/nextjs start",
     "format": "turbo run format --continue -- --cache --cache-location .cache/.prettiercache",
     "format:fix": "turbo run format --continue -- --write --cache --cache-location .cache/.prettiercache",
     "lint": "turbo run lint --continue --force -- --cache --cache-location .cache/.eslintcache",
     "lint:fix": "turbo run lint --continue --force -- --fix --cache --cache-location .cache/.eslintcache",
-    "lint:ws": "pnpm dlx sherif@latest",
+    "lint:ws": "sherif",
     "postinstall": "pnpm lint:ws",
     "prepare": "husky",
     "test": "turbo run test",
     "typecheck": "turbo run typecheck --force",
-    "ui-add": "turbo run ui-add",
-    "android": "expo run:android",
-    "ios": "expo run:ios"
+    "ui-add": "turbo run ui-add"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx,mjs,cjs,json,md,mdx,yml,yaml,css}": "prettier --write"
@@ -39,12 +35,14 @@
   "devDependencies": {
     "@mono/prettier-config": "workspace:*",
     "@turbo/gen": "2.9.6",
-    "dotenv-cli": "11.0.0",
     "husky": "9.1.7",
+    "inngest-cli": "1.53.0",
     "lint-staged": "16.4.0",
     "prettier": "catalog:",
+    "sherif": "1.13.0",
     "turbo": "2.9.6",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vercel": "66.6.0"
   },
   "prettier": "@mono/prettier-config"
 }

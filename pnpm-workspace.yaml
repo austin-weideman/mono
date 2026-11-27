@@ -8,9 +8,7 @@ catalog:
   "@ai-sdk/gateway": 3.0.109
   "@ai-sdk/mcp": 1.0.39
   "@ai-sdk/openai": 3.0.58
-  "@ai-sdk/react": 3.0.176
   "@better-auth/cli": 1.4.21
-  "@better-auth/expo": 1.6.9
   "@eslint/js": 9.38.0
   "@neondatabase/serverless": 1.0.2
   "@tailwindcss/postcss": 4.2.4
@@ -19,7 +17,6 @@ catalog:
   "@trpc/server": 11.17.0
   "@trpc/tanstack-react-query": 11.17.0
   "@types/node": 24.12.2
-  "@vitejs/plugin-react": 6.0.1
   ai: 6.0.174
   better-auth: 1.6.9
   drizzle-orm: 0.45.2
@@ -29,7 +26,6 @@ catalog:
   superjson: 2.2.6
   tailwindcss: 4.2.4
   typescript: 6.0.3
-  vite: 8.0.10
   zod: 4.4.2
 
 catalogs:
@@ -46,6 +42,7 @@ autoInstallPeers: false
 onlyBuiltDependencies:
   - "@tailwindcss/oxide"
   - esbuild
+  - inngest-cli
 
 overrides:
   "@types/minimatch": 6.0.0
@@ -53,11 +50,6 @@ overrides:
   better-call: 1.3.5
   lightningcss: 1.30.1
   vite: 8.0.10
-
-peerDependencyRules:
-  allowedVersions:
-    # TODO: remove when Expo's tooling declares TS 6 support.
-    "@expo/require-utils>typescript": "^6.0.0"
 
 publicHoistPattern:
   - "@ianvs/prettier-plugin-sort-imports"
