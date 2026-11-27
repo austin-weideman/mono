@@ -10,8 +10,6 @@ import {
   lookupValue,
 } from "./dataset";
 
-// Memoize the (cheap) 768-element permutation per seed so a campaign's ~20 tool
-// calls don't each rebuild it.
 const permutationCache = new Map<number, number[]>();
 
 function getPermutation(seed: number): number[] {
@@ -23,8 +21,7 @@ function getPermutation(seed: number): number[] {
   return perm;
 }
 
-// Under scrambled feedback we show the value of a *different* row, chosen by a
-// seeded permutation. A learner degrades; a memorizer doesn't notice.
+// Scrambled feedback shows the value of a different row, chosen by a seeded permutation.
 function scrambledValue(params: ParameterValues, seed: number): number {
   const index = lookupIndex(params);
   if (index === undefined) {
@@ -41,10 +38,7 @@ function scrambledValue(params: ParameterValues, seed: number): number {
   return shown;
 }
 
-// The single execution seam. Point this at a simulator or a real lab later and
-// nothing upstream changes. Takes REAL params (the tool converts ablated
-// proposals back before calling). Returns the true value and the value the
-// agent sees — equal unless the campaign carries a scramble seed.
+// Takes real parameter names; the tool converts hidden-name proposals back before calling.
 export function runExperiment(
   campaign: Pick<Campaign, "environmentKey" | "scrambleSeed">,
   params: ParameterValues,
