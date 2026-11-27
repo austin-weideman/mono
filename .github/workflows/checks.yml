@@ -103,7 +103,7 @@ jobs:
           doppler run -- pnpm generate
           if [ -n "$(git status --porcelain migrations)" ]; then
             echo "::error::Schema changes detected without committed migration!"
-            echo "Run 'd generate' locally and commit the migration file."
+            echo "Run 'd db:generate' locally and commit the migration file."
             git status migrations
             git diff migrations
             exit 1

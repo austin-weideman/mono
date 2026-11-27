@@ -2,10 +2,11 @@
 
 Monorepo for **Autolab**, an autonomous closed-loop research platform: an AI scientist agent that proposes, predicts, runs, and learns from experiments in a chat-driven loop, with a live trajectory chart beside the transcript.
 
-[AGENTS.md](./AGENTS.md) holds the project overview, architecture rules, and conventions. System docs live in [`docs/`](./docs):
+[AGENTS.md](./AGENTS.md) holds the project overview, architecture rules, and conventions. System docs:
 
 - [Chat turns](./docs/chat/chat-turns.md): durable, resumable assistant replies
 - [Scheduler](./docs/scheduler/scheduler.md): scheduled and recurring tasks
+- [Mini-study](./packages/experiment/study/README.md): is the agent learning or remembering?
 
 ## Quick Start
 
@@ -15,29 +16,14 @@ Every command needs Doppler for environment variables. Install the [Doppler CLI]
 alias d='doppler run -- pnpm'
 ```
 
-### 1. Install dependencies
+Use the Node version in `.nvmrc` and the pnpm version in the root `package.json`.
 
 ```bash
 pnpm install
-```
-
-### 2. Apply database migrations
-
-```bash
 d db:migrate
 ```
 
-### 3. Run the app
-
-```bash
-# Terminal 1: app and package watchers
-d dev
-
-# Terminal 2: Inngest dev server
-pnpm inngest:dev
-```
-
-The app runs at `http://localhost:3000` and the Inngest dev server at `http://localhost:8288`. Google sign-in needs the ngrok tunnel described in [AGENTS.md](./AGENTS.md#local-development-startup).
+Then start the app as described in [Local Development Startup](./AGENTS.md#local-development-startup).
 
 ## Common Tasks
 
@@ -48,8 +34,5 @@ The app runs at `http://localhost:3000` and the Inngest dev server at `http://lo
 | Add a UI component       | `pnpm ui-add` (shadcn/ui CLI)                                         |
 | Add a package            | `pnpm turbo gen init`                                                 |
 | Add a background job     | See [Background Jobs](./AGENTS.md#background-jobs-inngest)            |
-| Check everything locally | `d typecheck`, `d lint`, `d test`, `d build`                          |
-
-## Deployment
-
-Pushes to `main` deploy to production through GitHub Actions: checks, then database migrations, then a Vercel deploy. See [CI/CD](./AGENTS.md#cicd).
+| Check everything locally | `d typecheck`, `d lint`, `d format`, `d test`, `d build`              |
+| Deploy                   | Merge to `main`; see [CI/CD](./AGENTS.md#cicd)                        |

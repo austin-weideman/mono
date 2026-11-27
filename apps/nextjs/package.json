@@ -12,9 +12,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@ai-sdk/anthropic": "catalog:",
     "@ai-sdk/gateway": "catalog:",
-    "@ai-sdk/openai": "catalog:",
     "@hookform/resolvers": "5.2.2",
     "@mono/agent": "workspace:*",
     "@mono/ai": "workspace:*",

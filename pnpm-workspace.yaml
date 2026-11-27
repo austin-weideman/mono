@@ -4,10 +4,8 @@ packages:
   - tooling/*
 
 catalog:
-  "@ai-sdk/anthropic": 3.0.74
   "@ai-sdk/gateway": 3.0.109
   "@ai-sdk/mcp": 1.0.39
-  "@ai-sdk/openai": 3.0.58
   "@better-auth/cli": 1.4.21
   "@eslint/js": 9.38.0
   "@neondatabase/serverless": 1.0.2
